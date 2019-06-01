@@ -69,14 +69,13 @@ end
 minetest.register_decoration({
     deco_type = "simple",
     place_on = {
-        "default:copper_sulfate",
         "default:cinnabar",
         "default:red_mercury_oxide",
         "default:mercury_oxide"
     },
     sidelen = 16,
     fill_ratio = 0.05,
-    biomes = { "default:azure", "default:redland" },
+    biomes = "default:redland",
     decoration = "default:pusilli",
     height = 1
 })
