@@ -115,6 +115,18 @@ minetest.register_node("default:pusilli", {
     groups = { snappy = 3, attached_node = 1 }
 })
 
+minetest.register_node("default:rosea", {
+    description = "Rosea mushroom",
+    light_source = 5,
+    drawtype = "plantlike",
+    tiles = { "default_rosea.png" },
+    wield_image = "default_rosea.png",
+    inventory_image = "default_rosea.png",
+    paramtype = "light",
+    walkable = false,
+    groups = { snappy = 3, attached_node = 1 }
+})
+
 minetest.register_node("default:purpura", {
     description = "Purpura mushroom",
     light_source = 5,

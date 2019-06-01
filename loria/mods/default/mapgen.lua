@@ -84,6 +84,16 @@ minetest.register_decoration({
 minetest.register_decoration({
     deco_type = "simple",
     place_on = "default:copper_sulfate",
+    sidelen = 8,
+    fill_ratio = 0.05,
+    biomes = "default:azure",
+    decoration = "default:rosea",
+    height = 1
+})
+
+minetest.register_decoration({
+    deco_type = "simple",
+    place_on = "default:copper_sulfate",
     sidelen = 16,
     fill_ratio = 0.05,
     biomes = "default:azure",
