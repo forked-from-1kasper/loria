@@ -117,6 +117,7 @@ minetest.register_node("default:pusilli", {
 
 minetest.register_node("default:purpura", {
     description = "Purpura mushroom",
+    light_source = 5,
     drawtype = "plantlike",
     tiles = { "default_purpura.png" },
     wield_image = "default_purpura.png",
