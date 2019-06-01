@@ -131,7 +131,6 @@ minetest.register_node("default:pusilli", {
 
 minetest.register_node("default:rosea", {
     description = "Rosea mushroom",
-    light_source = 5,
     drawtype = "plantlike",
     tiles = { "default_rosea.png" },
     wield_image = "default_rosea.png",
