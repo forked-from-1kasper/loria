@@ -76,10 +76,16 @@ minetest.register_node("default:rete_body", {
     drop = 'default:rete_body'
 })
 
+truncus_names = {
+    "hyacinthum",
+    "viridi",
+    "purpura"
+}
+
 truncus_types = 3
 for i = 1, truncus_types do
     minetest.register_node("default:truncus_" .. i, {
-        description = "Truncus grass",
+        description = "Truncus " .. truncus_names[i],
         drawtype = "plantlike",
         tiles = { "default_truncus_" .. i .. ".png" },
         wield_image = "default_truncus_" .. i .. ".png",
@@ -90,10 +96,18 @@ for i = 1, truncus_types do
     })
 end
 
+pars_names = {
+    "ordinarius",
+    "insignis",
+    "comantem",
+    "longus",
+    "lenis"
+}
+
 pars_types = 5
 for i = 1, pars_types do
     minetest.register_node("default:pars_" .. i, {
-        description = "Pars grass",
+        description = "Pars " .. pars_names[i],
         drawtype = "plantlike",
         tiles = { "default_pars_" .. i .. ".png" },
         wield_image = "default_pars_" .. i .. ".png",
