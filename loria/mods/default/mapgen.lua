@@ -84,7 +84,7 @@ minetest.register_decoration({
 minetest.register_decoration({
     deco_type = "simple",
     place_on = "default:copper_sulfate",
-    sidelen = 8,
+    sidelen = 16,
     fill_ratio = 0.05,
     biomes = "default:azure",
     decoration = "default:rosea",
@@ -103,17 +103,16 @@ minetest.register_decoration({
 
 max_truncus_height = 7
 for i = 1, truncus_types do
-    for h = 1, max_truncus_height do
-        minetest.register_decoration({
-            deco_type = "simple",
-            place_on = "default:copper_sulfate",
-            sidelen = 16,
-            fill_ratio = 0.0005 * max_truncus_height,
-            biomes = "default:azure",
-            decoration = "default:truncus_" .. i,
-            height = h
-        })
-    end
+    minetest.register_decoration({
+        deco_type = "simple",
+        place_on = "default:copper_sulfate",
+        sidelen = 16,
+        fill_ratio = 0.05,
+        biomes = "default:azure",
+        decoration = "default:truncus_" .. i,
+        height = 1,
+        height_max = max_truncus_height
+    })
 end
 
 minetest.register_ore({
