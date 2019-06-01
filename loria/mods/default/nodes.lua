@@ -56,16 +56,24 @@ minetest.register_node("default:viridi_petasum_stem", {
 
 minetest.register_node("default:viridi_petasum_body", {
     description = "Viridi petasum body",
+    light_source = 3,
     tiles = { "default_viridi_petasum_body.png" },
     groups = { oddly_breakable_by_hand = 1, choppy = 2, leaves = 1 },
     drop = 'default:viridi_petasum_body'
 })
 
-minetest.register_node("default:rete", {
+minetest.register_node("default:rete_stem", {
+    description = "Rete stem",
+    tiles = { "default_rete_stem.png" },
+    groups = { choppy = 2 },
+    drop = 'default:rete_stem'
+})
+
+minetest.register_node("default:rete_body", {
     description = "Rete body",
-    tiles = { "default_rete.png" },
+    tiles = { "default_rete_body.png" },
     groups = { oddly_breakable_by_hand = 1, choppy = 2, leaves = 1 },
-    drop = 'default:rete'
+    drop = 'default:rete_body'
 })
 
 truncus_types = 3
@@ -95,6 +103,28 @@ for i = 1, pars_types do
         groups = { snappy = 3, attached_node = 1 }
     })
 end
+
+minetest.register_node("default:pusilli", {
+    description = "Pusilli mushroom",
+    drawtype = "plantlike",
+    tiles = { "default_pusilli.png" },
+    wield_image = "default_pusilli.png",
+    inventory_image = "default_pusilli.png",
+    paramtype = "light",
+    walkable = false,
+    groups = { snappy = 3, attached_node = 1 }
+})
+
+minetest.register_node("default:purpura", {
+    description = "Purpura mushroom",
+    drawtype = "plantlike",
+    tiles = { "default_purpura.png" },
+    wield_image = "default_purpura.png",
+    inventory_image = "default_purpura.png",
+    paramtype = "light",
+    walkable = false,
+    groups = { snappy = 3, attached_node = 1 }
+})
 
 minetest.register_node("default:mercury_flowing", {
     description = "Mercury (flowing)",

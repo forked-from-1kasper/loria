@@ -1,12 +1,21 @@
 local c_air = minetest.get_content_id("air")
 local c_copper_sulfate = minetest.get_content_id("default:copper_sulfate")
-local c_stem = minetest.get_content_id("default:viridi_petasum_stem")
-local c_body = minetest.get_content_id("default:viridi_petasum_body")
+
+local c_viridi_stem = minetest.get_content_id("default:viridi_petasum_stem")
+local c_viridi_body = minetest.get_content_id("default:viridi_petasum_body")
+
+local c_rete_stem = minetest.get_content_id("default:rete_stem")
+local c_rete_body = minetest.get_content_id("default:rete_body")
 
 viridi_petasum = {
     min_height = 7,
     max_height = 30,
     min_radius = 3
+}
+
+rete = {
+    min_height = 5,
+    max_height = 9
 }
 
 function generate_viridi_petasum(x, y, z, g, data, area)
@@ -20,7 +29,7 @@ function generate_viridi_petasum(x, y, z, g, data, area)
 
     -- stem
     for k = 1, height do
-        data[area:index(x, y + k, z)] = c_stem
+        data[area:index(x, y + k, z)] = c_viridi_stem
     end
 
     -- body
@@ -30,12 +39,43 @@ function generate_viridi_petasum(x, y, z, g, data, area)
             local delta_x = math.floor(k * math.cos(t))
             local delta_z = math.floor(k * math.sin(t))
 
-            data[area:index(x + delta_x, y + height, z + delta_z)] = c_body
+            data[area:index(x + delta_x, y + height, z + delta_z)] = c_viridi_body
         end
 
         t = t + 0.4
     end
 end
+
+function generate_rete(x, y, z, g, data, area)
+    local height = g:next(rete.min_height, rete.max_height)
+    local radius = 1
+
+    if not (area:contains(x - radius - 1, y, z - radius - 1)) or
+       not (area:contains(x + radius + 1, y + height, z + radius + 1)) then
+        return
+    end
+
+    for k = 1, height do
+        data[area:index(x, y + k, z)] = c_rete_stem
+    end
+
+    for i = -radius, radius do
+        for j = -radius, radius do
+            data[area:index(x + i, y + height, z + j)] = c_rete_body
+
+            data[area:index(x + i, y + height - math.abs(j) - 1, z + radius + 1)] = c_rete_body
+            data[area:index(x + i, y + height - math.abs(j) - 1, z - radius - 1)] = c_rete_body
+
+            data[area:index(x + radius + 1, y + height - math.abs(j) - 1, z + i)] = c_rete_body
+            data[area:index(x - radius - 1, y + height - math.abs(j) - 1, z + i)] = c_rete_body
+        end
+    end
+end
+
+mushrooms = {
+    [c_copper_sulfate] = { generate_viridi_petasum, generate_rete },
+    [c_viridi_body] = { generate_viridi_petasum }
+}
 
 minetest.register_on_generated(function(minp0, maxp0, seed)
     local height_min = 0
@@ -55,7 +95,7 @@ minetest.register_on_generated(function(minp0, maxp0, seed)
     local y_max = math.min(maxp.y, height_max)
 
     local perlin1 = minetest.get_perlin(230, 3, 0.6, 100)
-    local divlen = 8
+    local divlen = 4
     local divs = (maxp.x - minp.x) / divlen + 1
 
     local g = PseudoRandom(seed + 1)
@@ -81,9 +121,13 @@ minetest.register_on_generated(function(minp0, maxp0, seed)
 
                 if ground_y then
                     local ground = data[area:index(x, ground_y, z)]
-                    if ground == c_copper_sulfate or ground == c_body then
-                        generate_viridi_petasum(x, ground_y, z, g, data, area)
+                    local variants = mushrooms[ground]
+                    if not variants then
+                        break
                     end
+
+                    local func = variants[g:next(1, #variants)]
+                    func(x, ground_y, z, g, data, area)
                 end
             end
         end

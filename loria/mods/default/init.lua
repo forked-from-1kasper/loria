@@ -5,7 +5,6 @@ dofile(minetest.get_modpath("default").."/mapgen.lua")
 dofile(minetest.get_modpath("default").."/mushrooms.lua")
 dofile(minetest.get_modpath("default").."/hud.lua")
 
-hud_pos = { x = 100, y = 600 }
 oxygen_hud = {}
 minetest.register_on_joinplayer(function(player)
     local meta = player:get_meta()
@@ -17,11 +16,11 @@ minetest.register_on_joinplayer(function(player)
     player:hud_set_flags({ healthbar = false })
     oxygen_hud[name] = player:hud_add({
         hud_elem_type = "text",
-        position = { x = 0, y = 0 },
+        position = { x = 0, y = 0.9 },
         text = "N/A",
         number = 0xFFFFFF,
         alignment = "right",
-        offset = hud_pos
+        offset = { x = 100, y = 0 }
     })
 
     minetest.chat_send_player(name, "Welcome to Loria!")
