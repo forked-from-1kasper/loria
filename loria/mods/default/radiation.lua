@@ -7,7 +7,6 @@ RADIATION_LIMIT = 16
 
 DOSE_DECREASE_TIME = 1
 DOSE_DAMAGE_LIMIT = 1
---DOSE_DECREASE_VALUE = 0.001
 
 local radiation_timer = 0
 minetest.register_globalstep(function(dtime)
@@ -38,6 +37,21 @@ function hypot_sqr(pos1, pos2)
         (pos1.x - pos2.x) ^ 2 +
         (pos1.y - pos2.y) ^ 2 +
         (pos1.z - pos2.z) ^ 2
+end
+
+function calculate_inventory_radiation(inv)
+    local radiation = 0
+
+    for _, list in pairs(inv:get_lists()) do
+        for _, stack in ipairs(list) do
+            local A = activity[minetest.get_content_id(stack:get_name())]
+            if A then
+                radiation = radiation + A * stack:get_count()
+            end
+        end
+    end
+
+    return radiation
 end
 
 minetest.register_globalstep(function(dtime)
@@ -81,15 +95,8 @@ minetest.register_globalstep(function(dtime)
             end
         end
 
-        local inv = player:get_inventory()
-        for _, list in pairs(inv:get_lists()) do
-            for _, stack in ipairs(list) do
-                local A = activity[minetest.get_content_id(stack:get_name())]
-                if A then
-                    radiation = radiation + A * stack:get_count()
-                end
-            end
-        end
+        radiation = radiation +
+            calculate_inventory_radiation(player:get_inventory())
 
         local meta = player:get_meta()
         meta:set_float("radiation", radiation)

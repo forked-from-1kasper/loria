@@ -31,7 +31,7 @@ START_ITEMS = { "default:drill", "default:oxygen_balloon" }
 
 function send_start_items(player)
     local name = player:get_player_name()
-    local inv = minetest.get_inventory({ type = "player", name = name })
+    local inv = player:get_inventory()
     for _, name in ipairs(START_ITEMS) do
         inv:remove_item("main", { name = name, count = 99 })
         inv:add_item("main", { name = name, count = 1 })
