@@ -26,6 +26,14 @@ minetest.register_node("default:cobalt_blue", {
     drop = 'default:cobalt_blue'
 })
 
+minetest.register_node("default:plutonium_fluoride", {
+    description = "Plutonium (III) fluoride (PuF₃)",
+    tiles = { "default_cinnabar.png" },
+    overlay_tiles = { "default_plutonium_fluoride.png" },
+    groups = { cracky = 1 },
+    drop = 'default:plutonium_fluoride'
+})
+
 minetest.register_node("default:uranyl_acetate", {
     description = "Uranyl acetate (UO₂(CH₃COO)₂·2H₂O)",
     tiles = { "default_cinnabar.png" },

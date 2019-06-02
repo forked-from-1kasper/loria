@@ -1,6 +1,8 @@
 local c_uranyl_acetate = minetest.get_content_id("default:uranyl_acetate")
+local c_plutonium_fluoride = minetest.get_content_id("default:plutonium_fluoride")
 activity = {
-    [c_uranyl_acetate] = 1
+    [c_uranyl_acetate] = 1,
+    [c_plutonium_fluoride] = 20,
 }
 
 RADIATION_LIMIT = 16
