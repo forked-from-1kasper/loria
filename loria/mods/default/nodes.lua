@@ -118,39 +118,66 @@ for i = 1, pars_types do
     })
 end
 
-minetest.register_node("default:pusilli", {
-    description = "Pusilli mushroom",
-    drawtype = "plantlike",
-    tiles = { "default_pusilli.png" },
-    wield_image = "default_pusilli.png",
-    inventory_image = "default_pusilli.png",
-    paramtype = "light",
-    walkable = false,
-    groups = { snappy = 3, attached_node = 1 }
-})
+small_mushrooms = {
+    ["pusilli"] = {},
+    ["rosea"] = {},
+    ["purpura"] = { light_source = 5 },
+    ["picea"] = {},
+    ["caput"] = {}
+}
 
-minetest.register_node("default:rosea", {
-    description = "Rosea mushroom",
-    drawtype = "plantlike",
-    tiles = { "default_rosea.png" },
-    wield_image = "default_rosea.png",
-    inventory_image = "default_rosea.png",
-    paramtype = "light",
-    walkable = false,
-    groups = { snappy = 3, attached_node = 1 }
-})
+for name, features in pairs(small_mushrooms) do
+    local info = {
+        description = name:gsub("^%l", string.upper),
+        drawtype = "plantlike",
+        tiles = { "default_" .. name .. ".png" },
+        wield_image = "default_" .. name .. ".png",
+        inventory_image = "default_" .. name .. ".png",
+        paramtype = "light",
+        walkable = false,
+        groups = { snappy = 3, attached_node = 1 }
+    }
 
-minetest.register_node("default:purpura", {
-    description = "Purpura mushroom",
-    light_source = 5,
-    drawtype = "plantlike",
-    tiles = { "default_purpura.png" },
-    wield_image = "default_purpura.png",
-    inventory_image = "default_purpura.png",
-    paramtype = "light",
-    walkable = false,
-    groups = { snappy = 3, attached_node = 1 }
-})
+    for key, value in pairs(features) do
+        info[key] = value
+    end
+
+    minetest.register_node("default:" .. name, info)
+end
+
+--minetest.register_node("default:pusilli", {
+--    description = "Pusilli mushroom",
+--    drawtype = "plantlike",
+--    tiles = { "default_pusilli.png" },
+--    wield_image = "default_pusilli.png",
+--    inventory_image = "default_pusilli.png",
+--    paramtype = "light",
+--    walkable = false,
+--    groups = { snappy = 3, attached_node = 1 }
+--})
+
+--minetest.register_node("default:rosea", {
+--    description = "Rosea mushroom",
+--    drawtype = "plantlike",
+--    tiles = { "default_rosea.png" },
+--    wield_image = "default_rosea.png",
+--    inventory_image = "default_rosea.png",
+--    paramtype = "light",
+--    walkable = false,
+--    groups = { snappy = 3, attached_node = 1 }
+--})
+
+--minetest.register_node("default:purpura", {
+--    description = "Purpura mushroom",
+--    light_source = 5,
+--    drawtype = "plantlike",
+--    tiles = { "default_purpura.png" },
+--    wield_image = "default_purpura.png",
+--    inventory_image = "default_purpura.png",
+--    paramtype = "light",
+--    walkable = false,
+--    groups = { snappy = 3, attached_node = 1 }
+--})
 
 minetest.register_node("default:mercury_flowing", {
     description = "Mercury (flowing)",

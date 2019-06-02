@@ -57,7 +57,7 @@ minetest.register_globalstep(function(dtime)
         if timer > OXYGEN_DECREASE_TIME then
             timer = 0
             if oxygen > 1 then
-                oxygen = oxygen - 50
+                oxygen = oxygen - 1
             else
                 player:set_hp(player:get_hp() - 1)
             end

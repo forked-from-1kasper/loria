@@ -66,39 +66,33 @@ for i = 1, pars_types do
     })
 end
 
-minetest.register_decoration({
-    deco_type = "simple",
-    place_on = {
-        "default:cinnabar",
-        "default:red_mercury_oxide",
-        "default:mercury_oxide"
-    },
-    sidelen = 16,
-    fill_ratio = 0.05,
-    biomes = "default:redland",
-    decoration = "default:pusilli",
-    height = 1
-})
+for _, name in ipairs({"pusilli", "caput"}) do
+    minetest.register_decoration({
+        deco_type = "simple",
+        place_on = {
+            "default:cinnabar",
+            "default:red_mercury_oxide",
+            "default:mercury_oxide"
+        },
+        sidelen = 16,
+        fill_ratio = 0.05,
+        biomes = "default:redland",
+        decoration = "default:" .. name,
+        height = 1
+    })
+end
 
-minetest.register_decoration({
-    deco_type = "simple",
-    place_on = "default:copper_sulfate",
-    sidelen = 16,
-    fill_ratio = 0.05,
-    biomes = "default:azure",
-    decoration = "default:rosea",
-    height = 1
-})
-
-minetest.register_decoration({
-    deco_type = "simple",
-    place_on = "default:copper_sulfate",
-    sidelen = 16,
-    fill_ratio = 0.05,
-    biomes = "default:azure",
-    decoration = "default:purpura",
-    height = 1
-})
+for _, name in ipairs({"rosea", "picea", "purpura"}) do
+    minetest.register_decoration({
+        deco_type = "simple",
+        place_on = "default:copper_sulfate",
+        sidelen = 16,
+        fill_ratio = 0.05,
+        biomes = "default:azure",
+        decoration = "default:" .. name,
+        height = 1
+    })
+end
 
 max_truncus_height = 7
 for i = 1, truncus_types do
