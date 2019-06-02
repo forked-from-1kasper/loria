@@ -1,3 +1,10 @@
+minetest.register_node("default:ammonium_manganese_pyrophosphate", {
+    description = "Ammonium manganese (III) pyrophosphate",
+    tiles = { "default_ammonium_manganese_pyrophosphate.png" },
+    groups = { crumbly = 3 },
+    drop = 'default:ammonium_manganese_pyrophosphate'
+})
+
 minetest.register_node("default:cinnabar", {
     description = "Cinnabar (HgS)",
     tiles = { "default_cinnabar.png" },
@@ -239,4 +246,91 @@ minetest.register_node("default:mercury_source", {
     liquid_viscosity = 7,
     post_effect_color = {a = 250, r = 150, g = 150, b = 150},
     groups = {water = 3, liquid = 3},
+})
+
+minetest.register_node("default:potassium_permanganate_flowing", {
+    description = "Potassium permanganate (flowing)",
+    drawtype = "flowingliquid",
+    tiles = { "default_potassium_permanganate.png" },
+    special_tiles = {
+        {
+            name = "default_potassium_permanganate_animated.png",
+            animation = {
+                type = "vertical_frames",
+                aspect_w = 16,
+                aspect_h = 16,
+                length = 2.0,
+            },
+            backface_culling = false
+        },
+        {
+            name = "default_potassium_permanganate_animated.png",
+            animation = {
+                type = "vertical_frames",
+                aspect_w = 16,
+                aspect_h = 16,
+                length = 2.0,
+            },
+            backface_culling = true
+        },
+    },
+    alpha = 160,
+    paramtype = "light",
+    paramtype2 = "flowingliquid",
+    walkable = false,
+    pointable = false,
+    diggable = false,
+    buildable_to = true,
+    is_ground_content = false,
+    drop = "",
+    drowning = 1,
+    liquidtype = "flowing",
+    liquid_alternative_flowing = "default:potassium_permanganate_flowing",
+    liquid_alternative_source = "default:potassium_permanganate_source",
+    liquid_viscosity = 1,
+    post_effect_color = { a = 100, r = 160, g = 0, b = 130 },
+    groups = { water = 3, liquid = 3 },
+})
+
+minetest.register_node("default:potassium_permanganate_source", {
+    description = "Potassium permanganate",
+    drawtype = "liquid",
+    tiles = {
+        {
+            name = "default_potassium_permanganate_animated.png",
+            animation = {
+                type = "vertical_frames",
+                aspect_w = 16,
+                aspect_h = 16,
+                length = 2.0,
+            }
+        }
+    },
+    special_tiles = {
+        {
+            name = "default_potassium_permanganate_animated.png",
+            animation = {
+                type = "vertical_frames",
+                aspect_w = 16,
+                aspect_h = 16,
+                length = 2.0,
+            },
+            backface_culling = false
+        },
+    },
+    alpha = 160,
+    paramtype = "light",
+    walkable = false,
+    pointable = false,
+    diggable = false,
+    buildable_to = true,
+    is_ground_content = false,
+    drop = "",
+    drowning = 1,
+    liquidtype = "source",
+    liquid_alternative_flowing = "default:potassium_permanganate_flowing",
+    liquid_alternative_source = "default:potassium_permanganate_source",
+    liquid_viscosity = 1,
+    post_effect_color = { a = 100, r = 160, g = 0, b = 130 },
+    groups = { water = 3, liquid = 3 },
 })

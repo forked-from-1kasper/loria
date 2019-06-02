@@ -43,6 +43,18 @@ minetest.register_biome({
 })
 
 minetest.register_biome({
+    name = "default:purple_swamp",
+    node_stone = "default:potassium_permanganate_source",
+    node_top = "default:ammonium_manganese_pyrophosphate",
+    depth_top = 5,
+    node_river_water = "default:potassium_permanganate_flowing",
+    y_min = 0,
+    y_max = 31000,
+    heat_point = 40,
+    humidity_point = 50,
+})
+
+minetest.register_biome({
     name = "default:mercury_ocean",
     node_top = "default:lead_sulfate",
     depth_top = 1,

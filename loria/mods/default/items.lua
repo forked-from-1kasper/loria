@@ -142,3 +142,11 @@ bucket.register_liquid(
     "bucket_mercury.png",
     "Bucket with mercury"
 )
+
+bucket.register_liquid(
+    "default:potassium_permanganate_source",
+    "default:potassium_permanganate_flowing",
+    "default:bucket_potassium_permanganate",
+    "bucket_potassium_permanganate.png",
+    "Bucket with potassium permanganate"
+)
