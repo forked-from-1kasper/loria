@@ -4,6 +4,7 @@ dofile(minetest.get_modpath("default").."/items.lua")
 dofile(minetest.get_modpath("default").."/mapgen.lua")
 dofile(minetest.get_modpath("default").."/mushrooms.lua")
 dofile(minetest.get_modpath("default").."/hud.lua")
+dofile(minetest.get_modpath("default").."/radiation.lua")
 
 oxygen_hud = {}
 minetest.register_on_joinplayer(function(player)
@@ -20,7 +21,7 @@ minetest.register_on_joinplayer(function(player)
         text = "N/A",
         number = 0xFFFFFF,
         alignment = "right",
-        offset = { x = 100, y = 0 }
+        offset = { x = 150, y = 0 }
     })
 
     minetest.chat_send_player(name, "Welcome to Loria!")
@@ -37,11 +38,20 @@ function send_start_items(player)
     end
 end
 
-minetest.register_on_newplayer(send_start_items)
+minetest.register_on_newplayer(function(player)
+    send_start_items(player)
+
+    local meta = player:get_meta()
+    meta:set_int("oxygen", OXYGEN_MAX)
+
+    meta:set_float("radiation", 0)
+    meta:set_float("received_dose", 0)
+end)
 
 minetest.register_on_respawnplayer(function(player)
     local meta = player:get_meta()
     meta:set_int("oxygen", OXYGEN_MAX)
+    meta:set_float("received_dose", 0)
 
     send_start_items(player)
 end)

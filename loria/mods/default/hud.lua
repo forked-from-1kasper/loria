@@ -9,7 +9,18 @@ end
 
 function gravity(player)
     local gravity = player:get_physics_override().gravity * 100
-    return "Gravity: "..gravity.." %"
+    return string.format("Gravity: %.4f %%", gravity)
+end
+
+function radiation(player)
+    local meta = player:get_meta()
+    return string.format(
+        "Radiation: %.3f CU/h",
+        meta:get_float("radiation")
+    ) .. "\n" .. string.format(
+        "Received dose: %.3f CU",
+        meta:get_float("received_dose")
+    )
 end
 
 function copyright(player)
@@ -20,7 +31,7 @@ function copyright(player)
     }, "\n")
 end
 
-hud_elems = { health, oxygen, gravity, copyright }
+hud_elems = { health, oxygen, gravity, radiation, copyright }
 
 minetest.register_globalstep(function(dtime)
     for _, player in ipairs(minetest.get_connected_players()) do
