@@ -1,6 +1,6 @@
 local c_uranyl_acetate = minetest.get_content_id("default:uranyl_acetate")
 activity = {
-    [c_uranyl_acetate] = 5
+    [c_uranyl_acetate] = 1
 }
 
 RADIATION_LIMIT = 16
@@ -34,6 +34,13 @@ minetest.register_globalstep(function(dtime)
     end
 end)
 
+function hypot_sqr(pos1, pos2)
+    return
+        (pos1.x - pos2.x) ^ 2 +
+        (pos1.y - pos2.y) ^ 2 +
+        (pos1.z - pos2.z) ^ 2
+end
+
 minetest.register_globalstep(function(dtime)
     local vm = minetest.get_voxel_manip()
 
@@ -57,11 +64,29 @@ minetest.register_globalstep(function(dtime)
             local A = activity[data[i]]
             if A then
                 local node = area:position(i)
-                radiation = radiation + A / (
-                    (pos.x - node.x) ^ 2 +
-                    (pos.y - node.y) ^ 2 +
-                    (pos.z - node.z) ^ 2
-                )
+                radiation = radiation + A / hypot_sqr(pos, node)
+            end
+        end
+
+        local objs = minetest.get_objects_inside_radius(pos, RADIATION_LIMIT)
+        for _, obj in pairs(objs) do
+            local name = player:get_player_name()
+            local entity = obj:get_luaentity()
+            if entity and entity.name == "__builtin:item" then
+                local stack = ItemStack(entity.itemstring)
+                local A = activity[minetest.get_content_id(stack:get_name())]
+                if A then
+                    A = A * stack:get_count()
+                    radiation = radiation + A / hypot_sqr(pos, obj:get_pos())
+                end
+            end
+        end
+
+        local inv = player:get_inventory()
+        for _, stack in ipairs(inv:get_list("main")) do
+            local A = activity[minetest.get_content_id(stack:get_name())]
+            if A then
+                radiation = radiation + A * stack:get_count()
             end
         end
 

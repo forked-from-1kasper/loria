@@ -18,8 +18,8 @@ function radiation(player)
         "Radiation: %.3f CU/h",
         meta:get_float("radiation")
     ) .. "\n" .. string.format(
-        "Received dose: %.3f CU",
-        meta:get_float("received_dose")
+        "Received dose: %.3f mCU",
+        meta:get_float("received_dose") * 1000
     )
 end
 
