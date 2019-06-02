@@ -109,12 +109,21 @@ for i = 1, truncus_types do
 end
 
 minetest.register_ore({
-    ore_type       = "scatter",
+    ore_type       = "blob",
     ore            = "default:uranyl_acetate",
     wherein        = "default:cinnabar",
-    clust_scarcity = 8 * 8 * 8,
-    clust_num_ores = 8,
-    clust_size     = 3,
-    y_min          = -30,
-    y_max          = 45,
+    clust_scarcity = 32 * 32 * 32,
+    clust_num_ores = 10,
+    clust_size     = 4,
+    y_min          = -60,
+    y_max          = 60,
+    noise_threshold = 0.0,
+    noise_params    = {
+        offset = 0.5,
+        scale = 0.2,
+        spread = { x = 4, y = 4, z = 4 },
+        seed = 17676,
+        octaves = 1,
+        persist = 0.0
+    }
 })

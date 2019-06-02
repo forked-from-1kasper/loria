@@ -23,15 +23,44 @@ minetest.register_craftitem("default:drill", {
     inventory_image = "default_drill.png",
     wield_image = "default_drill.png",
     tool_capabilities = {
+        full_punch_interval = 1.0,
         max_drop_level = 1,
         groupcaps = {
             cracky = {
                 times = { [1] = 2.00, [2] = 1.20, [3] = 0.80 },
-                uses = 50,
-                maxlevel = 1
+                uses = 10
+            },
+            crumbly = {
+                times = { [1] = 0.50, [2] = 0.30, [3] = 0.10 },
+                uses = 20
             },
             oddly_breakable_by_hand = {
                 times = { [1] = 0.50, [2] = 0.30, [3] = 0.10 }
+            }
+        },
+        damage_groups = { fleshy = 2 }
+    }
+})
+
+minetest.register_craftitem("default:super_drill", {
+    description = "Super drill",
+    stack_max = 1,
+    liquids_pointable = false,
+    range = 5.0,
+    inventory_image = "default_super_drill.png",
+    wield_image = "default_super_drill.png",
+    tool_capabilities = {
+        full_punch_interval = 1.0,
+        max_drop_level = 1,
+        groupcaps = {
+            cracky = {
+                times = { [1] = 0.05, [2] = 0.05, [3] = 0.05 }
+            },
+            crumbly = {
+                times = { [1] = 0.05, [2] = 0.05, [3] = 0.05 }
+            },
+            oddly_breakable_by_hand = {
+                times = { [1] = 0.05, [2] = 0.05, [3] = 0.05 }
             }
         },
         damage_groups = { fleshy = 2 }

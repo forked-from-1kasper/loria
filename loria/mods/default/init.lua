@@ -23,6 +23,7 @@ minetest.register_on_joinplayer(function(player)
         alignment = "right",
         offset = { x = 150, y = 0 }
     })
+    player:set_clouds({ density = 0 })
 
     minetest.chat_send_player(name, "Welcome to Loria!")
 end)
@@ -52,8 +53,6 @@ minetest.register_on_respawnplayer(function(player)
     local meta = player:get_meta()
     meta:set_int("oxygen", OXYGEN_MAX)
     meta:set_float("received_dose", 0)
-
-    send_start_items(player)
 end)
 
 MAX_HEIGHT = 31000

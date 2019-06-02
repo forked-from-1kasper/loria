@@ -8,21 +8,21 @@ minetest.register_node("default:cinnabar", {
 minetest.register_node("default:copper_sulfate", {
     description = "Copper (II) sulfate pentahydrate (CuSO₄·5H₂O)",
     tiles = { "default_copper_sulfate.png" },
-    groups = { oddly_breakable_by_hand = 1 },
+    groups = { crumbly = 2 },
     drop = 'default:copper_sulfate'
 })
 
 minetest.register_node("default:lead_sulfate", {
     description = "Lead (II) sulfate (PbSO₄)",
     tiles = { "default_lead_sulfate.png" },
-    groups = { oddly_breakable_by_hand = 1 },
+    groups = { crumbly = 2 },
     drop = 'default:lead_sulfate'
 })
 
 minetest.register_node("default:cobalt_blue", {
     description = "Cobalt blue (CoAl₂O₄)",
     tiles = { "default_cobalt_blue.png" },
-    groups = { oddly_breakable_by_hand = 1 },
+    groups = { crumbly = 2 },
     drop = 'default:cobalt_blue'
 })
 
@@ -37,14 +37,14 @@ minetest.register_node("default:uranyl_acetate", {
 minetest.register_node("default:mercury_oxide", {
     description = "Mercury (II) oxide (HgO)",
     tiles = { "default_mercury_oxide.png" },
-    groups = { oddly_breakable_by_hand = 1 },
+    groups = { crumbly = 2 },
     drop = 'default:mercury_oxide'
 })
 
 minetest.register_node("default:red_mercury_oxide", {
     description = "Mercury (II) oxide (HgO, red)",
     tiles = { "default_red_mercury_oxide.png" },
-    groups = { oddly_breakable_by_hand = 1 },
+    groups = { crumbly = 2 },
     drop = 'default:red_mercury_oxide'
 })
 
@@ -59,7 +59,7 @@ minetest.register_node("default:viridi_petasum_body", {
     description = "Viridi petasum body",
     light_source = 3,
     tiles = { "default_viridi_petasum_body.png" },
-    groups = { oddly_breakable_by_hand = 1, choppy = 2, leaves = 1 },
+    groups = { crumbly = 1, choppy = 2, leaves = 1 },
     drop = 'default:viridi_petasum_body'
 })
 
@@ -73,7 +73,7 @@ minetest.register_node("default:rete_stem", {
 minetest.register_node("default:rete_body", {
     description = "Rete body",
     tiles = { "default_rete_body.png" },
-    groups = { oddly_breakable_by_hand = 1, choppy = 2, leaves = 1 },
+    groups = { crumbly = 1, choppy = 2, leaves = 1 },
     drop = 'default:rete_body'
 })
 
