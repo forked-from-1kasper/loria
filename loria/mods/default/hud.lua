@@ -4,7 +4,7 @@ end
 
 function oxygen(player)
     local meta = player:get_meta()
-    return "Oxygen: "..meta:get_int("oxygen").."/"..OXYGEN_MAX
+    return "Oxygen: "..(meta:get_int("oxygen") - 1).."/"..(OXYGEN_MAX - 1)
 end
 
 function gravity(player)

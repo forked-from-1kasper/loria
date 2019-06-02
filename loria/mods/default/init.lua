@@ -39,7 +39,7 @@ minetest.register_globalstep(function(dtime)
     end
 end)
 
-OXYGEN_MAX = 255
+OXYGEN_MAX = 256
 OXYGEN_DECREASE_TIME = 5
 
 local timer = 0
@@ -56,10 +56,14 @@ minetest.register_globalstep(function(dtime)
 
         if timer > OXYGEN_DECREASE_TIME then
             timer = 0
-            if oxygen > 0 then
-                oxygen = oxygen - 1
+            if oxygen > 1 then
+                oxygen = oxygen - 50
             else
                 player:set_hp(player:get_hp() - 1)
+            end
+
+            if oxygen < 1 then
+                oxygen = 1
             end
         end
         if oxygen > OXYGEN_MAX then
