@@ -15,6 +15,29 @@ minetest.register_item(":", {
     }
 })
 
+minetest.register_craftitem("default:drill", {
+    description = "Drill",
+    stack_max = 1,
+    liquids_pointable = false,
+    range = 5.0,
+    inventory_image = "default_drill.png",
+    wield_image = "default_drill.png",
+    tool_capabilities = {
+        max_drop_level = 1,
+        groupcaps = {
+            cracky = {
+                times = { [1] = 2.00, [2] = 1.20, [3] = 0.80 },
+                uses = 50,
+                maxlevel = 1
+            },
+            oddly_breakable_by_hand = {
+                times = { [1] = 0.50, [2] = 0.30, [3] = 0.10 }
+            }
+        },
+        damage_groups = { fleshy = 2 }
+    }
+})
+
 minetest.register_craftitem("default:empty_balloon", {
     inventory_image = "default_empty_balloon.png",
     description = "Empty balloon",

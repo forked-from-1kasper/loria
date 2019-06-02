@@ -28,7 +28,8 @@ minetest.register_node("default:cobalt_blue", {
 
 minetest.register_node("default:uranyl_acetate", {
     description = "Uranyl acetate (UO₂(CH₃COO)₂·2H₂O)",
-    tiles = { "default_uranyl_acetate.png" },
+    tiles = { "default_cinnabar.png" },
+    overlay_tiles = { "default_uranyl_acetate.png" },
     groups = { cracky = 1 },
     drop = 'default:uranyl_acetate'
 })
@@ -144,40 +145,6 @@ for name, features in pairs(small_mushrooms) do
 
     minetest.register_node("default:" .. name, info)
 end
-
---minetest.register_node("default:pusilli", {
---    description = "Pusilli mushroom",
---    drawtype = "plantlike",
---    tiles = { "default_pusilli.png" },
---    wield_image = "default_pusilli.png",
---    inventory_image = "default_pusilli.png",
---    paramtype = "light",
---    walkable = false,
---    groups = { snappy = 3, attached_node = 1 }
---})
-
---minetest.register_node("default:rosea", {
---    description = "Rosea mushroom",
---    drawtype = "plantlike",
---    tiles = { "default_rosea.png" },
---    wield_image = "default_rosea.png",
---    inventory_image = "default_rosea.png",
---    paramtype = "light",
---    walkable = false,
---    groups = { snappy = 3, attached_node = 1 }
---})
-
---minetest.register_node("default:purpura", {
---    description = "Purpura mushroom",
---    light_source = 5,
---    drawtype = "plantlike",
---    tiles = { "default_purpura.png" },
---    wield_image = "default_purpura.png",
---    inventory_image = "default_purpura.png",
---    paramtype = "light",
---    walkable = false,
---    groups = { snappy = 3, attached_node = 1 }
---})
 
 minetest.register_node("default:mercury_flowing", {
     description = "Mercury (flowing)",

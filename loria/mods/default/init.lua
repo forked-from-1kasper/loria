@@ -26,9 +26,24 @@ minetest.register_on_joinplayer(function(player)
     minetest.chat_send_player(name, "Welcome to Loria!")
 end)
 
+START_ITEMS = { "default:drill", "default:oxygen_balloon" }
+
+function send_start_items(player)
+    local name = player:get_player_name()
+    local inv = minetest.get_inventory({ type = "player", name = name })
+    for _, name in ipairs(START_ITEMS) do
+        inv:remove_item("main", { name = name, count = 99 })
+        inv:add_item("main", { name = name, count = 1 })
+    end
+end
+
+minetest.register_on_newplayer(send_start_items)
+
 minetest.register_on_respawnplayer(function(player)
     local meta = player:get_meta()
     meta:set_int("oxygen", OXYGEN_MAX)
+
+    send_start_items(player)
 end)
 
 MAX_HEIGHT = 31000

@@ -111,7 +111,7 @@ end
 minetest.register_ore({
     ore_type       = "scatter",
     ore            = "default:uranyl_acetate",
-    wherein        = { "default:cobalt_blue", "default:cinnabar" },
+    wherein        = "default:cinnabar",
     clust_scarcity = 8 * 8 * 8,
     clust_num_ores = 8,
     clust_size     = 3,
