@@ -7,7 +7,7 @@ RADIATION_LIMIT = 16
 
 DOSE_DECREASE_TIME = 1
 DOSE_DAMAGE_LIMIT = 1
-DOSE_DECREASE_VALUE = 0.001
+--DOSE_DECREASE_VALUE = 0.001
 
 local radiation_timer = 0
 minetest.register_globalstep(function(dtime)
@@ -20,8 +20,7 @@ minetest.register_globalstep(function(dtime)
             local radiation = meta:get_float("radiation")
 
             local dose = meta:get_float("received_dose") +
-                (radiation / 3600) * DOSE_DECREASE_TIME -
-                DOSE_DECREASE_VALUE
+                (radiation / 3600) * DOSE_DECREASE_TIME
 
             if dose < 0 then dose = 0 end
 
