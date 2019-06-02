@@ -6,7 +6,7 @@ minetest.register_node("default:cinnabar", {
 })
 
 minetest.register_node("default:copper_sulfate", {
-    description = "Copper (II) sulfate (CuSO₄)",
+    description = "Copper (II) sulfate pentahydrate (CuSO₄·5H₂O)",
     tiles = { "default_copper_sulfate.png" },
     groups = { oddly_breakable_by_hand = 1 },
     drop = 'default:copper_sulfate'
