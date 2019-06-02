@@ -83,10 +83,12 @@ minetest.register_globalstep(function(dtime)
         end
 
         local inv = player:get_inventory()
-        for _, stack in ipairs(inv:get_list("main")) do
-            local A = activity[minetest.get_content_id(stack:get_name())]
-            if A then
-                radiation = radiation + A * stack:get_count()
+        for _, list in pairs(inv:get_lists()) do
+            for _, stack in ipairs(list) do
+                local A = activity[minetest.get_content_id(stack:get_name())]
+                if A then
+                    radiation = radiation + A * stack:get_count()
+                end
             end
         end
 
