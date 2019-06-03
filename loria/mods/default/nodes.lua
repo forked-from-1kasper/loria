@@ -98,6 +98,17 @@ truncus_names = {
     "purpura"
 }
 
+minetest.register_node("default:naga", {
+    description = "Naga",
+    drawtype = "plantlike",
+    tiles = { "default_naga.png" },
+    wield_image = "default_naga.png",
+    inventory_image = "default_naga.png",
+    paramtype = "light",
+    walkable = false,
+    groups = { snappy = 3, attached_node = 1 }
+})
+
 truncus_types = 3
 for i = 1, truncus_types do
     minetest.register_node("default:truncus_" .. i, {

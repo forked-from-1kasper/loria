@@ -7,6 +7,10 @@ local c_viridi_body = minetest.get_content_id("default:viridi_petasum_body")
 local c_rete_stem = minetest.get_content_id("default:rete_stem")
 local c_rete_body = minetest.get_content_id("default:rete_body")
 
+local c_ammonium_manganese_pyrophosphate =
+    minetest.get_content_id("default:ammonium_manganese_pyrophosphate")
+local c_naga = minetest.get_content_id("default:naga")
+
 viridi_petasum = {
     min_height = 7,
     max_height = 30,
@@ -72,9 +76,32 @@ function generate_rete(x, y, z, g, data, area)
     end
 end
 
+function generate_columnae(x, y, z, g, data, area)
+    while data[area:index(x, y, z)] ~= c_air do
+        y = y - 1
+        if not area:contains(x, y, z) then
+            return
+        end
+    end
+
+    local height = g:next(2, 10)
+    for k = 0, height do
+        if not area:contains(x, y - k, z) then
+            return
+        end
+
+        local i = area:index(x, y - k, z)
+        if data[i] ~= c_air then
+            return
+        end
+        data[i] = c_naga
+    end
+end
+
 mushrooms = {
     [c_copper_sulfate] = { generate_viridi_petasum, generate_rete },
-    [c_viridi_body] = { generate_viridi_petasum }
+    [c_viridi_body] = { generate_viridi_petasum },
+    [c_ammonium_manganese_pyrophosphate] = { generate_columnae }
 }
 
 minetest.register_on_generated(function(minp0, maxp0, seed)

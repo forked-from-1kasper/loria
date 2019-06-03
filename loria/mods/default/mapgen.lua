@@ -61,7 +61,7 @@ minetest.register_biome({
     depth_top = 5,
     node_stone = "default:potassium_permanganate_source",
 
-    y_min = -3,
+    y_min = -5,
     y_max = 0,
     heat_point = 40,
     humidity_point = 50,
