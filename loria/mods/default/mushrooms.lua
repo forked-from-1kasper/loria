@@ -17,6 +17,9 @@ local c_potassium_permanganate_source =
 local c_potassium_permanganate_flowing =
     minetest.get_content_id("default:potassium_permanganate_flowing")
 
+local c_turris_stem = minetest.get_content_id("default:turris_stem")
+local c_turris_body = minetest.get_content_id("default:turris_body")
+
 viridi_petasum = {
     min_height = 7,
     max_height = 30,
@@ -137,10 +140,38 @@ function generate_column(x, y, z, g, data, area)
     end
 end
 
+function generate_turris(x, y, z, g, data, area)
+    local height = g:next(9, 15)
+    local radius = g:next(3, 5)
+
+    if not (area:contains(x - radius, y, z - radius)) or
+       not (area:contains(x + radius, y + height, z + radius)) then
+        return
+    end
+
+    for k = 1, height do
+        data[area:index(x, y + k, z)] = c_turris_stem
+    end
+
+    for k = 0, radius do
+        local h = y + height - k
+        for delta = -k, k do
+            data[area:index(x + delta, h, z + k)] = c_turris_body
+            data[area:index(x + delta, h, z - k)] = c_turris_body
+            data[area:index(x + k, h, z + delta)] = c_turris_body
+            data[area:index(x - k, h, z + delta)] = c_turris_body
+        end
+    end
+end
+
 mushrooms = {
     [c_copper_sulfate] = { generate_viridi_petasum, generate_rete },
     [c_viridi_body] = { generate_viridi_petasum },
-    [c_ammonium_manganese_pyrophosphate] = { generate_columnae, generate_column }
+    [c_ammonium_manganese_pyrophosphate] = {
+        generate_columnae,
+        generate_column,
+        generate_turris
+    }
 }
 
 minetest.register_on_generated(function(minp0, maxp0, seed)

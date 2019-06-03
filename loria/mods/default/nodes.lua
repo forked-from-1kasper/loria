@@ -78,6 +78,20 @@ minetest.register_node("default:viridi_petasum_body", {
     drop = 'default:viridi_petasum_body'
 })
 
+minetest.register_node("default:turris_stem", {
+    description = "Turris stem",
+    tiles = { "default_turris_stem.png" },
+    groups = { choppy = 2 },
+    drop = 'default:turris_stem'
+})
+
+minetest.register_node("default:turris_body", {
+    description = "Turris body",
+    tiles = { "default_turris_body.png" },
+    groups = { choppy = 2 },
+    drop = 'default:turris_body'
+})
+
 minetest.register_node("default:rete_stem", {
     description = "Rete stem",
     tiles = { "default_rete_stem.png" },
