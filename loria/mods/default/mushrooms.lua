@@ -36,6 +36,13 @@ columnae = {
     max_height = 20
 }
 
+turris = {
+    min_height = 9,
+    max_height = 15,
+    min_radius = 3,
+    max_radius = 5
+}
+
 function generate_viridi_petasum(x, y, z, g, data, area)
     local height = g:next(viridi_petasum.min_height, viridi_petasum.max_height)
     local radius = g:next(viridi_petasum.min_radius, math.floor(height / 2))
@@ -141,8 +148,8 @@ function generate_column(x, y, z, g, data, area)
 end
 
 function generate_turris(x, y, z, g, data, area)
-    local height = g:next(9, 15)
-    local radius = g:next(3, 5)
+    local height = g:next(turris.min_height, turris.max_height)
+    local radius = g:next(turris.min_radius, turris.max_radius)
 
     if not (area:contains(x - radius, y, z - radius)) or
        not (area:contains(x + radius, y + height, z + radius)) then
