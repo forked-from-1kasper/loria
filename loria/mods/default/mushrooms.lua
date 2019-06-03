@@ -29,8 +29,8 @@ rete = {
 }
 
 columnae = {
-    min_height = 2,
-    max_height = 10
+    min_height = 6,
+    max_height = 20
 }
 
 function generate_viridi_petasum(x, y, z, g, data, area)

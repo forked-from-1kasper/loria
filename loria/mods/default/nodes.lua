@@ -106,6 +106,7 @@ minetest.register_node("default:naga", {
     inventory_image = "default_naga.png",
     paramtype = "light",
     walkable = false,
+    light_source = 5,
     groups = { snappy = 3, attached_node = 1 }
 })
 
@@ -211,9 +212,9 @@ minetest.register_node("default:mercury_flowing", {
     liquidtype = "flowing",
     liquid_alternative_flowing = "default:mercury_flowing",
     liquid_alternative_source = "default:mercury_source",
-    liquid_viscosity = 7,
+    liquid_viscosity = 7,   
     post_effect_color = { a = 200, r = 150, g = 150, b = 150 },
-    groups = {water = 3, liquid = 3},
+    groups = { water = 3, liquid = 3 },
 })
 
 minetest.register_node("default:mercury_source", {
@@ -256,7 +257,7 @@ minetest.register_node("default:mercury_source", {
     liquid_alternative_source = "default:mercury_source",
     liquid_viscosity = 7,
     post_effect_color = {a = 250, r = 150, g = 150, b = 150},
-    groups = {water = 3, liquid = 3},
+    groups = { water = 3, liquid = 3 },
 })
 
 minetest.register_node("default:potassium_permanganate_flowing", {
