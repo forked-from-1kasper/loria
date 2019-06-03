@@ -11,6 +11,12 @@ local c_ammonium_manganese_pyrophosphate =
     minetest.get_content_id("default:ammonium_manganese_pyrophosphate")
 local c_naga = minetest.get_content_id("default:naga")
 
+local c_potassium_permanganate_source =
+    minetest.get_content_id("default:potassium_permanganate_source")
+
+local c_potassium_permanganate_flowing =
+    minetest.get_content_id("default:potassium_permanganate_flowing")
+
 viridi_petasum = {
     min_height = 7,
     max_height = 30,
@@ -20,6 +26,11 @@ viridi_petasum = {
 rete = {
     min_height = 5,
     max_height = 9
+}
+
+columnae = {
+    min_height = 2,
+    max_height = 10
 }
 
 function generate_viridi_petasum(x, y, z, g, data, area)
@@ -84,7 +95,7 @@ function generate_columnae(x, y, z, g, data, area)
         end
     end
 
-    local height = g:next(2, 10)
+    local height = g:next(columnae.min_height, columnae.max_height)
     for k = 0, height do
         if not area:contains(x, y - k, z) then
             return
@@ -98,10 +109,38 @@ function generate_columnae(x, y, z, g, data, area)
     end
 end
 
+function generate_column(x, y, z, g, data, area)
+    while data[area:index(x, y, z)] ~= c_air do
+        y = y - 1
+        if not area:contains(x, y, z) then
+            return
+        end
+    end
+
+    local i = area:index(x, y, z)
+    while data[i] == c_air or
+          data[i] == c_potassium_permanganate_source or
+          data[i] == c_potassium_permanganate_flowing do
+
+        data[i + 1] = c_ammonium_manganese_pyrophosphate
+        data[i] = c_ammonium_manganese_pyrophosphate
+
+        y = y - 1
+        x = x + g:next(-1, 1)
+        z = z + g:next(-1, 1)
+
+        if not area:contains(x, y, z) then
+            return
+        end
+
+        i = area:index(x, y, z)
+    end
+end
+
 mushrooms = {
     [c_copper_sulfate] = { generate_viridi_petasum, generate_rete },
     [c_viridi_body] = { generate_viridi_petasum },
-    [c_ammonium_manganese_pyrophosphate] = { generate_columnae }
+    [c_ammonium_manganese_pyrophosphate] = { generate_columnae, generate_column }
 }
 
 minetest.register_on_generated(function(minp0, maxp0, seed)
