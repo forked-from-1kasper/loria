@@ -12,7 +12,8 @@ fuel_list = {
 crafts = {
     {
         input = {
-            { name = "default:copper_sulfate", count = 1 }
+            { name = "default:copper_sulfate", count = 1 },
+            { name = "default:bucket_empty", count = 5 }
         },
         output = {
             { name = "default:copper_sulfate_pure", count = 1 },
@@ -140,6 +141,7 @@ minetest.register_node("default:furnace_active", {
             }
         }
     },
+    light_source = 10,
     paramtype2 = "facedir",
     groups = { cracky = 2 },
 
