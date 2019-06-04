@@ -3,6 +3,7 @@ gases_list = {
 }
 
 fuel_list = {
+    ["default:cinnabar"] = 45,
     ["default:viridi_petasum_body"] = 35,
     ["default:turris_body"] = 25,
     ["default:rete_body"] = 15,

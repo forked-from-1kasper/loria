@@ -519,3 +519,13 @@ minetest.register_craft({
         "default:bucket_mercury"
     },
 })
+
+minetest.register_craft({
+    type = "shapeless",
+    output = "default:glow_stick",
+    recipe = {
+        "default:naga",
+        "default:naga",
+        "default:bucket_mercury"
+    },
+})
