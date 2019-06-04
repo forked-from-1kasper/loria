@@ -3,6 +3,7 @@ local c_copper_sulfate = minetest.get_content_id("default:copper_sulfate")
 
 local c_viridi_stem = minetest.get_content_id("default:viridi_petasum_stem")
 local c_viridi_body = minetest.get_content_id("default:viridi_petasum_body")
+local c_vastatorem = minetest.get_content_id("default:vastatorem")
 
 local c_rete_stem = minetest.get_content_id("default:rete_stem")
 local c_rete_body = minetest.get_content_id("default:rete_body")

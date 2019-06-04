@@ -91,7 +91,7 @@ for i = 1, pars_types do
     })
 end
 
-for _, name in ipairs({"pusilli", "caput"}) do
+for _, name in ipairs({ "pusilli", "caput", "viriditas", "quercu", "conc" }) do
     minetest.register_decoration({
         deco_type = "simple",
         place_on = {
@@ -100,20 +100,45 @@ for _, name in ipairs({"pusilli", "caput"}) do
             "default:mercury_oxide"
         },
         sidelen = 16,
-        fill_ratio = 0.05,
+        fill_ratio = 0.01,
         biomes = "default:redland",
         decoration = "default:" .. name,
         height = 1
     })
 end
 
-for _, name in ipairs({"rosea", "picea", "purpura"}) do
+for _, name in ipairs({ "rosea", "picea", "purpura" }) do
     minetest.register_decoration({
         deco_type = "simple",
         place_on = "default:copper_sulfate",
         sidelen = 16,
         fill_ratio = 0.05,
         biomes = "default:azure",
+        decoration = "default:" .. name,
+        height = 1
+    })
+end
+
+for _, name in ipairs({ "rami", "spears" }) do
+    minetest.register_decoration({
+        deco_type = "simple",
+        place_on = "default:ammonium_manganese_pyrophosphate",
+        sidelen = 16,
+        fill_ratio = 0.05,
+        biomes = "default:purple_swamp",
+        decoration = "default:" .. name,
+        height = 1,
+        height_max = 4
+    })
+end
+
+for _, name in ipairs({ "periculum", "grebe", "secreta", "pulchram" }) do
+    minetest.register_decoration({
+        deco_type = "simple",
+        place_on = "default:ammonium_manganese_pyrophosphate",
+        sidelen = 16,
+        fill_ratio = 0.01,
+        biomes = "default:purple_swamp",
         decoration = "default:" .. name,
         height = 1
     })

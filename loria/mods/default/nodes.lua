@@ -1,3 +1,9 @@
+minetest.register_node("default:test", {
+    description = "For tests only",
+    tiles = { "default_test.png" },
+    drop = 'default:test'
+})
+
 minetest.register_node("default:ammonium_manganese_pyrophosphate", {
     description = "Ammonium manganese (III) pyrophosphate",
     tiles = { "default_ammonium_manganese_pyrophosphate.png" },
@@ -112,18 +118,6 @@ truncus_names = {
     "purpura"
 }
 
-minetest.register_node("default:naga", {
-    description = "Naga",
-    drawtype = "plantlike",
-    tiles = { "default_naga.png" },
-    wield_image = "default_naga.png",
-    inventory_image = "default_naga.png",
-    paramtype = "light",
-    walkable = false,
-    light_source = 5,
-    groups = { snappy = 3, attached_node = 1 }
-})
-
 truncus_types = 3
 for i = 1, truncus_types do
     minetest.register_node("default:truncus_" .. i, {
@@ -160,12 +154,44 @@ for i = 1, pars_types do
     })
 end
 
+for _, name in ipairs({ "rami", "spears", "viriditas" }) do
+    minetest.register_node("default:" .. name, {
+        description = name:gsub("^%l", string.upper),
+        drawtype = "plantlike",
+        tiles = { "default_" .. name .. ".png" },
+        wield_image = "default_" .. name .. ".png",
+        inventory_image = "default_" .. name .. ".png",
+        paramtype = "light",
+        walkable = false,
+        groups = { snappy = 3, attached_node = 1 }
+    })
+end
+
+minetest.register_node("default:naga", {
+    description = "Naga",
+    drawtype = "plantlike",
+    tiles = { "default_naga.png" },
+    wield_image = "default_naga.png",
+    inventory_image = "default_naga.png",
+    paramtype = "light",
+    walkable = false,
+    light_source = 5,
+    groups = { snappy = 3, attached_node = 1 }
+})
+
 small_mushrooms = {
     ["pusilli"] = {},
     ["rosea"] = {},
     ["purpura"] = { light_source = 5 },
     ["picea"] = {},
-    ["caput"] = {}
+    ["caput"] = {},
+    ["periculum"] = { light_source = 3 },
+    ["vastatorem"] = { light_source = 8 },
+    ["quercu"] = {},
+    ["grebe"] = {},
+    ["secreta"] = {},
+    ["pulchram"] = {},
+    ["conc"] = {}
 }
 
 for name, features in pairs(small_mushrooms) do

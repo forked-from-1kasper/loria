@@ -3,8 +3,8 @@ dofile(minetest.get_modpath("default").."/nodes.lua")
 dofile(minetest.get_modpath("default").."/items.lua")
 dofile(minetest.get_modpath("default").."/mapgen.lua")
 dofile(minetest.get_modpath("default").."/mushrooms.lua")
-dofile(minetest.get_modpath("default").."/hud.lua")
 dofile(minetest.get_modpath("default").."/radiation.lua")
+dofile(minetest.get_modpath("default").."/hud.lua")
 
 oxygen_hud = {}
 minetest.register_on_joinplayer(function(player)
