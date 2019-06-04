@@ -18,6 +18,13 @@ minetest.register_node("default:cinnabar", {
     drop = 'default:cinnabar'
 })
 
+minetest.register_node("default:copper_sulfate_pure", {
+    description = "Copper (II) sulfate (CuSO₄)",
+    tiles = { "default_copper_sulfate_pure.png" },
+    groups = { crumbly = 2 },
+    drop = 'default:copper_sulfate_pure'
+})
+
 minetest.register_node("default:copper_sulfate", {
     description = "Copper (II) sulfate pentahydrate (CuSO₄·5H₂O)",
     tiles = { "default_copper_sulfate.png" },
@@ -210,6 +217,93 @@ for name, features in pairs(small_mushrooms) do
 
     minetest.register_node("default:" .. name, info)
 end
+
+minetest.register_node("default:water_source", {
+    description = "Water Source",
+    drawtype = "liquid",
+    tiles = {
+        {
+            name = "default_water_source_animated.png",
+            backface_culling = false,
+            animation = {
+                type = "vertical_frames",
+                aspect_w = 16,
+                aspect_h = 16,
+                length = 2.0,
+            },
+        },
+        {
+            name = "default_water_source_animated.png",
+            backface_culling = true,
+            animation = {
+                type = "vertical_frames",
+                aspect_w = 16,
+                aspect_h = 16,
+                length = 2.0,
+            },
+        },
+    },
+    alpha = 160,
+    paramtype = "light",
+    walkable = false,
+    pointable = false,
+    diggable = false,
+    buildable_to = true,
+    is_ground_content = false,
+    drop = "",
+    drowning = 1,
+    liquidtype = "source",
+    liquid_alternative_flowing = "default:water_flowing",
+    liquid_alternative_source = "default:water_source",
+    liquid_viscosity = 1,
+    post_effect_color = {a = 103, r = 30, g = 60, b = 90},
+    groups = {water = 3, liquid = 3, cools_lava = 1},
+})
+
+minetest.register_node("default:water_flowing", {
+    description = "Flowing Water",
+    drawtype = "flowingliquid",
+    tiles = {"default_water.png"},
+    special_tiles = {
+        {
+            name = "default_water_flowing_animated.png",
+            backface_culling = false,
+            animation = {
+                type = "vertical_frames",
+                aspect_w = 16,
+                aspect_h = 16,
+                length = 0.8,
+            },
+        },
+        {
+            name = "default_water_flowing_animated.png",
+            backface_culling = true,
+            animation = {
+                type = "vertical_frames",
+                aspect_w = 16,
+                aspect_h = 16,
+                length = 0.8,
+            },
+        },
+    },
+    alpha = 160,
+    paramtype = "light",
+    paramtype2 = "flowingliquid",
+    walkable = false,
+    pointable = false,
+    diggable = false,
+    buildable_to = true,
+    is_ground_content = false,
+    drop = "",
+    drowning = 1,
+    liquidtype = "flowing",
+    liquid_alternative_flowing = "default:water_flowing",
+    liquid_alternative_source = "default:water_source",
+    liquid_viscosity = 1,
+    post_effect_color = { a = 103, r = 30, g = 60, b = 90 },
+    groups = { water = 3, liquid = 3, not_in_creative_inventory = 1,
+               cools_lava = 1 },
+})
 
 minetest.register_node("default:mercury_flowing", {
     description = "Mercury (flowing)",

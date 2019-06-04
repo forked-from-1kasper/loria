@@ -15,7 +15,7 @@ minetest.register_item(":", {
     }
 })
 
-minetest.register_craftitem("default:drill", {
+minetest.register_tool("default:drill", {
     description = "Drill",
     stack_max = 1,
     liquids_pointable = false,
@@ -67,19 +67,34 @@ minetest.register_craftitem("default:super_drill", {
     }
 })
 
-minetest.register_craftitem("default:empty_balloon", {
+minetest.register_tool("default:empty_balloon", {
     inventory_image = "default_empty_balloon.png",
     description = "Empty balloon",
     stack_max = 1
 })
 
-minetest.register_craftitem("default:oxygen_balloon", {
+balloon_use = 100
+balloon_coeff = 128
+minetest.register_tool("default:oxygen_balloon", {
     inventory_image = "default_oxygen_balloon.png",
     description = "Oxygen balloon",
     stack_max = 1,
     on_use = function(itemstack, player, pointed_thing)
-        player:set_attribute("oxygen", tonumber(player:get_attribute("oxygen")) + 100)
-        return { name = "default:empty_balloon" }
+        local meta = player:get_meta()
+
+        local current_wear = itemstack:get_wear()
+        local oxygen = math.floor((65535 - current_wear) / balloon_coeff)
+
+        local current_oxygen = meta:get_int("oxygen")
+
+        if oxygen <= balloon_use then
+            meta:set_int("oxygen", current_oxygen + oxygen)
+            return { name = "default:empty_balloon", wear = 0 }
+        else
+            local wear = current_wear + balloon_use * balloon_coeff
+            meta:set_int("oxygen", current_oxygen + balloon_use)
+            return { name = "default:oxygen_balloon", wear = wear }
+        end
     end
 })
 
@@ -149,4 +164,12 @@ bucket.register_liquid(
     "default:bucket_potassium_permanganate",
     "bucket_potassium_permanganate.png",
     "Bucket with potassium permanganate"
+)
+
+bucket.register_liquid(
+    "default:water_source",
+    "default:water_flowing",
+    "default:bucket_water",
+    "bucket_water.png",
+    "Bucket with water"
 )
