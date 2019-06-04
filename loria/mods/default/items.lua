@@ -15,6 +15,11 @@ minetest.register_item(":", {
     }
 })
 
+minetest.register_craftitem("default:broken_drill", {
+    description = "Broken drill",
+    inventory_image = "default_broken_drill.png",
+})
+
 minetest.register_tool("default:drill", {
     description = "Drill",
     stack_max = 1,
@@ -28,18 +33,26 @@ minetest.register_tool("default:drill", {
         groupcaps = {
             cracky = {
                 times = { [1] = 2.00, [2] = 1.20, [3] = 0.80 },
-                uses = 10
+                uses = 80
             },
             crumbly = {
                 times = { [1] = 0.50, [2] = 0.30, [3] = 0.10 },
-                uses = 20
+                uses = 100
             },
             oddly_breakable_by_hand = {
                 times = { [1] = 0.50, [2] = 0.30, [3] = 0.10 }
             }
         },
         damage_groups = { fleshy = 2 }
-    }
+    },
+    after_use = function(itemstack, user, node, digparams)
+        if itemstack:get_wear() + digparams.wear >= 65535 then
+            return { name = "default:broken_drill", count = 1 }
+        else
+            itemstack:add_wear(digparams.wear)
+            return itemstack
+        end
+    end
 })
 
 minetest.register_craftitem("default:super_drill", {
