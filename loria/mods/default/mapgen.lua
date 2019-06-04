@@ -91,7 +91,7 @@ for i = 1, #pars_names do
     })
 end
 
-for _, name in ipairs({ "pusilli", "caput", "viriditas", "quercu", "conc" }) do
+for _, name in ipairs({ "pusilli", "caput", "quercu" }) do
     minetest.register_decoration({
         deco_type = "simple",
         place_on = {
@@ -132,7 +132,7 @@ for _, name in ipairs({ "rami", "spears" }) do
     })
 end
 
-for _, name in ipairs({ "periculum", "grebe", "secreta", "pulchram" }) do
+for _, name in ipairs({ "periculum", "grebe", "secreta" }) do
     minetest.register_decoration({
         deco_type = "simple",
         place_on = "default:ammonium_manganese_pyrophosphate",
@@ -179,3 +179,13 @@ for _, name in ipairs({"uranyl_acetate", "plutonium_fluoride"}) do
         }
     })
 end
+
+minetest.register_decoration({
+    deco_type = "simple",
+    place_on = { "default:lead_sulfate" },
+    sidelen = 16,
+    fill_ratio = 0.01,
+    biomes = "default:mercury_ocean",
+    decoration = "default:viriditas",
+    height = 1
+})

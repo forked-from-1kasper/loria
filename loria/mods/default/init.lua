@@ -1,4 +1,5 @@
 default = {}
+dofile(minetest.get_modpath("default").."/furnace.lua")
 dofile(minetest.get_modpath("default").."/nodes.lua")
 dofile(minetest.get_modpath("default").."/items.lua")
 dofile(minetest.get_modpath("default").."/mapgen.lua")
@@ -28,14 +29,17 @@ minetest.register_on_joinplayer(function(player)
     minetest.chat_send_player(name, "Welcome to Loria!")
 end)
 
-START_ITEMS = { "default:drill", "default:oxygen_balloon" }
+START_ITEMS = {
+    ["default:oxygen_balloon"] = 3,
+    ["default:furnace"] = 1
+}
 
 function send_start_items(player)
     local name = player:get_player_name()
     local inv = player:get_inventory()
-    for _, name in ipairs(START_ITEMS) do
-        inv:remove_item("main", { name = name, count = 99 })
-        inv:add_item("main", { name = name, count = 1 })
+    inv:add_item("main", { name = "default:drill", count = 1, wear = 1 })
+    for name, count in pairs(START_ITEMS) do
+        inv:add_item("main", { name = name, count = count })
     end
 end
 
