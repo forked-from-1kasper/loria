@@ -158,7 +158,7 @@ for i = 1, #truncus_names do
     })
 end
 
-for _, name in ipairs({"uranyl_acetate", "plutonium_fluoride"}) do
+for _, name in ipairs({ "uranyl_acetate", "plutonium_fluoride", "aluminium" }) do
     minetest.register_ore({
         ore_type       = "blob",
         ore            = "default:" .. name,

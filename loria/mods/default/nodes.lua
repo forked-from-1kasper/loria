@@ -54,6 +54,14 @@ minetest.register_node("default:plutonium_fluoride", {
     drop = 'default:plutonium_fluoride'
 })
 
+minetest.register_node("default:aluminium", {
+    description = "Aluminium",
+    tiles = { "default_cinnabar.png" },
+    overlay_tiles = { "default_aluminium.png" },
+    groups = { cracky = 1 },
+    drop = 'default:aluminium'
+})
+
 minetest.register_node("default:uranyl_acetate", {
     description = "Uranyl acetate (UO₂(CH₃COO)₂·2H₂O)",
     tiles = { "default_cinnabar.png" },

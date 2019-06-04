@@ -173,3 +173,8 @@ bucket.register_liquid(
     "bucket_water.png",
     "Bucket with water"
 )
+
+minetest.register_craftitem("default:aluminium_ingot", {
+    description = "Aluminium ingot",
+    inventory_image = "default_aluminium_ingot.png",
+})

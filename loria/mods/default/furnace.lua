@@ -20,6 +20,25 @@ crafts = {
             { name = "default:bucket_water", count = 5 }
         },
         time = 5
+    },
+    {
+        input = {
+            { name = "default:aluminium", count = 1 }
+        },
+        output = {
+            { name = "default:aluminium_ingot", count = 1 },
+            { name = "default:cinnabar", count = 1 }
+        },
+        time = 3
+    },
+    {
+        input = {
+            { name = "default:aluminium_ingot", count = 8 }
+        },
+        output = {
+            { name = "default:bucket_empty", count = 1 }
+        },
+        time = 8
     }
 }
 
