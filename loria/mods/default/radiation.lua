@@ -9,7 +9,7 @@ activity = {
     [c_periculum] = 0.5,
 }
 
-RADIATION_LIMIT = 16
+radiation_vect = vector.new(16, 16, 16)
 
 DOSE_DECREASE_TIME = 1
 DOSE_DAMAGE_LIMIT = 1
@@ -69,12 +69,8 @@ minetest.register_globalstep(function(dtime)
         local pos = player:get_pos()
 
         local minp, maxp = vm:read_from_map(
-            { x = pos.x - RADIATION_LIMIT,
-              y = pos.y - RADIATION_LIMIT,
-              z = pos.z - RADIATION_LIMIT },
-            { x = pos.x + RADIATION_LIMIT,
-              y = pos.y + RADIATION_LIMIT,
-              z = pos.z + RADIATION_LIMIT }
+            vector.subtract(pos, radiation_vect),
+            vector.add(pos, radiation_vect)
         )
 
         local area = VoxelArea:new({MinEdge = minp, MaxEdge = maxp})
@@ -87,7 +83,7 @@ minetest.register_globalstep(function(dtime)
             end
         end
 
-        local objs = minetest.get_objects_inside_radius(pos, RADIATION_LIMIT)
+        local objs = minetest.get_objects_inside_radius(pos, vector.length(radiation_vect))
         for _, obj in pairs(objs) do
             local name = player:get_player_name()
             local entity = obj:get_luaentity()

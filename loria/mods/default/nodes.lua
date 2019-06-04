@@ -118,10 +118,9 @@ truncus_names = {
     "purpura"
 }
 
-truncus_types = 3
-for i = 1, truncus_types do
+for i, name in ipairs(truncus_names) do
     minetest.register_node("default:truncus_" .. i, {
-        description = "Truncus " .. truncus_names[i],
+        description = "Truncus " .. name,
         drawtype = "plantlike",
         tiles = { "default_truncus_" .. i .. ".png" },
         wield_image = "default_truncus_" .. i .. ".png",
@@ -140,10 +139,9 @@ pars_names = {
     "lenis"
 }
 
-pars_types = 5
-for i = 1, pars_types do
+for i, name in ipairs(pars_names) do
     minetest.register_node("default:pars_" .. i, {
-        description = "Pars " .. pars_names[i],
+        description = "Pars " .. name,
         drawtype = "plantlike",
         tiles = { "default_pars_" .. i .. ".png" },
         wield_image = "default_pars_" .. i .. ".png",

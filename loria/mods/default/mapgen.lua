@@ -79,7 +79,7 @@ minetest.register_biome({
     humidity_point = 50,
 })
 
-for i = 1, pars_types do
+for i = 1, #pars_names do
     minetest.register_decoration({
         deco_type = "simple",
         place_on = "default:copper_sulfate",
@@ -145,7 +145,7 @@ for _, name in ipairs({ "periculum", "grebe", "secreta", "pulchram" }) do
 end
 
 max_truncus_height = 7
-for i = 1, truncus_types do
+for i = 1, #truncus_names do
     minetest.register_decoration({
         deco_type = "simple",
         place_on = "default:copper_sulfate",
