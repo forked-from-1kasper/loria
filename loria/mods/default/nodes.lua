@@ -478,3 +478,36 @@ minetest.register_node("default:potassium_permanganate_source", {
     post_effect_color = { a = 100, r = 160, g = 0, b = 130 },
     groups = { water = 3, liquid = 3 },
 })
+
+minetest.register_node("default:glow_stick", {
+    description = "Glow stick",
+    drawtype = "torchlike",
+    tiles = { "default_glow_stick_on_floor.png", "default_glow_stick_on_ceiling.png", "default_glow_stick.png" },
+    inventory_image = "default_glow_stick_on_floor.png",
+    wield_image = "default_glow_stick_on_floor.png",
+    paramtype = "light",
+    paramtype2 = "wallmounted",
+    sunlight_propagates = true,
+    is_ground_content = false,
+    walkable = false,
+    light_source = 14,
+    selection_box = {
+        type = "wallmounted",
+        wall_top = {-0.1, 0.5-0.6, -0.1, 0.1, 0.5, 0.1},
+        wall_bottom = {-0.1, -0.5, -0.1, 0.1, -0.5+0.6, 0.1},
+        wall_side = {-0.5, -0.3, -0.1, -0.5+0.3, 0.3, 0.1},
+    },
+    groups = { choppy=2, dig_immediate=3, attached_node=1 },
+    legacy_wallmounted = true,
+})
+
+minetest.register_craft({
+    type = "shapeless",
+    output = "default:glow_stick",
+    recipe = {
+        "default:purpura",
+        "default:purpura",
+        "default:purpura",
+        "default:bucket_mercury"
+    },
+})
