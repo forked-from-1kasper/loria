@@ -35,6 +35,10 @@ minetest.register_tool("default:drill", {
                 times = { [1] = 2.00, [2] = 1.20, [3] = 0.80 },
                 uses = 80
             },
+            choppy = {
+                times = { [1] = 1.00, [2] = 0.50, [3] = 0.20 },
+                uses = 160
+            },
             crumbly = {
                 times = { [1] = 0.50, [2] = 0.30, [3] = 0.10 },
                 uses = 100
