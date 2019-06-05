@@ -69,7 +69,7 @@ minetest.register_on_newplayer(function(player)
     init_inv(player)
 
     local meta = player:get_meta()
-    meta:set_int("oxygen", OXYGEN_MAX)
+    meta:set_int("oxygen", 0)
 
     meta:set_float("radiation", 0)
     meta:set_float("received_dose", 0)
