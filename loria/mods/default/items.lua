@@ -109,7 +109,7 @@ minetest.register_tool("default:hydrogen_balloon", {
 })
 
 balloon_use = 100
-balloon_coeff = 128
+balloon_coeff = 64
 minetest.register_tool("default:oxygen_balloon", {
     inventory_image = "default_oxygen_balloon.png",
     description = "Oxygen balloon",
