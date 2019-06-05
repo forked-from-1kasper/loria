@@ -1,5 +1,5 @@
 gases_list = {
-    ["default:oxygen_balloon"] = balloon_coeff * 10
+    ["default:oxygen_balloon"] = balloon_coeff * 3
 }
 
 fuel_list = {
@@ -68,7 +68,7 @@ crafts = {
     },
     {
         input = {
-            { name = "default:aluminium_ingot", count = 8 }
+            { name = "default:aluminium_ingot", count = 5 }
         },
         output = {
             { name = "default:bucket_empty", count = 1 }
@@ -126,6 +126,8 @@ function stop_furnace(pos)
     if (gases_list[gas] == nil) or (fuel_list[fuel] == nil) then
         minetest.swap_node(pos, { name = "default:furnace" })
         minetest.get_node_timer(pos):stop()
+
+        meta:set_string("formspec", inactive_formspec(0))
         meta:set_float("cooking", 0)
     end
 end
