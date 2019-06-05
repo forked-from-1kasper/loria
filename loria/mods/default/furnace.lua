@@ -13,6 +13,30 @@ fuel_list = {
 crafts = {
     {
         input = {
+            { name = "default:mercury_oxide", count = 2 },
+            { name = "default:empty_balloon", count = 1 },
+            { name = "default:bucket_empty", count = 2 }
+        },
+        output = {
+            { name = "default:oxygen_balloon", count = 1 },
+            { name = "default:bucket_mercury", count = 2 }
+        },
+        time = 3
+    },
+    {
+        input = {
+            { name = "default:red_mercury_oxide", count = 2 },
+            { name = "default:empty_balloon", count = 1 },
+            { name = "default:bucket_empty", count = 2 }
+        },
+        output = {
+            { name = "default:oxygen_balloon", count = 1 },
+            { name = "default:bucket_mercury", count = 2 }
+        },
+        time = 3
+    },
+    {
+        input = {
             { name = "default:copper_sulfate", count = 1 },
             { name = "default:bucket_empty", count = 5 }
         },
@@ -40,35 +64,32 @@ crafts = {
             { name = "default:bucket_empty", count = 1 }
         },
         time = 8
+    },
+    {
+        input = {
+            { name = "default:aluminium_ingot", count = 3 }
+        },
+        output = {
+            { name = "default:empty_balloon", count = 1 }
+        },
+        time = 3
     }
 }
 
-function get_craft(inv)
-    for _, craft in ipairs(crafts) do
-        local checked = true
-        for _, reagent in ipairs(craft.input) do
-            checked = checked and inv:contains_item("input", reagent)
-        end
-
-        if checked then
-            return craft
-        end
-    end
-end
-
 function inactive_formspec()
     return
-        "size[11,9]"..
+        "size[11,9.5]"..
         "label[0,1.5;Gas]"..
         "list[context;gas;0,2;1,1;]"..
         "label[2,1.5;Fuel]"..
         "list[context;fuel;2,2;1,1;]"..
         "label[4,0.5;Input]"..
+        "image[7,2;1,1;gui_arrow.png]"..
         "list[context;input;4,1;3,3;]"..
         "label[8,0.5;Output]"..
         "list[context;output;8,1;3,3;]"..
         "list[current_player;main;2,5;8,1;]"..
-        "list[current_player;main;2,6;8,3;8]"
+        "list[current_player;main;2,6.5;8,3;8]"
 end
 
 function run_furnace(pos)
@@ -239,7 +260,7 @@ minetest.register_node("default:furnace_active", {
         meta:set_float("cycle", cycle)
 
         local cooking = meta:get_float("cooking") + elapsed
-        local recipe = get_craft(inv)
+        local recipe = get_craft(crafts, inv)
 
         if recipe ~= nil and cooking >= recipe.time then
             cooking = 0

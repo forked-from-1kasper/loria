@@ -158,7 +158,27 @@ for i = 1, #truncus_names do
     })
 end
 
-for _, name in ipairs({ "uranyl_acetate", "plutonium_fluoride", "aluminium" }) do
+minetest.register_ore({
+    ore_type       = "blob",
+    ore            = "default:aluminium",
+    wherein        = "default:cinnabar",
+    clust_scarcity = 16 * 16 * 16,
+    clust_num_ores = 15,
+    clust_size     = 5,
+    y_min          = -60,
+    y_max          = 60,
+    noise_threshold = 0.0,
+    noise_params    = {
+        offset = 0.5,
+        scale = 0.2,
+        spread = { x = 5, y = 5, z = 5 },
+        seed = 17676,
+        octaves = 5,
+        persist = 0.2
+    }
+})
+
+for _, name in ipairs({ "uranyl_acetate", "plutonium_fluoride" }) do
     minetest.register_ore({
         ore_type       = "blob",
         ore            = "default:" .. name,

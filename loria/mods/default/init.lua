@@ -1,18 +1,31 @@
 default = {}
 dofile(minetest.get_modpath("default").."/nodes.lua")
 dofile(minetest.get_modpath("default").."/items.lua")
+dofile(minetest.get_modpath("default").."/craft.lua")
 dofile(minetest.get_modpath("default").."/furnace.lua")
 dofile(minetest.get_modpath("default").."/mapgen.lua")
 dofile(minetest.get_modpath("default").."/mushrooms.lua")
 dofile(minetest.get_modpath("default").."/radiation.lua")
 dofile(minetest.get_modpath("default").."/hud.lua")
 
+function player_formspec()
+    return
+        "size[9,9.5]"..
+        "label[0,1.5;Oxygen]"..
+        "list[context;oxygen;0,2;1,1;]"..
+        "label[2,0.5;Input]"..
+        "image[5,2;1,1;gui_arrow.png]"..
+        "button[5,3;1,1;craft_it;Craft]"..
+        "list[context;input;2,1;3,3;]"..
+        "label[6,0.5;Output]"..
+        "list[context;output;6,1;3,3;]"..
+        "list[context;main;0.5,5;8,1;]"..
+        "list[context;main;0.5,6.5;8,3;8]"
+end
+
 oxygen_hud = {}
 minetest.register_on_joinplayer(function(player)
     local meta = player:get_meta()
-    if meta:get_int("oxygen") == 0 then
-        meta:set_int("oxygen", OXYGEN_MAX)
-    end
 
     local name = player:get_player_name()
     player:hud_set_flags({ healthbar = false })
@@ -25,6 +38,7 @@ minetest.register_on_joinplayer(function(player)
         offset = { x = 150, y = 0 }
     })
     player:set_clouds({ density = 0 })
+    player:set_inventory_formspec(player_formspec())
 
     minetest.chat_send_player(name, "Welcome to Loria!")
 end)
@@ -34,17 +48,25 @@ START_ITEMS = {
     ["default:furnace"] = 1
 }
 
-function send_start_items(player)
+function init_inv(player)
     local name = player:get_player_name()
     local inv = player:get_inventory()
+
+    inv:set_size("oxygen", 1)
+    inv:set_size("input", 9)
+    inv:set_size("output", 9)
+
     inv:add_item("main", { name = "default:drill", count = 1 })
+
+    inv:add_item("oxygen", { name = "default:oxygen_balloon" })
+
     for name, count in pairs(START_ITEMS) do
         inv:add_item("main", { name = name, count = count })
     end
 end
 
 minetest.register_on_newplayer(function(player)
-    send_start_items(player)
+    init_inv(player)
 
     local meta = player:get_meta()
     meta:set_int("oxygen", OXYGEN_MAX)
@@ -64,40 +86,5 @@ minetest.register_globalstep(function(dtime)
     for _, player in ipairs(minetest.get_connected_players()) do
         local gravity = (MAX_HEIGHT / (player:get_pos().y + MAX_HEIGHT)) ^ 2
         player:set_physics_override({ gravity = gravity })
-    end
-end)
-
-OXYGEN_MAX = 256
-OXYGEN_DECREASE_TIME = 5
-
-local timer = 0
-minetest.register_globalstep(function(dtime)
-    timer = timer + dtime
-    for _, player in ipairs(minetest.get_connected_players()) do
-        -- disables breath
-        if player:get_breath() ~= 11 then
-            player:set_breath(11)
-        end
-
-        local meta = player:get_meta("oxygen")
-        local oxygen = meta:get_int("oxygen")
-
-        if timer > OXYGEN_DECREASE_TIME then
-            timer = 0
-            if oxygen > 1 then
-                oxygen = oxygen - 1
-            else
-                player:set_hp(player:get_hp() - 1)
-            end
-
-            if oxygen < 1 then
-                oxygen = 1
-            end
-        end
-        if oxygen > OXYGEN_MAX then
-            meta:set_int("oxygen", OXYGEN_MAX)
-            oxygen = OXYGEN_MAX
-        end
-        meta:set_int("oxygen", oxygen)
     end
 end)

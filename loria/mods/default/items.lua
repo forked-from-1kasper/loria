@@ -95,25 +95,59 @@ balloon_coeff = 128
 minetest.register_tool("default:oxygen_balloon", {
     inventory_image = "default_oxygen_balloon.png",
     description = "Oxygen balloon",
-    stack_max = 1,
-    on_use = function(itemstack, player, pointed_thing)
-        local meta = player:get_meta()
+    stack_max = 1
+})
 
-        local current_wear = itemstack:get_wear()
-        local oxygen = math.floor((65535 - current_wear) / balloon_coeff)
+oxygen_decrease_time = 5
+local oxygen_timer = 0
+minetest.register_globalstep(function(dtime)
+    oxygen_timer = oxygen_timer + dtime
+    for _, player in ipairs(minetest.get_connected_players()) do
+        -- disables breath
+        if player:get_breath() ~= 11 then
+            player:set_breath(11)
+        end
 
-        local current_oxygen = meta:get_int("oxygen")
+        local oxygen = 0
+        local oxygen_max = 0
 
-        if oxygen <= balloon_use then
-            meta:set_int("oxygen", current_oxygen + oxygen)
-            return { name = "default:empty_balloon", wear = 0 }
-        else
-            local wear = current_wear + balloon_use * balloon_coeff
-            meta:set_int("oxygen", current_oxygen + balloon_use)
-            return { name = "default:oxygen_balloon", wear = wear }
+        local meta = player:get_meta("oxygen")
+        if oxygen_timer > oxygen_decrease_time then
+            oxygen_timer = 0
+
+            local inv = player:get_inventory()
+            local oxygen_stack = inv:get_list("oxygen")[1]
+
+            if oxygen_stack == nil then
+                oxygen = 0
+            elseif oxygen_stack:get_name() == "default:empty_balloon" then
+                oxygen = 0
+            elseif oxygen_stack:get_name() == "default:oxygen_balloon" then
+                local wear = oxygen_stack:get_wear()
+
+                oxygen = (65536 - wear) / balloon_coeff
+                oxygen_stack:set_wear(wear + balloon_coeff)
+
+                if wear + balloon_coeff >= 65535 then
+                    inv:set_stack("oxygen", 1, { name = "default:empty_balloon" })
+                else
+                    inv:set_stack("oxygen", 1, oxygen_stack)
+                end
+
+                oxygen_max = 65536 / balloon_coeff
+            else
+                oxygen = 0
+            end
+
+            if oxygen <= 0 then
+                player:set_hp(player:get_hp() - 1)
+            end
+
+            meta:set_int("oxygen_max", oxygen_max)
+            meta:set_int("oxygen", oxygen)
         end
     end
-})
+end)
 
 bucket = {}
 bucket.liquids = {}
