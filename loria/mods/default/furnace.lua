@@ -3,11 +3,11 @@ gases_list = {
 }
 
 fuel_list = {
-    ["default:cinnabar"] = 45,
-    ["default:viridi_petasum_body"] = 35,
-    ["default:turris_body"] = 25,
-    ["default:rete_body"] = 15,
-    ["default:oxygen_baloon"] = 5,
+    ["default:cinnabar"] = 2,
+    ["default:viridi_petasum_body"] = 3,
+    ["default:turris_body"] = 3,
+    ["default:rete_body"] = 3,
+    ["default:oxygen_baloon"] = 1,
 }
 
 crafts = {
