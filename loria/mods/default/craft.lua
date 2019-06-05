@@ -19,6 +19,26 @@ inv_crafts = {
             { name = "default:bucket_empty", count = 1 }
         }
     },
+    {
+        input = {
+            { name = "default:potassium_ingot", count = 2 },
+            { name = "default:bucket_water", count = 2 },
+            { name = "default:empty_balloon", count = 1 }
+        },
+        output = {
+            { name = "default:bucket_potassium_hydroxide", count = 2 },
+            { name = "default:hydrogen_balloon", count = 2 },
+        }
+    },
+    {
+        input = {
+            { name = "default:broken_drill", count = 1 },
+            { name = "default:battery", count = 1 }
+        },
+        output = {
+            { name = "default:drill", count = 1 }
+        }
+    }
 }
 
 function get_craft(crafts, inv)

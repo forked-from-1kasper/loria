@@ -2,9 +2,12 @@ digraph {
     rankdir="LR"
     node [shape=none]
 
-    "Aluminium ore" -> "Aluminium ingot" [label = "t"]
-    "Aluminium ingot" -> "Empty bucket" [label = "t, 5"]
-    "Aluminium ingot" -> "Empty balloon" [label = "t, 3"]
+    "Aluminium ore" -> "Al" [label = "t"]
+    "Potassium ore" -> "K" [label = "t"]
+    "Zinc ore" -> "Zn" [label = "t"]
+
+    "Al" -> "Empty bucket" [label = "t, 5"]
+    "Al" -> "Empty balloon" [label = "t, 3"]
 
     "HgO" -> "Oxygen balloon" [label = "t, 2"]
     "Empty balloon" -> "Oxygen balloon" [label = "t"]
@@ -12,4 +15,19 @@ digraph {
 
     "Empty bucket" -> "H₂O" [label = "t, 5"]
     "CuSO₄·5H₂O" -> "H₂O" [label = "t"]
+
+    "Al" -> "Aluminium case" [label = "t"]
+
+    "HgO" -> "Battery" [label = "t"]
+    "KOH" -> "Battery" [label = "t"]
+    "Zn" -> "Battery" [label = "t"]
+    "Aluminium case" -> "Battery" [label = "t"]
+
+
+    "K" -> "KOH" [label = "2"]
+    "H₂O" -> "KOH" [label = "2"]
+    "Empty balloon" -> "KOH"
+
+    "Broken drill" -> "Drill"
+    "Battery" -> "Drill" [label = "2"]
 }

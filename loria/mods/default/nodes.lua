@@ -54,21 +54,25 @@ minetest.register_node("default:plutonium_fluoride", {
     drop = 'default:plutonium_fluoride'
 })
 
-minetest.register_node("default:aluminium", {
-    description = "Aluminium (in cinnabar)",
-    tiles = { "default_cinnabar.png" },
-    overlay_tiles = { "default_aluminium.png" },
-    groups = { cracky = 1 },
-    drop = 'default:aluminium'
-})
+ores = { "aluminium", "potassium", "zinc" }
 
-minetest.register_node("default:aluminium_azure", {
-    description = "Aluminium (in cobalt blue)",
-    tiles = { "default_cobalt_blue.png" },
-    overlay_tiles = { "default_aluminium.png" },
-    groups = { cracky = 1 },
-    drop = 'default:aluminium_azure'
-})
+for _, name in ipairs(ores) do
+    minetest.register_node("default:" .. name, {
+        description = name:gsub("^%l", string.upper) .. " (in cinnabar)",
+        tiles = { "default_cinnabar.png" },
+        overlay_tiles = { "default_" .. name .. ".png" },
+        groups = { cracky = 1 },
+        drop = "default:" .. name
+    })
+
+    minetest.register_node("default:" .. name .. "_azure", {
+        description = name:gsub("^%l", string.upper) .. " (in cobalt blue)",
+        tiles = { "default_cobalt_blue.png" },
+        overlay_tiles = { "default_" .. name .. ".png" },
+        groups = { cracky = 1 },
+        drop = "default:" .. name .. "_azure"
+    })
+end
 
 minetest.register_node("default:uranyl_acetate", {
     description = "Uranyl acetate (UO₂(CH₃COO)₂·2H₂O)",
@@ -233,6 +237,92 @@ for name, features in pairs(small_mushrooms) do
 
     minetest.register_node("default:" .. name, info)
 end
+
+minetest.register_node("default:potassium_hydroxide_source", {
+    description = "Potassium hydroxide source",
+    drawtype = "liquid",
+    tiles = {
+        {
+            name = "default_potassium_hydroxide_source_animated.png",
+            backface_culling = false,
+            animation = {
+                type = "vertical_frames",
+                aspect_w = 16,
+                aspect_h = 16,
+                length = 2.0,
+            },
+        },
+        {
+            name = "default_potassium_hydroxide_source_animated.png",
+            backface_culling = true,
+            animation = {
+                type = "vertical_frames",
+                aspect_w = 16,
+                aspect_h = 16,
+                length = 2.0,
+            },
+        },
+    },
+    alpha = 50,
+    paramtype = "light",
+    walkable = false,
+    pointable = false,
+    diggable = false,
+    buildable_to = true,
+    is_ground_content = false,
+    drop = "",
+    drowning = 1,
+    liquidtype = "source",
+    liquid_alternative_flowing = "default:potassium_hydroxide_flowing",
+    liquid_alternative_source = "default:potassium_hydroxide_source",
+    liquid_viscosity = 1,
+    post_effect_color = { a = 30, r = 255, g = 255, b = 255 },
+    groups = { water = 3, liquid = 3 },
+})
+
+minetest.register_node("default:potassium_hydroxide_flowing", {
+    description = "Flowing potassium hydroxide",
+    drawtype = "flowingliquid",
+    tiles = {"default_potassium_hydroxide.png"},
+    special_tiles = {
+        {
+            name = "default_potassium_hydroxide_flowing_animated.png",
+            backface_culling = false,
+            animation = {
+                type = "vertical_frames",
+                aspect_w = 16,
+                aspect_h = 16,
+                length = 0.8,
+            },
+        },
+        {
+            name = "default_potassium_hydroxide_flowing_animated.png",
+            backface_culling = true,
+            animation = {
+                type = "vertical_frames",
+                aspect_w = 16,
+                aspect_h = 16,
+                length = 0.8,
+            },
+        },
+    },
+    alpha = 50,
+    paramtype = "light",
+    paramtype2 = "flowingliquid",
+    walkable = false,
+    pointable = false,
+    diggable = false,
+    buildable_to = true,
+    is_ground_content = false,
+    drop = "",
+    drowning = 1,
+    liquidtype = "flowing",
+    liquid_alternative_flowing = "default:potassium_hydroxide_flowing",
+    liquid_alternative_source = "default:potassium_hydroxide_source",
+    liquid_viscosity = 1,
+    post_effect_color = { a = 30, r = 255, g = 255, b = 255 },
+    groups = { water = 3, liquid = 3 },
+})
 
 minetest.register_node("default:water_source", {
     description = "Water Source",

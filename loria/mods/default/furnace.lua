@@ -83,8 +83,66 @@ crafts = {
             { name = "default:empty_balloon", count = 1 }
         },
         time = 3
+    },
+    {
+        input = {
+            { name = "default:aluminium_ingot", count = 1 }
+        },
+        output = {
+            { name = "default:aluminium_case", count = 1 }
+        },
+        time = 3
+    },
+    {
+        input = {
+            { name = "default:mercury_oxide", count = 1 },
+            { name = "default:bucket_potassium_hydroxide", count = 1 },
+            { name = "default:zinc_ingot", count = 1 },
+            { name = "default:aluminium_case", count = 1 }
+        },
+        output = {
+            { name = "default:battery", count = 1 },
+            { name = "default:bucket_empty", count = 1 }
+        },
+        time = 2,
+    },
+    {
+        input = {
+            { name = "default:red_mercury_oxide", count = 1 },
+            { name = "default:bucket_potassium_hydroxide", count = 1 },
+            { name = "default:zinc_ingot", count = 1 },
+            { name = "default:aluminium_case", count = 1 }
+        },
+        output = {
+            { name = "default:battery", count = 1 },
+            { name = "default:bucket_empty", count = 1 }
+        },
+        time = 2,
     }
 }
+
+for _, name in ipairs(ores) do
+    table.insert(crafts, {
+        input = {
+            { name = "default:" .. name, count = 1 }
+        },
+        output = {
+            { name = "default:" .. name .. "_ingot", count = 1 },
+            { name = "default:cinnabar", count = 1 }
+        },
+        time = 3
+    })
+    table.insert(crafts, {
+        input = {
+            { name = "default:" .. name .. "_azure", count = 1 }
+        },
+        output = {
+            { name = "default:" .. name .. "_ingot", count = 1 },
+            { name = "default:cobalt_blue", count = 1 }
+        },
+        time = 3
+    })
+end
 
 function inactive_formspec(craft_percent)
     return

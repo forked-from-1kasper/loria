@@ -84,9 +84,27 @@ minetest.register_craftitem("default:super_drill", {
     }
 })
 
+minetest.register_tool("default:battery", {
+    inventory_image = "default_battery.png",
+    description = "Battery",
+    stack_max = 16,
+})
+
+minetest.register_tool("default:aluminium_case", {
+    inventory_image = "default_aluminium_case.png",
+    description = "Aluminium case",
+    stack_max = 16,
+})
+
 minetest.register_tool("default:empty_balloon", {
     inventory_image = "default_empty_balloon.png",
     description = "Empty balloon",
+    stack_max = 1
+})
+
+minetest.register_tool("default:hydrogen_balloon", {
+    inventory_image = "default_oxygen_balloon.png",
+    description = "Hydrogen balloon",
     stack_max = 1
 })
 
@@ -225,7 +243,17 @@ bucket.register_liquid(
     "Bucket with water"
 )
 
-minetest.register_craftitem("default:aluminium_ingot", {
-    description = "Aluminium ingot",
-    inventory_image = "default_aluminium_ingot.png",
-})
+bucket.register_liquid(
+    "default:potassium_hydroxide_source",
+    "default:potassium_hydroxide_flowing",
+    "default:bucket_potassium_hydroxide",
+    "bucket_potassium_hydroxide.png",
+    "Bucket with potassium hydroxide"
+)
+
+for _, name in ipairs(ores) do
+    minetest.register_craftitem("default:" .. name .."_ingot", {
+        description = name:gsub("^%l", string.upper) .. " ingot",
+        inventory_image = "default_" .. name .. "_ingot.png",
+    })
+end
