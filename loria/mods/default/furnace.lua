@@ -76,7 +76,7 @@ crafts = {
     }
 }
 
-function inactive_formspec()
+function inactive_formspec(craft_percent)
     return
         "size[11,9.5]"..
         "label[0,1.5;Gas]"..
@@ -84,7 +84,8 @@ function inactive_formspec()
         "label[2,1.5;Fuel]"..
         "list[context;fuel;2,2;1,1;]"..
         "label[4,0.5;Input]"..
-        "image[7,2;1,1;gui_arrow.png]"..
+        "image[7,2;1,1;gui_arrow.png^[lowpart:"
+        .. craft_percent .. ":gui_active_arrow.png]]"..
         "list[context;input;4,1;3,3;]"..
         "label[8,0.5;Output]"..
         "list[context;output;8,1;3,3;]"..
@@ -129,7 +130,7 @@ minetest.register_node("default:furnace", {
 
     on_construct = function(pos)
         local meta = minetest.get_meta(pos)
-        meta:set_string("formspec", inactive_formspec())
+        meta:set_string("formspec", inactive_formspec(0))
         meta:set_float("cycle", 0)
         meta:set_float("cooking", 0)
 
@@ -279,6 +280,11 @@ minetest.register_node("default:furnace_active", {
 
         if recipe == nil then
             cooking = 0
+            meta:set_string("formspec", inactive_formspec(0))
+        else
+            meta:set_string("formspec", inactive_formspec(
+                math.floor(100 * cooking / recipe.time)
+            ))
         end
 
         meta:set_float("cooking", cooking)
