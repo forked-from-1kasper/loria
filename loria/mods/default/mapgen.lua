@@ -160,18 +160,38 @@ end
 
 minetest.register_ore({
     ore_type       = "blob",
-    ore            = "default:aluminium",
-    wherein        = "default:cinnabar",
-    clust_scarcity = 16 * 16 * 16,
-    clust_num_ores = 15,
-    clust_size     = 5,
+    ore            = "default:aluminium_azure",
+    wherein        = "default:cobalt_blue",
+    clust_scarcity = 8 * 8 * 8,
+    clust_num_ores = 5,
+    clust_size     = 3,
     y_min          = -60,
     y_max          = 60,
     noise_threshold = 0.0,
     noise_params    = {
         offset = 0.5,
         scale = 0.2,
-        spread = { x = 5, y = 5, z = 5 },
+        spread = { x = 3, y = 3, z = 3 },
+        seed = 17676,
+        octaves = 5,
+        persist = 0.2
+    }
+})
+
+minetest.register_ore({
+    ore_type       = "blob",
+    ore            = "default:aluminium",
+    wherein        = "default:cinnabar",
+    clust_scarcity = 8 * 8 * 8,
+    clust_num_ores = 5,
+    clust_size     = 3,
+    y_min          = -60,
+    y_max          = 60,
+    noise_threshold = 0.0,
+    noise_params    = {
+        offset = 0.5,
+        scale = 0.2,
+        spread = { x = 3, y = 3, z = 3 },
         seed = 17676,
         octaves = 5,
         persist = 0.2

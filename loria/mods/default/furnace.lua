@@ -58,6 +58,16 @@ crafts = {
     },
     {
         input = {
+            { name = "default:aluminium_azure", count = 1 }
+        },
+        output = {
+            { name = "default:aluminium_ingot", count = 1 },
+            { name = "default:cobalt_blue", count = 1 }
+        },
+        time = 3
+    },
+    {
+        input = {
             { name = "default:aluminium_ingot", count = 8 }
         },
         output = {

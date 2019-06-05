@@ -55,11 +55,19 @@ minetest.register_node("default:plutonium_fluoride", {
 })
 
 minetest.register_node("default:aluminium", {
-    description = "Aluminium",
+    description = "Aluminium (in cinnabar)",
     tiles = { "default_cinnabar.png" },
     overlay_tiles = { "default_aluminium.png" },
     groups = { cracky = 1 },
     drop = 'default:aluminium'
+})
+
+minetest.register_node("default:aluminium_azure", {
+    description = "Aluminium (in cobalt blue)",
+    tiles = { "default_cobalt_blue.png" },
+    overlay_tiles = { "default_aluminium.png" },
+    groups = { cracky = 1 },
+    drop = 'default:aluminium_azure'
 })
 
 minetest.register_node("default:uranyl_acetate", {
