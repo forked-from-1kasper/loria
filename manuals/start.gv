@@ -1,0 +1,15 @@
+digraph {
+    rankdir="LR"
+    node [shape=none]
+
+    "Aluminium ore" -> "Aluminium ingot" [label = "t"]
+    "Aluminium ingot" -> "Empty bucket" [label = "t, 5"]
+    "Aluminium ingot" -> "Empty balloon" [label = "t, 3"]
+
+    "HgO" -> "Oxygen balloon" [label = "t, 2"]
+    "Empty balloon" -> "Oxygen balloon" [label = "t"]
+    "Empty bucket" -> "Oxygen balloon" [label = "t, 2"]
+
+    "Empty bucket" -> "H₂O" [label = "t, 5"]
+    "CuSO₄·5H₂O" -> "H₂O" [label = "t"]
+}
