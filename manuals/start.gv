@@ -9,9 +9,9 @@ digraph {
     "Al" -> "Empty bucket" [label = "t, 5"]
     "Al" -> "Empty balloon" [label = "t, 3"]
 
-    "HgO" -> "Oxygen balloon" [label = "t, 2"]
-    "Empty balloon" -> "Oxygen balloon" [label = "t"]
-    "Empty bucket" -> "Oxygen balloon" [label = "t, 2"]
+    "HgO" -> "O₂" [label = "t, 2"]
+    "Empty balloon" -> "O₂" [label = "t"]
+    "Empty bucket" -> "O₂" [label = "t, 2"]
 
     "Empty bucket" -> "H₂O" [label = "t, 5"]
     "CuSO₄·5H₂O" -> "H₂O" [label = "t"]
@@ -22,7 +22,6 @@ digraph {
     "KOH" -> "Battery" [label = "t"]
     "Zn" -> "Battery" [label = "t"]
     "Aluminium case" -> "Battery" [label = "t"]
-
 
     "K" -> "KOH" [label = "2"]
     "H₂O" -> "KOH" [label = "2"]
