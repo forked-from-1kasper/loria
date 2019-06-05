@@ -9,6 +9,16 @@ inv_crafts = {
             { name = "default:bucket_empty", count = 1 }
         }
     },
+    {
+        input = {
+            { name = "default:naga", count = 2 },
+            { name = "default:bucket_mercury", count = 1 },
+        },
+        output = {
+            { name = "default:glow_stick", count = 1 },
+            { name = "default:bucket_empty", count = 1 }
+        }
+    },
 }
 
 function get_craft(crafts, inv)

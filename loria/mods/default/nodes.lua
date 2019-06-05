@@ -508,24 +508,3 @@ minetest.register_node("default:glow_stick", {
     groups = { choppy=2, dig_immediate=3, attached_node=1 },
     legacy_wallmounted = true,
 })
-
-minetest.register_craft({
-    type = "shapeless",
-    output = "default:glow_stick",
-    recipe = {
-        "default:purpura",
-        "default:purpura",
-        "default:purpura",
-        "default:bucket_mercury"
-    },
-})
-
-minetest.register_craft({
-    type = "shapeless",
-    output = "default:glow_stick",
-    recipe = {
-        "default:naga",
-        "default:naga",
-        "default:bucket_mercury"
-    },
-})
