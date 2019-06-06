@@ -77,14 +77,18 @@ end)
 
 minetest.register_on_respawnplayer(function(player)
     local meta = player:get_meta()
-    meta:set_int("oxygen", OXYGEN_MAX)
     meta:set_float("received_dose", 0)
 end)
 
 MAX_HEIGHT = 31000
 minetest.register_globalstep(function(dtime)
     for _, player in ipairs(minetest.get_connected_players()) do
-        local gravity = (MAX_HEIGHT / (player:get_pos().y + MAX_HEIGHT)) ^ 2
-        player:set_physics_override({ gravity = gravity })
+        local pos = player:get_pos()
+        if pos.y ~= -MAX_HEIGHT then
+            local gravity = (MAX_HEIGHT / (player:get_pos().y + MAX_HEIGHT)) ^ 2
+            player:set_physics_override({ gravity = gravity })
+        else
+            player:set_physics_override({ gravity = 1 })
+        end
     end
 end)
