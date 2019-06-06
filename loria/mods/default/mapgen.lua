@@ -163,7 +163,7 @@ for _, name in ipairs(ores) do
         ore_type       = "blob",
         ore            = "default:" .. name .. "_azure",
         wherein        = "default:cobalt_blue",
-        clust_scarcity = 8 * 8 * 8,
+        clust_scarcity = 16 * 16 * 16,
         clust_num_ores = 5,
         clust_size     = 3,
         y_min          = -60,
@@ -174,8 +174,8 @@ for _, name in ipairs(ores) do
             scale = 0.2,
             spread = { x = 3, y = 3, z = 3 },
             seed = 17676,
-            octaves = 5,
-            persist = 0.2
+            octaves = 1,
+            persist = 0.0
         }
     })
 
@@ -183,7 +183,7 @@ for _, name in ipairs(ores) do
         ore_type       = "blob",
         ore            = "default:" .. name,
         wherein        = "default:cinnabar",
-        clust_scarcity = 8 * 8 * 8,
+        clust_scarcity = 16 * 16 * 16,
         clust_num_ores = 5,
         clust_size     = 3,
         y_min          = -60,
@@ -194,8 +194,8 @@ for _, name in ipairs(ores) do
             scale = 0.2,
             spread = { x = 3, y = 3, z = 3 },
             seed = 17676,
-            octaves = 5,
-            persist = 0.2
+            octaves = 1,
+            persist = 0.0
         }
     })
 end
