@@ -7,7 +7,9 @@ dofile(minetest.get_modpath("default").."/mapgen.lua")
 dofile(minetest.get_modpath("default").."/mushrooms.lua")
 dofile(minetest.get_modpath("default").."/radiation.lua")
 dofile(minetest.get_modpath("default").."/hud.lua")
+dofile(minetest.get_modpath("default").."/player.lua")
 
+oxygen_hud = {}
 function player_formspec()
     return
         "size[9,9.5]"..
@@ -23,7 +25,22 @@ function player_formspec()
         "list[context;main;0.5,6.5;8,3;8]"
 end
 
-oxygen_hud = {}
+player_api.register_model("player.b3d", {
+    animation_speed = 30,
+    textures = { "player.png" },
+    animations = {
+        stand = { x = 0, y = 79 },
+        lay = { x = 162, y = 166 },
+        walk = { x = 168, y = 187 },
+        mine = { x = 189, y = 198 },
+        walk_mine = { x = 200, y = 219 },
+        sit = { x = 81, y = 160 }
+    },
+    collisionbox = { -0.3, 0.0, -0.3, 0.3, 1.7, 0.3 },
+    stepheight = 0.6,
+    eye_height = 1.47,
+})
+
 minetest.register_on_joinplayer(function(player)
     local meta = player:get_meta()
 
@@ -39,6 +56,15 @@ minetest.register_on_joinplayer(function(player)
     })
     player:set_clouds({ density = 0 })
     player:set_inventory_formspec(player_formspec())
+
+    player_api.set_model(player, "player.b3d")
+    player:set_local_animation(
+        { x = 0,   y = 79 },
+        { x = 168, y = 187 },
+        { x = 189, y = 198 },
+        { x = 200, y = 219 },
+        30
+    )
 
     minetest.chat_send_player(name, "Welcome to Loria!")
 end)

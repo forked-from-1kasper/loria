@@ -120,7 +120,7 @@ minetest.register_node("default:colossus_stem", {
 
 minetest.register_node("default:colossus_body", {
     description = "Colossus body",
-    tiles = { "default_colossuss_body.png" },
+    tiles = { "default_colossus_body.png" },
     groups = { cracky = 2 },
     drop = 'default:colossus_body'
 })
