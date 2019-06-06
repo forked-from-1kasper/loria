@@ -9,6 +9,7 @@ minetest.register_item(":", {
             fleshy = { times = { [2] = 2.00, [3] = 1.00 }, uses = 0, maxlevel = 1},
             crumbly = { times = { [2] = 3.00, [3] = 0.70 }, uses = 0, maxlevel = 1},
             snappy = { times = { [3] = 0.40 }, uses = 0, maxlevel = 1},
+            cracky = { times = { [1] = 9.00, [2] = 7.00, [3] = 5.00 } },
             oddly_breakable_by_hand = {times = { [1] = 7.00, [2] = 4.00, [3] = 1.40}, uses = 0, maxlevel = 5},
         },
         damage_groups = { fleshy = 1 },
@@ -84,19 +85,19 @@ minetest.register_craftitem("default:super_drill", {
     }
 })
 
-minetest.register_tool("default:battery", {
+minetest.register_craftitem("default:battery", {
     inventory_image = "default_battery.png",
     description = "Battery",
     stack_max = 16,
 })
 
-minetest.register_tool("default:aluminium_case", {
+minetest.register_craftitem("default:aluminium_case", {
     inventory_image = "default_aluminium_case.png",
     description = "Aluminium case",
     stack_max = 16,
 })
 
-minetest.register_tool("default:empty_balloon", {
+minetest.register_craftitem("default:empty_balloon", {
     inventory_image = "default_empty_balloon.png",
     description = "Empty balloon",
     stack_max = 1

@@ -21,6 +21,11 @@ local c_potassium_permanganate_flowing =
 local c_turris_stem = minetest.get_content_id("default:turris_stem")
 local c_turris_body = minetest.get_content_id("default:turris_body")
 
+local c_red_mercury_oxide = minetest.get_content_id("default:red_mercury_oxide")
+
+local c_colossus_stem = minetest.get_content_id("default:colossus_stem")
+local c_colossus_body = minetest.get_content_id("default:colossus_body")
+
 viridi_petasum = {
     min_height = 7,
     max_height = 30,
@@ -42,6 +47,13 @@ turris = {
     max_height = 15,
     min_radius = 3,
     max_radius = 5
+}
+
+colossus = {
+    min_height = 30,
+    max_height = 36,
+    min_radius = 10,
+    max_radius = 20
 }
 
 function generate_viridi_petasum(x, y, z, g, data, area)
@@ -120,6 +132,22 @@ function generate_columnae(x, y, z, g, data, area)
     end
 end
 
+function generate_colossus(x, y, z, g, data, area)
+    local height = g:next(colossus.min_height, colossus.max_height)
+    local radius = g:next(colossus.min_radius, colossus.max_radius)
+
+    for k = -height, height do
+        data[area:index(x, y + k, z)] = c_colossus_stem
+        data[area:index(x + 1, y + k, z)] = c_colossus_stem
+        data[area:index(x, y + k, z + 1)] = c_colossus_stem
+        data[area:index(x + 1, y + k, z + 1)] = c_colossus_stem
+    end
+
+    for k = 1, radius do
+
+    end
+end
+
 function generate_column(x, y, z, g, data, area)
     while data[area:index(x, y, z)] ~= c_air do
         y = y - 1
@@ -173,13 +201,21 @@ function generate_turris(x, y, z, g, data, area)
 end
 
 mushrooms = {
-    [c_copper_sulfate] = { generate_viridi_petasum, generate_rete },
-    [c_viridi_body] = { generate_viridi_petasum },
+    [c_copper_sulfate] = {
+        { func = generate_viridi_petasum, prob = 1 },
+        { func = generate_rete, prob = 1 },
+    },
+    [c_viridi_body] = {
+        { func = generate_viridi_petasum, prob = 1 },
+    },
     [c_ammonium_manganese_pyrophosphate] = {
-        generate_columnae,
-        generate_column,
-        generate_turris
-    }
+        { func = generate_columnae, prob = 1 },
+        { func = generate_column, prob = 1 },
+        { func = generate_turris, prob = 1 },
+    },
+    --[c_red_mercury_oxide] = {
+    --    { func = generate_colossus, prob = 0.001 },
+    --}
 }
 
 minetest.register_on_generated(function(minp0, maxp0, seed)
@@ -231,8 +267,10 @@ minetest.register_on_generated(function(minp0, maxp0, seed)
                         break
                     end
 
-                    local func = variants[g:next(1, #variants)]
-                    func(x, ground_y, z, g, data, area)
+                    local mushroom = variants[g:next(1, #variants)]
+                    if math.random() <= mushroom.prob then
+                        mushroom.func(x, ground_y, z, g, data, area)
+                    end
                 end
             end
         end
