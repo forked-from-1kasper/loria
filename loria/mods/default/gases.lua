@@ -92,6 +92,8 @@ function register_gas(gas)
                         minetest.set_node(v, { name = reaction.result })
                         if reaction.gas then
                             minetest.set_node(pos, { name = reaction.gas .. "_" .. i })
+                        else
+                            minetest.set_node(pos, { name = "air" })
                         end
                         return
                     elseif (node.name == "air") or
