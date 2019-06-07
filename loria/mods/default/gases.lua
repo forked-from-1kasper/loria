@@ -241,3 +241,25 @@ gases = { chlorine, oxygen, hydrogen, sulfur_dioxide, fluorine }
 for _, gas in ipairs(gases) do
     register_gas(gas)
 end
+
+local attack_radius = 10
+local attack_step = 5
+minetest.register_chatcommand("chemical_attack", {
+    params = "<gas>",
+    description = "Send gas",
+    privs = {},
+    func = function(name, gas)
+        local player = minetest.get_player_by_name(name)
+        if player then
+            local pos = player:get_pos()
+            for x = pos.x - attack_radius, pos.x + attack_radius do
+                for z = pos.z - attack_radius, pos.z + attack_radius do
+                    minetest.set_node({ x = x, y = pos.y, z = z }, {
+                        name = "default:" .. gas .. "_" .. gas_levels
+                    })
+                end
+            end
+            minetest.chat_send_player(name, "Done")
+        end
+    end,
+})

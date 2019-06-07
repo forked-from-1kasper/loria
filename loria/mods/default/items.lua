@@ -105,6 +105,7 @@ minetest.register_craftitem("default:empty_balloon", {
 
 balloon_use = 100
 balloon_coeff = 64
+broken_spacesuit_coeff = 3
 
 oxygen_decrease_time = 5
 local oxygen_timer = 0
@@ -131,12 +132,19 @@ minetest.register_globalstep(function(dtime)
             elseif oxygen_stack:get_name() == "default:empty_balloon" then
                 oxygen = 0
             elseif oxygen_stack:get_name() == "default:oxygen_balloon" then
+                local delta
+                if meta:get_int("space_suit") > 0 then
+                    delta = balloon_coeff
+                else
+                    delta = broken_spacesuit_coeff * balloon_coeff
+                end
+
                 local wear = oxygen_stack:get_wear()
 
                 oxygen = (65536 - wear) / balloon_coeff
-                oxygen_stack:set_wear(wear + balloon_coeff)
+                oxygen_stack:set_wear(wear + delta)
 
-                if wear + balloon_coeff >= 65535 then
+                if wear + delta >= 65535 then
                     inv:set_stack("oxygen", 1, { name = "default:empty_balloon" })
                 else
                     inv:set_stack("oxygen", 1, oxygen_stack)
