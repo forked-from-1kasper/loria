@@ -129,39 +129,6 @@ function register_gas(gas)
         "default:" .. gas.name .. "_" .. gas_levels
     )
 
-    local timer = 0
-    minetest.register_globalstep(function(dtime)
-        timer = timer + dtime
-        if timer > gas_timer then
-            timer = 0
-
-            for _, player in ipairs(minetest.get_connected_players()) do
-                local vm = minetest.get_voxel_manip()
-                local pos = player:get_pos()
-
-                local minp, maxp = vm:read_from_map(
-                    vector.subtract(pos, gas_vect),
-                    vector.add(pos, gas_vect)
-                )
-
-                local area = VoxelArea:new({MinEdge = minp, MaxEdge = maxp})
-                local data = vm:get_data()
-                for i, cid in ipairs(data) do
-                    local name = minetest.get_name_from_content_id(cid)
-                    if starts_with(name, "default:" .. gas.name) then
-                        if math.random() <= 0.5 then
-                            process_gas(gas, i, name, data, area)
-                        end
-                    end
-                end
-
-                vm:set_data(data)
-                vm:write_to_map()
-                vm:update_map()
-            end
-        end
-    end)
-
     minetest.register_tool("default:" .. gas.name .. "_balloon", {
         inventory_image = "default_empty_balloon.png^[combine:16x16:0,0=" .. gas.icon,
         description = gas.name:gsub("^%l", string.upper) .. " balloon",
@@ -287,6 +254,42 @@ for _, gas in ipairs(gases) do
     register_gas(gas)
 end
 
+local timer = 0
+minetest.register_globalstep(function(dtime)
+    timer = timer + dtime
+    if timer > gas_timer then
+        timer = 0
+
+        for _, player in ipairs(minetest.get_connected_players()) do
+            local vm = minetest.get_voxel_manip()
+            local pos = player:get_pos()
+
+            local minp, maxp = vm:read_from_map(
+                vector.subtract(pos, gas_vect),
+                vector.add(pos, gas_vect)
+            )
+
+            local area = VoxelArea:new({MinEdge = minp, MaxEdge = maxp})
+            local data = vm:get_data()
+            for i, cid in ipairs(data) do
+                local name = minetest.get_name_from_content_id(cid)
+
+                for _, gas in ipairs(gases) do
+                    if starts_with(name, "default:" .. gas.name) then
+                        if math.random() <= 0.5 then
+                            process_gas(gas, i, name, data, area)
+                        end
+                    end
+                end
+            end
+
+            vm:set_data(data)
+            vm:write_to_map()
+            vm:update_map()
+        end
+    end
+end)
+
 local attack_radius = 30
 local attack_step = 10
 minetest.register_chatcommand("chemical_attack", {
@@ -316,4 +319,17 @@ minetest.register_chatcommand("cid", {
     func = function(name, node)
         minetest.chat_send_player(name, tostring(minetest.get_content_id(node)))
     end,
+})
+
+minetest.register_abm({
+    label = "Chlorine source",
+    nodenames = { "default:test" },
+    interval = 1,
+    chance = 1,
+    action = function(pos)
+        pos = vector.add(pos, vector.new(0, 1, 0))
+        if minetest.get_node(pos).name == "air" then
+            minetest.set_node(pos, { name = "default:chlorine_" .. gas_levels })
+        end
+    end
 })
