@@ -28,6 +28,12 @@ function register_gas(gas)
     for i = 1, gas_levels do
         local level = gas_levels - i
         local alpha = 150 - (128 / gas_levels) * level
+        local color = string.format(
+            "#%02x%02x%02x",
+            gas.color.r,
+            gas.color.g,
+            gas.color.b
+        )
 
         if gas.transparent then
             alpha = 0
@@ -35,7 +41,7 @@ function register_gas(gas)
 
         minetest.register_node("default:" .. gas.name .. "_" .. i, {
             description = gas.name:gsub("^%l", string.upper) .. " gas",
-            tiles = { "default_gas.png^[colorize:" .. gas.color .. "^[opacity:"..alpha },
+            tiles = { "default_gas.png^[colorize:" .. color .. "^[opacity:"..alpha },
             drawtype = "glasslike",
             paramtype = "light",
             paramtype2 = "glasslikeliquidlevel",
@@ -45,9 +51,9 @@ function register_gas(gas)
             alpha = alpha,
             post_effect_color = {
                 a = alpha,
-                r = gas.post_effect_color.r,
-                g = gas.post_effect_color.g,
-                b = gas.post_effect_color.b
+                r = gas.color.r,
+                g = gas.color.g,
+                b = gas.color.b
             },
             drop = {},
             pointable = false,
@@ -113,9 +119,8 @@ end
 
 chlorine = {
     name = "chlorine",
-    color = "#d2ff00",
     icon = "default_chlorine_symbol.png",
-    post_effect_color = { r = 210, g = 255, b = 0 },
+    color = { r = 210, g = 255, b = 0 },
     destroys = is_organic,
     transparent = false,
     damage = 1,
@@ -123,9 +128,8 @@ chlorine = {
 
 oxygen = {
     name = "oxygen",
-    color = "#ffffff",
     icon = "default_oxygen_symbol.png",
-    post_effect_color = { r = 255, g = 255, b = 255 },
+    color = { r = 255, g = 255, b = 255 },
     destroys = function(name)
         return false
     end,
@@ -135,9 +139,8 @@ oxygen = {
 
 hydrogen = {
     name = "hydrogen",
-    color = "#ffffff",
     icon = "default_hydrogen_symbol.png",
-    post_effect_color = { r = 255, g = 255, b = 255 },
+    color = { r = 255, g = 255, b = 255 },
     destroys = function(name)
         return false
     end,
@@ -147,9 +150,8 @@ hydrogen = {
 
 fluorine = {
     name = "fluorine",
-    color = "#fffba4",
     icon = "default_fluorine_symbol.png",
-    post_effect_color = { r = 255, g = 251, b = 164 },
+    color = { r = 255, g = 251, b = 164 },
     destroys = is_organic,
     transparent = false,
     damage = 5,
