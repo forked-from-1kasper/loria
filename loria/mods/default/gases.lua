@@ -39,6 +39,7 @@ function register_gas(gas)
             drawtype = "glasslike",
             paramtype = "light",
             paramtype2 = "glasslikeliquidlevel",
+            damage_per_second = gas.damage,
             sunlight_propagates = true,
             walkable = false,
             alpha = alpha,
@@ -117,6 +118,7 @@ chlorine = {
     post_effect_color = { r = 210, g = 255, b = 0 },
     destroys = is_organic,
     transparent = false,
+    damage = 1,
 }
 
 oxygen = {
@@ -128,6 +130,7 @@ oxygen = {
         return false
     end,
     transparent = true,
+    damage = 0,
 }
 
 hydrogen = {
@@ -139,6 +142,7 @@ hydrogen = {
         return false
     end,
     transparent = true,
+    damage = 0,
 }
 
 fluorine = {
@@ -148,6 +152,7 @@ fluorine = {
     post_effect_color = { r = 255, g = 251, b = 164 },
     destroys = is_organic,
     transparent = false,
+    damage = 5,
 }
 
 gases = { chlorine, oxygen, hydrogen, fluorine }

@@ -70,6 +70,27 @@ minetest.register_on_joinplayer(function(player)
     minetest.chat_send_player(name, "Welcome to Loria!")
 end)
 
+space_suit_strength = 20
+
+minetest.register_on_player_hpchange(function(player, hp_change, reason)
+    local meta = player:get_meta()
+    local space_suit = meta:get_int("space_suit")
+
+    if space_suit > 0 then
+        if reason.type ~= "node_damage" then
+            local new = space_suit + math.floor(hp_change / 2)
+            if new > 0 then
+                meta:set_int("space_suit", new)
+            else
+                meta:set_int("space_suit", 0)
+            end
+        end
+        return 0
+    else
+        return hp_change
+    end
+end, true)
+
 START_ITEMS = {
     ["default:oxygen_balloon"] = 1,
     ["default:furnace"] = 1
@@ -100,11 +121,14 @@ minetest.register_on_newplayer(function(player)
 
     meta:set_float("radiation", 0)
     meta:set_float("received_dose", 0)
+    meta:set_int("space_suit", space_suit_strength)
 end)
 
 minetest.register_on_respawnplayer(function(player)
     local meta = player:get_meta()
+
     meta:set_float("received_dose", 0)
+    meta:set_int("space_suit", space_suit_strength)
 end)
 
 MAX_HEIGHT = 31000

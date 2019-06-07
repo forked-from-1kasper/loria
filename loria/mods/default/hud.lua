@@ -2,6 +2,11 @@ function health(player)
     return "Health: "..player:get_hp()
 end
 
+function space_suit(player)
+    local meta = player:get_meta()
+    return "Space suit: ".. meta:get_int("space_suit")
+end
+
 function oxygen(player)
     local meta = player:get_meta()
     return "Oxygen: "..meta:get_int("oxygen").."/"..meta:get_int("oxygen_max")
@@ -31,7 +36,7 @@ function copyright(player)
     }, "\n")
 end
 
-hud_elems = { health, oxygen, gravity, radiation, copyright }
+hud_elems = { health, space_suit, oxygen, gravity, radiation, copyright }
 
 minetest.register_globalstep(function(dtime)
     for _, player in ipairs(minetest.get_connected_players()) do
