@@ -109,8 +109,10 @@ function register_gas(gas)
                 return
             end
 
+            local wear = 65535 - itemstack:get_wear()
+            local value = math.ceil(wear * gas_levels / 65536)
             minetest.add_node(pointed_thing.above, {
-                name = "default:" .. gas.name .. "_" .. gas_levels
+                name = "default:" .. gas.name .. "_" .. value
             })
             return { name = "default:empty_balloon" }
         end
@@ -124,8 +126,13 @@ function is_organic(name)
         starts_with(name, "default:viriditas") or
         starts_with(name, "default:rami") or
         starts_with(name, "default:spears") or
+        starts_with(name, "default:naga") or
         ends_with(name, "_body") or
         (small_mushrooms[name:sub(#"default:" + 1)] ~= nil)
+end
+
+function is_heavy_organic(name)
+    return ends_with(name, "_stem")
 end
 
 chlorine = {
@@ -163,7 +170,9 @@ fluorine = {
     name = "fluorine",
     icon = "default_fluorine_symbol.png",
     color = { r = 255, g = 251, b = 164 },
-    destroys = is_organic,
+    destroys = function(name)
+        return is_organic(name) or is_heavy_organic(name)
+    end,
     transparent = false,
     damage = 5,
 }
