@@ -7,6 +7,15 @@ function space_suit(player)
     return "Space suit: ".. meta:get_int("space_suit")
 end
 
+function gas(player)
+    local name = detect_gas(minetest.get_node(player:get_pos()).name)
+    if not name then
+        return "No gases detected"
+    else
+        return "Gas: " .. name
+    end
+end
+
 function oxygen(player)
     local meta = player:get_meta()
     return "Oxygen: "..meta:get_int("oxygen").."/"..meta:get_int("oxygen_max")
@@ -36,7 +45,7 @@ function copyright(player)
     }, "\n")
 end
 
-hud_elems = { health, space_suit, oxygen, gravity, radiation, copyright }
+hud_elems = { health, space_suit, gas, oxygen, gravity, radiation, copyright }
 
 minetest.register_globalstep(function(dtime)
     for _, player in ipairs(minetest.get_connected_players()) do

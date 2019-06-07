@@ -23,8 +23,19 @@ local function ends_with(str, ending)
     return ending == "" or str:sub(-#ending) == ending
 end
 
+gas_table = { }
+function detect_gas(name)
+    for _, gas in ipairs(gas_table) do
+        if starts_with(name, "default:" .. gas) then
+            return gas
+        end
+    end
+    return false
+end
+
 gas_levels = 128
 function register_gas(gas)
+    table.insert(gas_table, gas.name)
     for i = 1, gas_levels do
         local level = gas_levels - i
         local alpha = 150 - (128 / gas_levels) * level
