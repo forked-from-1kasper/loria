@@ -180,7 +180,7 @@ hydrogen = {
     reactions = {},
 }
 
-hydrogen = {
+sulfur_dioxide = {
     name = "sulfur_dioxide",
     icon = "default_sulfur_dioxide_symbol.png",
     color = { r = 255, g = 255, b = 255 },
@@ -213,7 +213,7 @@ fluorine = {
     },
 }
 
-gases = { chlorine, oxygen, hydrogen, fluorine }
+gases = { chlorine, oxygen, hydrogen, sulfur_dioxide, fluorine }
 for _, gas in ipairs(gases) do
     register_gas(gas)
 end
