@@ -80,10 +80,19 @@ function register_gas(gas)
                 for _, v in ipairs(get_neighbors(pos)) do
                     local node = minetest.get_node(v)
 
-                    local reaction = gas.reactions[node.name]
+                    local reaction
+                    
+                    local gas_name = detect_gas(node.name)
+                    if gas_name ~= false then
+                        reaction = gas.reactions["default:" .. gas_name]
+                    else
+                        reaction = gas.reactions[node.name]
+                    end
                     if reaction ~= nil then
-                        minetest.set_node(pos, { name = reaction.gas .. "_" .. i })
                         minetest.set_node(v, { name = reaction.result })
+                        if reaction.gas then
+                            minetest.set_node(pos, { name = reaction.gas .. "_" .. i })
+                        end
                         return
                     elseif (node.name == "air") or
                        starts_with(node.name, "default:" .. gas.name) or
@@ -164,6 +173,9 @@ oxygen = {
         ["default:cinnabar"] = {
             result = "default:mercury",
             gas = "default:sulfur_dioxide"
+        },
+        ["default:hydrogen"] = {
+            result = "default:water_source"
         }
     },
 }
