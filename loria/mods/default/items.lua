@@ -103,19 +103,8 @@ minetest.register_craftitem("default:empty_balloon", {
     stack_max = 1
 })
 
-minetest.register_tool("default:hydrogen_balloon", {
-    inventory_image = "default_oxygen_balloon.png",
-    description = "Hydrogen balloon",
-    stack_max = 1
-})
-
 balloon_use = 100
 balloon_coeff = 64
-minetest.register_tool("default:oxygen_balloon", {
-    inventory_image = "default_oxygen_balloon.png",
-    description = "Oxygen balloon",
-    stack_max = 1
-})
 
 oxygen_decrease_time = 5
 local oxygen_timer = 0

@@ -1,7 +1,8 @@
 minetest.register_node("default:test", {
     description = "For tests only",
     tiles = { "default_test.png" },
-    drop = 'default:test'
+    drop = 'default:test',
+    groups = { crumbly = 3 }
 })
 
 minetest.register_node("default:ammonium_manganese_pyrophosphate", {
@@ -459,6 +460,7 @@ minetest.register_node("default:mercury_flowing", {
     diggable = false,
     buildable_to = true,
     is_ground_content = false,
+    sunlight_propagates = true,
     drop = "",
     drowning = 1,
     liquidtype = "flowing",
