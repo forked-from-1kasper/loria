@@ -159,7 +159,17 @@ chlorine = {
     destroys = is_organic,
     transparent = false,
     damage = 2,
-    reactions = {},
+    reactions = {
+        ["default:mercury"] = {
+            result = "default:mercury_chloride"
+        },
+        ["default:mercury_source"] = {
+            result = "default:mercury_chloride"
+        },
+        ["default:mercury_flowing"] = {
+            result = "default:mercury_chloride"
+        },
+    },
 }
 
 oxygen = {

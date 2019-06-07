@@ -118,6 +118,16 @@ crafts = {
             { name = "default:bucket_empty", count = 1 }
         },
         time = 2,
+    },
+    {
+        input = {
+            { name = "default:bucket_empty", count = 1 },
+            { name = "default:mercury", count = 1 }
+        },
+        output = {
+            { name = "default:bucket_mercury" }
+        },
+        time = 5,
     }
 }
 

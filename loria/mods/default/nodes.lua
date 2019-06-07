@@ -40,6 +40,13 @@ minetest.register_node("default:mercury", {
     drop = 'default:mercury'
 })
 
+minetest.register_node("default:mercury_chloride", {
+    description = "Mercury (II) chloride (HgCl₂)",
+    tiles = { "default_mercury_chloride.png" },
+    groups = { crumbly = 3 },
+    drop = 'default:mercury_chloride'
+})
+
 minetest.register_node("default:mercury_fluoride", {
     description = "Mercury (II) fluoride (HgF₂)",
     tiles = { "default_mercury_fluoride.png" },
