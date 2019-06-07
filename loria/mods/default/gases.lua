@@ -33,7 +33,59 @@ function detect_gas(name)
     return false
 end
 
+local c_air = minetest.get_content_id("air")
+
+function process_gas(gas, i, name, data, area)
+    local pos = area:position(i)
+    local accepted = { i }
+
+    local reacts = false
+
+    for _, v in ipairs(get_neighbors(pos)) do
+        if area:containsp(v) then
+            local index = area:indexp(v)
+            local cid = data[index]
+            local name = minetest.get_name_from_content_id(cid)
+
+            local reaction
+
+            local gas_name = detect_gas(name)
+            if gas_name ~= false then
+                reaction = gas.reactions["default:" .. gas_name]
+            else
+                reaction = gas.reactions[name]
+            end
+            if reaction ~= nil then
+                reacts = true
+                data[index] = minetest.get_content_id(reaction.result)
+                if reaction.gas then
+                    data[i] = minetest.get_content_id(reaction.gas .. "_" .. i)
+                else
+                    data[i] = c_air
+                end
+            elseif starts_with(name, "default:" .. gas.name) or (cid == c_air) or gas.destroys(name) then
+                table.insert(accepted, index)
+            end
+        end
+    end
+
+    if not reacts then
+        local value = tonumber(name:sub(#("default:" .. gas.name) + 2))
+        local value_new = value - (#accepted - 1)
+
+        if value_new > 0 then
+            for _, index in ipairs(accepted) do
+                data[index] = minetest.get_content_id("default:" .. gas.name .. "_" .. value_new)
+            end
+        else
+            data[i] = c_air
+        end
+    end
+end
+
 gas_levels = 128
+gas_timer = 1
+gas_vect = vector.new(16, 16, 16)
 function register_gas(gas)
     table.insert(gas_table, gas.name)
     for i = 1, gas_levels do
@@ -70,52 +122,45 @@ function register_gas(gas)
             pointable = false,
             buildable_to = true,
         })
-
-        minetest.register_abm{
-            nodenames = { "default:" .. gas.name .. "_" .. i },
-            interval = 1,
-            chance = 2,
-            action = function(pos)
-                local accepted = { pos }
-                for _, v in ipairs(get_neighbors(pos)) do
-                    local node = minetest.get_node(v)
-
-                    local reaction
-                    
-                    local gas_name = detect_gas(node.name)
-                    if gas_name ~= false then
-                        reaction = gas.reactions["default:" .. gas_name]
-                    else
-                        reaction = gas.reactions[node.name]
-                    end
-                    if reaction ~= nil then
-                        minetest.set_node(v, { name = reaction.result })
-                        if reaction.gas then
-                            minetest.set_node(pos, { name = reaction.gas .. "_" .. i })
-                        else
-                            minetest.set_node(pos, { name = "air" })
-                        end
-                        return
-                    elseif (node.name == "air") or
-                       starts_with(node.name, "default:" .. gas.name) or
-                       gas.destroys(node.name) then
-                        table.insert(accepted, v)
-                    end
-                end
-
-                local j = i - (#accepted - 1)
-                if j > 0 then
-                    for _, pos in ipairs(accepted) do
-                        minetest.set_node(pos, {
-                            name = "default:" .. gas.name .. "_" .. j
-                        })
-                    end
-                else
-                    minetest.set_node(pos, { name = "air" })
-                end
-            end
-        }
     end
+
+    local cid_min = minetest.get_content_id("default:" .. gas.name .. "_1")
+    local cid_max = minetest.get_content_id(
+        "default:" .. gas.name .. "_" .. gas_levels
+    )
+
+    local timer = 0
+    minetest.register_globalstep(function(dtime)
+        timer = timer + dtime
+        if timer > gas_timer then
+            timer = 0
+
+            for _, player in ipairs(minetest.get_connected_players()) do
+                local vm = minetest.get_voxel_manip()
+                local pos = player:get_pos()
+
+                local minp, maxp = vm:read_from_map(
+                    vector.subtract(pos, gas_vect),
+                    vector.add(pos, gas_vect)
+                )
+
+                local area = VoxelArea:new({MinEdge = minp, MaxEdge = maxp})
+                local data = vm:get_data()
+                for i, cid in ipairs(data) do
+                    local name = minetest.get_name_from_content_id(cid)
+                    if starts_with(name, "default:" .. gas.name) then
+                        if math.random() <= 0.5 then
+                            process_gas(gas, i, name, data, area)
+                        end
+                    end
+                end
+
+                vm:set_data(data)
+                vm:write_to_map()
+                vm:update_map()
+            end
+        end
+    end)
 
     minetest.register_tool("default:" .. gas.name .. "_balloon", {
         inventory_image = "default_empty_balloon.png^[combine:16x16:0,0=" .. gas.icon,
@@ -246,7 +291,7 @@ local attack_radius = 30
 local attack_step = 10
 minetest.register_chatcommand("chemical_attack", {
     params = "<gas>",
-    description = "Send gas",
+    description = "Sends gas",
     privs = {},
     func = function(name, gas)
         local player = minetest.get_player_by_name(name)
@@ -261,5 +306,14 @@ minetest.register_chatcommand("chemical_attack", {
             end
             minetest.chat_send_player(name, "Done")
         end
+    end,
+})
+
+minetest.register_chatcommand("cid", {
+    params = "<node>",
+    description = "Returns content id.",
+    privs = {},
+    func = function(name, node)
+        minetest.chat_send_player(name, tostring(minetest.get_content_id(node)))
     end,
 })
