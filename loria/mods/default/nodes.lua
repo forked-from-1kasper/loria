@@ -33,6 +33,20 @@ minetest.register_node("default:copper_sulfate", {
     drop = 'default:copper_sulfate'
 })
 
+minetest.register_node("default:mercury", {
+    description = "Mercury (Hg)",
+    tiles = { "default_mercury.png" },
+    groups = { cracky = 2 },
+    drop = 'default:mercury'
+})
+
+minetest.register_node("default:mercury_fluoride", {
+    description = "Mercury (II) fluoride (HgF₂)",
+    tiles = { "default_mercury_fluoride.png" },
+    groups = { crumbly = 2 },
+    drop = 'default:mercury_fluoride'
+})
+
 minetest.register_node("default:lead_sulfate", {
     description = "Lead (II) sulfate (PbSO₄)",
     tiles = { "default_lead_sulfate.png" },

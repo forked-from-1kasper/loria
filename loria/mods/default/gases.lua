@@ -77,12 +77,18 @@ function register_gas(gas)
             chance = 2,
             action = function(pos)
                 local accepted = { pos }
-                for _, pos in ipairs(get_neighbors(pos)) do
-                    local node = minetest.get_node(pos)
-                    if (node.name == "air") or
+                for _, v in ipairs(get_neighbors(pos)) do
+                    local node = minetest.get_node(v)
+
+                    local reaction = gas.reactions[node.name]
+                    if reaction ~= nil then
+                        minetest.set_node(pos, { name = reaction.gas .. "_" .. i })
+                        minetest.set_node(v, { name = reaction.result })
+                        return
+                    elseif (node.name == "air") or
                        starts_with(node.name, "default:" .. gas.name) or
                        gas.destroys(node.name) then
-                        table.insert(accepted, pos)
+                        table.insert(accepted, v)
                     end
                 end
 
@@ -141,7 +147,8 @@ chlorine = {
     color = { r = 210, g = 255, b = 0 },
     destroys = is_organic,
     transparent = false,
-    damage = 1,
+    damage = 2,
+    reactions = {},
 }
 
 oxygen = {
@@ -153,6 +160,12 @@ oxygen = {
     end,
     transparent = true,
     damage = 0,
+    reactions = {
+        ["default:cinnabar"] = {
+            result = "default:mercury",
+            gas = "default:sulfur_dioxide"
+        }
+    },
 }
 
 hydrogen = {
@@ -164,6 +177,19 @@ hydrogen = {
     end,
     transparent = true,
     damage = 0,
+    reactions = {},
+}
+
+hydrogen = {
+    name = "sulfur_dioxide",
+    icon = "default_sulfur_dioxide_symbol.png",
+    color = { r = 255, g = 255, b = 255 },
+    destroys = function(name)
+        return false
+    end,
+    transparent = true,
+    damage = 1,
+    reactions = {},
 }
 
 fluorine = {
@@ -175,6 +201,16 @@ fluorine = {
     end,
     transparent = false,
     damage = 5,
+    reactions = {
+        ["default:mercury_oxide"] = {
+            result = "default:mercury_fluoride",
+            gas = "default:oxygen"
+        },
+        ["default:red_mercury_oxide"] = {
+            result = "default:mercury_fluoride",
+            gas = "default:oxygen"
+        },
+    },
 }
 
 gases = { chlorine, oxygen, hydrogen, fluorine }
