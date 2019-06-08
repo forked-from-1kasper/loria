@@ -244,15 +244,15 @@ small_mushrooms = {
     ["pusilli"] = { damage = 5 },
     ["rosea"] = { damage = 4 },
     ["purpura"] = { features = { light_source = 5 } },
-    ["picea"] = {},
+    ["picea"] = { damage = 9 },
     ["caput"] = { damage = 15 },
     ["periculum"] = { features = { light_source = 3 }, damage = 18 },
     ["vastatorem"] = { features = { light_source = 8 } },
-    ["quercu"] = {},
-    ["grebe"] = {},
-    ["secreta"] = {},
-    ["pulchram"] = {},
-    ["conc"] = {}
+    ["quercu"] = { damage = 7 },
+    ["grebe"] = { damage = 11 },
+    ["secreta"] = { damage = 12 },
+    ["pulchram"] = { damage = 3 },
+    ["conc"] = { damage = 16 }
 }
 
 for name, params in pairs(small_mushrooms) do
