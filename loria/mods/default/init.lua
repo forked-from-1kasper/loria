@@ -86,6 +86,10 @@ end)
 space_suit_strength = 20
 
 minetest.register_on_player_hpchange(function(player, hp_change, reason)
+    if reason.type == "set_hp" then
+        return hp_change
+    end
+
     local meta = player:get_meta()
     local space_suit = meta:get_int("space_suit")
 

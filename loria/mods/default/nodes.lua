@@ -241,13 +241,13 @@ minetest.register_node("default:naga", {
 })
 
 small_mushrooms = {
-    ["pusilli"] = {},
-    ["rosea"] = {},
-    ["purpura"] = { light_source = 5 },
+    ["pusilli"] = { damage = 5 },
+    ["rosea"] = { damage = 4 },
+    ["purpura"] = { features = { light_source = 5 } },
     ["picea"] = {},
-    ["caput"] = {},
-    ["periculum"] = { light_source = 3 },
-    ["vastatorem"] = { light_source = 8 },
+    ["caput"] = { damage = 15 },
+    ["periculum"] = { features = { light_source = 3 }, damage = 18 },
+    ["vastatorem"] = { features = { light_source = 8 } },
     ["quercu"] = {},
     ["grebe"] = {},
     ["secreta"] = {},
@@ -255,7 +255,7 @@ small_mushrooms = {
     ["conc"] = {}
 }
 
-for name, features in pairs(small_mushrooms) do
+for name, params in pairs(small_mushrooms) do
     local info = {
         description = name:gsub("^%l", string.upper),
         drawtype = "plantlike",
@@ -264,10 +264,23 @@ for name, features in pairs(small_mushrooms) do
         inventory_image = "default_" .. name .. ".png",
         paramtype = "light",
         walkable = false,
-        groups = { snappy = 3, attached_node = 1 }
+        groups = { snappy = 3, attached_node = 1 },
+        on_use = function(itemstack, user, pointed_thing)
+            local damage = params.damage or 1
+            local hp = user:get_hp()
+
+            if damage <= hp then
+                user:set_hp(hp - damage)
+            else
+                user:set_hp(0)
+            end
+
+            itemstack:set_count(itemstack:get_count() - 1)
+            return itemstack
+        end
     }
 
-    for key, value in pairs(features) do
+    for key, value in pairs(params.features or {}) do
         info[key] = value
     end
 
