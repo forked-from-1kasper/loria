@@ -44,25 +44,28 @@ minetest.register_biome({
 
 minetest.register_biome({
     name = "default:purple_swamp",
-    node_top = "default:ammonium_manganese_pyrophosphate",
-    depth_top = 30,
-    node_stone = "air",
+    node_stone = "default:ammonium_manganese_pyrophosphate",
 
-    y_min = -23,
+    y_min = -15,
     y_max = 31000,
     heat_point = 40,
     humidity_point = 50,
 })
 
 minetest.register_biome({
+    name = "default:swamp_connector",
+    node_stone = "air",
+    y_min = -20,
+    y_max = -15,
+    heat_point = 40,
+    humidity_point = 50,
+})
+
+minetest.register_biome({
     name = "default:swamp_bottom",
-
-    node_top = "default:potassium_permanganate_source",
-    depth_top = 5,
     node_stone = "default:potassium_permanganate_source",
-
     y_min = -25,
-    y_max = -23,
+    y_max = -20,
     heat_point = 40,
     humidity_point = 50,
 })

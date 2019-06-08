@@ -149,7 +149,9 @@ function generate_colossus(x, y, z, g, data, area)
 end
 
 function generate_column(x, y, z, g, data, area)
-    while data[area:index(x, y, z)] ~= c_air do
+    while (data[area:index(x, y, z)] ~= c_air) and
+          (data[area:index(x, y, z)] ~= c_potassium_permanganate_flowing) and
+          (data[area:index(x, y, z)] ~= c_potassium_permanganate_source) do
         y = y - 1
         if not area:contains(x, y, z) then
             return

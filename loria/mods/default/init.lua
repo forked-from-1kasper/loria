@@ -42,7 +42,7 @@ player_api.register_model("player.b3d", {
     eye_height = 1.47,
 })
 
-creative_privs = { "fly", "fast", "give", "noclip", "settime" }
+creative_privs = { "fly", "fast", "give", "noclip", "settime", "teleport" }
 minetest.register_on_joinplayer(function(player)
     local meta = player:get_meta()
 
