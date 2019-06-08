@@ -254,7 +254,6 @@ minetest.register_globalstep(function(dtime)
         timer = 0
 
         for _, player in ipairs(minetest.get_connected_players()) do
-            local vm = minetest.get_voxel_manip()
             local pos = player:get_pos()
 
             local minp = vector.subtract(pos, gas_vect)
