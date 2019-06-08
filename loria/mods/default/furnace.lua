@@ -4,10 +4,10 @@ gases_list = {
 
 fuel_list = {
     ["default:cinnabar"] = 1,
-    ["default:potassium"] = 4,
-    ["default:potassium_azure"] = 5,
-    ["default:potassium_ingot"] = 6,
-    ["default:bucket_trisilane"] = 25,
+    ["default:potassium"] = 3,
+    ["default:potassium_azure"] = 4,
+    ["default:potassium_ingot"] = 5,
+    ["default:bucket_trisilane"] = 10,
 }
 
 crafts = {
