@@ -33,53 +33,51 @@ function detect_gas(name)
     return false
 end
 
-local c_air = minetest.get_content_id("air")
+local function get_gas_value(gas, name)
+    return tonumber(name:sub(#("default:" .. gas.name) + 2))
+end
 
-function process_gas(gas, i, name, data, area)
-    local pos = area:position(i)
-    local accepted = { i }
+function process_gas(gas, pos, node)
+    local accepted = { pos }
 
-    local reacts = false
-
+    local value = get_gas_value(gas, node.name)
     for _, v in ipairs(get_neighbors(pos)) do
-        if area:containsp(v) then
-            local index = area:indexp(v)
-            local cid = data[index]
-            local name = minetest.get_name_from_content_id(cid)
+        local node = minetest.get_node(v)
 
-            local reaction
+        local reaction
 
-            local gas_name = detect_gas(name)
-            if gas_name ~= false then
-                reaction = gas.reactions["default:" .. gas_name]
+        local gas_name = detect_gas(node.name)
+        if gas_name ~= false then
+            reaction = gas.reactions["default:" .. gas_name]
+        else
+            reaction = gas.reactions[node.name]
+        end
+        if reaction ~= nil then
+            minetest.set_node(v, { name = reaction.result })
+            if reaction.gas then
+                minetest.set_node(pos, {
+                    name = reaction.gas .. "_" .. value
+                })
             else
-                reaction = gas.reactions[name]
+                minetest.set_node(pos, { name = "air" })
             end
-            if reaction ~= nil then
-                reacts = true
-                data[index] = minetest.get_content_id(reaction.result)
-                if reaction.gas then
-                    data[i] = minetest.get_content_id(reaction.gas .. "_" .. i)
-                else
-                    data[i] = c_air
-                end
-            elseif starts_with(name, "default:" .. gas.name) or (cid == c_air) or gas.destroys(name) then
-                table.insert(accepted, index)
-            end
+            return
+        elseif starts_with(node.name, "default:" .. gas.name) or
+              (node.name == "air") or
+               gas.destroys(node.name) then
+            table.insert(accepted, v)
         end
     end
 
-    if not reacts then
-        local value = tonumber(name:sub(#("default:" .. gas.name) + 2))
-        local value_new = value - (#accepted - 1)
-
-        if value_new > 0 then
-            for _, index in ipairs(accepted) do
-                data[index] = minetest.get_content_id("default:" .. gas.name .. "_" .. value_new)
-            end
-        else
-            data[i] = c_air
+    local value_new = value - (#accepted - 1)
+    if value_new > 0 then
+        for _, v in ipairs(accepted) do
+            minetest.set_node(v, {
+                name = "default:" .. gas.name .. "_" .. value_new
+            })
         end
+    else
+        minetest.set_node(pos, { name = "air" })
     end
 end
 
@@ -123,11 +121,6 @@ function register_gas(gas)
             buildable_to = true,
         })
     end
-
-    local cid_min = minetest.get_content_id("default:" .. gas.name .. "_1")
-    local cid_max = minetest.get_content_id(
-        "default:" .. gas.name .. "_" .. gas_levels
-    )
 
     minetest.register_tool("default:" .. gas.name .. "_balloon", {
         inventory_image = "default_empty_balloon.png^[combine:16x16:0,0=" .. gas.icon,
@@ -264,28 +257,24 @@ minetest.register_globalstep(function(dtime)
             local vm = minetest.get_voxel_manip()
             local pos = player:get_pos()
 
-            local minp, maxp = vm:read_from_map(
-                vector.subtract(pos, gas_vect),
-                vector.add(pos, gas_vect)
-            )
+            local minp = vector.subtract(pos, gas_vect)
+            local maxp = vector.add(pos, gas_vect)
+            for x = minp.x, maxp.x do
+                for y = minp.y, maxp.y do
+                    for z = minp.x, maxp.z do
+                        local pos = vector.new(x, y, z)
+                        local node = minetest.get_node(pos)
 
-            local area = VoxelArea:new({MinEdge = minp, MaxEdge = maxp})
-            local data = vm:get_data()
-            for i, cid in ipairs(data) do
-                local name = minetest.get_name_from_content_id(cid)
-
-                for _, gas in ipairs(gases) do
-                    if starts_with(name, "default:" .. gas.name) then
-                        if math.random() <= 0.5 then
-                            process_gas(gas, i, name, data, area)
+                        for _, gas in ipairs(gases) do
+                            if starts_with(node.name, "default:" .. gas.name) then
+                                if math.random() <= 0.5 then
+                                    process_gas(gas, pos, node)
+                                end
+                            end
                         end
                     end
                 end
             end
-
-            vm:set_data(data)
-            vm:write_to_map()
-            vm:update_map()
         end
     end
 end)
