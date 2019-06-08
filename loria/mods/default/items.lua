@@ -166,6 +166,7 @@ minetest.register_globalstep(function(dtime)
 end)
 
 bucket = {}
+bucket.is_bucket = {}
 bucket.liquids = {}
 
 function bucket.register_liquid(source, flowing, itemname, inventory_image, description)
@@ -175,6 +176,7 @@ function bucket.register_liquid(source, flowing, itemname, inventory_image, desc
         itemname = itemname
     }
     bucket.liquids[flowing] = bucket.liquids[source]
+    bucket.is_bucket[itemname] = true
 
     if itemname ~= nil then
         minetest.register_craftitem(itemname, {

@@ -4,6 +4,7 @@ gases_list = {
 
 fuel_list = {
     ["default:cinnabar"] = 1,
+    ["default:bucket_trisilane"] = 25,
 }
 
 crafts = {
@@ -322,15 +323,26 @@ minetest.register_node("default:furnace_active", {
         local fuel = inv:get_list("fuel")[1]
 
         local cycle = meta:get_float("cycle") + elapsed
-        if cycle > fuel_list[fuel:get_name()] then
+        local fuel_name = fuel:get_name()
+        if cycle > fuel_list[fuel_name] then
             cycle = 0
             local count = fuel:get_count() - 1
             fuel:set_count(count)
-            
+
             if count == 0 then
                 minetest.swap_node(pos, { name = "default:furnace" })
                 minetest.get_node_timer(pos):stop()
+
                 meta:set_float("cooking", 0)
+
+                if bucket.is_bucket[fuel_name] then
+                    local empty = { name = "default:bucket_empty" }
+                    if inv:room_for_item("output", empty) then
+                        inv:add_item("output", empty)
+                    else
+                        minetest.add_item(vector.add(pos, vector.new(0, 1, 0)), empty)
+                    end
+                end
             end
             inv:set_stack("fuel", 1, fuel)
         end

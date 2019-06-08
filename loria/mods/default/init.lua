@@ -42,6 +42,7 @@ player_api.register_model("player.b3d", {
     eye_height = 1.47,
 })
 
+creative_privs = { "fly", "fast", "give", "noclip", "settime" }
 minetest.register_on_joinplayer(function(player)
     local meta = player:get_meta()
 
@@ -66,6 +67,18 @@ minetest.register_on_joinplayer(function(player)
         { x = 200, y = 219 },
         30
     )
+
+    creative = minetest.settings:get_bool("creative_mode")
+    local privs = minetest.get_player_privs(name)
+
+    for _, priv in ipairs(creative_privs) do
+        if creative then
+            privs[priv] = true
+        else
+            privs[priv] = nil
+        end
+    end
+    minetest.set_player_privs(name, privs)
 
     minetest.chat_send_player(name, "Welcome to Loria!")
 end)

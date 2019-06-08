@@ -360,6 +360,28 @@ minetest.register_node("default:trisilane_flowing", {
     groups = { water = 3, liquid = 3 },
 })
 
+minetest.register_node("default:trisilane_cinnabar", {
+    description = "Trisilane (in cinnabar)",
+    tiles = { "default_cinnabar.png" },
+    overlay_tiles = { "default_trisilane_ore.png" },
+    groups = { cracky = 1 },
+    drop = {},
+    after_destruct = function(pos, oldnode)
+        minetest.set_node(pos, { name = "default:trisilane_source" })
+    end
+})
+
+minetest.register_node("default:trisilane_cobalt_blue", {
+    description = "Trisilane (in cobalt blue)",
+    tiles = { "default_cobalt_blue.png" },
+    overlay_tiles = { "default_trisilane_ore.png" },
+    groups = { cracky = 1 },
+    drop = {},
+    after_destruct = function(pos, oldnode)
+        minetest.set_node(pos, { name = "default:trisilane_source" })
+    end
+})
+
 minetest.register_node("default:potassium_hydroxide_source", {
     description = "Potassium hydroxide source",
     drawtype = "liquid",

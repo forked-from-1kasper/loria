@@ -222,6 +222,28 @@ for _, name in ipairs({ "uranyl_acetate", "plutonium_fluoride" }) do
     })
 end
 
+minetest.register_ore({
+    ore_type       = "scatter",
+    ore            = "default:trisilane_cinnabar",
+    wherein        = "default:cinnabar",
+    clust_scarcity = 8 * 8 * 8,
+    clust_num_ores = 8,
+    clust_size     = 3,
+    height_min     = -10,
+    height_max     = 80,
+})
+
+minetest.register_ore({
+    ore_type       = "scatter",
+    ore            = "default:trisilane_cobalt_blue",
+    wherein        = "default:cobalt_blue",
+    clust_scarcity = 8 * 8 * 8,
+    clust_num_ores = 8,
+    clust_size     = 3,
+    height_min     = -10,
+    height_max     = 80,
+})
+
 minetest.register_decoration({
     deco_type = "simple",
     place_on = { "default:lead_sulfate" },
