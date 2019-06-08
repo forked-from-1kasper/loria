@@ -270,7 +270,7 @@ fluorine = {
 fire = {
     name = "fire",
     no_balloon = true,
-    color = { r = 255, g = 0, b = 0 },
+    color = { r = 255, g = 255, b = 255 },
     destroys = function(name)
         return is_organic(name) or is_heavy_organic(name) or is_fuel(name)
     end,
@@ -289,11 +289,35 @@ fire = {
         ["default:mercury"] = {
             result = "default:mercury_source",
             gas = "default:fire"
-        }
+        },
+        ["default:red_mercury_oxide"] = {
+            result = "air",
+            gas = "default:fire"
+        },
+        ["default:mercury_oxide"] = {
+            result = "air",
+            gas = "default:fire"
+        },
+        ["default:cinnabar"] = {
+            result = "air",
+            gas = "default:fire"
+        },
+        ["default:cobalt_blue"] = {
+            result = "air",
+            gas = "default:fire"
+        },
     },
     texture = function(alpha)
+        local postfix
+        if alpha > 90 then
+            postfix = "^[colorize:#ffffff^[opacity:" .. alpha + 128
+        elseif alpha > 32 then
+            postfix = "^[colorize:#ffff00^[opacity:" .. alpha + 128
+        else
+            postfix = "^[colorize:#ff0000^[opacity:" .. alpha
+        end
         return {
-            "default_gas.png^[colorize:#ffff00^[opacity:"..(alpha + 128)
+            "default_gas.png" .. postfix
         }
     end
 }
