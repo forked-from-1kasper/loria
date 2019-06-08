@@ -92,7 +92,6 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
     end
 
     update_preview(player)
-    return true
 end)
 
 minetest.register_on_player_inventory_action(function(player, action, inventory, inventory_info)

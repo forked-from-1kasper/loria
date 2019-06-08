@@ -186,7 +186,7 @@ function bucket.register_liquid(source, flowing, itemname, inventory_image, desc
                 if pointed_thing.type ~= "node" then
                     return
                 end
-                n = minetest.get_node(pointed_thing.under)
+                local n = minetest.get_node(pointed_thing.under)
                 if bucket.liquids[n.name] == nil then
                     minetest.add_node(pointed_thing.above, { name = source })
                 elseif n.name ~= source then
@@ -209,7 +209,7 @@ minetest.register_craftitem("default:bucket_empty", {
         end
 
         n = minetest.get_node(pointed_thing.under)
-        liquiddef = bucket.liquids[n.name]
+        local liquiddef = bucket.liquids[n.name]
         if liquiddef ~= nil and liquiddef.source == n.name and liquiddef.itemname ~= nil then
             minetest.add_node(pointed_thing.under, { name = "air" })
             return { name = liquiddef.itemname }
@@ -247,6 +247,14 @@ bucket.register_liquid(
     "default:bucket_potassium_hydroxide",
     "bucket_potassium_hydroxide.png",
     "Bucket with potassium hydroxide"
+)
+
+bucket.register_liquid(
+    "default:trisilane_source",
+    "default:trisilane_flowing",
+    "default:bucket_trisilane",
+    "bucket_trisilane.png",
+    "Bucket with trisilane"
 )
 
 for _, name in ipairs(ores) do
