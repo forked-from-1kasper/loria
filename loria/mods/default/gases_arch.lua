@@ -234,11 +234,11 @@ minetest.register_abm({
     chance = 1,
     action = function(pos)
         vects = {
-            vector.add(pos, vector.new(0, 1, 0)),
-            vector.add(pos, vector.new(1, 0, 0)),
-            vector.add(pos, vector.new(-1, 0, 0)),
-            vector.add(pos, vector.new(0, 0, 1)),
-            vector.add(pos, vector.new(0, 0, -1)),
+            vector.new(0, 1, 0),
+            vector.new(1, 0, 0),
+            vector.new(-1, 0, 0),
+            vector.new(0, 0, 1),
+            vector.new(0, 0, -1),
         }
 
         for _, vect in ipairs(vects) do

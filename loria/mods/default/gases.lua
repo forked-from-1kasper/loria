@@ -53,7 +53,8 @@ oxygen = {
     destroys = function(name)
         return false
     end,
-    transparent = true,
+    --transparent = true,
+    transparent = false,
     damage = 0,
     reactions = {
         ["default:cinnabar"] = {
