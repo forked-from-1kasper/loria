@@ -173,6 +173,15 @@ function is_fuel(name)
         starts_with(name, "default:trisilane")
 end
 
+function detonate(name)
+    return
+        (name == "default:red_mercury_oxide") or
+        (name == "default:mercury_oxide") or
+        (name == "default:cinnabar") or
+        (name == "default:copper_sulfate") or
+        (name == "default:cobalt_blue")
+end
+
 chlorine = {
     name = "chlorine",
     icon = "default_chlorine_symbol.png",
@@ -272,7 +281,11 @@ fire = {
     no_balloon = true,
     color = { r = 255, g = 255, b = 255 },
     destroys = function(name)
-        return is_organic(name) or is_heavy_organic(name) or is_fuel(name)
+        return
+            is_organic(name) or
+            is_heavy_organic(name) or
+            is_fuel(name) or
+            detonate(name)
     end,
     transparent = false,
     damage = 3,
@@ -289,23 +302,7 @@ fire = {
         ["default:mercury"] = {
             result = "default:mercury_source",
             gas = "default:fire"
-        },
-        ["default:red_mercury_oxide"] = {
-            result = "air",
-            gas = "default:fire"
-        },
-        ["default:mercury_oxide"] = {
-            result = "air",
-            gas = "default:fire"
-        },
-        ["default:cinnabar"] = {
-            result = "air",
-            gas = "default:fire"
-        },
-        ["default:cobalt_blue"] = {
-            result = "air",
-            gas = "default:fire"
-        },
+        }
     },
     texture = function(alpha)
         local postfix
