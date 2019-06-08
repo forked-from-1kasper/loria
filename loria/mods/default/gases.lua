@@ -53,7 +53,7 @@ function process_gas(gas, pos, node)
             reaction = gas.reactions[node.name]
         end
         if reaction ~= nil then
-            minetest.set_node(v, { name = reaction.result })
+            minetest.swap_node(v, { name = reaction.result })
             if reaction.gas then
                 minetest.set_node(pos, {
                     name = reaction.gas .. "_" .. value
@@ -100,9 +100,16 @@ function register_gas(gas)
             alpha = 0
         end
 
+        local tiles = {
+            "default_gas.png^[colorize:" .. color .. "^[opacity:"..alpha
+        }
+        if gas.texture ~= nil then
+            tiles = gas.texture(alpha)
+        end
+
         minetest.register_node("default:" .. gas.name .. "_" .. i, {
             description = gas.name:gsub("^%l", string.upper) .. " gas",
-            tiles = { "default_gas.png^[colorize:" .. color .. "^[opacity:"..alpha },
+            tiles = tiles,
             drawtype = "glasslike",
             paramtype = "light",
             paramtype2 = "glasslikeliquidlevel",
@@ -119,26 +126,29 @@ function register_gas(gas)
             drop = {},
             pointable = false,
             buildable_to = true,
+            light_source = gas.light_source or 0,
         })
     end
 
-    minetest.register_tool("default:" .. gas.name .. "_balloon", {
-        inventory_image = "default_empty_balloon.png^[combine:16x16:0,0=" .. gas.icon,
-        description = gas.name:gsub("^%l", string.upper) .. " balloon",
-        stack_max = 1,
-        on_use = function(itemstack, user, pointed_thing)
-            if pointed_thing.type ~= "node" then
-                return
-            end
+    if not gas.no_balloon then
+        minetest.register_tool("default:" .. gas.name .. "_balloon", {
+            inventory_image = "default_empty_balloon.png^[combine:16x16:0,0=" .. gas.icon,
+            description = gas.name:gsub("^%l", string.upper) .. " balloon",
+            stack_max = 1,
+            on_use = function(itemstack, user, pointed_thing)
+                if pointed_thing.type ~= "node" then
+                    return
+                end
 
-            local wear = 65535 - itemstack:get_wear()
-            local value = math.ceil(wear * gas_levels / 65536)
-            minetest.add_node(pointed_thing.above, {
-                name = "default:" .. gas.name .. "_" .. value
-            })
-            return { name = "default:empty_balloon" }
-        end
-    })
+                local wear = 65535 - itemstack:get_wear()
+                local value = math.ceil(wear * gas_levels / 65536)
+                minetest.add_node(pointed_thing.above, {
+                    name = "default:" .. gas.name .. "_" .. value
+                })
+                return { name = "default:empty_balloon" }
+            end
+        })
+    end
 end
 
 function is_organic(name)
@@ -155,6 +165,12 @@ end
 
 function is_heavy_organic(name)
     return ends_with(name, "_stem")
+end
+
+function is_fuel(name)
+    return
+        starts_with(name, "default:potassium") or
+        starts_with(name, "default:trisilane")
 end
 
 chlorine = {
@@ -193,7 +209,11 @@ oxygen = {
         },
         ["default:hydrogen"] = {
             result = "default:water_source"
-        }
+        },
+        ["default:furnace_active"] = {
+            result = "default:furnace_active",
+            gas = "default:fire"
+        },
     },
 }
 
@@ -206,7 +226,12 @@ hydrogen = {
     end,
     transparent = true,
     damage = 0,
-    reactions = {},
+    reactions = {
+        ["default:furnace_active"] = {
+            result = "default:furnace_active",
+            gas = "default:fire"
+        },
+    },
 }
 
 sulfur_dioxide = {
@@ -242,7 +267,38 @@ fluorine = {
     },
 }
 
-gases = { chlorine, oxygen, hydrogen, sulfur_dioxide, fluorine }
+fire = {
+    name = "fire",
+    no_balloon = true,
+    color = { r = 255, g = 0, b = 0 },
+    destroys = function(name)
+        return is_organic(name) or is_heavy_organic(name) or is_fuel(name)
+    end,
+    transparent = false,
+    damage = 3,
+    light_source = 14,
+    reactions = {
+        ["default:hydrogen"] = {
+            result = "default:fire_" .. gas_levels,
+            gas = "default:fire"
+        },
+        ["default:oxygen"] = {
+            result = "default:fire_" .. gas_levels,
+            gas = "default:fire"
+        },
+        ["default:mercury"] = {
+            result = "default:mercury_source",
+            gas = "default:fire"
+        }
+    },
+    texture = function(alpha)
+        return {
+            "default_gas.png^[colorize:#ffff00^[opacity:"..(alpha + 128)
+        }
+    end
+}
+
+gases = { chlorine, oxygen, hydrogen, sulfur_dioxide, fluorine, fire }
 for _, gas in ipairs(gases) do
     register_gas(gas)
 end
