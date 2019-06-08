@@ -56,7 +56,7 @@ colossus = {
     max_radius = 20
 }
 
-function generate_viridi_petasum(x, y, z, g, data, area)
+local function generate_viridi_petasum(x, y, z, g, data, area)
     local height = g:next(viridi_petasum.min_height, viridi_petasum.max_height)
     local radius = g:next(viridi_petasum.min_radius, math.floor(height / 2))
 
@@ -84,7 +84,7 @@ function generate_viridi_petasum(x, y, z, g, data, area)
     end
 end
 
-function generate_rete(x, y, z, g, data, area)
+local function generate_rete(x, y, z, g, data, area)
     local height = g:next(rete.min_height, rete.max_height)
     local radius = 1
 
@@ -110,7 +110,7 @@ function generate_rete(x, y, z, g, data, area)
     end
 end
 
-function generate_columnae(x, y, z, g, data, area)
+local function generate_columnae(x, y, z, g, data, area)
     while data[area:index(x, y, z)] ~= c_air do
         y = y - 1
         if not area:contains(x, y, z) then
@@ -132,7 +132,7 @@ function generate_columnae(x, y, z, g, data, area)
     end
 end
 
-function generate_colossus(x, y, z, g, data, area)
+local function generate_colossus(x, y, z, g, data, area)
     local height = g:next(colossus.min_height, colossus.max_height)
     local radius = g:next(colossus.min_radius, colossus.max_radius)
 
@@ -148,7 +148,7 @@ function generate_colossus(x, y, z, g, data, area)
     end
 end
 
-function generate_column(x, y, z, g, data, area)
+local function generate_column(x, y, z, g, data, area)
     while (data[area:index(x, y, z)] ~= c_air) and
           (data[area:index(x, y, z)] ~= c_potassium_permanganate_flowing) and
           (data[area:index(x, y, z)] ~= c_potassium_permanganate_source) do
@@ -178,7 +178,7 @@ function generate_column(x, y, z, g, data, area)
     end
 end
 
-function generate_turris(x, y, z, g, data, area)
+local function generate_turris(x, y, z, g, data, area)
     local height = g:next(turris.min_height, turris.max_height)
     local radius = g:next(turris.min_radius, turris.max_radius)
 

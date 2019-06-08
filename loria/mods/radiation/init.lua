@@ -1,13 +1,4 @@
-local c_uranyl_acetate = minetest.get_content_id("default:uranyl_acetate")
-local c_plutonium_fluoride = minetest.get_content_id("default:plutonium_fluoride")
-local c_turris_body = minetest.get_content_id("default:turris_body")
-local c_periculum = minetest.get_content_id("default:periculum")
-
-activity = {
-    [c_uranyl_acetate] = 1,
-    [c_plutonium_fluoride] = 20,
-    [c_periculum] = 0.5,
-}
+dofile(minetest.get_modpath("radiation").."/conf.lua")
 
 radiation_vect = vector.new(16, 16, 16)
 
@@ -38,14 +29,14 @@ minetest.register_globalstep(function(dtime)
     end
 end)
 
-function hypot_sqr(pos1, pos2)
+local function hypot_sqr(pos1, pos2)
     return
         (pos1.x - pos2.x) ^ 2 +
         (pos1.y - pos2.y) ^ 2 +
         (pos1.z - pos2.z) ^ 2
 end
 
-function calculate_inventory_radiation(inv)
+local function calculate_inventory_radiation(inv)
     local radiation = 0
 
     for _, list in pairs(inv:get_lists()) do

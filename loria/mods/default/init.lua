@@ -1,4 +1,8 @@
 default = {}
+dofile(minetest.get_modpath("default").."/ores.lua")
+dofile(minetest.get_modpath("default").."/mushrooms_nodes.lua")
+dofile(minetest.get_modpath("default").."/small_mushrooms.lua")
+dofile(minetest.get_modpath("default").."/liquids.lua")
 dofile(minetest.get_modpath("default").."/nodes.lua")
 dofile(minetest.get_modpath("default").."/gases.lua")
 dofile(minetest.get_modpath("default").."/items.lua")
@@ -6,7 +10,6 @@ dofile(minetest.get_modpath("default").."/craft.lua")
 dofile(minetest.get_modpath("default").."/furnace.lua")
 dofile(minetest.get_modpath("default").."/mapgen.lua")
 dofile(minetest.get_modpath("default").."/mushrooms.lua")
-dofile(minetest.get_modpath("default").."/radiation.lua")
 dofile(minetest.get_modpath("default").."/hud.lua")
 dofile(minetest.get_modpath("default").."/player.lua")
 
