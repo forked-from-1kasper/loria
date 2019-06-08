@@ -41,14 +41,18 @@ inv_crafts = {
     }
 }
 
+function check_craft(craft, inv)
+    for _, reagent in ipairs(craft.input) do
+        if not inv:contains_item("input", reagent) then
+            return false
+        end
+    end
+    return true
+end
+
 function get_craft(crafts, inv)
     for _, craft in ipairs(crafts) do
-        local checked = true
-        for _, reagent in ipairs(craft.input) do
-            checked = checked and inv:contains_item("input", reagent)
-        end
-
-        if checked then
+        if check_craft(craft, inv) then
             return craft
         end
     end
@@ -59,9 +63,7 @@ function update_preview(player)
     local recipe = get_craft(inv_crafts, inv)
 
     -- clear first
-    for i = 1, #inv:get_list("output") do
-        inv:set_stack("output", i, {})
-    end
+    inv:set_list("output", {})
 
     if recipe ~= nil then
         for _, result in ipairs(recipe.output) do

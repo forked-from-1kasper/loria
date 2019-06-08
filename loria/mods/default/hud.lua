@@ -8,12 +8,9 @@ function space_suit(player)
 end
 
 function gas(player)
-    local name = detect_gas(minetest.get_node(player:get_pos()).name)
-    if not name then
-        return "No gases detected"
-    else
-        return "Gas: " .. name
-    end
+    local pos = player:get_pos()
+    local name = get_gas(vector.add(vector.new(0, 1, 0), pos)) or get_gas(pos) or "N/A"
+    return "Gas: " .. name
 end
 
 function oxygen(player)

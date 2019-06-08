@@ -103,6 +103,10 @@ minetest.register_craftitem("default:empty_balloon", {
     stack_max = 1
 })
 
+function get_gas(pos)
+    return detect_gas(minetest.get_node(pos).name)
+end
+
 balloon_use = 100
 balloon_coeff = 64
 broken_spacesuit_coeff = 3
@@ -127,11 +131,7 @@ minetest.register_globalstep(function(dtime)
             local inv = player:get_inventory()
             local oxygen_stack = inv:get_list("oxygen")[1]
 
-            if oxygen_stack == nil then
-                oxygen = 0
-            elseif oxygen_stack:get_name() == "default:empty_balloon" then
-                oxygen = 0
-            elseif oxygen_stack:get_name() == "default:oxygen_balloon" then
+            if inv:contains_item("oxygen", { name = "default:oxygen_balloon" }) then
                 local delta
                 if meta:get_int("space_suit") > 0 then
                     delta = balloon_coeff
@@ -154,8 +154,10 @@ minetest.register_globalstep(function(dtime)
             else
                 oxygen = 0
             end
-
-            if oxygen <= 0 then
+            
+            local pos = player:get_pos()
+            if get_gas(vector.add(vector.new(0, 1, 0), pos)) ~= "oxygen" and
+               get_gas(pos) ~= "oxygen" and oxygen <= 0 then
                 player:set_hp(player:get_hp() - 1)
             end
 

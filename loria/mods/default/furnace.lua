@@ -77,6 +77,15 @@ crafts = {
     },
     {
         input = {
+            { name = "default:zinc_ingot", count = 4 }
+        },
+        output = {
+            { name = "default:bucket_empty", count = 1 }
+        },
+        time = 10
+    },
+    {
+        input = {
             { name = "default:aluminium_ingot", count = 3 }
         },
         output = {
