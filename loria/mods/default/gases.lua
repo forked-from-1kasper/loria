@@ -173,15 +173,6 @@ function is_fuel(name)
         starts_with(name, "default:trisilane")
 end
 
-function detonate(name)
-    return
-        (name == "default:red_mercury_oxide") or
-        (name == "default:mercury_oxide") or
-        (name == "default:cinnabar") or
-        (name == "default:copper_sulfate") or
-        (name == "default:cobalt_blue")
-end
-
 chlorine = {
     name = "chlorine",
     icon = "default_chlorine_symbol.png",
@@ -276,6 +267,35 @@ fluorine = {
     },
 }
 
+fire_reactions = {
+    ["default:hydrogen"] = {
+        result = "default:fire_" .. gas_levels,
+        gas = "default:fire"
+    },
+    ["default:oxygen"] = {
+        result = "default:fire_" .. gas_levels,
+        gas = "default:fire"
+    },
+    ["default:mercury"] = {
+        result = "default:mercury_source",
+        gas = "default:fire"
+    }
+}
+
+evaporates = {
+    "default:red_mercury_oxide",
+    "default:mercury_oxide",
+    "default:cinnabar",
+    "default:copper_sulfate",
+    "default:cobalt_blue"
+}
+
+for _, name in ipairs(evaporates) do
+    fire_reactions[name] = {
+        result = "air"
+    }
+end
+
 fire = {
     name = "fire",
     no_balloon = true,
@@ -284,26 +304,12 @@ fire = {
         return
             is_organic(name) or
             is_heavy_organic(name) or
-            is_fuel(name) or
-            detonate(name)
+            is_fuel(name)
     end,
     transparent = false,
     damage = 3,
     light_source = 14,
-    reactions = {
-        ["default:hydrogen"] = {
-            result = "default:fire_" .. gas_levels,
-            gas = "default:fire"
-        },
-        ["default:oxygen"] = {
-            result = "default:fire_" .. gas_levels,
-            gas = "default:fire"
-        },
-        ["default:mercury"] = {
-            result = "default:mercury_source",
-            gas = "default:fire"
-        }
-    },
+    reactions = fire_reactions,
     texture = function(alpha)
         local postfix
         if alpha > 90 then
