@@ -260,7 +260,7 @@ minetest.register_globalstep(function(dtime)
             local maxp = vector.add(pos, gas_vect)
             for x = minp.x, maxp.x do
                 for y = minp.y, maxp.y do
-                    for z = minp.x, maxp.z do
+                    for z = minp.z, maxp.z do
                         local pos = vector.new(x, y, z)
                         local node = minetest.get_node(pos)
 
