@@ -60,9 +60,6 @@ oxygen = {
             result = "default:mercury",
             gas = "default:sulfur_dioxide"
         },
-        ["default:hydrogen"] = {
-            result = "default:water_source"
-        },
         ["default:furnace_active"] = {
             result = "default:furnace_active",
             gas = "default:fire"

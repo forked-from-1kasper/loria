@@ -82,7 +82,7 @@ minetest.register_node("default:fused_quartz", {
     paramtype = "light",
     is_ground_content = false,
     sunlight_propagates = true,
-    groups = { snappy=2, cracky=3, oddly_breakable_by_hand=3 },
+    groups = { snappy = 2, cracky = 3, oddly_breakable_by_hand = 3 },
 })
 
 minetest.register_node("default:cobalt_blue", {
