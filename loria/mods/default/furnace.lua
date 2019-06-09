@@ -146,6 +146,16 @@ crafts = {
             { name = "default:fused_quartz" }
         },
         time = 3,
+    },
+    {
+        input = {
+            { name = "default:uranium_tetrachloride_ore", count = 1 }
+        },
+        output = {
+            { name = "default:uranium_tetrachloride", count = 1 },
+            { name = "default:cinnabar", count = 1 },
+        },
+        time = 5,
     }
 }
 
@@ -240,6 +250,17 @@ function stop_furnace(pos)
     end
 end
 
+function drop_everything(pos)
+    local meta = minetest.get_meta(pos)
+    local inv = meta:get_inventory()
+
+    for _, list in pairs(inv:get_lists()) do
+        for _, item_stack in ipairs(list) do
+            minetest.add_item(pos, item_stack)
+        end
+    end
+end
+
 minetest.register_node("default:furnace", {
     description = "Furnace",
     tiles = {
@@ -247,6 +268,8 @@ minetest.register_node("default:furnace", {
         "default_furnace_side.png", "default_furnace_side.png",
         "default_furnace_side.png", "default_furnace_front.png"
     },
+
+    on_destruct = drop_everything,
 
     on_construct = function(pos)
         local meta = minetest.get_meta(pos)
@@ -348,6 +371,8 @@ minetest.register_node("default:furnace_active", {
     on_metadata_inventory_take = function(pos, listname, index, stack, player)
         stop_furnace(pos)
     end,
+
+    on_destruct = drop_everything,
 
     on_timer = function(pos, elapsed)
         local meta = minetest.get_meta(pos)

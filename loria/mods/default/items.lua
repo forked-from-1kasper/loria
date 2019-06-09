@@ -205,7 +205,7 @@ end
 minetest.register_craftitem("default:bucket_empty", {
     inventory_image = "bucket.png",
     description = "Empty bucket",
-    stack_max = 5,
+    stack_max = 1,
     liquids_pointable = true,
     on_use = function(itemstack, user, pointed_thing)
         if pointed_thing.type ~= "node" then

@@ -38,6 +38,16 @@ inv_crafts = {
         output = {
             { name = "default:drill", count = 1 }
         }
+    },
+    {
+        input = {
+            { name = "default:uranium_tetrachloride", count = 1 },
+            { name = "default:potassium_ingot", count = 1 },
+        },
+        output = {
+            { name = "default:uranium", count = 1 },
+            { name = "default:potassium_chloride", count = 4 },
+        }
     }
 }
 

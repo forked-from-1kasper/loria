@@ -47,11 +47,32 @@ minetest.register_node("default:mercury", {
     drop = 'default:mercury'
 })
 
+minetest.register_node("default:uranium", {
+    description = "Uranium (U)",
+    tiles = { "default_uranium.png" },
+    groups = { cracky = 1 },
+    drop = 'default:uranium'
+})
+
 minetest.register_node("default:mercury_chloride", {
     description = "Mercury (II) chloride (HgCl₂)",
     tiles = { "default_mercury_chloride.png" },
     groups = { crumbly = 3 },
     drop = 'default:mercury_chloride'
+})
+
+minetest.register_node("default:uranium_tetrachloride", {
+    description = "Uranium tetrachloride (UCl₄)",
+    tiles = { "default_uranium_tetrachloride.png" },
+    groups = { crumbly = 2 },
+    drop = 'default:uranium_tetrachloride'
+})
+
+minetest.register_node("default:potassium_chloride", {
+    description = "Potassium chloride (KCl)",
+    tiles = { "default_potassium_chloride.png" },
+    groups = { crumbly = 3 },
+    drop = 'default:potassium_chloride'
 })
 
 minetest.register_node("default:mercury_fluoride", {
