@@ -147,6 +147,7 @@ end)
 minetest.register_on_respawnplayer(function(player)
     local meta = player:get_meta()
 
+    player:set_hp(20)
     meta:set_float("received_dose", 0)
     meta:set_int("space_suit", space_suit_strength)
 end)

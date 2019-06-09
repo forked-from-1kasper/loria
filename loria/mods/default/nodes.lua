@@ -92,14 +92,6 @@ minetest.register_node("default:cobalt_blue", {
     drop = 'default:cobalt_blue'
 })
 
-minetest.register_node("default:plutonium_fluoride", {
-    description = "Plutonium (III) fluoride (PuF₃)",
-    tiles = { "default_cinnabar.png" },
-    overlay_tiles = { "default_plutonium_fluoride.png" },
-    groups = { cracky = 1 },
-    drop = 'default:plutonium_fluoride'
-})
-
 minetest.register_node("default:mercury_oxide", {
     description = "Mercury (II) oxide (HgO)",
     tiles = { "default_mercury_oxide.png" },

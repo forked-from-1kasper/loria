@@ -90,13 +90,7 @@ for name, params in pairs(small_mushrooms) do
         groups = { snappy = 3, attached_node = 1 },
         on_use = function(itemstack, user, pointed_thing)
             local damage = params.damage or 1
-            local hp = user:get_hp()
-
-            if damage <= hp then
-                user:set_hp(hp - damage)
-            else
-                user:set_hp(0)
-            end
+            user:set_hp(user:get_hp() - damage)
 
             itemstack:set_count(itemstack:get_count() - 1)
             return itemstack

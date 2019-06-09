@@ -18,12 +18,20 @@ for _, name in ipairs(ores) do
     })
 end
 
-minetest.register_node("default:uranyl_acetate", {
-    description = "Uranyl acetate (UO₂(CH₃COO)₂·2H₂O)",
+minetest.register_node("default:plutonium_fluoride", {
+    description = "Plutonium (III) fluoride (PuF₃)",
     tiles = { "default_cinnabar.png" },
-    overlay_tiles = { "default_uranyl_acetate.png" },
+    overlay_tiles = { "default_plutonium_fluoride.png" },
     groups = { cracky = 1 },
-    drop = 'default:uranyl_acetate'
+    drop = 'default:plutonium_fluoride'
+})
+
+minetest.register_node("default:uranium_tetrafluoride", {
+    description = "Uranium tetrafluoride (UF₄)",
+    tiles = { "default_cinnabar.png" },
+    overlay_tiles = { "default_uranium_tetrafluoride.png" },
+    groups = { cracky = 1 },
+    drop = 'default:uranium_tetrafluoride'
 })
 
 minetest.register_node("default:trisilane_source", {

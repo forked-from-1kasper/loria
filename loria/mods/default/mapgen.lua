@@ -5,7 +5,7 @@ minetest.register_alias("mapgen_sand", "default:lead_sulfate")
 minetest.register_alias("mapgen_water_source", "default:mercury_source")
 minetest.register_alias("mapgen_river_water_source", "default:mercury_source")
 minetest.register_alias("mapgen_lava_source", "default:mercury_source")
-minetest.register_alias("mapgen_gravel", "default:uranyl_acetate")
+minetest.register_alias("mapgen_gravel", "default:uranium_tetrafluoride")
 
 minetest.register_alias("mapgen_tree", "default:viridi_petasum_stem")
 minetest.register_alias("mapgen_leaves", "default:viridi_petasum_body")
@@ -203,7 +203,7 @@ for _, name in ipairs(ores) do
     })
 end
 
-for _, name in ipairs({ "uranyl_acetate", "plutonium_fluoride" }) do
+for _, name in ipairs({ "uranium_tetrafluoride", "plutonium_fluoride" }) do
     minetest.register_ore({
         ore_type       = "blob",
         ore            = "default:" .. name,
