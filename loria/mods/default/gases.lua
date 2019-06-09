@@ -131,7 +131,7 @@ fire = {
             is_fuel(name)
     end,
     transparent = false,
-    damage = 3,
+    damage = 10,
     light_source = 14,
     texture = function(alpha)
         local postfix
@@ -168,7 +168,8 @@ evaporates = {
     "default:mercury_oxide",
     "default:cinnabar",
     "default:copper_sulfate",
-    "default:cobalt_blue"
+    "default:cobalt_blue",
+    "default:ammonium_manganese_pyrophosphate"
 }
 
 for _, name in ipairs(evaporates) do

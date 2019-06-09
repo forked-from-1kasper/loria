@@ -69,7 +69,6 @@ local function process_gas(gas, pos, node)
         end
     end
 
-    minetest.log(node.name)
     local value_new = value - (#accepted - 1)
     if value_new > 0 then
         for _, v in ipairs(accepted) do
@@ -128,6 +127,15 @@ function register_gas(gas)
             pointable = false,
             buildable_to = true,
             light_source = gas.light_source or 0,
+        })
+
+        minetest.register_abm({
+            nodenames = { "default:" .. gas.name .. "_" .. i },
+            interval = 1,
+            chance = 100,
+            action = function(pos)
+                minetest.set_node(pos, { name = "air" })
+            end
         })
     end
 

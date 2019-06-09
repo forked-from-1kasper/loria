@@ -137,6 +137,15 @@ crafts = {
             { name = "default:bucket_mercury" }
         },
         time = 5,
+    },
+    {
+        input = {
+            { name = "default:silicon_dioxide", count = 9 }
+        },
+        output = {
+            { name = "default:fused_quartz" }
+        },
+        time = 3,
     }
 }
 
@@ -160,6 +169,28 @@ for _, name in ipairs(ores) do
             { name = "default:cobalt_blue", count = 1 }
         },
         time = 3
+    })
+end
+
+for _, mushroom in ipairs(giant_mushrooms) do
+    table.insert(crafts, {
+        input = {
+            { name = "default:" .. mushroom .. "_body", count = 3 }
+        },
+        output = {
+            { name = "default:silicon_dioxide" }
+        },
+        time = 5
+    })
+
+    table.insert(crafts, {
+        input = {
+            { name = "default:" .. mushroom .. "_stem", count = 5 }
+        },
+        output = {
+            { name = "default:silicon_dioxide" }
+        },
+        time = 8
     })
 end
 
@@ -232,6 +263,7 @@ minetest.register_node("default:furnace", {
     end,
 
     paramtype2 = "facedir",
+    legacy_facedir_simple = true,
     groups = { cracky = 2 },
 
     allow_metadata_inventory_put = function(pos, listname, index, stack, player)
@@ -257,6 +289,7 @@ minetest.register_node("default:furnace", {
 
 minetest.register_node("default:furnace_active", {
     description = "Furnace",
+    drop = "default:furnace",
     tiles = {
         "default_furnace_side.png", "default_furnace_side.png",
         "default_furnace_side.png", "default_furnace_side.png",
@@ -274,6 +307,7 @@ minetest.register_node("default:furnace_active", {
     },
     light_source = 10,
     paramtype2 = "facedir",
+    legacy_facedir_simple = true,
     groups = { cracky = 2 },
 
     allow_metadata_inventory_put = function(pos, listname, index, stack, player)

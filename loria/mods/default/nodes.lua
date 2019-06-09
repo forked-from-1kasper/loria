@@ -68,6 +68,23 @@ minetest.register_node("default:lead_sulfate", {
     drop = 'default:lead_sulfate'
 })
 
+minetest.register_node("default:silicon_dioxide", {
+    description = "Silicon dioxide (SiO₂)",
+    tiles = { "default_silicon_dioxide.png" },
+    groups = { crumbly = 3 },
+    drop = 'default:silicon_dioxide'
+})
+
+minetest.register_node("default:fused_quartz", {
+    description = "Fused quartz (glass)",
+    drawtype = "glasslike",
+    tiles ={ "default_fused_quartz.png" },
+    paramtype = "light",
+    is_ground_content = false,
+    sunlight_propagates = true,
+    groups = { snappy=2, cracky=3, oddly_breakable_by_hand=3 },
+})
+
 minetest.register_node("default:cobalt_blue", {
     description = "Cobalt blue (CoAl₂O₄)",
     tiles = { "default_cobalt_blue.png" },
