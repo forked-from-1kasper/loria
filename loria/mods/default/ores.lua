@@ -27,7 +27,7 @@ minetest.register_node("default:plutonium_fluoride", {
 })
 
 minetest.register_node("default:uranium_tetrachloride", {
-    description = "Uranium tetrafluoride (UF₄)",
+    description = "Uranium tetrachloride (UCl₄)",
     tiles = { "default_cinnabar.png" },
     overlay_tiles = { "default_uranium_tetrachloride.png" },
     groups = { cracky = 1 },
