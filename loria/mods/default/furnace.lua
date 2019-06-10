@@ -156,6 +156,30 @@ crafts = {
             { name = "default:cinnabar", count = 1 },
         },
         time = 5,
+    },
+    {
+        input = {
+            { name = "default:lead_sulfate", count = 1 },
+            { name = "default:bucket_empty", count = 1 }
+        },
+        output = {
+            { name = "default:lead_oxide", count = 1 },
+            { name = "default:bucket_sulfur_trioxide", count = 1 }
+        },
+        time = 4,
+    },
+    {
+        input = {
+            { name = "default:lead_oxide", count = 1 },
+            { name = "default:hydrogen_balloon", count = 1 },
+            { name = "default:bucket_empty", count = 1 }
+        },
+        output = {
+            { name = "default:lead", count = 1 },
+            { name = "default:empty_balloon", count = 1 },
+            { name = "default:bucket_water", count = 1 }
+        },
+        time = 2,
     }
 }
 

@@ -48,6 +48,23 @@ inv_crafts = {
             { name = "default:uranium", count = 1 },
             { name = "default:potassium_chloride", count = 4 },
         }
+    },
+    {
+        input = {
+            { name = "default:lead", count = 4 },
+        },
+        output = {
+            { name = "default:lead_case", count = 1 },
+        }
+    },
+    {
+        input = {
+            { name = "default:lead_case", count = 1 },
+            { name = "default:lead", count = 3 }
+        },
+        output = {
+            { name = "default:furnace", count = 1 },
+        }
     }
 }
 

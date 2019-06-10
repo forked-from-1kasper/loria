@@ -54,6 +54,20 @@ minetest.register_node("default:uranium", {
     drop = 'default:uranium'
 })
 
+minetest.register_node("default:lead", {
+    description = "Lead (Pb)",
+    tiles = { "default_lead.png" },
+    groups = { cracky = 1 },
+    drop = 'default:lead'
+})
+
+minetest.register_node("default:lead_case", {
+    description = "Lead case",
+    tiles = { "default_lead_case.png" },
+    groups = { cracky = 2 },
+    drop = 'default:lead_case'
+})
+
 minetest.register_node("default:mercury_chloride", {
     description = "Mercury (II) chloride (HgCl₂)",
     tiles = { "default_mercury_chloride.png" },
@@ -87,6 +101,13 @@ minetest.register_node("default:lead_sulfate", {
     tiles = { "default_lead_sulfate.png" },
     groups = { crumbly = 2 },
     drop = 'default:lead_sulfate'
+})
+
+minetest.register_node("default:lead_oxide", {
+    description = "Lead (II) oxide (PbSO)",
+    tiles = { "default_lead_oxide.png" },
+    groups = { crumbly = 2 },
+    drop = 'default:lead_oxide'
 })
 
 minetest.register_node("default:silicon_dioxide", {

@@ -261,6 +261,14 @@ bucket.register_liquid(
     "Bucket with trisilane"
 )
 
+bucket.register_liquid(
+    "default:sulfur_trioxide_source",
+    "default:sulfur_trioxide_flowing",
+    "default:bucket_sulfur_trioxide",
+    "bucket_sulfur_trioxide.png",
+    "Bucket with sulfur trioxide"
+)
+
 for _, name in ipairs(ores) do
     minetest.register_craftitem("default:" .. name .."_ingot", {
         description = name:gsub("^%l", string.upper) .. " ingot",

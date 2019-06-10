@@ -1,8 +1,18 @@
 liquids = {
     ["potassium_hydroxide"] = {
         liquid_viscosity = 1,
+        damage = 3,
         post_effect_color = { a = 30, r = 255, g = 255, b = 255 },
         alpha = 50,
+        texture = "default_liquid.png",
+        animated_texture = "default_liquid_source_animated.png",
+        animated_flowing_texture = "default_liquid_flowing_animated.png",
+    },
+    ["sulfur_trioxide"] = {
+        liquid_viscosity = 1,
+        post_effect_color = { a = 30, r = 255, g = 255, b = 255 },
+        alpha = 100,
+        damage = 5,
         texture = "default_liquid.png",
         animated_texture = "default_liquid_source_animated.png",
         animated_flowing_texture = "default_liquid_flowing_animated.png",
