@@ -129,15 +129,21 @@ function register_gas(gas)
             light_source = gas.light_source or 0,
         })
 
-        minetest.register_abm({
-            nodenames = { "default:" .. gas.name .. "_" .. i },
-            interval = 1,
-            chance = 100,
-            action = function(pos)
-                minetest.set_node(pos, { name = "air" })
-            end
-        })
     end
+
+    nodenames = {}
+    for i = 1, gas_levels do
+        table.insert(nodenames, "default:" .. gas.name .. "_" .. i)
+    end
+
+    minetest.register_abm({
+        nodenames = nodenames,
+        interval = 1,
+        chance = 100,
+        action = function(pos)
+            process_gas(gas, pos, minetest.get_node(pos))
+        end
+    })
 
     if not gas.no_balloon then
         minetest.register_tool("default:" .. gas.name .. "_balloon", {
