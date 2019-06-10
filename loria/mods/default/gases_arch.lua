@@ -139,7 +139,7 @@ function register_gas(gas)
     minetest.register_abm({
         nodenames = nodenames,
         interval = 1,
-        chance = 100,
+        chance = 2,
         action = function(pos)
             process_gas(gas, pos, minetest.get_node(pos))
         end
@@ -166,36 +166,36 @@ function register_gas(gas)
     end
 end
 
-local timer = 0
-minetest.register_globalstep(function(dtime)
-    timer = timer + dtime
-    if timer > gas_timer then
-        timer = 0
-
-        for _, player in ipairs(minetest.get_connected_players()) do
-            local pos = player:get_pos()
-
-            local minp = vector.subtract(pos, gas_vect)
-            local maxp = vector.add(pos, gas_vect)
-            for x = minp.x, maxp.x do
-                for y = minp.y, maxp.y do
-                    for z = minp.z, maxp.z do
-                        local pos = vector.new(x, y, z)
-                        local node = minetest.get_node(pos)
-
-                        for _, gas in ipairs(gases) do
-                            if starts_with(node.name, "default:" .. gas.name) then
-                                if math.random() <= 0.5 then
-                                    process_gas(gas, pos, node)
-                                end
-                            end
-                        end
-                    end
-                end
-            end
-        end
-    end
-end)
+--local timer = 0
+--minetest.register_globalstep(function(dtime)
+--    timer = timer + dtime
+--    if timer > gas_timer then
+--        timer = 0
+--
+--        for _, player in ipairs(minetest.get_connected_players()) do
+--            local pos = player:get_pos()
+--
+--            local minp = vector.subtract(pos, gas_vect)
+--            local maxp = vector.add(pos, gas_vect)
+--            for x = minp.x, maxp.x do
+--                for y = minp.y, maxp.y do
+--                    for z = minp.z, maxp.z do
+--                        local pos = vector.new(x, y, z)
+--                        local node = minetest.get_node(pos)
+--
+--                        for _, gas in ipairs(gases) do
+--                            if starts_with(node.name, "default:" .. gas.name) then
+--                                if math.random() <= 0.5 then
+--                                    process_gas(gas, pos, node)
+--                                end
+--                            end
+--                        end
+--                    end
+--                end
+--            end
+--        end
+--    end
+--end)
 
 local attack_radius = 30
 local attack_step = 10

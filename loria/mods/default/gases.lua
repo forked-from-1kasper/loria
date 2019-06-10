@@ -157,6 +157,14 @@ fire.reactions = {
     ["default:mercury"] = {
         result = "default:mercury_source",
         gas = "default:fire"
+    },
+    ["default:trisilane_source"] = {
+        result = "default:fire_" .. gas_levels,
+        gas = "default:fire"
+    },
+    ["default:trisilane_flowing"] = {
+        result = "default:fire_" .. gas_levels,
+        gas = "default:fire"
     }
 }
 
