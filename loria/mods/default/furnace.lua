@@ -274,17 +274,6 @@ function stop_furnace(pos)
     end
 end
 
-function drop_everything(pos)
-    local meta = minetest.get_meta(pos)
-    local inv = meta:get_inventory()
-
-    for _, list in pairs(inv:get_lists()) do
-        for _, item_stack in ipairs(list) do
-            minetest.add_item(pos, item_stack)
-        end
-    end
-end
-
 minetest.register_node("default:furnace", {
     description = "Furnace",
     tiles = {

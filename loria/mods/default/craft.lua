@@ -65,7 +65,16 @@ inv_crafts = {
         output = {
             { name = "default:furnace", count = 1 },
         }
-    }
+    },
+    {
+        input = {
+            { name = "default:lead_case", count = 1 },
+            { name = "default:lead", count = 1 }
+        },
+        output = {
+            { name = "default:lead_box", count = 1 },
+        }
+    },
 }
 
 function check_craft(craft, inv)

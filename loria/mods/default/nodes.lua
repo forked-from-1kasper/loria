@@ -169,3 +169,43 @@ minetest.register_node("default:glow_stick", {
     groups = { choppy = 2, dig_immediate = 3, attached_node=1 },
     legacy_wallmounted = true,
 })
+
+function drop_everything(pos)
+    local meta = minetest.get_meta(pos)
+    local inv = meta:get_inventory()
+
+    for _, list in pairs(inv:get_lists()) do
+        for _, item_stack in ipairs(list) do
+            minetest.add_item(pos, item_stack)
+        end
+    end
+end
+
+lead_box_formspec =
+    "size[8,10.5]"..
+    "list[context;main;0,0;8,5;]"..
+    "list[current_player;main;0,6;8,1;]"..
+    "list[current_player;main;0,7.5;8,3;8]"
+
+minetest.register_node("default:lead_box", {
+    description = "Lead box",
+    tiles = {
+        "default_lead_box_top.png", "default_lead_box_bottom.png",
+        "default_lead_box_side.png", "default_lead_box_side.png",
+        "default_lead_box_side.png", "default_lead_box_side.png"
+    },
+
+    on_destruct = drop_everything,
+
+    on_construct = function(pos)
+        local meta = minetest.get_meta(pos)
+        meta:set_string("formspec", lead_box_formspec)
+
+        local inv = meta:get_inventory()
+
+        inv:set_size('main', 40)
+    end,
+
+    paramtype2 = "facedir",
+    groups = { cracky = 2 },
+})
