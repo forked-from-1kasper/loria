@@ -3,7 +3,6 @@ dofile(minetest.get_modpath("radiation").."/conf.lua")
 radiation_vect = vector.new(16, 16, 16)
 
 DOSE_DECREASE_TIME = 1
-DOSE_DAMAGE_LIMIT = 1
 
 local radiation_timer = 0
 minetest.register_globalstep(function(dtime)
@@ -21,9 +20,21 @@ minetest.register_globalstep(function(dtime)
             if dose < 0 then dose = 0 end
 
             meta:set_float("received_dose", dose)
+            local dose_damage_limit = meta:get_float("dose_damage_limit")
 
-            if dose > DOSE_DAMAGE_LIMIT then
-                player:set_hp(player:get_hp() - 1)
+            if dose > dose_damage_limit then
+                local inv = player:get_inventory()
+                local drug_stack = inv:get_list("antiradiation")[1]
+
+                local drug_value = antiradiation_drugs[drug_stack:get_name()]
+
+                if drug_value then
+                    meta:set_float("dose_damage_limit", dose_damage_limit + drug_value)
+                    drug_stack:set_count(drug_stack:get_count() - 1)
+                    inv:set_stack("antiradiation", 1, drug_stack)
+                else
+                    player:set_hp(player:get_hp() - 1)
+                end
             end
         end
     end

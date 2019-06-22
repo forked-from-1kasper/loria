@@ -180,7 +180,32 @@ crafts = {
             { name = "default:bucket_water", count = 1 }
         },
         time = 2,
-    }
+    },
+    {
+        input = {
+            { name = "default:bucket_potassium_permanganate", count = 2 },
+            { name = "default:empty_balloon", count = 1 },
+        },
+        output = {
+            { name = "default:potassium_manganate", count = 1 },
+            { name = "default:manganese_dioxide", count = 1 },
+            { name = "default:oxygen_balloon", count = 1 },
+        },
+        time = 2,
+    },
+    {
+        input = {
+            { name = "default:manganese_dioxide", count = 1 },
+            { name = "default:bucket_empty", count = 1 },
+            { name = "default:hydrogen_balloon", count = 1 },
+        },
+        output = {
+            { name = "default:manganese_oxide", count = 1 },
+            { name = "default:bucket_water", count = 1 },
+            { name = "default:empty_balloon", count = 1 },
+        },
+        time = 3,
+    },
 }
 
 for _, name in ipairs(ores) do

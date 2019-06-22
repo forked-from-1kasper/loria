@@ -12,6 +12,27 @@ minetest.register_node("default:infinite_oxygen", {
     groups = { crumbly = 3 }
 })
 
+minetest.register_node("default:potassium_manganate", {
+    description = "Potassium manganate (K₂MnO₄)",
+    tiles = { "default_potassium_manganate.png" },
+    groups = { crumbly = 3 },
+    drop = 'default:potassium_manganate'
+})
+
+minetest.register_node("default:manganese_dioxide", {
+    description = "Manganese dioxide (MnO₂)",
+    tiles = { "default_manganese_dioxide.png" },
+    groups = { crumbly = 3 },
+    drop = 'default:manganese_dioxide'
+})
+
+minetest.register_node("default:manganese_oxide", {
+    description = "Manganese oxide (MnO)",
+    tiles = { "default_manganese_oxide.png" },
+    groups = { crumbly = 3 },
+    drop = 'default:manganese_oxide'
+})
+
 minetest.register_node("default:ammonium_manganese_pyrophosphate", {
     description = "Ammonium manganese (III) pyrophosphate",
     tiles = { "default_ammonium_manganese_pyrophosphate.png" },

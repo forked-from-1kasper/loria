@@ -17,8 +17,10 @@ oxygen_hud = {}
 function player_formspec()
     return
         "size[9,9.5]"..
-        "label[0,1.5;Oxygen]"..
-        "list[context;oxygen;0,2;1,1;]"..
+        "label[0,0.5;Oxygen]"..
+        "list[context;oxygen;0,1;1,1;]"..
+        "label[0,2.5;Anti-radiation drug]"..
+        "list[context;antiradiation;0,3;1,1;]"..
         "label[2,0.5;Input]"..
         "image[5,2;1,1;gui_arrow.png]"..
         "button[5,3;1,1;craft_it;Craft]"..
@@ -121,6 +123,7 @@ function init_inv(player)
     local inv = player:get_inventory()
 
     inv:set_size("oxygen", 1)
+    inv:set_size("antiradiation", 1)
     inv:set_size("input", 9)
     inv:set_size("output", 9)
 
@@ -141,6 +144,8 @@ minetest.register_on_newplayer(function(player)
 
     meta:set_float("radiation", 0)
     meta:set_float("received_dose", 0)
+    meta:set_float("dose_damage_limit", 1)
+
     meta:set_int("space_suit", space_suit_strength)
 end)
 
@@ -148,7 +153,10 @@ minetest.register_on_respawnplayer(function(player)
     local meta = player:get_meta()
 
     player:set_hp(20)
+
     meta:set_float("received_dose", 0)
+    meta:set_float("dose_damage_limit", 1)
+
     meta:set_int("space_suit", space_suit_strength)
 end)
 

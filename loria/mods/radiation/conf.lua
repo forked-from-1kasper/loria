@@ -12,3 +12,7 @@ activity = {
     [c_plutonium_fluoride] = 20,
     [c_periculum] = 0.5,
 }
+
+antiradiation_drugs = {
+    ["default:manganese_oxide"] = 0.5,
+}
