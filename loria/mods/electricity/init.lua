@@ -61,8 +61,13 @@ minetest.register_node("electricity:aluminium_cable", {
 
         local update_time = meta:get_float("update_time")
         if elapsed >= update_time then
-            meta:set_float("I", 0)
-            meta:set_float("U", 0)
+            local lines = meta:get_int("lines")
+
+            for i = 1, lines do
+                meta:set_float("I" .. i, 0)
+                meta:set_float("U" .. i, 0)
+            end
+            meta:set_int("lines", 0)
             meta:set_float("update_time", 0)
         else
             meta:set_float("update_time", update_time - elapsed)
@@ -142,6 +147,14 @@ minetest.register_node("electricity:infinite_electricity", {
         local circuit_resists = { }
         local elem_resists = { }
 
+        for _, circuit in ipairs(circuits) do
+            for _, pos in ipairs(circuit) do
+                local meta = minetest.get_meta(pos)
+                meta:set_int("lines", 0)
+                meta:set_float("update_time", 0.5)
+            end
+        end
+
         local R = 0
         for circuit_idx, circuit in ipairs(circuits) do
             local R0 = 0
@@ -172,9 +185,11 @@ minetest.register_node("electricity:infinite_electricity", {
                 local R0 = elem_resists[circuit_idx][idx]
 
                 local meta = minetest.get_meta(pos)
-                meta:set_float("I", I)
-                meta:set_float("U", I * R0)
-                meta:set_float("update_time", 0.5)
+                local lines = meta:get_int("lines")
+
+                meta:set_int("lines", lines + 1)
+                meta:set_float("I" .. lines + 1, I)
+                meta:set_float("U" .. lines + 1, I * R0)
             end
         end
 
@@ -193,9 +208,13 @@ minetest.register_craftitem("electricity:multimeter", {
         end
 
         local meta = minetest.get_meta(pointed_thing.under)
-        minetest.chat_send_player(user:get_player_name(), string.format(
-            "I = %f, U = %f", meta:get_float("I"), meta:get_float("U")
-        ))
+        for i = 1, meta:get_int("lines") do
+            minetest.chat_send_player(user:get_player_name(), string.format(
+                "I%d = %f, U%d = %f",
+                i, meta:get_float("I" .. i),
+                i, meta:get_float("U" .. i)
+            ))
+        end
 
         return
     end
