@@ -73,15 +73,11 @@ minetest.register_on_joinplayer(function(player)
         30
     )
 
-    creative = minetest.settings:get_bool("creative_mode")
+    local creative = minetest.settings:get_bool("creative_mode")
     local privs = minetest.get_player_privs(name)
 
     for _, priv in ipairs(creative_privs) do
-        if creative then
-            privs[priv] = true
-        else
-            privs[priv] = nil
-        end
+        privs[priv] = creative or nil
     end
     minetest.set_player_privs(name, privs)
 
