@@ -5,7 +5,7 @@ source = {
 }
 
 conductor = {
-    ["electricity:aluminum_cable"] = {
+    ["electricity:aluminium_cable"] = {
         resis = 0.1
     },
 }
@@ -28,20 +28,20 @@ local function neighbors(height)
     }
 end
 
-minetest.register_node("electricity:aluminum_cable", {
+minetest.register_node("electricity:aluminium_cable", {
     description = "Aluminium cable",
     drawtype = "raillike",
-    tiles = { "electricity_aluminum_cable_normal.png",
-              "electricity_aluminum_cable_curved.png",
-              "electricity_aluminum_cable_t_junction.png",
-              "electricity_aluminum_cable_crossing.png" },
-    inventory_image = "electricity_aluminum_cable_normal.png",
-    wield_image = "electricity_aluminum_cable_normal.png",
+    tiles = { "electricity_aluminium_cable_normal.png",
+              "electricity_aluminium_cable_curved.png",
+              "electricity_aluminium_cable_t_junction.png",
+              "electricity_aluminium_cable_crossing.png" },
+    inventory_image = "electricity_aluminium_cable_normal.png",
+    wield_image = "electricity_aluminium_cable_normal.png",
     is_ground_content = false,
     walkable = false,
     sunlight_propagates = true,
     paramtype = "light",
-    drop = 'electricity:aluminum_cable',
+    drop = 'electricity:aluminium_cable',
     groups = { crumbly = 3 },
 
     on_construct = function(pos)
