@@ -14,6 +14,9 @@ consumer = {
     ["electricity:infinite_consumer"] = {
         resis = 5
     },
+    ["electricity:heavy_infinite_consumer"] = {
+        resis = 500
+    }
 }
 
 value_minimal = 0.001
@@ -135,18 +138,24 @@ minetest.register_node("electricity:infinite_electricity", {
 
     on_timer = function(pos, elapsed)
         local circuits = find_circuits({ vector.add(vector.new(1, 0, 0), pos) }, { })
-        local resists = { }
+
+        local circuit_resists = { }
+        local elem_resists = { }
 
         local R = 0
-        for idx, circuit in ipairs(circuits) do
+        for circuit_idx, circuit in ipairs(circuits) do
             local R0 = 0
-            for _, pos in ipairs(circuit) do
+            elem_resists[circuit_idx] = { }
+
+            for idx, pos in ipairs(circuit) do
                 local name = minetest.get_node(pos).name
                 local conf = consumer[name] or conductor[name]
                 R0 = R0 + conf.resis
+                elem_resists[circuit_idx][idx] = R0
             end
-            resists[idx] = R0
-            R = R + 1.0 / R0
+
+            circuit_resists[circuit_idx] = R0
+            R = R + (1.0 / R0)
         end
 
         local conf = source["electricity:infinite_electricity"]
@@ -155,19 +164,16 @@ minetest.register_node("electricity:infinite_electricity", {
         local I = conf.emf / (R + conf.resis)
         local U = I * R
 
-        for idx, circuit in ipairs(circuits) do
-            local R0 = resists[idx]
-            local I0 = U / R0
+        for circuit_idx, circuit in ipairs(circuits) do
+            for idx, pos in ipairs(circuit) do
+                local R = circuit_resists[circuit_idx]
+                local I = U / R -- I = I0
 
-            local R = 0
-            for _, pos in ipairs(circuit) do
-                local name = minetest.get_node(pos).name
-                local conf = consumer[name] or conductor[name]
-                R = R + conf.resis
+                local R0 = elem_resists[circuit_idx][idx]
 
                 local meta = minetest.get_meta(pos)
-                meta:set_float("I", I0)
-                meta:set_float("U", I0 * R)
+                meta:set_float("I", I)
+                meta:set_float("U", I * R0)
                 meta:set_float("update_time", 0.5)
             end
         end
@@ -198,6 +204,13 @@ minetest.register_craftitem("electricity:multimeter", {
 minetest.register_node("electricity:infinite_consumer", {
     description = "Infinite consumer",
     tiles = { "default_test.png^[colorize:#ff000050" },
+    drop = 'electricity:infinite_consumer',
+    groups = { crumbly = 3 }
+})
+
+minetest.register_node("electricity:heavy_infinite_consumer", {
+    description = "Infinite consumer",
+    tiles = { "default_test.png^[colorize:#00ff0050" },
     drop = 'electricity:infinite_consumer',
     groups = { crumbly = 3 }
 })
