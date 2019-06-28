@@ -19,7 +19,6 @@ consumer = {
     }
 }
 
-value_minimal = 0.001
 cable_tick = 0.1
 
 local function neighbors(height)
@@ -96,7 +95,12 @@ minetest.register_node("electricity:infinite_electricity", {
     end,
 
     on_timer = function(pos, elapsed)
-        local circuits = find_circuits({ vector.add(vector.new(1, 0, 0), pos) }, { })
+        local circuits = { }
+        for _, vect in ipairs(neighbors(0)) do
+            for _, circuit in ipairs(find_circuits({ vector.add(vect, pos) }, { })) do
+                table.insert(circuits, circuit)
+            end
+        end
 
         local circuit_resists = { }
         local elem_resists = { }
@@ -214,12 +218,11 @@ minetest.register_node("electricity:aluminium_cable", {
     drop = 'electricity:aluminium_cable',
     groups = { crumbly = 3 },
 
-    
     selection_box = {
         type = "fixed",
         fixed = { -1/2, -1/2, -1/2, 1/2, -1/2+1/16, 1/2 },
     },
-    
+
     on_construct = run_timer,
     on_timer = reset_current,
 })
@@ -237,7 +240,7 @@ minetest.register_node("electricity:infinite_consumer", {
 minetest.register_node("electricity:heavy_infinite_consumer", {
     description = "Infinite consumer",
     tiles = { "default_test.png^[colorize:#00ff0050" },
-    drop = 'electricity:infinite_consumer',
+    drop = 'electricity:heavy_infinite_consumer',
     groups = { crumbly = 3 },
 
     on_construct = run_timer,
