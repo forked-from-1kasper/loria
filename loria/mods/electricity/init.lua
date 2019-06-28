@@ -214,6 +214,10 @@ minetest.register_tool("electricity:multimeter", {
 
         meta:set_float("user_resis", multimeter_resis)
         minetest.after(multimeter_timeout, function(meta, name)
+            if meta:get_int("lines") == 0 then
+                minetest.chat_send_player(name, "No electric current.")
+            end
+
             for i = 1, meta:get_int("lines") do
                 minetest.chat_send_player(name, string.format(
                     "I%d = %f, U%d = %f",
@@ -221,6 +225,7 @@ minetest.register_tool("electricity:multimeter", {
                     i, meta:get_float("U" .. i)
                 ))
             end
+
             meta:set_float("user_resis", 0)
         end, meta, user:get_player_name())
         return
