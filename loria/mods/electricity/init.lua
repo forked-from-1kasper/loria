@@ -53,9 +53,15 @@ end
 local function find_circuits(circuit, already_processed)
     local res = { }
 
+    local current = circuit[#circuit]
+    local current_name = minetest.get_node(current).name
+    if not (consumer[current_name] or conductor[current_name]) then
+        return res
+    end
+
     for height = -1, 1 do
         for _, vect in ipairs(neighbors(height)) do
-            local pos = vector.add(circuit[#circuit], vect)
+            local pos = vector.add(current, vect)
             local name = minetest.get_node(pos).name
 
             if (consumer[name] or conductor[name]) and
