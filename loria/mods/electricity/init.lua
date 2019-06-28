@@ -280,11 +280,10 @@ minetest.register_node("electricity:aluminium_cable", {
     inventory_image = "electricity_aluminium_cable.png",
     wield_image = "electricity_aluminium_cable.png",
     is_ground_content = false,
-    walkable = false,
     sunlight_propagates = true,
     paramtype = "light",
     drop = 'electricity:aluminium_cable',
-    groups = { crumbly = 3, conductor = 1 },
+    groups = { crumbly = 3, dig_immediate = 3, conductor = 1 },
 
     selection_box = cable_box,
     node_box = cable_box,

@@ -13,7 +13,7 @@ for i, name in ipairs(truncus_names) do
         inventory_image = "default_truncus_" .. i .. ".png",
         paramtype = "light",
         walkable = false,
-        groups = { snappy = 3, attached_node = 1 }
+        groups = { snappy = 3 },
     })
 end
 
@@ -34,7 +34,7 @@ for i, name in ipairs(pars_names) do
         inventory_image = "default_pars_" .. i .. ".png",
         paramtype = "light",
         walkable = false,
-        groups = { snappy = 3, attached_node = 1 }
+        groups = { snappy = 3, attached_node = 1 },
     })
 end
 
@@ -47,7 +47,7 @@ for _, name in ipairs({ "rami", "spears", "viriditas" }) do
         inventory_image = "default_" .. name .. ".png",
         paramtype = "light",
         walkable = false,
-        groups = { snappy = 3, attached_node = 1 }
+        groups = { snappy = 3 }
     })
 end
 
