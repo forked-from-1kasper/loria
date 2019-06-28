@@ -181,6 +181,7 @@ minetest.register_node("electricity:infinite_electricity", {
 })
 
 local multimeter_resis = 0.001
+local multimeter_timeout = 0.5
 minetest.register_tool("electricity:multimeter", {
     inventory_image = "electricity_multimeter.png",
     description = "Multimeter",
@@ -195,7 +196,7 @@ minetest.register_tool("electricity:multimeter", {
         local meta = minetest.get_meta(pointed_thing.under)
 
         meta:set_float("user_resis", multimeter_resis)
-        minetest.after(cable_tick * 3, function(meta, name)
+        minetest.after(multimeter_timeout, function(meta, name)
             for i = 1, meta:get_int("lines") do
                 minetest.chat_send_player(name, string.format(
                     "I%d = %f, U%d = %f",

@@ -131,7 +131,7 @@ for _, name in ipairs({ "rami", "spears" }) do
         biomes = "default:purple_swamp",
         decoration = "default:" .. name,
         height = 1,
-        height_max = 4
+        y_max = 4
     })
 end
 
@@ -157,7 +157,7 @@ for i = 1, #truncus_names do
         biomes = "default:azure",
         decoration = "default:truncus_" .. i,
         height = 1,
-        height_max = max_truncus_height
+        y_max = max_truncus_height
     })
 end
 
@@ -232,8 +232,8 @@ minetest.register_ore({
     clust_scarcity = 8 * 8 * 8,
     clust_num_ores = 8,
     clust_size     = 3,
-    height_min     = -10,
-    height_max     = 80,
+    y_min     = -10,
+    y_max     = 80,
 })
 
 minetest.register_ore({
@@ -243,8 +243,8 @@ minetest.register_ore({
     clust_scarcity = 8 * 8 * 8,
     clust_num_ores = 8,
     clust_size     = 3,
-    height_min     = -10,
-    height_max     = 80,
+    y_min     = -10,
+    y_max     = 80,
 })
 
 minetest.register_decoration({

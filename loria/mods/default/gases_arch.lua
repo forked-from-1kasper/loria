@@ -131,7 +131,7 @@ function register_gas(gas)
 
     end
 
-    nodenames = {}
+    local nodenames = {}
     for i = 1, gas_levels do
         table.insert(nodenames, "default:" .. gas.name .. "_" .. i)
     end
