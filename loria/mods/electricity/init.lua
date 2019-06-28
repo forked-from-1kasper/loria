@@ -30,6 +30,15 @@ local function neighbors(height)
     }
 end
 
+local cable_neighbors = {
+    vector.new( 1,  0,  0),
+    vector.new(-1,  0,  0),
+    vector.new( 0,  0,  1),
+    vector.new( 0,  0, -1),
+    vector.new( 0,  1,  0),
+    vector.new( 0, -1,  0)
+}
+
 local function fix_processed(already_processed, pos)
     if not already_processed[pos.x] then
         already_processed[pos.x] = { }
@@ -59,32 +68,30 @@ local function find_circuits(circuit, already_processed)
         return res
     end
 
-    for height = -1, 1 do
-        for _, vect in ipairs(neighbors(height)) do
-            local pos = vector.add(current, vect)
-            local name = minetest.get_node(pos).name
+    for _, vect in ipairs(cable_neighbors) do
+        local pos = vector.add(current, vect)
+        local name = minetest.get_node(pos).name
 
-            if (consumer[name] or conductor[name]) and
-               not get_processed(already_processed, pos) then
+        if (consumer[name] or conductor[name]) and
+           not get_processed(already_processed, pos) then
 
-                local circuit_tail = { }
-                for idx, v in ipairs(circuit) do
-                    circuit_tail[idx] = v
-                end
-                table.insert(circuit_tail, pos)
+            local circuit_tail = { }
+            for idx, v in ipairs(circuit) do
+                circuit_tail[idx] = v
+            end
+            table.insert(circuit_tail, pos)
 
-                set_processed(already_processed, pos)
+            set_processed(already_processed, pos)
 
-                if consumer[name] then
+            if consumer[name] then
+                table.insert(res, circuit_tail)
+            elseif conductor[name] then
+                if minetest.get_meta(pos):get_float("user_resis") > 0 then
                     table.insert(res, circuit_tail)
-                elseif conductor[name] then
-                    if minetest.get_meta(pos):get_float("user_resis") > 0 then
-                        table.insert(res, circuit_tail)
-                    end
+                end
 
-                    for _, v in ipairs(find_circuits(circuit_tail, already_processed)) do
-                        table.insert(res, v)
-                    end
+                for _, v in ipairs(find_circuits(circuit_tail, already_processed)) do
+                    table.insert(res, v)
                 end
             end
         end
@@ -97,7 +104,7 @@ minetest.register_node("electricity:infinite_electricity", {
     description = "Infinite electricity",
     tiles = { "default_test.png" },
     drop = 'electricity:infinite_electricity',
-    groups = { crumbly = 3 },
+    groups = { crumbly = 3, source = 1, },
 
     on_construct = function(pos)
         local meta = minetest.get_meta(pos)
@@ -244,26 +251,40 @@ local function reset_current(pos, elapsed)
     return true
 end
 
+cable_box = {
+    type = "connected",
+    fixed = { -1/16, -1/2, -1/16, 1/16, -1/2+1/16, 1/16 },
+    connect_top = { -1/16, -1/2, -1/16, 1/16, 1/2, 1/16 },
+    connect_bottom = { -1/16, -1/2, -1/16, 1/16, -1/2+1/16, 1/16 },
+    connect_front = { -1/16, -1/2, -1/2, 1/16, -1/2+1/16, 1/16 },
+    connect_left = { -1/2, -1/2, -1/16, 1/16, -1/2+1/16, 1/16 },
+    connect_back = { -1/16, -1/2, -1/16, 1/16, -1/2+1/16, 1/2 },
+    connect_right = { -1/16, -1/2, -1/16, 1/2, -1/2+1/16, 1/16 },
+}
+
 minetest.register_node("electricity:aluminium_cable", {
     description = "Aluminium cable",
-    drawtype = "raillike",
-    tiles = { "electricity_aluminium_cable_normal.png",
-              "electricity_aluminium_cable_curved.png",
-              "electricity_aluminium_cable_t_junction.png",
-              "electricity_aluminium_cable_crossing.png" },
-    inventory_image = "electricity_aluminium_cable_normal.png",
-    wield_image = "electricity_aluminium_cable_normal.png",
+    drawtype = "nodebox",
+    tiles = { "electricity_aluminium_cable.png",
+              "electricity_aluminium_cable.png",
+              "electricity_aluminium_cable_side.png",
+              "electricity_aluminium_cable_side.png",
+              "electricity_aluminium_cable_side.png",
+              "electricity_aluminium_cable_side.png" },
+
+    inventory_image = "electricity_aluminium_cable.png",
+    wield_image = "electricity_aluminium_cable.png",
     is_ground_content = false,
     walkable = false,
     sunlight_propagates = true,
     paramtype = "light",
     drop = 'electricity:aluminium_cable',
-    groups = { crumbly = 3 },
+    groups = { crumbly = 3, conductor = 1 },
 
-    selection_box = {
-        type = "fixed",
-        fixed = { -1/2, -1/2, -1/2, 1/2, -1/2+1/16, 1/2 },
-    },
+    selection_box = cable_box,
+    node_box = cable_box,
+
+    connects_to = { "group:consumer", "group:source", "group:conductor" },
 
     on_construct = run_timer,
     on_timer = reset_current,
@@ -273,7 +294,7 @@ minetest.register_node("electricity:infinite_consumer", {
     description = "Infinite consumer",
     tiles = { "default_test.png^[colorize:#ff000050" },
     drop = 'electricity:infinite_consumer',
-    groups = { crumbly = 3 },
+    groups = { crumbly = 3, consumer = 1, },
 
     on_construct = run_timer,
     on_timer = reset_current,
@@ -283,7 +304,7 @@ minetest.register_node("electricity:heavy_infinite_consumer", {
     description = "Infinite consumer",
     tiles = { "default_test.png^[colorize:#00ff0050" },
     drop = 'electricity:heavy_infinite_consumer',
-    groups = { crumbly = 3 },
+    groups = { crumbly = 3, consumer = 1 },
 
     on_construct = run_timer,
     on_timer = reset_current,
