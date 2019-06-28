@@ -109,7 +109,6 @@ minetest.register_node("electricity:infinite_electricity", {
     on_construct = function(pos)
         local meta = minetest.get_meta(pos)
         minetest.get_node_timer(pos):start(cable_tick)
-        meta:set_int("lines", 1)
     end,
 
     on_timer = function(pos, elapsed)
@@ -122,14 +121,6 @@ minetest.register_node("electricity:infinite_electricity", {
 
         local circuit_resists = { }
         local elem_resists = { }
-
-        for _, circuit in ipairs(circuits) do
-            for _, pos in ipairs(circuit) do
-                local meta = minetest.get_meta(pos)
-                meta:set_int("lines", 0)
-                meta:set_float("update_time", 0.5)
-            end
-        end
 
         local R = 0
         for circuit_idx, circuit in ipairs(circuits) do
@@ -152,7 +143,6 @@ minetest.register_node("electricity:infinite_electricity", {
 
         local conf = source["electricity:infinite_electricity"]
 
-        
         local meta = minetest.get_meta(pos)
         local user_resis = meta:get_float("user_resis")
         if user_resis ~= 0 then
@@ -178,17 +168,14 @@ minetest.register_node("electricity:infinite_electricity", {
                     P = P + I * U0
 
                     local meta = minetest.get_meta(pos)
-                    local lines = meta:get_int("lines")
-
-                    meta:set_int("lines", lines + 1)
-                    meta:set_float("I" .. lines + 1, I)
-                    meta:set_float("U" .. lines + 1, U0)
+                    meta:set_float("I", (meta:get_float("I") + I) / 2)
+                    meta:set_float("U", (meta:get_float("U") + U0) / 2)
                 end
             end
         end
 
-        meta:set_float("I1", I)
-        meta:set_float("U1", conf.emf - I * conf.resis)
+        meta:set_float("I", I)
+        meta:set_float("U", conf.emf - I * conf.resis)
         meta:set_string("formspec", string.format(
             "size[2,1]label[0,0;Infinite electricity]label[0,0.5;P = %f]", P
         ))
@@ -214,17 +201,9 @@ minetest.register_tool("electricity:multimeter", {
 
         meta:set_float("user_resis", multimeter_resis)
         minetest.after(multimeter_timeout, function(meta, name)
-            if meta:get_int("lines") == 0 then
-                minetest.chat_send_player(name, "No electric current.")
-            end
-
-            for i = 1, meta:get_int("lines") do
-                minetest.chat_send_player(name, string.format(
-                    "I%d = %f, U%d = %f",
-                    i, meta:get_float("I" .. i),
-                    i, meta:get_float("U" .. i)
-                ))
-            end
+            minetest.chat_send_player(name, string.format(
+                "I = %f, U = %f", meta:get_float("I"), meta:get_float("U")
+            ))
 
             meta:set_float("user_resis", 0)
         end, meta, user:get_player_name())
@@ -237,22 +216,9 @@ local function run_timer(pos)
 end
 
 local function reset_current(pos, elapsed)
-    local meta = minetest.get_meta(pos)
-
-    local update_time = meta:get_float("update_time")
-    if elapsed >= update_time then
-        local lines = meta:get_int("lines")
-
-        for i = 1, lines do
-            meta:set_float("I" .. i, 0)
-            meta:set_float("U" .. i, 0)
-        end
-        meta:set_int("lines", 0)
-        meta:set_float("update_time", 0)
-    else
-        meta:set_float("update_time", update_time - elapsed)
-    end
-
+    meta = minetest.get_meta(pos)
+    meta:set_float("I", meta:get_float("I") / 2)
+    meta:set_float("U", meta:get_float("U") / 2)
     return true
 end
 
