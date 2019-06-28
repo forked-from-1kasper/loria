@@ -15,7 +15,7 @@ consumer = {
         resis = 5
     },
     ["electricity:heavy_infinite_consumer"] = {
-        resis = 500
+        resis = 0.1
     }
 }
 
@@ -72,6 +72,10 @@ local function find_circuits(circuit, already_processed)
                 if consumer[name] then
                     table.insert(res, circuit_tail)
                 elseif conductor[name] then
+                    if minetest.get_meta(pos):get_float("user_resis") > 0 then
+                        table.insert(res, circuit_tail)
+                    end
+
                     for _, v in ipairs(find_circuits(circuit_tail, already_processed)) do
                         table.insert(res, v)
                     end
@@ -92,6 +96,7 @@ minetest.register_node("electricity:infinite_electricity", {
     on_construct = function(pos)
         local meta = minetest.get_meta(pos)
         minetest.get_node_timer(pos):start(cable_tick)
+        meta:set_int("lines", 1)
     end,
 
     on_timer = function(pos, elapsed)
@@ -121,7 +126,8 @@ minetest.register_node("electricity:infinite_electricity", {
             for idx, pos in ipairs(circuit) do
                 local name = minetest.get_node(pos).name
                 local conf = consumer[name] or conductor[name]
-                R0 = R0 + conf.resis
+                local user_resis = minetest.get_meta(pos):get_float("user_resis")
+                R0 = R0 + conf.resis + user_resis
                 elem_resists[circuit_idx][idx] = R0
             end
 
@@ -131,9 +137,19 @@ minetest.register_node("electricity:infinite_electricity", {
 
         local conf = source["electricity:infinite_electricity"]
 
+        
+        local meta = minetest.get_meta(pos)
+        local user_resis = meta:get_float("user_resis")
+        if user_resis ~= 0 then
+            R = R + (1.0 / user_resis)
+        end
+
         local R = 1.0 / R
+
         local I = conf.emf / (R + conf.resis)
         local U = I * R
+
+        local P = 0
 
         for circuit_idx, circuit in ipairs(circuits) do
             for idx, pos in ipairs(circuit) do
@@ -141,21 +157,31 @@ minetest.register_node("electricity:infinite_electricity", {
                 local I = U / R -- I = I0
 
                 local R0 = elem_resists[circuit_idx][idx]
+                local U0 = I * R0
+
+                P = P + I * U0
 
                 local meta = minetest.get_meta(pos)
                 local lines = meta:get_int("lines")
 
                 meta:set_int("lines", lines + 1)
                 meta:set_float("I" .. lines + 1, I)
-                meta:set_float("U" .. lines + 1, I * R0)
+                meta:set_float("U" .. lines + 1, U0)
             end
         end
+
+        meta:set_float("I1", I)
+        meta:set_float("U1", conf.emf - I * conf.resis)
+        meta:set_string("formspec", string.format(
+            "size[2,1]label[0,0;Infinite electricity]label[0,0.5;P = %f]", P
+        ))
 
         return true
     end,
 })
 
-minetest.register_craftitem("electricity:multimeter", {
+local multimeter_resis = 0.001
+minetest.register_tool("electricity:multimeter", {
     inventory_image = "electricity_multimeter.png",
     description = "Multimeter",
     stack_max = 1,
@@ -165,17 +191,22 @@ minetest.register_craftitem("electricity:multimeter", {
             return
         end
 
+        local name = minetest.get_node(pointed_thing.under).name
         local meta = minetest.get_meta(pointed_thing.under)
-        for i = 1, meta:get_int("lines") do
-            minetest.chat_send_player(user:get_player_name(), string.format(
-                "I%d = %f, U%d = %f",
-                i, meta:get_float("I" .. i),
-                i, meta:get_float("U" .. i)
-            ))
-        end
 
+        meta:set_float("user_resis", multimeter_resis)
+        minetest.after(cable_tick * 3, function(meta, name)
+            for i = 1, meta:get_int("lines") do
+                minetest.chat_send_player(name, string.format(
+                    "I%d = %f, U%d = %f",
+                    i, meta:get_float("I" .. i),
+                    i, meta:get_float("U" .. i)
+                ))
+            end
+            meta:set_float("user_resis", 0)
+        end, meta, user:get_player_name())
         return
-    end
+    end,
 })
 
 local function run_timer(pos)
