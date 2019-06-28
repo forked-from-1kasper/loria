@@ -126,9 +126,11 @@ minetest.register_node("electricity:infinite_electricity", {
             for idx, pos in ipairs(circuit) do
                 local name = minetest.get_node(pos).name
                 local conf = consumer[name] or conductor[name]
-                local user_resis = minetest.get_meta(pos):get_float("user_resis")
-                R0 = R0 + conf.resis + user_resis
-                elem_resists[circuit_idx][idx] = R0
+                if conf then
+                    local user_resis = minetest.get_meta(pos):get_float("user_resis")
+                    R0 = R0 + conf.resis + user_resis
+                    elem_resists[circuit_idx][idx] = R0
+                end
             end
 
             circuit_resists[circuit_idx] = R0
@@ -157,16 +159,18 @@ minetest.register_node("electricity:infinite_electricity", {
                 local I = U / R -- I = I0
 
                 local R0 = elem_resists[circuit_idx][idx]
-                local U0 = I * R0
+                if R0 then
+                    local U0 = I * R0
 
-                P = P + I * U0
+                    P = P + I * U0
 
-                local meta = minetest.get_meta(pos)
-                local lines = meta:get_int("lines")
+                    local meta = minetest.get_meta(pos)
+                    local lines = meta:get_int("lines")
 
-                meta:set_int("lines", lines + 1)
-                meta:set_float("I" .. lines + 1, I)
-                meta:set_float("U" .. lines + 1, U0)
+                    meta:set_int("lines", lines + 1)
+                    meta:set_float("I" .. lines + 1, I)
+                    meta:set_float("U" .. lines + 1, U0)
+                end
             end
         end
 
