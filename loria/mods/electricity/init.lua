@@ -31,52 +31,6 @@ local function neighbors(height)
     }
 end
 
-minetest.register_node("electricity:aluminium_cable", {
-    description = "Aluminium cable",
-    drawtype = "raillike",
-    tiles = { "electricity_aluminium_cable_normal.png",
-              "electricity_aluminium_cable_curved.png",
-              "electricity_aluminium_cable_t_junction.png",
-              "electricity_aluminium_cable_crossing.png" },
-    inventory_image = "electricity_aluminium_cable_normal.png",
-    wield_image = "electricity_aluminium_cable_normal.png",
-    is_ground_content = false,
-    walkable = false,
-    sunlight_propagates = true,
-    paramtype = "light",
-    drop = 'electricity:aluminium_cable',
-    groups = { crumbly = 3 },
-
-    on_construct = function(pos)
-        minetest.get_node_timer(pos):start(cable_tick)
-    end,
-
-    selection_box = {
-        type = "fixed",
-        fixed = { -1/2, -1/2, -1/2, 1/2, -1/2+1/16, 1/2 },
-    },
-
-    on_timer = function(pos, elapsed)
-        local meta = minetest.get_meta(pos)
-
-        local update_time = meta:get_float("update_time")
-        if elapsed >= update_time then
-            local lines = meta:get_int("lines")
-
-            for i = 1, lines do
-                meta:set_float("I" .. i, 0)
-                meta:set_float("U" .. i, 0)
-            end
-            meta:set_int("lines", 0)
-            meta:set_float("update_time", 0)
-        else
-            meta:set_float("update_time", update_time - elapsed)
-        end
-
-        return true
-    end,
-})
-
 local function fix_processed(already_processed, pos)
     if not already_processed[pos.x] then
         already_processed[pos.x] = { }
@@ -220,16 +174,72 @@ minetest.register_craftitem("electricity:multimeter", {
     end
 })
 
+local function run_timer(pos)
+    minetest.get_node_timer(pos):start(cable_tick)
+end
+
+local function reset_current(pos, elapsed)
+    local meta = minetest.get_meta(pos)
+
+    local update_time = meta:get_float("update_time")
+    if elapsed >= update_time then
+        local lines = meta:get_int("lines")
+
+        for i = 1, lines do
+            meta:set_float("I" .. i, 0)
+            meta:set_float("U" .. i, 0)
+        end
+        meta:set_int("lines", 0)
+        meta:set_float("update_time", 0)
+    else
+        meta:set_float("update_time", update_time - elapsed)
+    end
+
+    return true
+end
+
+minetest.register_node("electricity:aluminium_cable", {
+    description = "Aluminium cable",
+    drawtype = "raillike",
+    tiles = { "electricity_aluminium_cable_normal.png",
+              "electricity_aluminium_cable_curved.png",
+              "electricity_aluminium_cable_t_junction.png",
+              "electricity_aluminium_cable_crossing.png" },
+    inventory_image = "electricity_aluminium_cable_normal.png",
+    wield_image = "electricity_aluminium_cable_normal.png",
+    is_ground_content = false,
+    walkable = false,
+    sunlight_propagates = true,
+    paramtype = "light",
+    drop = 'electricity:aluminium_cable',
+    groups = { crumbly = 3 },
+
+    
+    selection_box = {
+        type = "fixed",
+        fixed = { -1/2, -1/2, -1/2, 1/2, -1/2+1/16, 1/2 },
+    },
+    
+    on_construct = run_timer,
+    on_timer = reset_current,
+})
+
 minetest.register_node("electricity:infinite_consumer", {
     description = "Infinite consumer",
     tiles = { "default_test.png^[colorize:#ff000050" },
     drop = 'electricity:infinite_consumer',
-    groups = { crumbly = 3 }
+    groups = { crumbly = 3 },
+
+    on_construct = run_timer,
+    on_timer = reset_current,
 })
 
 minetest.register_node("electricity:heavy_infinite_consumer", {
     description = "Infinite consumer",
     tiles = { "default_test.png^[colorize:#00ff0050" },
     drop = 'electricity:infinite_consumer',
-    groups = { crumbly = 3 }
+    groups = { crumbly = 3 },
+
+    on_construct = run_timer,
+    on_timer = reset_current,
 })
