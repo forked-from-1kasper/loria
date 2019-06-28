@@ -277,8 +277,8 @@ minetest.register_node("electricity:aluminium_cable", {
               "electricity_aluminium_cable_side.png",
               "electricity_aluminium_cable_side.png" },
 
-    inventory_image = "electricity_aluminium_cable.png",
-    wield_image = "electricity_aluminium_cable.png",
+    inventory_image = "electricity_aluminium_cable_item.png",
+    wield_image = "electricity_aluminium_cable_item.png",
     is_ground_content = false,
     sunlight_propagates = true,
     paramtype = "light",
