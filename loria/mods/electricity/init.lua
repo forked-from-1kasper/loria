@@ -132,8 +132,9 @@ minetest.register_node("electricity:infinite_electricity", {
                 local conf = consumer[name] or conductor[name]
                 if conf then
                     local user_resis = minetest.get_meta(pos):get_float("user_resis")
-                    R0 = R0 + conf.resis + user_resis
-                    elem_resists[circuit_idx][idx] = R0
+                    local elem_resis = conf.resis + user_resis
+                    R0 = R0 + elem_resis
+                    elem_resists[circuit_idx][idx] = elem_resis
                 end
             end
 
