@@ -132,7 +132,12 @@ minetest.register_node("electricity:infinite_electricity", {
                 local conf = consumer[name] or conductor[name]
                 if conf then
                     local user_resis = minetest.get_meta(pos):get_float("user_resis")
-                    local elem_resis = conf.resis + user_resis
+                    local elem_resis
+                    if user_resis ~= 0 then
+                        elem_resis = (conf.resis * user_resis) / (conf.resis + user_resis)
+                    else
+                        elem_resis = conf.resis
+                    end
                     R0 = R0 + elem_resis
                     elem_resists[circuit_idx][idx] = elem_resis
                 end
@@ -185,7 +190,7 @@ minetest.register_node("electricity:infinite_electricity", {
     end,
 })
 
-local multimeter_resis = 0.001
+local multimeter_resis = 0.1
 local multimeter_timeout = 0.5
 minetest.register_tool("electricity:multimeter", {
     inventory_image = "electricity_multimeter.png",
