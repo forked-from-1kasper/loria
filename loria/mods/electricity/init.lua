@@ -6,7 +6,7 @@ source = {
 
 conductor = {
     ["electricity:aluminium_cable"] = {
-        resis = 0.1
+        resis = 0.01
     },
 }
 
@@ -15,7 +15,7 @@ consumer = {
         resis = 1
     },
     ["electricity:heavy_infinite_consumer"] = {
-        resis = 50
+        resis = 0.05
     }
 }
 
@@ -132,12 +132,7 @@ minetest.register_node("electricity:infinite_electricity", {
                 local conf = consumer[name] or conductor[name]
                 if conf then
                     local user_resis = minetest.get_meta(pos):get_float("user_resis")
-                    local elem_resis
-                    if user_resis ~= 0 then
-                        elem_resis = (conf.resis * user_resis) / (conf.resis + user_resis)
-                    else
-                        elem_resis = conf.resis
-                    end
+                    local elem_resis = conf.resis + user_resis
                     R0 = R0 + elem_resis
                     elem_resists[circuit_idx][idx] = elem_resis
                 end
@@ -156,12 +151,10 @@ minetest.register_node("electricity:infinite_electricity", {
         end
 
         local R = 1.0 / R
-
         local I = conf.emf / (R + conf.resis)
         local U = I * R
 
         local P = 0
-
         for circuit_idx, circuit in ipairs(circuits) do
             for idx, pos in ipairs(circuit) do
                 local R = circuit_resists[circuit_idx]
