@@ -324,13 +324,17 @@ minetest.register_globalstep(function(dtime)
     local circuits = { }
 
     for str, time in pairs(sources) do
-        sources[str] = time - dtime
-        local pos = deserialize_pos(str)
+        if dtime >= time then
+            sources[str] = nil
+        else
+            sources[str] = time - dtime
+            local pos = deserialize_pos(str)
 
-        circuits[str] = { }
-        for _, vect in ipairs(source_neighbors) do
-            for _, circuit in ipairs(find_circuits({ vector.add(vect, pos) }, { })) do
-                table.insert(circuits[str], circuit)
+            circuits[str] = { }
+            for _, vect in ipairs(source_neighbors) do
+                for _, circuit in ipairs(find_circuits({ vector.add(vect, pos) }, { })) do
+                    table.insert(circuits[str], circuit)
+                end
             end
         end
     end
