@@ -21,14 +21,12 @@ consumer = {
 
 cable_tick = 0.1
 
-local function neighbors(height)
-    return {
-        vector.new( 1, height,  0),
-        vector.new(-1, height,  0),
-        vector.new( 0, height,  1),
-        vector.new( 0, height, -1)
-    }
-end
+local source_neighbors = {
+    vector.new( 1, 0,  0),
+    vector.new(-1, 0,  0),
+    vector.new( 0, 0,  1),
+    vector.new( 0, 0, -1)
+}
 
 local cable_neighbors = {
     vector.new( 1,  0,  0),
@@ -59,128 +57,11 @@ local function get_processed(already_processed, pos)
     return already_processed[pos.x][pos.y][pos.z]
 end
 
-local function find_circuits(circuit, already_processed)
-    local res = { }
-
-    local current = circuit[#circuit]
-    local current_name = minetest.get_node(current).name
-    if not (consumer[current_name] or conductor[current_name]) then
-        return res
-    end
-
-    for _, vect in ipairs(cable_neighbors) do
-        local pos = vector.add(current, vect)
-        local name = minetest.get_node(pos).name
-
-        if (consumer[name] or conductor[name]) and
-           not get_processed(already_processed, pos) then
-
-            local circuit_tail = { }
-            for idx, v in ipairs(circuit) do
-                circuit_tail[idx] = v
-            end
-            table.insert(circuit_tail, pos)
-
-            set_processed(already_processed, pos)
-
-            if consumer[name] then
-                table.insert(res, circuit_tail)
-            elseif conductor[name] then
-                if minetest.get_meta(pos):get_float("user_resis") > 0 then
-                    table.insert(res, circuit_tail)
-                end
-
-                for _, v in ipairs(find_circuits(circuit_tail, already_processed)) do
-                    table.insert(res, v)
-                end
-            end
-        end
-    end
-
-    return res
-end
-
 minetest.register_node("electricity:infinite_electricity", {
     description = "Infinite electricity",
     tiles = { "default_test.png" },
     drop = 'electricity:infinite_electricity',
-    groups = { crumbly = 3, source = 1, },
-
-    on_construct = function(pos)
-        local meta = minetest.get_meta(pos)
-        minetest.get_node_timer(pos):start(cable_tick)
-    end,
-
-    on_timer = function(pos, elapsed)
-        local circuits = { }
-        for _, vect in ipairs(neighbors(0)) do
-            for _, circuit in ipairs(find_circuits({ vector.add(vect, pos) }, { })) do
-                table.insert(circuits, circuit)
-            end
-        end
-
-        local circuit_resists = { }
-        local elem_resists = { }
-
-        local R = 0
-        for circuit_idx, circuit in ipairs(circuits) do
-            local R0 = 0
-            elem_resists[circuit_idx] = { }
-
-            for idx, pos in ipairs(circuit) do
-                local name = minetest.get_node(pos).name
-                local conf = consumer[name] or conductor[name]
-                if conf then
-                    local user_resis = minetest.get_meta(pos):get_float("user_resis")
-                    local elem_resis = conf.resis + user_resis
-                    R0 = R0 + elem_resis
-                    elem_resists[circuit_idx][idx] = elem_resis
-                end
-            end
-
-            circuit_resists[circuit_idx] = R0
-            R = R + (1.0 / R0)
-        end
-
-        local conf = source["electricity:infinite_electricity"]
-
-        local meta = minetest.get_meta(pos)
-        local user_resis = meta:get_float("user_resis")
-        if user_resis ~= 0 then
-            R = R + (1.0 / user_resis)
-        end
-
-        local R = 1.0 / R
-        local I = conf.emf / (R + conf.resis)
-        local U = I * R
-
-        local P = 0
-        for circuit_idx, circuit in ipairs(circuits) do
-            for idx, pos in ipairs(circuit) do
-                local R = circuit_resists[circuit_idx]
-                local I = U / R -- I = I0
-
-                local R0 = elem_resists[circuit_idx][idx]
-                if R0 then
-                    local U0 = I * R0
-
-                    P = P + I * U0
-
-                    local meta = minetest.get_meta(pos)
-                    meta:set_float("I", meta:get_float("I") + I)
-                    meta:set_float("U", meta:get_float("U") + U0)
-                end
-            end
-        end
-
-        meta:set_float("I", I)
-        meta:set_float("U", conf.emf - I * conf.resis)
-        meta:set_string("formspec", string.format(
-            "size[2,1]label[0,0;Infinite electricity]label[0,0.5;P = %f]", P
-        ))
-
-        return true
-    end,
+    groups = { crumbly = 3, source = 1 },
 })
 
 local multimeter_resis = 0.1
@@ -216,8 +97,17 @@ end
 
 local function reset_current(pos, elapsed)
     meta = minetest.get_meta(pos)
-    meta:set_float("I", meta:get_float("I") / 2)
-    meta:set_float("U", meta:get_float("U") / 2)
+
+    local timeout = meta:get_float("electricity_timeout")
+
+    if timeout <= elapsed then
+        meta:set_float("I", 0)
+        meta:set_float("U", 0)
+        meta:set_float("electricity_timeout", 0)
+    else
+        meta:set_float("electricity_timeout", timeout - elapsed)
+    end
+
     return true
 end
 
@@ -278,3 +168,175 @@ minetest.register_node("electricity:heavy_infinite_consumer", {
     on_construct = run_timer,
     on_timer = reset_current,
 })
+
+local function find_circuits(circuit, already_processed)
+    local res = { }
+
+    local current = circuit[#circuit]
+    local current_name = minetest.get_node(current).name
+    if not (consumer[current_name] or conductor[current_name]) then
+        return res
+    end
+
+    for _, vect in ipairs(cable_neighbors) do
+        local pos = vector.add(current, vect)
+        local name = minetest.get_node(pos).name
+
+        if (consumer[name] or conductor[name]) and
+           not get_processed(already_processed, pos) then
+            local meta = minetest.get_meta(pos)
+            meta:set_float("I", 0)
+            meta:set_float("U", 0)
+            meta:set_float("electricity_timeout", 1)
+
+            local circuit_tail = { }
+            for idx, v in ipairs(circuit) do
+                circuit_tail[idx] = v
+            end
+            table.insert(circuit_tail, pos)
+
+            set_processed(already_processed, pos)
+
+            if consumer[name] then
+                table.insert(res, circuit_tail)
+            elseif conductor[name] then
+                if meta:get_float("user_resis") > 0 then
+                    table.insert(res, circuit_tail)
+                end
+
+                for _, v in ipairs(find_circuits(circuit_tail, already_processed)) do
+                    table.insert(res, v)
+                end
+            end
+        end
+    end
+
+    return res
+end
+
+local function calculate_resis(circuits)
+    local circuit_resists = { }
+    local elem_resists = { }
+
+    local R = 0
+    for circuit_idx, circuit in ipairs(circuits) do
+        local R0 = 0
+        elem_resists[circuit_idx] = { }
+
+        for idx, pos in ipairs(circuit) do
+            local name = minetest.get_node(pos).name
+            local conf = consumer[name] or conductor[name]
+            if conf then
+                local user_resis = minetest.get_meta(pos):get_float("user_resis")
+                local elem_resis = conf.resis + user_resis
+                R0 = R0 + elem_resis
+                elem_resists[circuit_idx][idx] = elem_resis
+            end
+        end
+
+        circuit_resists[circuit_idx] = R0
+        R = R + (1 / R0)
+    end
+
+    if R ~= 0 then
+        R = 1 / R
+    end
+
+    return {
+        circuit_resists = circuit_resists,
+        elem_resists = elem_resists,
+        R = R
+    }
+end
+
+local function calculate_circuits(resists, circuits, I, U)
+    local P = 0
+    for circuit_idx, circuit in ipairs(circuits) do
+        for idx, pos in ipairs(circuit) do
+            local R = resists.circuit_resists[circuit_idx]
+            local I = U / R -- I = I0
+
+            local R0 = resists.elem_resists[circuit_idx][idx]
+            if R0 then
+                local U0 = I * R0
+                P = P + I * U0
+
+                local meta = minetest.get_meta(pos)
+                meta:set_float("I", meta:get_float("I") + I + math.random())
+                meta:set_float("U", meta:get_float("U") + U0 + math.random())
+            end
+        end
+    end
+
+    return { P = P }
+end
+
+local function process_source(pos, circuits)
+    local conf = source[minetest.get_node(pos).name]
+    if not conf then
+        return
+    end
+
+    local resists = calculate_resis(circuits)
+
+    local meta = minetest.get_meta(pos)
+    local user_resis = meta:get_float("user_resis")
+
+    local R = resists.R
+    if user_resis ~= 0 then
+        R = R + (1 / user_resis)
+    end
+
+    local I = conf.emf / (R + conf.resis)
+    local U = I * R
+
+    local values = calculate_circuits(resists, circuits, I, U)
+
+    meta:set_float("I", I)
+    meta:set_float("U", conf.emf - I * conf.resis)
+    meta:set_string("formspec", string.format(
+        "size[2,1]label[0,0;Infinite electricity]label[0,0.5;P = %f]", values.P
+    ))
+end
+
+sources = { }
+
+local function serialize_pos(pos)
+    return string.format("%f,%f,%f", pos.x, pos.y, pos.z)
+end
+
+local function deserialize_pos(str)
+    local x, y, z = str:match("([^,]+),([^,]+),([^,]+)")
+    return vector.new(tonumber(x), tonumber(y), tonumber(z))
+end
+
+minetest.register_abm{
+    label = "Enable electrcity sources",
+    nodenames = { "group:source" },
+    interval = 1,
+    chance = 1,
+    action = function(pos)
+        sources[serialize_pos(pos)] = 1
+    end,
+}
+
+minetest.register_globalstep(function(dtime)
+    local circuits = { }
+
+    for str, time in pairs(sources) do
+        sources[str] = time - dtime
+        local pos = deserialize_pos(str)
+
+        circuits[str] = { }
+        for _, vect in ipairs(source_neighbors) do
+            for _, circuit in ipairs(find_circuits({ vector.add(vect, pos) }, { })) do
+                table.insert(circuits[str], circuit)
+            end
+        end
+    end
+
+    for str, _ in pairs(sources) do
+        local pos = deserialize_pos(str)
+        process_source(pos, circuits[str])
+    end
+end)
