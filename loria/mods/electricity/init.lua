@@ -12,10 +12,10 @@ conductor = {
 
 consumer = {
     ["electricity:infinite_consumer"] = {
-        resis = 5
+        resis = 1
     },
     ["electricity:heavy_infinite_consumer"] = {
-        resis = 0.1
+        resis = 50
     }
 }
 
@@ -174,8 +174,8 @@ minetest.register_node("electricity:infinite_electricity", {
                     P = P + I * U0
 
                     local meta = minetest.get_meta(pos)
-                    meta:set_float("I", (meta:get_float("I") + I) / 2)
-                    meta:set_float("U", (meta:get_float("U") + U0) / 2)
+                    meta:set_float("I", meta:get_float("I") + I)
+                    meta:set_float("U", meta:get_float("U") + U0)
                 end
             end
         end
