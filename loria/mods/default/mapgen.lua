@@ -10,6 +10,18 @@ for i, _ in ipairs(pars_names) do
     })
 end
 
+for i, _ in ipairs(petite_names) do
+    minetest.register_decoration({
+        deco_type = "simple",
+        place_on = "default:ammonium_manganese_pyrophosphate",
+        sidelen = 16,
+        fill_ratio = 0.05,
+        biomes = "default:purple_swamp",
+        decoration = "default:petite_" .. i,
+        height = 1
+    })
+end
+
 for _, name in ipairs({ "rami", "spears" }) do
     minetest.register_decoration({
         deco_type = "simple",

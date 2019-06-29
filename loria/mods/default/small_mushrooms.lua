@@ -38,6 +38,24 @@ for i, name in ipairs(pars_names) do
     })
 end
 
+petite_names = {
+    "longus",
+    "humilis"
+}
+
+for i, name in ipairs(petite_names) do
+    minetest.register_node("default:petite_" .. i, {
+        description = "Petite " .. name,
+        drawtype = "plantlike",
+        tiles = { "default_petite_" .. i .. ".png" },
+        wield_image = "default_petite_" .. i .. ".png",
+        inventory_image = "default_petite_" .. i .. ".png",
+        paramtype = "light",
+        walkable = false,
+        groups = { snappy = 3, attached_node = 1 },
+    })
+end
+
 for _, name in ipairs({ "rami", "spears", "viriditas" }) do
     minetest.register_node("default:" .. name, {
         description = name:gsub("^%l", string.upper),
