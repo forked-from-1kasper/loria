@@ -60,8 +60,8 @@ oxygen = {
             result = "default:mercury",
             gas = "default:sulfur_dioxide"
         },
-        ["default:furnace_active"] = {
-            result = "default:furnace_active",
+        ["furnace:gas_active"] = {
+            result = "furnace:gas_active",
             gas = "default:fire"
         },
     },
@@ -77,8 +77,8 @@ hydrogen = {
     transparent = true,
     damage = 0,
     reactions = {
-        ["default:furnace_active"] = {
-            result = "default:furnace_active",
+        ["furnace:gas_active"] = {
+            result = "furnace:gas_active",
             gas = "default:fire"
         },
     },

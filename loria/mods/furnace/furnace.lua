@@ -255,15 +255,15 @@ function furnace_formspec(conf, craft_percent)
         conf.additional_formspec
 end
 
-function run_furnace(pos)
-    minetest.swap_node(pos, { name = "default:furnace_active" })
+function run_furnace(conf, pos)
+    minetest.swap_node(pos, { name = "furnace:" .. conf.name .. "_active" })
     minetest.get_node_timer(pos):start(1)
 end
 
 function stop_furnace(conf, pos)
     local meta = minetest.get_meta(pos)
 
-    minetest.swap_node(pos, { name = "default:furnace" })
+    minetest.swap_node(pos, { name = "furnace:" .. conf.name })
     minetest.get_node_timer(pos):stop()
 
     meta:set_string("formspec", furnace_formspec(conf, 0))
@@ -272,7 +272,7 @@ end
 
 function check_and_run_furnace(conf, pos)
     if conf.is_furnace_ready(pos) then
-        run_furnace(pos)
+        run_furnace(conf, pos)
     end
 end
 
@@ -352,7 +352,7 @@ function construct_furnace(conf)
 end
 
 function register_furnace(conf)
-    minetest.register_node("default:" .. conf.name, {
+    minetest.register_node("furnace:" .. conf.name, {
         description = conf.description,
         tiles = {
             conf.textures.side, conf.textures.side,
@@ -386,9 +386,9 @@ function register_furnace(conf)
         end,
     })
 
-    minetest.register_node("default:" .. conf.name .. "_active", {
+    minetest.register_node("furnace:" .. conf.name .. "_active", {
         description = conf.description,
-        drop = "default:" .. conf.name,
+        drop = "furnace:" .. conf.name,
         tiles = {
             conf.textures.side, conf.textures.side,
             conf.textures.side, conf.textures.side,

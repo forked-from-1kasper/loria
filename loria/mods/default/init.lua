@@ -9,8 +9,6 @@ dofile(minetest.get_modpath("default").."/nodes.lua")
 dofile(minetest.get_modpath("default").."/gases.lua")
 dofile(minetest.get_modpath("default").."/items.lua")
 dofile(minetest.get_modpath("default").."/craft.lua")
-dofile(minetest.get_modpath("default").."/furnace.lua")
-dofile(minetest.get_modpath("default").."/gas_furnace.lua")
 dofile(minetest.get_modpath("default").."/mushrooms.lua")
 dofile(minetest.get_modpath("default").."/hud.lua")
 dofile(minetest.get_modpath("default").."/player.lua")
@@ -113,7 +111,7 @@ end, true)
 
 START_ITEMS = {
     ["default:oxygen_balloon"] = 1,
-    ["default:furnace"] = 1
+    ["furnace:gas"] = 1
 }
 
 function init_inv(player)

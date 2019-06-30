@@ -64,7 +64,7 @@ function update_fuel(meta, inv, elapsed)
 end
 
 register_furnace({
-    name = "furnace",
+    name = "gas",
     description = "Gas furnace",
     lists = { gas = 1, fuel = 1 },
     on_tick = { update_fuel, update_gas },
@@ -75,10 +75,10 @@ register_furnace({
         "label[2,1.5;Fuel]"..
         "list[context;fuel;2,2;1,1;]",
     textures = {
-        side = "default_furnace_side.png",
-        front_inactive = "default_furnace_front.png",
+        side = "furnace_side.png",
+        front_inactive = "furnace_gas_front.png",
         front_active = {
-            image = "default_furnace_front_active.png",
+            image = "furnace_gas_front_active.png",
             backface_culling = false,
             animation = {
                 type = "vertical_frames",
