@@ -110,6 +110,8 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
         meta:set_int("creative_shift", shift)
         player:set_inventory_formspec(creative_formspec(shift))
     end
+
+    inv:set_list("creative_inv", creative_inv)
 end)
 
 creative_privs = { "fly", "fast", "give", "noclip", "settime", "teleport" }

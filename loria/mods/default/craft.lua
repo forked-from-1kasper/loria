@@ -149,6 +149,7 @@ minetest.register_allow_player_inventory_action(function(player, action, invento
         elseif inventory_info.from_list == "creative_inv" then
             stack:set_count(stack:get_count() + inventory_info.count)
             inv:set_stack("creative_inv", inventory_info.from_index, stack)
+            return inventory_info.count
         end
 
         if inventory_info.to_list == "oxygen" then
