@@ -57,13 +57,14 @@ local creative_formspec_width = 8
 local creative_formspec_height = 4
 
 local creative_inv = { }
-for name, params in pairs(minetest.registered_nodes) do
+
+for name, params in pairs(minetest.registered_items) do
     if not params.groups.not_in_creative_inventory then
         table.insert(creative_inv, name)
     end
 end
 
-local shift_min = 0
+local shift_min = 1
 local shift_max = (
     math.floor(#creative_inv / creative_formspec_width) -
     creative_formspec_height + 1
@@ -130,6 +131,7 @@ minetest.register_on_joinplayer(function(player)
 
     local inv = player:get_inventory()
 
+    meta:set_int("creative_shift", 1)
     inv:set_size("creative_inv", #creative_inv)
     inv:set_list("creative_inv", creative_inv)
 
