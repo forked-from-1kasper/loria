@@ -403,7 +403,7 @@ function register_furnace(conf)
     })
 
     minetest.register_node("furnace:" .. conf.name .. "_active", {
-        description = conf.description,
+        description = conf.description .. " (active)",
         drop = "furnace:" .. conf.name,
         tiles = {
             conf.textures.side, conf.textures.side,

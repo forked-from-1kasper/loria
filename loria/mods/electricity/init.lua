@@ -169,7 +169,7 @@ minetest.register_node("electricity:switch_off", {
 })
 
 minetest.register_node("electricity:switch_on", {
-    description = "Switch",
+    description = "Switch (active)",
     tiles = {
         "electricity_switch_top_on.png",
         "electricity_switch_bottom.png",
@@ -180,7 +180,7 @@ minetest.register_node("electricity:switch_on", {
     },
 
     drop = 'electricity:switch_off',
-    groups = { crumbly = 3, conductor = 1 },
+    groups = { crumbly = 3, conductor = 1, not_in_creative_inventory = 1 },
 
     drawtype = "nodebox",
     node_box = switch_box,
