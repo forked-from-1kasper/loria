@@ -48,7 +48,7 @@ function player_formspec()
         "list[context;main;0.5,7.5;8,3;8]"
 
     if creative then
-        str = str .. "button[4,4.5;1,1;go_to_creative;Creative]"
+        str = str .. "button[3.5,4.5;2,1;go_to_creative;Creative]"
     end
     return str
 end
@@ -78,7 +78,7 @@ function creative_formspec(shift)
         creative_formspec_height .. ";".. shift .. "]"..
         "button[2.5,4.5;1,1;creative_up;Up]"..
         "button[5.5,4.5;1,1;creative_down;Down]"..
-        "button[4,4.5;1,1;go_to_survival;Survival]"..
+        "button[3.5,4.5;2,1;go_to_survival;Survival]"..
         "list[context;main;0.5,6;8,1;]"..
         "list[context;main;0.5,7.5;8,3;8]"
 end
