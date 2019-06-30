@@ -85,7 +85,7 @@ for name, params in pairs(liquids) do
         liquid_viscosity = params.liquid_viscosity,
         post_effect_color = params.post_effect_color,
         damage_per_second = params.damage_per_second or 0,
-        groups = { liquid = 3 },
+        groups = { liquid = 3, not_in_creative_inventory = 1 },
     })
 
     minetest.register_node("default:" .. name .. "_flowing", {
@@ -130,6 +130,6 @@ for name, params in pairs(liquids) do
         liquid_viscosity = params.liquid_viscosity,
         post_effect_color = params.post_effect_color,
         damage_per_second = params.damage_per_second or 0,
-        groups = { liquid = 3 },
+        groups = { liquid = 3, not_in_creative_inventory = 1 },
     })
 end

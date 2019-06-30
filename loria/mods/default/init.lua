@@ -13,24 +13,6 @@ dofile(minetest.get_modpath("default").."/mushrooms.lua")
 dofile(minetest.get_modpath("default").."/hud.lua")
 dofile(minetest.get_modpath("default").."/player.lua")
 
-oxygen_hud = {}
-function player_formspec()
-    return
-        "size[9,9.5]"..
-        "label[0,0.5;Oxygen]"..
-        "list[context;oxygen;0,1;1,1;]"..
-        "label[0,2.5;Drugs]"..
-        "list[context;antiradiation;0,3;1,1;]"..
-        "label[2,0.5;Input]"..
-        "image[5,2;1,1;gui_arrow.png^[transformR270]"..
-        "button[5,3;1,1;craft_it;Craft]"..
-        "list[context;input;2,1;3,3;]"..
-        "label[6,0.5;Output]"..
-        "list[context;output;6,1;3,3;]"..
-        "list[context;main;0.5,5;8,1;]"..
-        "list[context;main;0.5,6.5;8,3;8]"
-end
-
 player_api.register_model("player.b3d", {
     animation_speed = 30,
     textures = { "player.png" },
@@ -46,8 +28,91 @@ player_api.register_model("player.b3d", {
     stepheight = 0.6,
     eye_height = 1.47,
 })
+oxygen_hud = {}
+
+local creative = minetest.settings:get_bool("creative_mode")
+function player_formspec()
+    local str =
+        "size[9,10.5]"..
+        "label[0,0.5;Oxygen]"..
+        "list[context;oxygen;0,1;1,1;]"..
+        "label[0,2.5;Drugs]"..
+        "list[context;antiradiation;0,3;1,1;]"..
+        "label[2,0.5;Input]"..
+        "image[5,2;1,1;gui_arrow.png^[transformR270]"..
+        "button[5,3;1,1;craft_it;Craft]"..
+        "list[context;input;2,1;3,3;]"..
+        "label[6,0.5;Output]"..
+        "list[context;output;6,1;3,3;]"..
+        "list[context;main;0.5,6;8,1;]"..
+        "list[context;main;0.5,7.5;8,3;8]"
+
+    if creative then
+        str = str .. "button[4,4.5;1,1;go_to_creative;Creative]"
+    end
+    return str
+end
+
+local creative_formspec_width = 8
+local creative_formspec_height = 4
+
+local creative_inv = { }
+for name, params in pairs(minetest.registered_nodes) do
+    if not params.groups.not_in_creative_inventory then
+        table.insert(creative_inv, name)
+    end
+end
+
+local shift_min = 0
+local shift_max = (
+    math.floor(#creative_inv / creative_formspec_width) -
+    creative_formspec_height + 1
+) * creative_formspec_width
+
+function creative_formspec(shift)
+    return
+        "size[9,10.5]"..
+        "list[context;creative_inv;0.5,0.5;" ..
+        creative_formspec_width .. "," ..
+        creative_formspec_height .. ";".. shift .. "]"..
+        "button[2.5,4.5;1,1;creative_up;Up]"..
+        "button[5.5,4.5;1,1;creative_down;Down]"..
+        "button[4,4.5;1,1;go_to_survival;Survival]"..
+        "list[context;main;0.5,6;8,1;]"..
+        "list[context;main;0.5,7.5;8,3;8]"
+end
+
+minetest.register_on_player_receive_fields(function(player, formname, fields)
+    local inv = player:get_inventory()
+    local meta = player:get_meta()
+
+    if fields.go_to_creative then
+        player:set_inventory_formspec(creative_formspec(meta:get_int("creative_shift")))
+    elseif fields.go_to_survival then
+        player:set_inventory_formspec(player_formspec())
+    elseif fields.creative_down then
+        local shift = meta:get_int("creative_shift")
+        shift = shift + 8
+        if shift > shift_max then
+            shift = shift_max
+        end
+
+        meta:set_int("creative_shift", shift)
+        player:set_inventory_formspec(creative_formspec(shift))
+    elseif fields.creative_up then
+        local shift = meta:get_int("creative_shift")
+        shift = shift - 8
+        if shift < shift_min then
+            shift = shift_min
+        end
+
+        meta:set_int("creative_shift", shift)
+        player:set_inventory_formspec(creative_formspec(shift))
+    end
+end)
 
 creative_privs = { "fly", "fast", "give", "noclip", "settime", "teleport" }
+
 minetest.register_on_joinplayer(function(player)
     local meta = player:get_meta()
 
@@ -62,6 +127,12 @@ minetest.register_on_joinplayer(function(player)
         offset = { x = 150, y = 0 }
     })
     player:set_clouds({ density = 0 })
+
+    local inv = player:get_inventory()
+
+    inv:set_size("creative_inv", #creative_inv)
+    inv:set_list("creative_inv", creative_inv)
+
     player:set_inventory_formspec(player_formspec())
 
     player_api.set_model(player, "player.b3d")
@@ -73,7 +144,6 @@ minetest.register_on_joinplayer(function(player)
         30
     )
 
-    local creative = minetest.settings:get_bool("creative_mode")
     local privs = minetest.get_player_privs(name)
 
     for _, priv in ipairs(creative_privs) do

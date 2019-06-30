@@ -50,11 +50,13 @@ end
 local function calculate_inventory_radiation(inv)
     local radiation = 0
 
-    for _, list in pairs(inv:get_lists()) do
-        for _, stack in ipairs(list) do
-            local A = activity[minetest.get_content_id(stack:get_name())]
-            if A then
-                radiation = radiation + A * stack:get_count()
+    for listname, list in pairs(inv:get_lists()) do
+        if listname ~= "creative_inv" then
+            for _, stack in ipairs(list) do
+                local A = activity[minetest.get_content_id(stack:get_name())]
+                if A then
+                    radiation = radiation + A * stack:get_count()
+                end
             end
         end
     end

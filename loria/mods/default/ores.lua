@@ -73,7 +73,7 @@ minetest.register_node("default:trisilane_source", {
     liquid_alternative_source = "default:trisilane_source",
     liquid_viscosity = 1,
     post_effect_color = { a = 70, r = 255, g = 255, b = 255 },
-    groups = { water = 3, liquid = 3 },
+    groups = { water = 3, liquid = 3, not_in_creative_inventory = 1 },
 })
 
 minetest.register_node("default:trisilane_flowing", {
@@ -117,7 +117,7 @@ minetest.register_node("default:trisilane_flowing", {
     liquid_alternative_source = "default:trisilane_source",
     liquid_viscosity = 1,
     post_effect_color = { a = 70, r = 255, g = 255, b = 255 },
-    groups = { water = 3, liquid = 3 },
+    groups = { water = 3, liquid = 3, not_in_creative_inventory = 1 },
 })
 
 minetest.register_node("default:trisilane_cinnabar", {

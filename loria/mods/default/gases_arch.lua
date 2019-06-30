@@ -127,6 +127,7 @@ function register_gas(gas)
             pointable = false,
             buildable_to = true,
             light_source = gas.light_source or 0,
+            groups = { not_in_creative_inventory = 1 },
         })
 
     end
