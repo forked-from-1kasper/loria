@@ -58,17 +58,22 @@ local creative_formspec_height = 4
 
 local creative_inv = { }
 
-for name, params in pairs(minetest.registered_items) do
-    if not params.groups.not_in_creative_inventory then
-        table.insert(creative_inv, name)
-    end
-end
 
 local shift_min = 1
-local shift_max = (
-    math.floor(#creative_inv / creative_formspec_width) -
-    creative_formspec_height + 1
-) * creative_formspec_width
+local shift_max
+
+minetest.register_on_mods_loaded(function()
+    for name, params in pairs(minetest.registered_items) do
+        if not params.groups.not_in_creative_inventory then
+            table.insert(creative_inv, name)
+        end
+    end
+
+    shift_max = (
+        math.floor(#creative_inv / creative_formspec_width) -
+        creative_formspec_height + 1
+    ) * creative_formspec_width
+end)
 
 function creative_formspec(shift)
     return
@@ -94,6 +99,8 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
     elseif fields.creative_down then
         local shift = meta:get_int("creative_shift")
         shift = shift + 8
+        minetest.chat_send_player("kraken", tostring(shift_max))
+
         if shift > shift_max then
             shift = shift_max
         end
