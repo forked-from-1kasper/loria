@@ -96,8 +96,7 @@ local function run_timer(pos)
 end
 
 local function reset_current(pos, elapsed)
-    meta = minetest.get_meta(pos)
-
+    local meta = minetest.get_meta(pos)
     local timeout = meta:get_float("electricity_timeout")
 
     if timeout <= elapsed then

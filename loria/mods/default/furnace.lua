@@ -253,13 +253,15 @@ for _, mushroom in ipairs(giant_mushrooms) do
     })
 end
 
-function inactive_formspec(craft_percent)
+local additional_formspec =
+    "label[0,1.5;Gas]"..
+    "list[context;gas;0,2;1,1;]"..
+    "label[2,1.5;Fuel]"..
+    "list[context;fuel;2,2;1,1;]"
+
+function furnace_formspec(craft_percent)
     return
         "size[11,9.5]"..
-        "label[0,1.5;Gas]"..
-        "list[context;gas;0,2;1,1;]"..
-        "label[2,1.5;Fuel]"..
-        "list[context;fuel;2,2;1,1;]"..
         "label[4,0.5;Input]"..
         "image[7,2;1,1;gui_arrow.png^[lowpart:"
         .. craft_percent .. ":gui_active_arrow.png]]"..
@@ -267,10 +269,26 @@ function inactive_formspec(craft_percent)
         "label[8,0.5;Output]"..
         "list[context;output;8,1;3,3;]"..
         "list[current_player;main;2,5;8,1;]"..
-        "list[current_player;main;2,6.5;8,3;8]"
+        "list[current_player;main;2,6.5;8,3;8]"..
+        additional_formspec
 end
 
 function run_furnace(pos)
+    minetest.swap_node(pos, { name = "default:furnace_active" })
+    minetest.get_node_timer(pos):start(1)
+end
+
+function stop_furnace(pos)
+    local meta = minetest.get_meta(pos)
+
+    minetest.swap_node(pos, { name = "default:furnace" })
+    minetest.get_node_timer(pos):stop()
+
+    meta:set_string("formspec", furnace_formspec(0))
+    meta:set_float("cooking", 0)
+end
+
+function check_and_run_furnace(pos)
     local meta = minetest.get_meta(pos)
     local inv = meta:get_inventory()
 
@@ -278,12 +296,11 @@ function run_furnace(pos)
     local fuel = inv:get_list("fuel")[1]:get_name()
 
     if (gases_list[gas] ~= nil) and (fuel_list[fuel] ~= nil) then
-        minetest.swap_node(pos, { name = "default:furnace_active" })
-        minetest.get_node_timer(pos):start(1)
+        run_furnace(pos)
     end
 end
 
-function stop_furnace(pos)
+function check_and_stop_furnace(pos)
     local meta = minetest.get_meta(pos)
     local inv = meta:get_inventory()
 
@@ -291,12 +308,59 @@ function stop_furnace(pos)
     local fuel = inv:get_list("fuel")[1]:get_name()
 
     if (gases_list[gas] == nil) or (fuel_list[fuel] == nil) then
-        minetest.swap_node(pos, { name = "default:furnace" })
-        minetest.get_node_timer(pos):stop()
-
-        meta:set_string("formspec", inactive_formspec(0))
-        meta:set_float("cooking", 0)
+        stop_furnace(pos)
     end
+end
+
+function add_or_drop(inv, listname, stack, pos)
+    if inv:room_for_item(listname, stack) then
+        inv:add_item(listname, stack)
+    else
+        minetest.add_item(pos, stack)
+    end
+end
+
+function update_gas(meta, inv, elapsed)
+    local gas = inv:get_list("gas")[1]
+    local wear = gas:get_wear() + gases_list[gas:get_name()]
+
+    if wear >= 65535 then
+        inv:set_stack("gas", 1, { name = "default:empty_balloon" })
+        return false
+    else
+        gas:set_wear(wear)
+    end
+    inv:set_stack("gas", 1, gas)
+
+    return true
+end
+
+function update_fuel(meta, inv, elapsed)
+    local fuel = inv:get_list("fuel")[1]
+
+    local cycle = meta:get_float("cycle") + elapsed
+    local fuel_name = fuel:get_name()
+    if cycle > fuel_list[fuel_name] then
+        cycle = 0
+
+        local count = fuel:get_count() - 1
+        fuel:set_count(count)
+        inv:set_stack("fuel", 1, fuel)
+
+        if count == 0 then
+            if bucket.is_bucket[fuel_name] then
+                add_or_drop(
+                    inv, "output",
+                    { name = "default:bucket_empty" },
+                    vector.add(pos, vector.new(0, 1, 0))
+                )
+            end
+            return false
+        end
+    end
+
+    meta:set_float("cycle", cycle)
+    return true
 end
 
 minetest.register_node("default:furnace", {
@@ -311,7 +375,7 @@ minetest.register_node("default:furnace", {
 
     on_construct = function(pos)
         local meta = minetest.get_meta(pos)
-        meta:set_string("formspec", inactive_formspec(0))
+        meta:set_string("formspec", furnace_formspec(0))
         meta:set_float("cycle", 0)
         meta:set_float("cooking", 0)
 
@@ -336,15 +400,15 @@ minetest.register_node("default:furnace", {
     end,
 
     on_metadata_inventory_move = function(pos, from_list, from_index, to_list, to_index, count, player)
-        run_furnace(pos)
+        check_and_run_furnace(pos)
     end,
 
     on_metadata_inventory_put = function(pos, listname, index, stack, player)
-        run_furnace(pos)
+        check_and_run_furnace(pos)
     end,
 
     on_metadata_inventory_take = function(pos, listname, index, stack, player)
-        run_furnace(pos)
+        check_and_run_furnace(pos)
     end,
 })
 
@@ -399,15 +463,15 @@ minetest.register_node("default:furnace_active", {
     end,
 
     on_metadata_inventory_move = function(pos, from_list, from_index, to_list, to_index, count, player)
-        stop_furnace(pos)
+        check_and_stop_furnace(pos)
     end,
 
     on_metadata_inventory_put = function(pos, listname, index, stack, player)
-        stop_furnace(pos)
+        check_and_stop_furnace(pos)
     end,
 
     on_metadata_inventory_take = function(pos, listname, index, stack, player)
-        stop_furnace(pos)
+        check_and_stop_furnace(pos)
     end,
 
     on_destruct = drop_everything,
@@ -416,46 +480,15 @@ minetest.register_node("default:furnace_active", {
         local meta = minetest.get_meta(pos)
         local inv = meta:get_inventory()
 
-        local gas = inv:get_list("gas")[1]
-        local wear = gas:get_wear() + gases_list[gas:get_name()]
-        if wear >= 65535 then
-            gas = { name = "default:empty_balloon", count = 1 }
-
-            minetest.swap_node(pos, { name = "default:furnace" })
-            minetest.get_node_timer(pos):stop()
-            meta:set_float("cooking", 0)
-        else
-            gas:set_wear(gas:get_wear() + gases_list[gas:get_name()])
+        if not update_gas(meta, inv, elapsed) then
+            stop_furnace(pos)
+            return
         end
-        inv:set_stack("gas", 1, gas)
 
-        local fuel = inv:get_list("fuel")[1]
-
-        local cycle = meta:get_float("cycle") + elapsed
-        local fuel_name = fuel:get_name()
-        if cycle > fuel_list[fuel_name] then
-            cycle = 0
-            local count = fuel:get_count() - 1
-            fuel:set_count(count)
-
-            if count == 0 then
-                minetest.swap_node(pos, { name = "default:furnace" })
-                minetest.get_node_timer(pos):stop()
-
-                meta:set_float("cooking", 0)
-
-                if bucket.is_bucket[fuel_name] then
-                    local empty = { name = "default:bucket_empty" }
-                    if inv:room_for_item("output", empty) then
-                        inv:add_item("output", empty)
-                    else
-                        minetest.add_item(vector.add(pos, vector.new(0, 1, 0)), empty)
-                    end
-                end
-            end
-            inv:set_stack("fuel", 1, fuel)
+        if not update_fuel(meta, inv, elapsed) then
+            stop_furnace(pos)
+            return
         end
-        meta:set_float("cycle", cycle)
 
         local cooking = meta:get_float("cooking") + elapsed
         local recipe = get_craft(crafts, inv)
@@ -467,19 +500,18 @@ minetest.register_node("default:furnace_active", {
             end
 
             for _, result in ipairs(recipe.output) do
-                if inv:room_for_item("output", result) then
-                    inv:add_item("output", result)
-                else
-                    minetest.add_item(vector.add(pos, vector.new(0, 1, 0)), result)
-                end
+                add_or_drop(
+                    inv, "output", result,
+                    vector.add(pos, vector.new(0, 1, 0))
+                )
             end
         end
 
         if recipe == nil then
             cooking = 0
-            meta:set_string("formspec", inactive_formspec(0))
+            meta:set_string("formspec", furnace_formspec(0))
         else
-            meta:set_string("formspec", inactive_formspec(
+            meta:set_string("formspec", furnace_formspec(
                 math.floor(100 * cooking / recipe.time)
             ))
         end
