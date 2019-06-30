@@ -19,10 +19,10 @@ function player_formspec()
         "size[9,9.5]"..
         "label[0,0.5;Oxygen]"..
         "list[context;oxygen;0,1;1,1;]"..
-        "label[0,2.5;Anti-radiation drug]"..
+        "label[0,2.5;Drugs]"..
         "list[context;antiradiation;0,3;1,1;]"..
         "label[2,0.5;Input]"..
-        "image[5,2;1,1;gui_arrow.png]"..
+        "image[5,2;1,1;gui_arrow.png^[transformR270]"..
         "button[5,3;1,1;craft_it;Craft]"..
         "list[context;input;2,1;3,3;]"..
         "label[6,0.5;Output]"..

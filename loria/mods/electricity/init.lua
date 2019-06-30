@@ -15,7 +15,7 @@ consumer = {
         resis = 1
     },
     ["electricity:heavy_infinite_consumer"] = {
-        resis = 0.05
+        resis = 0.01
     }
 }
 
@@ -37,24 +37,13 @@ local cable_neighbors = {
     vector.new( 0, -1,  0)
 }
 
-local function fix_processed(already_processed, pos)
-    if not already_processed[pos.x] then
-        already_processed[pos.x] = { }
-    end
-
-    if not already_processed[pos.x][pos.y] then
-        already_processed[pos.x][pos.y] = { }
-    end
+local function serialize_pos(pos)
+    return string.format("%f,%f,%f", pos.x, pos.y, pos.z)
 end
 
-local function set_processed(already_processed, pos)
-    fix_processed(already_processed, pos)
-    already_processed[pos.x][pos.y][pos.z] = true
-end
-
-local function get_processed(already_processed, pos)
-    fix_processed(already_processed, pos)
-    return already_processed[pos.x][pos.y][pos.z]
+local function deserialize_pos(str)
+    local x, y, z = str:match("([^,]+),([^,]+),([^,]+)")
+    return vector.new(tonumber(x), tonumber(y), tonumber(z))
 end
 
 minetest.register_node("electricity:infinite_electricity", {
@@ -64,7 +53,7 @@ minetest.register_node("electricity:infinite_electricity", {
     groups = { crumbly = 3, source = 1 },
 })
 
-local multimeter_resis = 0.1
+local multimeter_resis = 0.01
 local multimeter_timeout = 0.5
 minetest.register_tool("electricity:multimeter", {
     inventory_image = "electricity_multimeter.png",
@@ -230,21 +219,15 @@ minetest.register_node("electricity:heavy_infinite_consumer", {
     on_timer = reset_current,
 })
 
-local function find_circuits(circuit, already_processed)
+local function find_circuits(current, circuit, already_processed)
     local res = { }
-
-    local current = circuit[#circuit]
-    local current_name = minetest.get_node(current).name
-    if not (consumer[current_name] or conductor[current_name]) then
-        return res
-    end
 
     for _, vect in ipairs(cable_neighbors) do
         local pos = vector.add(current, vect)
         local name = minetest.get_node(pos).name
 
         if (consumer[name] or conductor[name]) and
-           not get_processed(already_processed, pos) then
+           not already_processed[serialize_pos(pos)] then
             local meta = minetest.get_meta(pos)
             meta:set_float("I", 0)
             meta:set_float("U", 0)
@@ -256,16 +239,18 @@ local function find_circuits(circuit, already_processed)
             end
             table.insert(circuit_tail, pos)
 
-            set_processed(already_processed, pos)
+            already_processed[serialize_pos(pos)] = true
 
             if consumer[name] then
                 table.insert(res, circuit_tail)
             elseif conductor[name] then
-                if meta:get_float("user_resis") > 0 then
+                local next_circuits = find_circuits(pos, circuit_tail, already_processed)
+
+                if meta:get_float("user_resis") > 0 and #next_circuits == 0 then
                     table.insert(res, circuit_tail)
                 end
 
-                for _, v in ipairs(find_circuits(circuit_tail, already_processed)) do
+                for _, v in ipairs(next_circuits) do
                     table.insert(res, v)
                 end
             end
@@ -290,6 +275,7 @@ local function calculate_resis(circuits)
             if conf then
                 local user_resis = minetest.get_meta(pos):get_float("user_resis")
                 local elem_resis = conf.resis + user_resis
+
                 R0 = R0 + elem_resis
                 elem_resists[circuit_idx][idx] = elem_resis
             end
@@ -362,15 +348,6 @@ end
 
 sources = { }
 
-local function serialize_pos(pos)
-    return string.format("%f,%f,%f", pos.x, pos.y, pos.z)
-end
-
-local function deserialize_pos(str)
-    local x, y, z = str:match("([^,]+),([^,]+),([^,]+)")
-    return vector.new(tonumber(x), tonumber(y), tonumber(z))
-end
-
 minetest.register_abm{
     label = "Enable electrcity sources",
     nodenames = { "group:source" },
@@ -389,14 +366,12 @@ minetest.register_globalstep(function(dtime)
             sources[str] = nil
         else
             sources[str] = time - dtime
-            local pos = deserialize_pos(str)
 
-            circuits[str] = { }
-            for _, vect in ipairs(source_neighbors) do
-                for _, circuit in ipairs(find_circuits({ vector.add(vect, pos) }, { })) do
-                    table.insert(circuits[str], circuit)
-                end
-            end
+            local pos = deserialize_pos(str)
+            local already_processed = {}
+            already_processed[serialize_pos(pos)] = true
+
+            circuits[str] = find_circuits(pos, { }, already_processed)
         end
     end
 
