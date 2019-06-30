@@ -253,13 +253,7 @@ for _, mushroom in ipairs(giant_mushrooms) do
     })
 end
 
-local additional_formspec =
-    "label[0,1.5;Gas]"..
-    "list[context;gas;0,2;1,1;]"..
-    "label[2,1.5;Fuel]"..
-    "list[context;fuel;2,2;1,1;]"
-
-function furnace_formspec(craft_percent)
+function furnace_formspec(conf, craft_percent)
     return
         "size[11,9.5]"..
         "label[4,0.5;Input]"..
@@ -270,7 +264,7 @@ function furnace_formspec(craft_percent)
         "list[context;output;8,1;3,3;]"..
         "list[current_player;main;2,5;8,1;]"..
         "list[current_player;main;2,6.5;8,3;8]"..
-        additional_formspec
+        conf.additional_formspec
 end
 
 function run_furnace(pos)
@@ -278,37 +272,25 @@ function run_furnace(pos)
     minetest.get_node_timer(pos):start(1)
 end
 
-function stop_furnace(pos)
+function stop_furnace(conf, pos)
     local meta = minetest.get_meta(pos)
 
     minetest.swap_node(pos, { name = "default:furnace" })
     minetest.get_node_timer(pos):stop()
 
-    meta:set_string("formspec", furnace_formspec(0))
+    meta:set_string("formspec", furnace_formspec(conf, 0))
     meta:set_float("cooking", 0)
 end
 
-function check_and_run_furnace(pos)
-    local meta = minetest.get_meta(pos)
-    local inv = meta:get_inventory()
-
-    local gas = inv:get_list("gas")[1]:get_name()
-    local fuel = inv:get_list("fuel")[1]:get_name()
-
-    if (gases_list[gas] ~= nil) and (fuel_list[fuel] ~= nil) then
+function check_and_run_furnace(conf, pos)
+    if conf.is_furnace_ready(pos) then
         run_furnace(pos)
     end
 end
 
-function check_and_stop_furnace(pos)
-    local meta = minetest.get_meta(pos)
-    local inv = meta:get_inventory()
-
-    local gas = inv:get_list("gas")[1]:get_name()
-    local fuel = inv:get_list("fuel")[1]:get_name()
-
-    if (gases_list[gas] == nil) or (fuel_list[fuel] == nil) then
-        stop_furnace(pos)
+function check_and_stop_furnace(conf, pos)
+    if not conf.is_furnace_ready(pos) then
+        stop_furnace(conf, pos)
     end
 end
 
@@ -318,6 +300,169 @@ function add_or_drop(inv, listname, stack, pos)
     else
         minetest.add_item(pos, stack)
     end
+end
+
+function furnace_on_timer(conf)
+    return (function(pos, elapsed)
+        local meta = minetest.get_meta(pos)
+        local inv = meta:get_inventory()
+
+        for _, func in ipairs(conf.on_tick) do
+            if not func(meta, inv, elapsed) then
+                stop_furnace(conf, pos)
+                return
+            end
+        end
+
+        local cooking = meta:get_float("cooking") + elapsed
+        local recipe = get_craft(crafts, inv)
+
+        if recipe ~= nil and cooking >= recipe.time then
+            cooking = 0
+            for _, reagent in ipairs(recipe.input) do
+                inv:remove_item("input", reagent)
+            end
+
+            for _, result in ipairs(recipe.output) do
+                add_or_drop(
+                    inv, "output", result,
+                    vector.add(pos, vector.new(0, 1, 0))
+                )
+            end
+        end
+
+        if recipe == nil then
+            cooking = 0
+            meta:set_string("formspec", furnace_formspec(conf, 0))
+        else
+            meta:set_string("formspec", furnace_formspec(
+                conf, math.floor(100 * cooking / recipe.time)
+            ))
+        end
+
+        meta:set_float("cooking", cooking)
+
+        return true
+    end)
+end
+
+function construct_furnace(conf)
+    return (function(pos)
+        local meta = minetest.get_meta(pos)
+        meta:set_string("formspec", furnace_formspec(conf, 0))
+        meta:set_float("cycle", 0)
+        meta:set_float("cooking", 0)
+
+        local inv = meta:get_inventory()
+
+        inv:set_size('input', 9)
+        inv:set_size('output', 9)
+        for name, size in pairs(conf.lists) do
+            inv:set_size(name, size)
+        end
+    end)
+end
+
+function register_furnace(conf)
+    minetest.register_node("default:" .. conf.name, {
+        description = conf.description,
+        tiles = {
+            conf.textures.side, conf.textures.side,
+            conf.textures.side, conf.textures.side,
+            conf.textures.side, conf.textures.front_inactive,
+        },
+
+        on_destruct = drop_everything,
+        on_construct = construct_furnace(conf),
+
+        paramtype2 = "facedir",
+        legacy_facedir_simple = true,
+        groups = { cracky = 2 },
+
+        allow_metadata_inventory_put = function(pos, listname, index, stack, player)
+            if listname == "output" then
+                return 0
+            else
+                return stack:get_count()
+            end
+        end,
+
+        on_metadata_inventory_move = function(pos, from_list, from_index, to_list, to_index, count, player)
+            check_and_run_furnace(conf, pos)
+        end,
+        on_metadata_inventory_put = function(pos, listname, index, stack, player)
+            check_and_run_furnace(conf, pos)
+        end,
+        on_metadata_inventory_take = function(pos, listname, index, stack, player)
+            check_and_run_furnace(conf, pos)
+        end,
+    })
+
+    minetest.register_node("default:" .. conf.name .. "_active", {
+        description = conf.description,
+        drop = "default:" .. conf.name,
+        tiles = {
+            conf.textures.side, conf.textures.side,
+            conf.textures.side, conf.textures.side,
+            conf.textures.side, conf.textures.front_active,
+        },
+
+        light_source = conf.light_source,
+        paramtype2 = "facedir",
+        legacy_facedir_simple = true,
+        groups = { cracky = 2 },
+
+        allow_metadata_inventory_put = function(pos, listname, index, stack, player)
+            if listname == "output" then
+                return 0
+            else
+                return stack:get_count()
+            end
+        end,
+
+        allow_metadata_inventory_move = function(pos, from_list, from_index, to_list, to_index, count, player)
+            if to_list == "input" then
+                return 0
+            else
+                local meta = minetest.get_meta(pos)
+                local inv = meta:get_inventory()
+                local stack = inv:get_stack(from_list, from_index)
+                return stack:get_count()
+            end
+        end,
+
+        allow_metadata_inventory_take = function(pos, listname, index, stack, player)
+            if listname == "input" then
+                return 0
+            else
+                return stack:get_count()
+            end
+        end,
+
+        on_metadata_inventory_move = function(pos, from_list, from_index, to_list, to_index, count, player)
+            check_and_stop_furnace(conf, pos)
+        end,
+        on_metadata_inventory_put = function(pos, listname, index, stack, player)
+            check_and_stop_furnace(conf, pos)
+        end,
+        on_metadata_inventory_take = function(pos, listname, index, stack, player)
+            check_and_stop_furnace(conf, pos)
+        end,
+
+        on_destruct = drop_everything,
+        on_timer = furnace_on_timer(conf),
+    })
+end
+
+------------------------------
+function is_furnace_ready(pos)
+    local meta = minetest.get_meta(pos)
+    local inv = meta:get_inventory()
+
+    local gas = inv:get_list("gas")[1]:get_name()
+    local fuel = inv:get_list("fuel")[1]:get_name()
+
+    return gases_list[gas] ~= nil and fuel_list[fuel] ~= nil
 end
 
 function update_gas(meta, inv, elapsed)
@@ -363,63 +508,21 @@ function update_fuel(meta, inv, elapsed)
     return true
 end
 
-minetest.register_node("default:furnace", {
-    description = "Furnace",
-    tiles = {
-        "default_furnace_side.png", "default_furnace_side.png",
-        "default_furnace_side.png", "default_furnace_side.png",
-        "default_furnace_side.png", "default_furnace_front.png"
-    },
-
-    on_destruct = drop_everything,
-
-    on_construct = function(pos)
-        local meta = minetest.get_meta(pos)
-        meta:set_string("formspec", furnace_formspec(0))
-        meta:set_float("cycle", 0)
-        meta:set_float("cooking", 0)
-
-        local inv = meta:get_inventory()
-
-        inv:set_size('gas', 1)
-        inv:set_size('fuel', 1)
-        inv:set_size('input', 9)
-        inv:set_size('output', 9)
-    end,
-
-    paramtype2 = "facedir",
-    legacy_facedir_simple = true,
-    groups = { cracky = 2 },
-
-    allow_metadata_inventory_put = function(pos, listname, index, stack, player)
-        if listname == "output" then
-            return 0
-        else
-            return stack:get_count()
-        end
-    end,
-
-    on_metadata_inventory_move = function(pos, from_list, from_index, to_list, to_index, count, player)
-        check_and_run_furnace(pos)
-    end,
-
-    on_metadata_inventory_put = function(pos, listname, index, stack, player)
-        check_and_run_furnace(pos)
-    end,
-
-    on_metadata_inventory_take = function(pos, listname, index, stack, player)
-        check_and_run_furnace(pos)
-    end,
-})
-
-minetest.register_node("default:furnace_active", {
-    description = "Furnace",
-    drop = "default:furnace",
-    tiles = {
-        "default_furnace_side.png", "default_furnace_side.png",
-        "default_furnace_side.png", "default_furnace_side.png",
-        "default_furnace_side.png",
-        {
+gas_furnace = {
+    name = "furnace",
+    description = "Gas furnace",
+    lists = { gas = 1, fuel = 1 },
+    on_tick = { update_fuel, update_gas },
+    is_furnace_ready = is_furnace_ready,
+    additional_formspec =
+        "label[0,1.5;Gas]"..
+        "list[context;gas;0,2;1,1;]"..
+        "label[2,1.5;Fuel]"..
+        "list[context;fuel;2,2;1,1;]",
+    textures = {
+        side = "default_furnace_side.png",
+        front_inactive = "default_furnace_front.png",
+        front_active = {
             image = "default_furnace_front_active.png",
             backface_culling = false,
             animation = {
@@ -428,96 +531,8 @@ minetest.register_node("default:furnace_active", {
                 aspect_h = 16,
                 length = 1.5
             }
-        }
+        },
     },
     light_source = 10,
-    paramtype2 = "facedir",
-    legacy_facedir_simple = true,
-    groups = { cracky = 2 },
-
-    allow_metadata_inventory_put = function(pos, listname, index, stack, player)
-        if listname == "output" then
-            return 0
-        else
-            return stack:get_count()
-        end
-    end,
-
-    allow_metadata_inventory_move = function(pos, from_list, from_index, to_list, to_index, count, player)
-        if to_list == "input" then
-            return 0
-        else
-            local meta = minetest.get_meta(pos)
-            local inv = meta:get_inventory()
-            local stack = inv:get_stack(from_list, from_index)
-            return stack:get_count()
-        end
-    end,
-
-    allow_metadata_inventory_take = function(pos, listname, index, stack, player)
-        if listname == "input" then
-            return 0
-        else
-            return stack:get_count()
-        end
-    end,
-
-    on_metadata_inventory_move = function(pos, from_list, from_index, to_list, to_index, count, player)
-        check_and_stop_furnace(pos)
-    end,
-
-    on_metadata_inventory_put = function(pos, listname, index, stack, player)
-        check_and_stop_furnace(pos)
-    end,
-
-    on_metadata_inventory_take = function(pos, listname, index, stack, player)
-        check_and_stop_furnace(pos)
-    end,
-
-    on_destruct = drop_everything,
-
-    on_timer = function(pos, elapsed)
-        local meta = minetest.get_meta(pos)
-        local inv = meta:get_inventory()
-
-        if not update_gas(meta, inv, elapsed) then
-            stop_furnace(pos)
-            return
-        end
-
-        if not update_fuel(meta, inv, elapsed) then
-            stop_furnace(pos)
-            return
-        end
-
-        local cooking = meta:get_float("cooking") + elapsed
-        local recipe = get_craft(crafts, inv)
-
-        if recipe ~= nil and cooking >= recipe.time then
-            cooking = 0
-            for _, reagent in ipairs(recipe.input) do
-                inv:remove_item("input", reagent)
-            end
-
-            for _, result in ipairs(recipe.output) do
-                add_or_drop(
-                    inv, "output", result,
-                    vector.add(pos, vector.new(0, 1, 0))
-                )
-            end
-        end
-
-        if recipe == nil then
-            cooking = 0
-            meta:set_string("formspec", furnace_formspec(0))
-        else
-            meta:set_string("formspec", furnace_formspec(
-                math.floor(100 * cooking / recipe.time)
-            ))
-        end
-
-        meta:set_float("cooking", cooking)
-
-        return true
-    end
-})
+}
+register_furnace(gas_furnace)
