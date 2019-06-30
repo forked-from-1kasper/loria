@@ -99,7 +99,6 @@ minetest.register_on_player_receive_fields(function(player, formname, fields)
     elseif fields.creative_down then
         local shift = meta:get_int("creative_shift")
         shift = shift + 8
-        minetest.chat_send_player("kraken", tostring(shift_max))
 
         if shift > shift_max then
             shift = shift_max
