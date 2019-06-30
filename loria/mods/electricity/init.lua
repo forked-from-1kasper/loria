@@ -1,6 +1,6 @@
 source = {
     ["electricity:infinite_electricity"] = {
-        emf = 50, resis = 0.5
+        emf = 230, resis = 0.5
     },
 }
 
@@ -91,11 +91,11 @@ minetest.register_tool("electricity:multimeter", {
     end,
 })
 
-local function run_timer(pos)
+function run_timer(pos)
     minetest.get_node_timer(pos):start(cable_tick)
 end
 
-local function reset_current(pos, elapsed)
+function reset_current(pos, elapsed)
     local meta = minetest.get_meta(pos)
     local timeout = meta:get_float("electricity_timeout")
 
@@ -124,12 +124,14 @@ cable_box = {
 minetest.register_node("electricity:aluminium_cable", {
     description = "Aluminium cable",
     drawtype = "nodebox",
-    tiles = { "electricity_aluminium_cable.png",
-              "electricity_aluminium_cable.png",
-              "electricity_aluminium_cable_side.png",
-              "electricity_aluminium_cable_side.png",
-              "electricity_aluminium_cable_side.png",
-              "electricity_aluminium_cable_side.png" },
+    tiles = {
+        "electricity_aluminium_cable.png",
+        "electricity_aluminium_cable.png",
+        "electricity_aluminium_cable_side.png",
+        "electricity_aluminium_cable_side.png",
+        "electricity_aluminium_cable_side.png",
+        "electricity_aluminium_cable_side.png"
+    },
 
     inventory_image = "electricity_aluminium_cable_item.png",
     wield_image = "electricity_aluminium_cable_item.png",
@@ -147,6 +149,66 @@ minetest.register_node("electricity:aluminium_cable", {
     on_construct = run_timer,
     on_timer = reset_current,
 })
+
+switch_box = {
+    type = "fixed",
+    fixed = {-1/2, -1/2, -1/2, 1/2, -1/2+3/16, 1/2},
+}
+
+minetest.register_node("electricity:switch_off", {
+    description = "Switch",
+    tiles = {
+        "electricity_switch_top_off.png",
+        "electricity_switch_bottom.png",
+        "electricity_switch_side.png",
+        "electricity_switch_side.png",
+        "electricity_switch_side.png",
+        "electricity_switch_side.png"
+    },
+
+    drop = 'electricity:switch_off',
+    groups = { crumbly = 3, conductor = 1 },
+
+    drawtype = "nodebox",
+    node_box = switch_box,
+    selection_box = switch_box,
+
+    on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
+        minetest.get_node_timer(pos):start(cable_tick)
+        minetest.swap_node(pos, { name = "electricity:switch_on" })
+    end,
+})
+
+minetest.register_node("electricity:switch_on", {
+    description = "Switch",
+    tiles = {
+        "electricity_switch_top_on.png",
+        "electricity_switch_bottom.png",
+        "electricity_switch_side.png",
+        "electricity_switch_side.png",
+        "electricity_switch_side.png",
+        "electricity_switch_side.png"
+    },
+
+    drop = 'electricity:switch_off',
+    groups = { crumbly = 3, conductor = 1 },
+
+    drawtype = "nodebox",
+    node_box = switch_box,
+    selection_box = switch_box,
+
+    on_timer = reset_current,
+    on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
+        local meta = minetest.get_meta(pos)
+        meta:set_float("I", 0)
+        meta:set_float("U", 0)
+        meta:set_float("electricity_timeout", 0)
+
+        minetest.get_node_timer(pos):stop()
+        minetest.swap_node(pos, { name = "electricity:switch_off" })
+    end,
+})
+conductor["electricity:switch_on"] = { resis = 0.02 }
 
 minetest.register_node("electricity:infinite_consumer", {
     description = "Infinite consumer",

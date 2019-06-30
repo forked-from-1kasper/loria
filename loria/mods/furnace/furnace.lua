@@ -241,33 +241,38 @@ for _, mushroom in ipairs(giant_mushrooms) do
     })
 end
 
-function furnace_formspec(conf, craft_percent)
+function furnace_formspec(conf, craft_percent, meta)
     return
         "size[11,9.5]"..
         "label[4,0.5;Input]"..
         "image[7,2;1,1;gui_arrow.png^[lowpart:"
-        .. craft_percent .. ":gui_active_arrow.png]]"..
+        .. craft_percent .. ":gui_active_arrow.png^[transformR270]"..
         "list[context;input;4,1;3,3;]"..
         "label[8,0.5;Output]"..
         "list[context;output;8,1;3,3;]"..
         "list[current_player;main;2,5;8,1;]"..
         "list[current_player;main;2,6.5;8,3;8]"..
-        conf.additional_formspec
+        conf.additional_formspec(meta)
 end
 
 function run_furnace(conf, pos)
+    if conf.before_run then
+        conf.before_run(pos)
+    end
+
     minetest.swap_node(pos, { name = "furnace:" .. conf.name .. "_active" })
-    minetest.get_node_timer(pos):start(1)
 end
 
 function stop_furnace(conf, pos)
     local meta = minetest.get_meta(pos)
-
     minetest.swap_node(pos, { name = "furnace:" .. conf.name })
-    minetest.get_node_timer(pos):stop()
 
-    meta:set_string("formspec", furnace_formspec(conf, 0))
+    meta:set_string("formspec", furnace_formspec(conf, 0, meta))
     meta:set_float("cooking", 0)
+
+    if conf.after_stop then
+        conf.after_stop(pos)
+    end
 end
 
 function check_and_run_furnace(conf, pos)
@@ -296,9 +301,9 @@ function furnace_on_timer(conf)
         local inv = meta:get_inventory()
 
         for _, func in ipairs(conf.on_tick) do
-            if not func(meta, inv, elapsed) then
+            if not func(pos, elapsed) then
                 stop_furnace(conf, pos)
-                return
+                return true
             end
         end
 
@@ -321,10 +326,10 @@ function furnace_on_timer(conf)
 
         if recipe == nil then
             cooking = 0
-            meta:set_string("formspec", furnace_formspec(conf, 0))
+            meta:set_string("formspec", furnace_formspec(conf, 0, meta))
         else
             meta:set_string("formspec", furnace_formspec(
-                conf, math.floor(100 * cooking / recipe.time)
+                conf, math.floor(100 * cooking / recipe.time), meta
             ))
         end
 
@@ -337,7 +342,7 @@ end
 function construct_furnace(conf)
     return (function(pos)
         local meta = minetest.get_meta(pos)
-        meta:set_string("formspec", furnace_formspec(conf, 0))
+        meta:set_string("formspec", furnace_formspec(conf, 0, meta))
         meta:set_float("cycle", 0)
         meta:set_float("cooking", 0)
 
@@ -348,6 +353,8 @@ function construct_furnace(conf)
         for name, size in pairs(conf.lists) do
             inv:set_size(name, size)
         end
+
+        minetest.get_node_timer(pos):start(0.3)
     end)
 end
 
@@ -365,7 +372,16 @@ function register_furnace(conf)
 
         paramtype2 = "facedir",
         legacy_facedir_simple = true,
-        groups = { cracky = 2 },
+        groups = conf.groups or { },
+
+        on_timer = function(pos, elapsed)
+            check_and_run_furnace(conf, pos)
+
+            if conf.on_inactive_timer then
+                conf.on_inactive_timer(pos, elapsed)
+            end
+            return true
+        end,
 
         allow_metadata_inventory_put = function(pos, listname, index, stack, player)
             if listname == "output" then
@@ -398,7 +414,7 @@ function register_furnace(conf)
         light_source = conf.light_source,
         paramtype2 = "facedir",
         legacy_facedir_simple = true,
-        groups = { cracky = 2 },
+        groups = conf.groups or { },
 
         allow_metadata_inventory_put = function(pos, listname, index, stack, player)
             if listname == "output" then
@@ -420,11 +436,7 @@ function register_furnace(conf)
         end,
 
         allow_metadata_inventory_take = function(pos, listname, index, stack, player)
-            if listname == "input" then
-                return 0
-            else
-                return stack:get_count()
-            end
+            return stack:get_count()
         end,
 
         on_metadata_inventory_move = function(pos, from_list, from_index, to_list, to_index, count, player)

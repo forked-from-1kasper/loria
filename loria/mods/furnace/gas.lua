@@ -20,7 +20,10 @@ function is_furnace_ready(pos)
     return gases_list[gas] ~= nil and fuel_list[fuel] ~= nil
 end
 
-function update_gas(meta, inv, elapsed)
+function update_gas(pos, elapsed)
+    local meta = minetest.get_meta(pos)
+    local inv = meta:get_inventory()
+
     local gas = inv:get_list("gas")[1]
     local wear = gas:get_wear() + gases_list[gas:get_name()]
 
@@ -35,7 +38,10 @@ function update_gas(meta, inv, elapsed)
     return true
 end
 
-function update_fuel(meta, inv, elapsed)
+function update_fuel(pos, elapsed)
+    local meta = minetest.get_meta(pos)
+    local inv = meta:get_inventory()
+
     local fuel = inv:get_list("fuel")[1]
 
     local cycle = meta:get_float("cycle") + elapsed
@@ -69,11 +75,13 @@ register_furnace({
     lists = { gas = 1, fuel = 1 },
     on_tick = { update_fuel, update_gas },
     is_furnace_ready = is_furnace_ready,
-    additional_formspec =
-        "label[0,1.5;Gas]"..
-        "list[context;gas;0,2;1,1;]"..
-        "label[2,1.5;Fuel]"..
-        "list[context;fuel;2,2;1,1;]",
+    additional_formspec = function(meta)
+        return
+            "label[0,1.5;Gas]"..
+            "list[context;gas;0,2;1,1;]"..
+            "label[2,1.5;Fuel]"..
+            "list[context;fuel;2,2;1,1;]"
+    end,
     textures = {
         side = "furnace_side.png",
         front_inactive = "furnace_gas_front.png",
@@ -88,5 +96,6 @@ register_furnace({
             }
         },
     },
+    groups = { cracky = 2 },
     light_source = 10,
 })
