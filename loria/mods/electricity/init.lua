@@ -234,7 +234,7 @@ minetest.register_node("electricity:transformer", {
         "electricity_transformer_side.png",
         "electricity_transformer_side.png",
     },
-    drop = 'electricity:Transformer',
+    drop = 'electricity:transformer',
     groups = { crumbly = 3, conductor = 1 },
 
     drawtype = "nodebox",
@@ -260,6 +260,7 @@ minetest.register_node("electricity:transformer", {
 
         run_timer(transformer_resis)(pos)
     end,
+    on_destruct = drop_everything,
     on_timer = reset_current,
 
     allow_metadata_inventory_put = function(pos, listname, index, stack, player)
