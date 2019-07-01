@@ -64,28 +64,33 @@ local function calculate_inventory_radiation(inv)
     return radiation
 end
 
+function calculate_radiation(vm, pos)
+    local radiation = 0
+
+    local minp, maxp = vm:read_from_map(
+        vector.subtract(pos, radiation_vect),
+        vector.add(pos, radiation_vect)
+    )
+
+    local area = VoxelArea:new({MinEdge = minp, MaxEdge = maxp})
+    local data = vm:get_data()
+    for i = 1, #data do
+        local A = activity[data[i]]
+        if A then
+            local node = area:position(i)
+            radiation = radiation + A / hypot_sqr(pos, node)
+        end
+    end
+
+    return radiation
+end
+
 minetest.register_globalstep(function(dtime)
     local vm = minetest.get_voxel_manip()
 
     for _, player in ipairs(minetest.get_connected_players()) do
-        local radiation = 0
-
         local pos = player:get_pos()
-
-        local minp, maxp = vm:read_from_map(
-            vector.subtract(pos, radiation_vect),
-            vector.add(pos, radiation_vect)
-        )
-
-        local area = VoxelArea:new({MinEdge = minp, MaxEdge = maxp})
-        local data = vm:get_data()
-        for i = 1, #data do
-            local A = activity[data[i]]
-            if A then
-                local node = area:position(i)
-                radiation = radiation + A / hypot_sqr(pos, node)
-            end
-        end
+        local radiation = calculate_radiation(vm, pos)
 
         local objs = minetest.get_objects_inside_radius(pos, vector.length(radiation_vect))
         for _, obj in pairs(objs) do
