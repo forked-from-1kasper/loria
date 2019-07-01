@@ -41,8 +41,8 @@ inv_crafts = {
     },
     {
         input = {
-            { name = "default:lead_case", count = 1 },
-            { name = "default:battery", count = 5 }
+            { name = "electricity:aluminium_cable", count = 10 },
+            { name = "default:lead_case", count = 1 }
         },
         output = {
             { name = "electricity:battery", count = 1 }
@@ -82,6 +82,14 @@ inv_crafts = {
         },
         output = {
             { name = "default:lead_box", count = 1 },
+        }
+    },
+    {
+        input = {
+            { name = "default:aluminium_ingot", count = 1 },
+        },
+        output = {
+            { name = "electricity:aluminium_cable", count = 15 }
         }
     },
 }
