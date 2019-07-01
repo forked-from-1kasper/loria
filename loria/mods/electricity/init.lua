@@ -1,6 +1,7 @@
 dofile(minetest.get_modpath("electricity").."/multimeter.lua")
 
 source = {}
+quadripole = {}
 
 cable_tick = 0.1
 
@@ -52,6 +53,19 @@ source["electricity:infinite_electricity"] = function(meta, P, R, emf, elapsed)
     return 230
 end
 
+local function battery_box_formspec(P, emf)
+    return string.format(
+        "size[8,6.5]" ..
+        "label[0,0;Battery box]" ..
+        "label[0,0.5;P = %f]" ..
+        "label[0,1;ε = %f]" ..
+        "list[context;box;1.5,0.5;6,1;]" ..
+        "list[current_player;main;0,2;8,1;]"..
+        "list[current_player;main;0,3.5;8,3;8]",
+        P, emf
+    )
+end
+
 minetest.register_node("electricity:battery", {
     description = "Battery box",
     tiles = {
@@ -71,6 +85,8 @@ minetest.register_node("electricity:battery", {
         inv:set_size("box", 6)
         meta:set_float("resis", 0.4)
         meta:set_float("emf", 25)
+
+        meta:set_string("formspec", battery_box_formspec(0, 0))
     end,
 
     allow_metadata_inventory_put = function(pos, listname, index, stack, player)
@@ -102,16 +118,7 @@ minetest.register_node("electricity:battery", {
 source["electricity:battery"] = function(meta, P, R, emf, elapsed)
     local inv = meta:get_inventory()
 
-    meta:set_string("formspec", string.format(
-        "size[8,6.5]" ..
-        "label[0,0;Battery box]" ..
-        "label[0,0.5;P = %f]" ..
-        "label[0,1;ε = %f]" ..
-        "list[context;box;1.5,0.5;6,1;]" ..
-        "list[current_player;main;0,2;8,1;]"..
-        "list[current_player;main;0,3.5;8,3;8]",
-        P, emf
-    ))
+    meta:set_string("formspec", battery_box_formspec(P, emf))
 
     local emf = 0
     local wear = 5 * P * elapsed
@@ -185,7 +192,7 @@ minetest.register_node("electricity:aluminium_cable", {
     sunlight_propagates = true,
     paramtype = "light",
     drop = 'electricity:aluminium_cable',
-    groups = { crumbly = 3, dig_immediate = 3, conductor = 1 },
+    groups = { crumbly = 3, dig_immediate = 3, conductor = 1, cable = 1 },
 
     selection_box = cable_box,
     node_box = cable_box,
@@ -200,6 +207,108 @@ minetest.register_node("electricity:aluminium_cable", {
     on_construct = run_timer(0.01),
     on_timer = reset_current,
 })
+
+transformer_box = {
+    type = "fixed",
+    fixed = {
+        { -1/2, -1/2, -1/2, 1/2, -1/2+2/16, 1/2 },
+        { -1/2+2/16, -1/2+2/16, -1/2+2/16, 1/2-2/16, 1/2-2/16, 1/2-2/16 },
+        { -1/2, 1/2-2/16, -1/2, 1/2, 1/2, 1/2 },
+    },
+}
+
+transformer_restrictions = { min = 1/10, max = 10 }
+transformer_resis = 0.1
+
+local function nullator(I, U)
+    return { I = 0, U = 0 }
+end
+
+minetest.register_node("electricity:transformer", {
+    description = "Transformer",
+    tiles = {
+        "electricity_transformer.png",
+        "electricity_transformer.png",
+        "electricity_transformer_side.png",
+        "electricity_transformer_side.png",
+        "electricity_transformer_side.png",
+        "electricity_transformer_side.png",
+    },
+    drop = 'electricity:Transformer',
+    groups = { crumbly = 3, conductor = 1 },
+
+    drawtype = "nodebox",
+    node_box = transformer_box,
+    selection_box = transformer_box,
+
+    on_construct = function(pos)
+        local meta = minetest.get_meta(pos)
+        local inv = meta:get_inventory()
+
+        inv:set_size("primary", 1)
+        inv:set_size("secondary", 1)
+
+        meta:set_string("formspec",
+            "size[8,6.5]" ..
+            "label[2,0;Primary winding]" ..
+            "list[context;primary;2,0.5;1,1;]" ..
+            "label[5,0;Secondary winding]" ..
+            "list[context;secondary;5,0.5;1,1;]" ..
+            "list[current_player;main;0,2;8,1;]" ..
+            "list[current_player;main;0,3.5;8,3;8]"
+        )
+
+        run_timer(transformer_resis)(pos)
+    end,
+    on_timer = reset_current,
+
+    allow_metadata_inventory_put = function(pos, listname, index, stack, player)
+        if minetest.get_item_group(stack:get_name(), "cable") > 0 then
+            return stack:get_count()
+        else
+            return 0
+        end
+    end,
+
+    allow_metadata_inventory_move = function(pos, from_list, from_index, to_list, to_index, count, player)
+        local meta = minetest.get_meta(pos)
+        local inv = meta:get_inventory()
+        local stack = inv:get_stack(from_list, from_index)
+
+        if to_list == "primary" or to_list == "secondary" then
+            if minetest.get_item_group(stack:get_name(), "cable") > 0 then
+                return stack:get_count()
+            else
+                return 0
+            end
+        else
+            return stack:get_count()
+        end
+    end,
+})
+quadripole["electricity:transformer"] = function(meta)
+    local inv = meta:get_inventory()
+    local prim_winding = inv:get_stack("primary", 1)
+    local sec_winding = inv:get_stack("secondary", 1)
+
+    local N1 = prim_winding:get_count()
+    local N2 = sec_winding:get_count()
+
+    if N1 == 0 or N2 == 0 or
+       minetest.get_item_group(prim_winding:get_name(), "cable") == 0 or
+       minetest.get_item_group(sec_winding:get_name(), "cable") == 0 then
+        return nullator
+    else
+        local n = N2 / N1
+
+        if n >= transformer_restrictions.min and n <= transformer_restrictions.max then
+            return (function(I, U) return { I = I / n, U = U * n } end)
+        else
+            return nullator
+        end
+    end
+    meta:set_float("resis", (N1 + N2 + 1) * transformer_resis)
+end
 
 switch_box = {
     type = "fixed",
@@ -285,17 +394,20 @@ minetest.register_node("electricity:heavy_infinite_consumer", {
 
 local function find_circuits(current, circuit, already_processed)
     local res = { }
+    local neighbors
 
     for _, vect in ipairs(cable_neighbors) do
         local pos = vector.add(current, vect)
         local name = minetest.get_node(pos).name
-
-        if ((minetest.get_item_group(name, "consumer") > 0) or
-            (minetest.get_item_group(name, "conductor") > 0)) and
+        
+        if (minetest.get_item_group(name, "consumer") > 0 or
+            minetest.get_item_group(name, "conductor") > 0) and
            not already_processed[serialize_pos(pos)] then
             local meta = minetest.get_meta(pos)
+
             meta:set_float("I", 0)
             meta:set_float("U", 0)
+
             meta:set_float("electricity_timeout", 1)
 
             local circuit_tail = { }
@@ -308,7 +420,7 @@ local function find_circuits(current, circuit, already_processed)
 
             if minetest.get_item_group(name, "consumer") > 0 then
                 table.insert(res, circuit_tail)
-            elseif (minetest.get_item_group(name, "conductor") > 0) then
+            elseif minetest.get_item_group(name, "conductor") > 0 then
                 local next_circuits = find_circuits(pos, circuit_tail, already_processed)
 
                 if meta:get_float("user_resis") > 0 and #next_circuits == 0 then
@@ -335,8 +447,8 @@ local function calculate_resis(circuits)
         for idx, pos in ipairs(circuit) do
             local name = minetest.get_node(pos).name
 
-            if (minetest.get_item_group(name, "consumer") > 0) or
-               (minetest.get_item_group(name, "conductor") > 0) then
+            if minetest.get_item_group(name, "consumer") > 0 or
+               minetest.get_item_group(name, "conductor") > 0 then
                 local meta = minetest.get_meta(pos)
                 R0 = R0 + meta:get_float("resis") + meta:get_float("user_resis")
             end
@@ -353,13 +465,18 @@ local function calculate_resis(circuits)
     return { circuit_resists = circuit_resists, R = R }
 end
 
-local function measurement_delta()
-    return math.random() / 2
+local function measurement_delta(X)
+    if X == 0 then
+        return 0
+    else
+        return X + math.random() / 2
+    end
 end
 
 local function calculate_circuits(resists, circuits, I, U)
     local P = 0
     for circuit_idx, circuit in ipairs(circuits) do
+        transformations = { }
         for idx, pos in ipairs(circuit) do
             local R = resists.circuit_resists[circuit_idx]
             local I = U / R -- I = I0
@@ -369,8 +486,22 @@ local function calculate_circuits(resists, circuits, I, U)
             local U0 = I * R0
             P = P + I * U0
 
-            meta:set_float("I", meta:get_float("I") + I + measurement_delta())
-            meta:set_float("U", meta:get_float("U") + U0 + measurement_delta())
+            local I = measurement_delta(I)
+            local U = measurement_delta(U0)
+
+            for _, trans in ipairs(transformations) do
+                local transformed = trans(I, U)
+                I = transformed.I
+                U = transformed.U
+            end
+
+            meta:set_float("I", meta:get_float("I") + I)
+            meta:set_float("U", meta:get_float("U") + U)
+
+            trans = quadripole[minetest.get_node(pos).name]
+            if trans then
+                table.insert(transformations, trans(meta))
+            end
         end
     end
 
@@ -379,7 +510,7 @@ end
 
 local function process_source(pos, circuits, elapsed)
     local name = minetest.get_node(pos).name
-    if  minetest.get_item_group(name, "source") == 0 then
+    if minetest.get_item_group(name, "source") == 0 then
         return
     end
 
