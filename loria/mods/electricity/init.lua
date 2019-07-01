@@ -332,7 +332,7 @@ local function process_source(pos, circuits, elapsed)
     meta:set_float("U", emf - I * r)
     meta:set_string("formspec", string.format(
         "size[2,1.5]" ..
-        "label[0,0;Infinite electricity]" ..
+        "label[0,0;Electricity source]" ..
         "label[0,0.5;P = %f]" ..
         "label[0,1;ε = %f]",
         values.P, emf
