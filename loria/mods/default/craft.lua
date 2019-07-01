@@ -147,9 +147,13 @@ minetest.register_allow_player_inventory_action(function(player, action, invento
         if inventory_info.from_list == "output" then
             return 0
         elseif inventory_info.from_list == "creative_inv" then
-            stack:set_count(stack:get_count() + inventory_info.count)
-            inv:set_stack("creative_inv", inventory_info.from_index, stack)
-            return inventory_info.count
+            if inv:get_stack(inventory_info.to_list, inventory_info.to_index):is_empty() then
+                stack:set_count(stack:get_count() + inventory_info.count)
+                inv:set_stack("creative_inv", inventory_info.from_index, stack)
+                return inventory_info.count
+            else
+                return 0
+            end
         end
 
         if inventory_info.to_list == "oxygen" then
@@ -181,6 +185,8 @@ minetest.register_allow_player_inventory_action(function(player, action, invento
         -- take
         if inventory_info.listname == "output" then
             return 0
+        elseif inventory_info.listname == "creative_inv" then
+            return -1
         else
             return inventory_info.stack:get_count()
         end
