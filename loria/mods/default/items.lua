@@ -85,10 +85,9 @@ minetest.register_craftitem("default:super_drill", {
     }
 })
 
-minetest.register_craftitem("default:battery", {
+minetest.register_tool("default:battery", {
     inventory_image = "default_battery.png",
     description = "Battery",
-    stack_max = 16,
 })
 
 minetest.register_craftitem("default:aluminium_case", {

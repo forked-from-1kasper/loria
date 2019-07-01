@@ -41,12 +41,19 @@ minetest.register_node("electricity:infinite_electricity", {
         meta:set_float("emf", 230)
     end,
 })
-source["electricity:infinite_electricity"] = function(P, R, emf, elapsed)
+source["electricity:infinite_electricity"] = function(meta, P, R, emf, elapsed)
+    meta:set_string("formspec", string.format(
+        "size[2,1.5]" ..
+        "label[0,0;Infinite electricity]" ..
+        "label[0,0.5;P = %f]" ..
+        "label[0,1;ε = %f]",
+        P, emf
+    ))
     return 230
 end
 
 minetest.register_node("electricity:battery", {
-    description = "Battery",
+    description = "Battery box",
     tiles = {
         "electricity_battery_top.png",
         "electricity_battery_bottom.png",
@@ -59,13 +66,70 @@ minetest.register_node("electricity:battery", {
     groups = { crumbly = 3, source = 1 },
     on_construct = function(pos)
         local meta = minetest.get_meta(pos)
+        local inv = meta:get_inventory()
 
+        inv:set_size("box", 6)
         meta:set_float("resis", 0.4)
         meta:set_float("emf", 25)
     end,
+
+    allow_metadata_inventory_put = function(pos, listname, index, stack, player)
+        if stack:get_name() == "default:battery" then
+            return stack:get_count()
+        else
+            return 0
+        end
+    end,
+
+    allow_metadata_inventory_move = function(pos, from_list, from_index, to_list, to_index, count, player)
+        local meta = minetest.get_meta(pos)
+        local inv = meta:get_inventory()
+        local stack = inv:get_stack(from_list, from_index)
+
+        if to_list == "box" then
+            if stack:get_name() == "default:battery" then
+                return stack:get_count()
+            else
+                return 0
+            end
+        else
+            return stack:get_count()
+        end
+    end,
+
+    on_destruct = drop_everything,
 })
-source["electricity:battery"] = function(P, R, emf, elapsed)
-    return emf - (1 / 1000) * P * elapsed
+source["electricity:battery"] = function(meta, P, R, emf, elapsed)
+    local inv = meta:get_inventory()
+
+    meta:set_string("formspec", string.format(
+        "size[8,6.5]" ..
+        "label[0,0;Battery box]" ..
+        "label[0,0.5;P = %f]" ..
+        "label[0,1;ε = %f]" ..
+        "list[context;box;1.5,0.5;6,1;]" ..
+        "list[current_player;main;0,2;8,1;]"..
+        "list[current_player;main;0,3.5;8,3;8]",
+        P, emf
+    ))
+
+    local emf = 0
+    local wear = 5 * P * elapsed
+    for idx, stack in ipairs(inv:get_list("box")) do
+        if stack:get_name() == "default:battery" then
+            emf = emf + (65536 - stack:get_wear()) * 5 / 65536
+
+            if stack:get_wear() + wear >= 65535 then
+                stack:set_name("default:aluminium_case")
+                stack:set_wear(0)
+            else
+                stack:add_wear(wear)
+            end
+            inv:set_stack("box", idx, stack)
+        end
+    end
+
+    return emf
 end
 
 function run_timer(resis)
@@ -289,6 +353,10 @@ local function calculate_resis(circuits)
     return { circuit_resists = circuit_resists, R = R }
 end
 
+local function measurement_delta()
+    return math.random() / 2
+end
+
 local function calculate_circuits(resists, circuits, I, U)
     local P = 0
     for circuit_idx, circuit in ipairs(circuits) do
@@ -301,8 +369,8 @@ local function calculate_circuits(resists, circuits, I, U)
             local U0 = I * R0
             P = P + I * U0
 
-            meta:set_float("I", meta:get_float("I") + I + math.random())
-            meta:set_float("U", meta:get_float("U") + U0 + math.random())
+            meta:set_float("I", meta:get_float("I") + I + measurement_delta())
+            meta:set_float("U", meta:get_float("U") + U0 + measurement_delta())
         end
     end
 
@@ -330,15 +398,8 @@ local function process_source(pos, circuits, elapsed)
 
     meta:set_float("I", I)
     meta:set_float("U", emf - I * r)
-    meta:set_string("formspec", string.format(
-        "size[2,1.5]" ..
-        "label[0,0;Electricity source]" ..
-        "label[0,0.5;P = %f]" ..
-        "label[0,1;ε = %f]",
-        values.P, emf
-    ))
 
-    meta:set_float("emf", source[name](values.P, R, emf, elapsed))
+    meta:set_float("emf", source[name](meta, values.P, R, emf, elapsed))
 end
 
 sources = { }
