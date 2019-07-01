@@ -1,5 +1,7 @@
 dofile(minetest.get_modpath("electricity").."/multimeter.lua")
 
+source = {}
+
 cable_tick = 0.1
 
 local source_neighbors = {
@@ -39,6 +41,32 @@ minetest.register_node("electricity:infinite_electricity", {
         meta:set_float("emf", 230)
     end,
 })
+source["electricity:infinite_electricity"] = function(P, R, emf, elapsed)
+    return 230
+end
+
+minetest.register_node("electricity:battery", {
+    description = "Battery",
+    tiles = {
+        "electricity_battery_top.png",
+        "electricity_battery_bottom.png",
+        "electricity_battery_side.png",
+        "electricity_battery_side.png",
+        "electricity_battery_side.png",
+        "electricity_battery_side.png"
+    },
+    drop = 'electricity:battery',
+    groups = { crumbly = 3, source = 1 },
+    on_construct = function(pos)
+        local meta = minetest.get_meta(pos)
+
+        meta:set_float("resis", 0.4)
+        meta:set_float("emf", 25)
+    end,
+})
+source["electricity:battery"] = function(P, R, emf, elapsed)
+    return emf - (1 / 1000) * P * elapsed
+end
 
 function run_timer(resis)
     return (function(pos)
@@ -281,8 +309,9 @@ local function calculate_circuits(resists, circuits, I, U)
     return { P = P }
 end
 
-local function process_source(pos, circuits)
-    if  minetest.get_item_group(minetest.get_node(pos).name, "source") == 0 then
+local function process_source(pos, circuits, elapsed)
+    local name = minetest.get_node(pos).name
+    if  minetest.get_item_group(name, "source") == 0 then
         return
     end
 
@@ -302,8 +331,14 @@ local function process_source(pos, circuits)
     meta:set_float("I", I)
     meta:set_float("U", emf - I * r)
     meta:set_string("formspec", string.format(
-        "size[2,1]label[0,0;Infinite electricity]label[0,0.5;P = %f]", values.P
+        "size[2,1.5]" ..
+        "label[0,0;Infinite electricity]" ..
+        "label[0,0.5;P = %f]" ..
+        "label[0,1;ε = %f]",
+        values.P, emf
     ))
+
+    meta:set_float("emf", source[name](values.P, R, emf, elapsed))
 end
 
 sources = { }
@@ -337,6 +372,6 @@ minetest.register_globalstep(function(dtime)
 
     for str, _ in pairs(sources) do
         local pos = deserialize_pos(str)
-        process_source(pos, circuits[str])
+        process_source(pos, circuits[str], dtime)
     end
 end)

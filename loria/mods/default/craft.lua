@@ -41,6 +41,15 @@ inv_crafts = {
     },
     {
         input = {
+            { name = "default:lead_case", count = 1 },
+            { name = "default:battery", count = 5 }
+        },
+        output = {
+            { name = "electricity:battery", count = 1 }
+        }
+    },
+    {
+        input = {
             { name = "default:uranium_tetrachloride", count = 1 },
             { name = "default:potassium_ingot", count = 1 },
         },

@@ -1,6 +1,6 @@
 optimal = {
-    I = { value = 5, delta = 2 },
-    U = { value = 220, delta = 50 },
+    I = { min = 3, max = 15 },
+    U = { min = 170, max = 300 },
 }
 
 function is_furnace_ready(meta)
@@ -8,10 +8,8 @@ function is_furnace_ready(meta)
     local U = meta:get_float("U")
 
     return
-        (I >= optimal.I.value - optimal.I.delta) and
-        (I <= optimal.I.value + optimal.I.delta) and
-        (U >= optimal.U.value - optimal.U.delta) and
-        (U <= optimal.U.value + optimal.U.delta)
+        (I >= optimal.I.min) and (I <= optimal.I.max) and
+        (U >= optimal.U.min) and (U <= optimal.U.max)
 end
 
 function check_current(pos, elapsed)
