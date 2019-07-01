@@ -237,6 +237,7 @@ minetest.register_node("electricity:transformer", {
     drop = 'electricity:transformer',
     groups = { crumbly = 3, conductor = 1 },
 
+    paramtype = "light",
     drawtype = "nodebox",
     node_box = transformer_box,
     selection_box = transformer_box,
@@ -330,6 +331,7 @@ minetest.register_node("electricity:switch_off", {
     drop = 'electricity:switch_off',
     groups = { crumbly = 3, disabled_electric_tool = 1 },
 
+    paramtype = "light",
     drawtype = "nodebox",
     node_box = switch_box,
     selection_box = switch_box,
@@ -357,6 +359,7 @@ minetest.register_node("electricity:switch_on", {
     drop = 'electricity:switch_off',
     groups = { crumbly = 3, conductor = 1, not_in_creative_inventory = 1 },
 
+    paramtype = "light",
     drawtype = "nodebox",
     node_box = switch_box,
     selection_box = switch_box,
