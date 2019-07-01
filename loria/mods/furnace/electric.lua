@@ -43,7 +43,8 @@ register_furnace({
     },
     light_source = 6,
     groups = { cracky = 2, consumer = 1 },
+    on_construct = function(pos)
+        local meta = minetest.get_meta(pos)
+        meta:set_float("resis", 50)
+    end,
 })
-
-consumer["furnace:electric"] = { resis = 50 }
-consumer["furnace:electric_active"] = { resis = 50 }

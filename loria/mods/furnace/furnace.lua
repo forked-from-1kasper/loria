@@ -355,6 +355,10 @@ function construct_furnace(conf)
         end
 
         minetest.get_node_timer(pos):start(0.3)
+
+        if conf.on_construct then
+            conf.on_construct(pos)
+        end
     end)
 end
 

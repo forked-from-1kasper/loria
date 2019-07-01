@@ -1,23 +1,4 @@
-source = {
-    ["electricity:infinite_electricity"] = {
-        emf = 230, resis = 0.5
-    },
-}
-
-conductor = {
-    ["electricity:aluminium_cable"] = {
-        resis = 0.01
-    },
-}
-
-consumer = {
-    ["electricity:infinite_consumer"] = {
-        resis = 1
-    },
-    ["electricity:heavy_infinite_consumer"] = {
-        resis = 0.01
-    }
-}
+dofile(minetest.get_modpath("electricity").."/multimeter.lua")
 
 cable_tick = 0.1
 
@@ -51,37 +32,21 @@ minetest.register_node("electricity:infinite_electricity", {
     tiles = { "default_test.png" },
     drop = 'electricity:infinite_electricity',
     groups = { crumbly = 3, source = 1 },
-})
+    on_construct = function(pos)
+        local meta = minetest.get_meta(pos)
 
-local multimeter_resis = 0.01
-local multimeter_timeout = 0.5
-minetest.register_tool("electricity:multimeter", {
-    inventory_image = "electricity_multimeter.png",
-    description = "Multimeter",
-    stack_max = 1,
-    liquids_pointable = true,
-    on_use = function(itemstack, user, pointed_thing)
-        if pointed_thing.type ~= "node" then
-            return
-        end
-
-        local name = minetest.get_node(pointed_thing.under).name
-        local meta = minetest.get_meta(pointed_thing.under)
-
-        meta:set_float("user_resis", multimeter_resis)
-        minetest.after(multimeter_timeout, function(meta, name)
-            minetest.chat_send_player(name, string.format(
-                "I = %f, U = %f", meta:get_float("I"), meta:get_float("U")
-            ))
-
-            meta:set_float("user_resis", 0)
-        end, meta, user:get_player_name())
-        return
+        meta:set_float("resis", 0.5)
+        meta:set_float("emf", 230)
     end,
 })
 
-function run_timer(pos)
-    minetest.get_node_timer(pos):start(cable_tick)
+function run_timer(resis)
+    return (function(pos)
+        local meta = minetest.get_meta(pos)
+        meta:set_float("resis", resis)
+
+        minetest.get_node_timer(pos):start(cable_tick)
+    end)
 end
 
 function reset_current(pos, elapsed)
@@ -133,9 +98,14 @@ minetest.register_node("electricity:aluminium_cable", {
     selection_box = cable_box,
     node_box = cable_box,
 
-    connects_to = { "group:consumer", "group:source", "group:conductor" },
+    connects_to = {
+        "group:consumer",
+        "group:source",
+        "group:conductor",
+        "group:disabled_electric_tool",
+    },
 
-    on_construct = run_timer,
+    on_construct = run_timer(0.01),
     on_timer = reset_current,
 })
 
@@ -156,13 +126,16 @@ minetest.register_node("electricity:switch_off", {
     },
 
     drop = 'electricity:switch_off',
-    groups = { crumbly = 3, conductor = 1 },
+    groups = { crumbly = 3, disabled_electric_tool = 1 },
 
     drawtype = "nodebox",
     node_box = switch_box,
     selection_box = switch_box,
 
     on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
+        local meta = minetest.get_meta(pos)
+        meta:set_float("resis", 0.05)
+
         minetest.get_node_timer(pos):start(cable_tick)
         minetest.swap_node(pos, { name = "electricity:switch_on" })
     end,
@@ -197,7 +170,6 @@ minetest.register_node("electricity:switch_on", {
         minetest.swap_node(pos, { name = "electricity:switch_off" })
     end,
 })
-conductor["electricity:switch_on"] = { resis = 0.02 }
 
 minetest.register_node("electricity:infinite_consumer", {
     description = "Infinite consumer",
@@ -205,7 +177,7 @@ minetest.register_node("electricity:infinite_consumer", {
     drop = 'electricity:infinite_consumer',
     groups = { crumbly = 3, consumer = 1, },
 
-    on_construct = run_timer,
+    on_construct = run_timer(5),
     on_timer = reset_current,
 })
 
@@ -215,7 +187,7 @@ minetest.register_node("electricity:heavy_infinite_consumer", {
     drop = 'electricity:heavy_infinite_consumer',
     groups = { crumbly = 3, consumer = 1 },
 
-    on_construct = run_timer,
+    on_construct = run_timer(50),
     on_timer = reset_current,
 })
 
@@ -226,7 +198,8 @@ local function find_circuits(current, circuit, already_processed)
         local pos = vector.add(current, vect)
         local name = minetest.get_node(pos).name
 
-        if (consumer[name] or conductor[name]) and
+        if ((minetest.get_item_group(name, "consumer") > 0) or
+            (minetest.get_item_group(name, "conductor") > 0)) and
            not already_processed[serialize_pos(pos)] then
             local meta = minetest.get_meta(pos)
             meta:set_float("I", 0)
@@ -241,9 +214,9 @@ local function find_circuits(current, circuit, already_processed)
 
             already_processed[serialize_pos(pos)] = true
 
-            if consumer[name] then
+            if minetest.get_item_group(name, "consumer") > 0 then
                 table.insert(res, circuit_tail)
-            elseif conductor[name] then
+            elseif (minetest.get_item_group(name, "conductor") > 0) then
                 local next_circuits = find_circuits(pos, circuit_tail, already_processed)
 
                 if meta:get_float("user_resis") > 0 and #next_circuits == 0 then
@@ -262,22 +235,18 @@ end
 
 local function calculate_resis(circuits)
     local circuit_resists = { }
-    local elem_resists = { }
 
     local R = 0
     for circuit_idx, circuit in ipairs(circuits) do
         local R0 = 0
-        elem_resists[circuit_idx] = { }
 
         for idx, pos in ipairs(circuit) do
             local name = minetest.get_node(pos).name
-            local conf = consumer[name] or conductor[name]
-            if conf then
-                local user_resis = minetest.get_meta(pos):get_float("user_resis")
-                local elem_resis = conf.resis + user_resis
 
-                R0 = R0 + elem_resis
-                elem_resists[circuit_idx][idx] = elem_resis
+            if (minetest.get_item_group(name, "consumer") > 0) or
+               (minetest.get_item_group(name, "conductor") > 0) then
+                local meta = minetest.get_meta(pos)
+                R0 = R0 + meta:get_float("resis") + meta:get_float("user_resis")
             end
         end
 
@@ -289,11 +258,7 @@ local function calculate_resis(circuits)
         R = 1 / R
     end
 
-    return {
-        circuit_resists = circuit_resists,
-        elem_resists = elem_resists,
-        R = R
-    }
+    return { circuit_resists = circuit_resists, R = R }
 end
 
 local function calculate_circuits(resists, circuits, I, U)
@@ -303,15 +268,13 @@ local function calculate_circuits(resists, circuits, I, U)
             local R = resists.circuit_resists[circuit_idx]
             local I = U / R -- I = I0
 
-            local R0 = resists.elem_resists[circuit_idx][idx]
-            if R0 then
-                local U0 = I * R0
-                P = P + I * U0
+            local meta = minetest.get_meta(pos)
+            local R0 = meta:get_float("resis") + meta:get_float("user_resis")
+            local U0 = I * R0
+            P = P + I * U0
 
-                local meta = minetest.get_meta(pos)
-                meta:set_float("I", meta:get_float("I") + I + math.random())
-                meta:set_float("U", meta:get_float("U") + U0 + math.random())
-            end
+            meta:set_float("I", meta:get_float("I") + I + math.random())
+            meta:set_float("U", meta:get_float("U") + U0 + math.random())
         end
     end
 
@@ -319,28 +282,25 @@ local function calculate_circuits(resists, circuits, I, U)
 end
 
 local function process_source(pos, circuits)
-    local conf = source[minetest.get_node(pos).name]
-    if not conf then
+    if  minetest.get_item_group(minetest.get_node(pos).name, "source") == 0 then
         return
     end
 
     local resists = calculate_resis(circuits)
 
     local meta = minetest.get_meta(pos)
-    local user_resis = meta:get_float("user_resis")
+    local emf = meta:get_float("emf")
+    local r = meta:get_float("resis")
 
-    local R = resists.R
-    if user_resis ~= 0 then
-        R = R + (1 / user_resis)
-    end
+    local R = resists.R + meta:get_float("user_resis")
 
-    local I = conf.emf / (R + conf.resis)
+    local I = emf / (R + r)
     local U = I * R
 
     local values = calculate_circuits(resists, circuits, I, U)
 
     meta:set_float("I", I)
-    meta:set_float("U", conf.emf - I * conf.resis)
+    meta:set_float("U", emf - I * r)
     meta:set_string("formspec", string.format(
         "size[2,1]label[0,0;Infinite electricity]label[0,0.5;P = %f]", values.P
     ))
