@@ -1,5 +1,3 @@
-ores = { "aluminium", "potassium", "zinc" }
-
 for _, name in ipairs(ores) do
     minetest.register_node("default:" .. name, {
         description = name:gsub("^%l", string.upper) .. " (in cinnabar)",

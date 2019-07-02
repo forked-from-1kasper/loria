@@ -1,3 +1,6 @@
+ores = { "aluminium", "potassium", "zinc" }
+giant_mushrooms = { "viridi_petasum", "colossus", "turris", "rete" }
+
 inv_crafts = {
     {
         input = {
@@ -45,7 +48,7 @@ inv_crafts = {
             { name = "default:lead_case", count = 1 }
         },
         output = {
-            { name = "electricity:battery", count = 1 }
+            { name = "electricity:battery_box", count = 1 }
         }
     },
     {

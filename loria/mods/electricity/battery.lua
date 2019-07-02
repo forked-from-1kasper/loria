@@ -11,7 +11,7 @@ local function battery_box_formspec(P, emf)
     )
 end
 
-minetest.register_node("electricity:battery", {
+minetest.register_node("electricity:battery_box", {
     description = "Battery box",
     tiles = {
         "electricity_battery_top.png",
@@ -21,7 +21,7 @@ minetest.register_node("electricity:battery", {
         "electricity_battery_side.png",
         "electricity_battery_side.png"
     },
-    drop = 'electricity:battery',
+    drop = 'electricity:battery_box',
     groups = { crumbly = 3, source = 1 },
     on_construct = function(pos)
         local meta = minetest.get_meta(pos)
@@ -60,7 +60,7 @@ minetest.register_node("electricity:battery", {
 
     on_destruct = drop_everything,
 })
-source["electricity:battery"] = function(meta, P, R, emf, elapsed)
+source["electricity:battery_box"] = function(meta, P, R, emf, elapsed)
     local inv = meta:get_inventory()
 
     meta:set_string("formspec", battery_box_formspec(P, emf))

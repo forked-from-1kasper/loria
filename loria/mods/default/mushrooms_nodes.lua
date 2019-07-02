@@ -54,5 +54,3 @@ minetest.register_node("default:rete_body", {
     groups = { crumbly = 1, choppy = 2, leaves = 1 },
     drop = 'default:rete_body'
 })
-
-giant_mushrooms = { "viridi_petasum", "colossus", "turris", "rete" }
