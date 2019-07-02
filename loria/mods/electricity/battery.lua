@@ -1,15 +1,9 @@
-local function battery_box_formspec(P, emf)
-    return string.format(
-        "size[8,6.5]" ..
-        "label[0,0;Battery box]" ..
-        "label[0,0.5;P = %f]" ..
-        "label[0,1;ε = %f]" ..
-        "list[context;box;1.5,0.5;6,1;]" ..
-        "list[current_player;main;0,2;8,1;]"..
-        "list[current_player;main;0,3.5;8,3;8]",
-        P, emf
-    )
-end
+local battery_box_formspec =
+    "size[8,6.5]" ..
+    "label[0,0.75;Battery box]" ..
+    "list[context;box;1.5,0.5;6,1;]" ..
+    "list[current_player;main;0,2;8,1;]" ..
+    "list[current_player;main;0,3.5;8,3;8]"
 
 minetest.register_node("electricity:battery_box", {
     description = "Battery box",
@@ -31,7 +25,7 @@ minetest.register_node("electricity:battery_box", {
         meta:set_float("resis", 0.4)
         meta:set_float("emf", 25)
 
-        meta:set_string("formspec", battery_box_formspec(0, 0))
+        meta:set_string("formspec", battery_box_formspec)
     end,
 
     allow_metadata_inventory_put = function(pos, listname, index, stack, player)
@@ -62,8 +56,6 @@ minetest.register_node("electricity:battery_box", {
 })
 source["electricity:battery_box"] = function(meta, P, R, emf, elapsed)
     local inv = meta:get_inventory()
-
-    meta:set_string("formspec", battery_box_formspec(P, emf))
 
     local emf = 0
     local wear = 5 * P * elapsed

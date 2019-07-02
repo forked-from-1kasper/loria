@@ -6,14 +6,12 @@ riteg_box = {
     },
 }
 
-local function riteg_formspec(P, emf)
-    return
-        "size[8,6.5]" ..
-        "label[3.5,0;RITEG]" ..
-        "list[context;place;3.5,0.5;1,1;]" ..
-        "list[current_player;main;0,2;8,1;]"..
-        "list[current_player;main;0,3.5;8,3;8]"
-end
+local riteg_formspec =
+    "size[8,6.5]" ..
+    "label[3.5,0;RITEG]" ..
+    "list[context;place;3.5,0.5;1,1;]" ..
+    "list[current_player;main;0,2;8,1;]"..
+    "list[current_player;main;0,3.5;8,3;8]"
 
 minetest.register_node("electricity:riteg", {
     description = "RITEG",
@@ -34,7 +32,7 @@ minetest.register_node("electricity:riteg", {
         inv:set_size("place", 1)
         meta:set_float("resis", 0.4)
 
-        meta:set_string("formspec", riteg_formspec(0, 0))
+        meta:set_string("formspec", riteg_formspec)
     end,
 
     paramtype = "light",
@@ -43,7 +41,12 @@ minetest.register_node("electricity:riteg", {
     selection_box = riteg_box,
 
     allow_metadata_inventory_put = function(pos, listname, index, stack, player)
-        return 1
+        local inv = minetest.get_meta(pos):get_inventory()
+        if inv:get_stack(listname, index):get_count() == 1 then
+            return 0
+        else
+            return 1
+        end
     end,
 
     on_destruct = drop_everything,
