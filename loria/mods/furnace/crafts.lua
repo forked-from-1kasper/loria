@@ -147,7 +147,7 @@ furnace_crafts = {
     },
     {
         input = {
-            { name = "default:plutonium_trifluoride_ore", count = 1 }
+            { name = "default:plutonium_fluoride_ore", count = 1 }
         },
         output = {
             { name = "default:plutonium_trifluoride", count = 1 },
