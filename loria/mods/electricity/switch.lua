@@ -1,6 +1,6 @@
 switch_box = {
     type = "fixed",
-    fixed = {-1/2, -1/2, -1/2, 1/2, -1/2+3/16, 1/2},
+    fixed = { -1/2, -1/2, -1/2, 1/2, -1/2+3/16, 1/2 },
 }
 
 minetest.register_node("electricity:switch_off", {

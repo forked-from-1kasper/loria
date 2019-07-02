@@ -75,9 +75,17 @@ function calculate_radiation(vm, pos)
     local area = VoxelArea:new({MinEdge = minp, MaxEdge = maxp})
     local data = vm:get_data()
     for i = 1, #data do
-        local A = activity[data[i]]
+        local cid = data[i]
+        local A = activity[cid]
         if A then
             local node = area:position(i)
+            radiation = radiation + A / hypot_sqr(pos, node)
+        end
+
+        if has_inventory[cid] then
+            local node = area:position(i)
+            local inv = minetest.get_meta(node):get_inventory()
+            local A = calculate_inventory_radiation(inv)
             radiation = radiation + A / hypot_sqr(pos, node)
         end
     end

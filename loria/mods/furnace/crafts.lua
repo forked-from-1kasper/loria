@@ -147,6 +147,27 @@ furnace_crafts = {
     },
     {
         input = {
+            { name = "default:plutonium_trifluoride_ore", count = 1 }
+        },
+        output = {
+            { name = "default:plutonium_trifluoride", count = 1 },
+            { name = "default:cinnabar", count = 1 },
+        },
+        time = 6,
+    },
+    {
+        input = {
+            { name = "default:plutonium_trifluoride", count = 4 },
+            { name = "default:oxygen_balloon", count = 1 },
+        },
+        output = {
+            { name = "default:plutonium_tetrafluoride", count = 3 },
+            { name = "default:plutonium_dioxide", count = 1 },
+        },
+        time = 3,
+    },
+    {
+        input = {
             { name = "default:lead_sulfate", count = 1 },
             { name = "default:bucket_empty", count = 1 }
         },

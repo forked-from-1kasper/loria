@@ -16,12 +16,33 @@ for _, name in ipairs(ores) do
     })
 end
 
-minetest.register_node("default:plutonium_fluoride", {
-    description = "Plutonium (III) fluoride (PuF3)",
+minetest.register_node("default:plutonium_dioxide", {
+    description = "Plutonium (IV) oxide (PuO2)",
+    tiles = { "default_plutonium_dioxide.png" },
+    groups = { cracky = 2 },
+    drop = 'default:plutonium_dioxide'
+})
+
+minetest.register_node("default:plutonium_trifluoride", {
+    description = "Plutonium (III) trifluoride (PuF3)",
+    tiles = { "default_plutonium_trifluoride.png" },
+    groups = { cracky = 2 },
+    drop = 'default:plutonium_trifluoride'
+})
+
+minetest.register_node("default:plutonium_tetrafluoride", {
+    description = "Plutonium (IV) tetrafluoride (PuF4)",
+    tiles = { "default_plutonium_tetrafluoride.png" },
+    groups = { cracky = 2 },
+    drop = 'default:plutonium_tetrafluoride'
+})
+
+minetest.register_node("default:plutonium_fluoride_ore", {
+    description = "Plutonium (III) fluoride ore",
     tiles = { "default_cinnabar.png" },
-    overlay_tiles = { "default_plutonium_fluoride.png" },
+    overlay_tiles = { "default_plutonium_fluoride_ore.png" },
     groups = { cracky = 1 },
-    drop = 'default:plutonium_fluoride'
+    drop = 'default:plutonium_fluoride_ore'
 })
 
 minetest.register_node("default:uranium_tetrachloride_ore", {

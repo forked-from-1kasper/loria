@@ -30,6 +30,8 @@
 |default:bucket_empty × 1, default:mercury × 1|default:bucket_mercury × 1|
 |default:silicon_dioxide × 9|default:fused_quartz × 1|
 |default:uranium_tetrachloride_ore × 1|default:uranium_tetrachloride × 1, default:cinnabar × 1|
+|default:plutonium_trifluoride_ore × 1|default:plutonium_trifluoride × 1, default:cinnabar × 1|
+|default:plutonium_trifluoride × 4, default:oxygen_balloon × 1|default:plutonium_tetrafluoride × 3, default:plutonium_dioxide × 1|
 |default:lead_sulfate × 1, default:bucket_empty × 1|default:lead_oxide × 1, default:bucket_sulfur_trioxide × 1|
 |default:lead_oxide × 1, default:hydrogen_balloon × 1, default:bucket_empty × 1|default:lead × 1, default:empty_balloon × 1, default:bucket_water × 1|
 |default:bucket_potassium_permanganate × 2, default:empty_balloon × 1|default:potassium_manganate × 1, default:manganese_dioxide × 1, default:oxygen_balloon × 1|

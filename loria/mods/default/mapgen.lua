@@ -91,7 +91,7 @@ for _, name in ipairs(ores) do
     })
 end
 
-for _, name in ipairs({ "uranium_tetrachloride_ore", "plutonium_fluoride" }) do
+for _, name in ipairs({ "uranium_tetrachloride_ore", "plutonium_fluoride_ore" }) do
     minetest.register_ore({
         ore_type       = "blob",
         ore            = "default:" .. name,
