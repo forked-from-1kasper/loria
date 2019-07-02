@@ -27,12 +27,7 @@ register_furnace({
         return is_furnace_ready(minetest.get_meta(pos))
     end,
     additional_formspec = function(meta)
-        return string.format(
-            "label[0,2;I = %f]"..
-            "label[2,2;U = %f]",
-            meta:get_float("I"),
-            meta:get_float("U")
-        )
+        return "label[1,2;Electric furnace]"
     end,
     textures = {
         side = "furnace_side.png",

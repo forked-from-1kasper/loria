@@ -88,6 +88,7 @@ minetest.register_craftitem("default:super_drill", {
 minetest.register_tool("default:battery", {
     inventory_image = "default_battery.png",
     description = "Battery",
+    groups = { item_source = 5 },
 })
 
 minetest.register_craftitem("default:aluminium_case", {

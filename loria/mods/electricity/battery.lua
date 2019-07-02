@@ -29,7 +29,7 @@ minetest.register_node("electricity:battery_box", {
     end,
 
     allow_metadata_inventory_put = function(pos, listname, index, stack, player)
-        if stack:get_name() == "default:battery" then
+        if minetest.get_item_group(stack:get_name(), "item_source") > 0 then
             return stack:get_count()
         else
             return 0
@@ -42,7 +42,7 @@ minetest.register_node("electricity:battery_box", {
         local stack = inv:get_stack(from_list, from_index)
 
         if to_list == "box" then
-            if stack:get_name() == "default:battery" then
+            if minetest.get_item_group(stack:get_name(), "item_source") > 0 then
                 return stack:get_count()
             else
                 return 0
@@ -54,18 +54,20 @@ minetest.register_node("electricity:battery_box", {
 
     on_destruct = drop_everything,
 })
+
+local k = 20
 source["electricity:battery_box"] = function(meta, P, R, emf, elapsed)
     local inv = meta:get_inventory()
 
     local emf = 0
-    local wear = 5 * P * elapsed
+    local wear = k * P * elapsed
     for idx, stack in ipairs(inv:get_list("box")) do
-        if stack:get_name() == "default:battery" then
-            emf = emf + (65536 - stack:get_wear()) * 5 / 65536
+        local stack_emf = minetest.get_item_group(stack:get_name(), "item_source")
+        if stack_emf > 0 then
+            emf = emf + (65536 - stack:get_wear()) * (stack_emf / 65536)
 
             if stack:get_wear() + wear >= 65535 then
-                stack:set_name("default:aluminium_case")
-                stack:set_wear(0)
+                stack:set_wear(65535)
             else
                 stack:add_wear(wear)
             end
