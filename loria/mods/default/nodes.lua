@@ -13,14 +13,14 @@ minetest.register_node("default:infinite_oxygen", {
 })
 
 minetest.register_node("default:potassium_manganate", {
-    description = "Potassium manganate (K₂MnO₄)",
+    description = "Potassium manganate (K2MnO4)",
     tiles = { "default_potassium_manganate.png" },
     groups = { crumbly = 3 },
     drop = 'default:potassium_manganate'
 })
 
 minetest.register_node("default:manganese_dioxide", {
-    description = "Manganese dioxide (MnO₂)",
+    description = "Manganese dioxide (MnO2)",
     tiles = { "default_manganese_dioxide.png" },
     groups = { crumbly = 3 },
     drop = 'default:manganese_dioxide'
@@ -48,14 +48,14 @@ minetest.register_node("default:cinnabar", {
 })
 
 minetest.register_node("default:copper_sulfate_pure", {
-    description = "Copper (II) sulfate (CuSO₄)",
+    description = "Copper (II) sulfate (CuSO4)",
     tiles = { "default_copper_sulfate_pure.png" },
     groups = { crumbly = 2 },
     drop = 'default:copper_sulfate_pure'
 })
 
 minetest.register_node("default:copper_sulfate", {
-    description = "Copper (II) sulfate pentahydrate (CuSO₄·5H₂O)",
+    description = "Copper (II) sulfate pentahydrate (CuSO4 * 5H2O)",
     tiles = { "default_copper_sulfate.png" },
     groups = { crumbly = 2 },
     drop = 'default:copper_sulfate'
@@ -90,14 +90,14 @@ minetest.register_node("default:lead_case", {
 })
 
 minetest.register_node("default:mercury_chloride", {
-    description = "Mercury (II) chloride (HgCl₂)",
+    description = "Mercury (II) chloride (HgCl2)",
     tiles = { "default_mercury_chloride.png" },
     groups = { crumbly = 3 },
     drop = 'default:mercury_chloride'
 })
 
 minetest.register_node("default:uranium_tetrachloride", {
-    description = "Uranium tetrachloride (UCl₄)",
+    description = "Uranium tetrachloride (UCl4)",
     tiles = { "default_uranium_tetrachloride.png" },
     groups = { crumbly = 2 },
     drop = 'default:uranium_tetrachloride'
@@ -111,28 +111,28 @@ minetest.register_node("default:potassium_chloride", {
 })
 
 minetest.register_node("default:mercury_fluoride", {
-    description = "Mercury (II) fluoride (HgF₂)",
+    description = "Mercury (II) fluoride (HgF2)",
     tiles = { "default_mercury_fluoride.png" },
     groups = { crumbly = 2 },
     drop = 'default:mercury_fluoride'
 })
 
 minetest.register_node("default:lead_sulfate", {
-    description = "Lead (II) sulfate (PbSO₄)",
+    description = "Lead (II) sulfate (PbSO4)",
     tiles = { "default_lead_sulfate.png" },
     groups = { crumbly = 2 },
     drop = 'default:lead_sulfate'
 })
 
 minetest.register_node("default:lead_oxide", {
-    description = "Lead (II) oxide (PbSO)",
+    description = "Lead (II) oxide (PbO)",
     tiles = { "default_lead_oxide.png" },
     groups = { crumbly = 2 },
     drop = 'default:lead_oxide'
 })
 
 minetest.register_node("default:silicon_dioxide", {
-    description = "Silicon dioxide (SiO₂)",
+    description = "Silicon dioxide (SiO2)",
     tiles = { "default_silicon_dioxide.png" },
     groups = { crumbly = 3 },
     drop = 'default:silicon_dioxide'
@@ -149,7 +149,7 @@ minetest.register_node("default:fused_quartz", {
 })
 
 minetest.register_node("default:cobalt_blue", {
-    description = "Cobalt blue (CoAl₂O₄)",
+    description = "Cobalt blue (CoAl2O4)",
     tiles = { "default_cobalt_blue.png" },
     groups = { crumbly = 2 },
     drop = 'default:cobalt_blue'

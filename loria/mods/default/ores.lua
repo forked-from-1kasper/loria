@@ -17,7 +17,7 @@ for _, name in ipairs(ores) do
 end
 
 minetest.register_node("default:plutonium_fluoride", {
-    description = "Plutonium (III) fluoride (PuF₃)",
+    description = "Plutonium (III) fluoride (PuF3)",
     tiles = { "default_cinnabar.png" },
     overlay_tiles = { "default_plutonium_fluoride.png" },
     groups = { cracky = 1 },
@@ -25,7 +25,7 @@ minetest.register_node("default:plutonium_fluoride", {
 })
 
 minetest.register_node("default:uranium_tetrachloride_ore", {
-    description = "Uranium tetrachloride ore (UCl₄)",
+    description = "Uranium tetrachloride ore (UCl4)",
     tiles = { "default_cinnabar.png" },
     overlay_tiles = { "default_uranium_tetrachloride_ore.png" },
     groups = { cracky = 1 },
