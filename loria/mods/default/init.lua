@@ -143,3 +143,25 @@ minetest.register_globalstep(function(dtime)
         end
     end
 end)
+
+local clear_radius = 500
+minetest.register_chatcommand("clearitems", {
+    params = "",
+    description = "Deletes all items in " .. clear_radius .. " meters",
+    privs = {},
+    func = function(name)
+        local player = minetest.get_player_by_name(name)
+        if player then
+            local pos = player:get_pos()
+
+            local objs = minetest.get_objects_inside_radius(pos, clear_radius)
+            for _, obj in pairs(objs) do
+                local name = player:get_player_name()
+                local entity = obj:get_luaentity()
+                if entity and entity.name == "__builtin:item" then
+                    obj:remove()
+                end
+            end
+        end
+    end,
+})
