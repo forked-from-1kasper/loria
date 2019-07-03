@@ -43,16 +43,17 @@ minetest.register_node("electricity:charger_box", {
         local inv = meta:get_inventory()
 
         local stack = inv:get_stack("place", 1)
-        local emf = minetest.get_item_group(stack:get_name(), "item_source")
 
-        if minetest.get_item_group(stack:get_name(), "rechargeable") > 0 and
-           emf > 0 then
+        local name = stack:get_name()
+        local emf = minetest.get_item_group(name, "item_source")
+
+        if minetest.get_item_group(name, "rechargeable") > 0 and emf > 0 then
             local I = meta:get_float("I")
             local U = meta:get_float("U")
 
             local wear = stack:get_wear()
             local wear_delta = charge_speed * I * (U / emf) * elapsed
-
+            
             if U >= (emf - voltage_delta) and
                U <= (emf + voltage_delta) then
                 if wear > wear_delta then

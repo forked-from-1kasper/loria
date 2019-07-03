@@ -210,19 +210,7 @@ local function process_source(pos, circuits, elapsed)
     return values.consumers
 end
 
-sources = { }
-
-minetest.register_abm{
-    label = "Enable electrcity sources",
-    nodenames = { "group:source" },
-    interval = 1,
-    chance = 1,
-    action = function(pos)
-        sources[serialize_pos(pos)] = 1
-    end,
-}
-
-minetest.register_globalstep(function(dtime)
+function globalstep(dtime)
     local circuits = { }
 
     for str, time in pairs(sources) do
@@ -260,5 +248,26 @@ minetest.register_globalstep(function(dtime)
             consumer.on_deactivate(pos)
             meta:set_int("active", 0)
         end
+    end
+end
+
+sources = { }
+
+minetest.register_abm{
+    label = "Enable electrcity sources",
+    nodenames = { "group:source" },
+    interval = 1,
+    chance = 1,
+    action = function(pos)
+        sources[serialize_pos(pos)] = 1
+    end,
+}
+
+local timer = 0
+minetest.register_globalstep(function(dtime)
+    timer = timer + dtime
+    if timer >= cable_tick then
+        timer = 0
+        globalstep(dtime)
     end
 end)
