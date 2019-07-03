@@ -26,7 +26,6 @@ minetest.register_node("electricity:switch_off", {
         local meta = minetest.get_meta(pos)
         meta:set_float("resis", 0.05)
 
-        minetest.get_node_timer(pos):start(cable_tick)
         minetest.swap_node(pos, { name = "electricity:switch_on" })
     end,
 })
@@ -50,14 +49,12 @@ minetest.register_node("electricity:switch_on", {
     node_box = switch_box,
     selection_box = switch_box,
 
-    on_timer = reset_current,
+    on_destruct = reset_current,
     on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
         local meta = minetest.get_meta(pos)
         meta:set_float("I", 0)
         meta:set_float("U", 0)
-        meta:set_float("electricity_timeout", 0)
 
-        minetest.get_node_timer(pos):stop()
         minetest.swap_node(pos, { name = "electricity:switch_off" })
     end,
 })

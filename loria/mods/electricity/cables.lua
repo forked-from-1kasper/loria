@@ -40,8 +40,8 @@ function register_cable(conf)
             "group:disabled_electric_tool",
         },
 
-        on_construct = run_timer(conf.resis),
-        on_timer = reset_current,
+        on_construct = set_resis(conf.resis),
+        on_destruct = reset_current,
     })
 end
 

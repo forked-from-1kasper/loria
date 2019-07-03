@@ -35,12 +35,10 @@ minetest.register_node("electricity:charger_box", {
         meta:set_string("formspec", charger_formspec)
         meta:set_float("resis", charger_box_resis)
 
-        run_timer(charger_box_resis)(pos)
+        minetest.get_node_timer(pos):start(0.5)
     end,
-    on_destruct = drop_everything,
+    on_destruct = and_then(reset_current, drop_everything),
     on_timer = function(pos, elapsed)
-        reset_current(pos, elapsed)
-
         local meta = minetest.get_meta(pos)
         local inv = meta:get_inventory()
 

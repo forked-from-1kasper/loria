@@ -128,7 +128,7 @@ function register_furnace(conf)
             conf.textures.side, conf.textures.front_inactive,
         },
 
-        on_destruct = drop_everything,
+        on_destruct = conf.on_destruct or drop_everything,
         on_construct = construct_furnace(conf),
 
         paramtype2 = "facedir",
@@ -210,7 +210,7 @@ function register_furnace(conf)
             check_and_stop_furnace(conf, pos)
         end,
 
-        on_destruct = drop_everything,
+        on_destruct = conf.on_destruct or drop_everything,
         on_timer = furnace_on_timer(conf),
     })
 end

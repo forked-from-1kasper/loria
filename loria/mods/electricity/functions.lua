@@ -3,26 +3,28 @@ quadripole = {}
 
 cable_tick = 0.1
 
-function run_timer(resis)
-    return (function(pos)
-        local meta = minetest.get_meta(pos)
-        meta:set_float("resis", resis)
-
-        minetest.get_node_timer(pos):start(cable_tick)
+function comp(f, g)
+    return (function(x)
+        return f(g(x))
     end)
 end
 
-function reset_current(pos, elapsed)
-    local meta = minetest.get_meta(pos)
-    local timeout = meta:get_float("electricity_timeout")
+function and_then(f, g)
+    return (function(x)
+        g(x)
+        f(x)
+    end)
+end
 
-    if timeout <= elapsed then
-        meta:set_float("I", 0)
-        meta:set_float("U", 0)
-        meta:set_float("electricity_timeout", 0)
-    else
-        meta:set_float("electricity_timeout", timeout - elapsed)
-    end
+function set_resis(resis)
+    return (function(pos)
+        local meta = minetest.get_meta(pos)
+        meta:set_float("resis", resis)
+    end)
+end
 
-    return true
+function reset_current(pos)
+    local already_processed = {}
+    already_processed[serialize_pos(pos)] = true
+    find_circuits(pos, { }, already_processed)
 end

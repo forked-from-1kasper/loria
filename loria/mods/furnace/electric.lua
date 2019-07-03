@@ -7,13 +7,11 @@ function is_furnace_ready(meta)
     local I = meta:get_float("I")
     local U = meta:get_float("U")
 
-    return
-        (I >= optimal.I.min) and (I <= optimal.I.max) and
-        (U >= optimal.U.min) and (U <= optimal.U.max)
+    return (I >= optimal.I.min) and (I <= optimal.I.max) and
+           (U >= optimal.U.min) and (U <= optimal.U.max)
 end
 
 function check_current(pos, elapsed)
-    reset_current(pos, elapsed)
     return is_furnace_ready(minetest.get_meta(pos))
 end
 
@@ -22,7 +20,7 @@ register_furnace({
     description = "Electric furnace",
     lists = { },
     on_tick = { check_current },
-    on_inactive_timer = reset_current,
+    on_destruct = and_then(reset_current, drop_everything),
     is_furnace_ready = function(pos)
         return is_furnace_ready(minetest.get_meta(pos))
     end,

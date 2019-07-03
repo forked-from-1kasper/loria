@@ -7,16 +7,16 @@ local neighbors = {
     vector.new( 0, -1,  0)
 }
 
-local function serialize_pos(pos)
+function serialize_pos(pos)
     return string.format("%f,%f,%f", pos.x, pos.y, pos.z)
 end
 
-local function deserialize_pos(str)
+function deserialize_pos(str)
     local x, y, z = str:match("([^,]+),([^,]+),([^,]+)")
     return vector.new(tonumber(x), tonumber(y), tonumber(z))
 end
 
-local function find_circuits(current, circuit, already_processed)
+function find_circuits(current, circuit, already_processed)
     local res = { }
 
     for _, vect in ipairs(neighbors) do
@@ -30,8 +30,6 @@ local function find_circuits(current, circuit, already_processed)
 
             meta:set_float("I", 0)
             meta:set_float("U", 0)
-
-            meta:set_float("electricity_timeout", 1)
 
             local circuit_tail = { }
             for idx, v in ipairs(circuit) do

@@ -27,8 +27,8 @@ minetest.register_node("electricity:infinite_consumer", {
     drop = 'electricity:infinite_consumer',
     groups = { crumbly = 3, consumer = 1, },
 
-    on_construct = run_timer(5),
-    on_timer = reset_current,
+    on_construct = set_resis(5),
+    on_destruct = reset_current,
 })
 
 minetest.register_node("electricity:heavy_infinite_consumer", {
@@ -37,6 +37,6 @@ minetest.register_node("electricity:heavy_infinite_consumer", {
     drop = 'electricity:heavy_infinite_consumer',
     groups = { crumbly = 3, consumer = 1 },
 
-    on_construct = run_timer(50),
-    on_timer = reset_current,
+    on_construct = set_resis(50),
+    on_destruct = reset_current,
 })
