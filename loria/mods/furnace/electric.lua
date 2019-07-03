@@ -3,26 +3,14 @@ optimal = {
     U = { min = 170, max = 300 },
 }
 
-function is_furnace_ready(meta)
-    local I = meta:get_float("I")
-    local U = meta:get_float("U")
-
-    return (I >= optimal.I.min) and (I <= optimal.I.max) and
-           (U >= optimal.U.min) and (U <= optimal.U.max)
-end
-
-function check_current(pos, elapsed)
-    return is_furnace_ready(minetest.get_meta(pos))
-end
-
-register_furnace({
+conf = {
     name = "electric",
     description = "Electric furnace",
     lists = { },
-    on_tick = { check_current },
+    on_tick = { and_then(const(true), reset_consumer("furnace:electric")) },
     on_destruct = and_then(reset_current, drop_everything),
     is_furnace_ready = function(pos)
-        return is_furnace_ready(minetest.get_meta(pos))
+        return minetest.get_meta(pos):get_int("active") == 1
     end,
     additional_formspec = function(meta)
         return "label[1,2;Electric furnace]"
@@ -38,4 +26,17 @@ register_furnace({
         local meta = minetest.get_meta(pos)
         meta:set_float("resis", 50)
     end,
-})
+}
+
+consumer["furnace:electric"] = {
+    on_activate = function(pos) run_furnace(conf, pos) end,
+    on_deactivate = function(pos) stop_furnace(conf, pos) end,
+    current = optimal,
+}
+
+--consumer["furnace:electric_active"] = {
+--    on_deactivate = function(pos) stop_furnace(conf, pos) end,
+--    current = optimal,
+--}
+
+register_furnace(conf)

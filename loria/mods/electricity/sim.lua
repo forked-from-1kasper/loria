@@ -58,6 +58,30 @@ function find_circuits(current, circuit, already_processed)
     return res
 end
 
+function reset_circuits(current, already_processed)
+    for _, vect in ipairs(neighbors) do
+        local pos = vector.add(current, vect)
+        local name = minetest.get_node(pos).name
+
+        if (minetest.get_item_group(name, "consumer") > 0 or
+            minetest.get_item_group(name, "conductor") > 0) and
+           not already_processed[serialize_pos(pos)] then
+            local meta = minetest.get_meta(pos)
+
+            meta:set_float("I", 0)
+            meta:set_float("U", 0)
+
+            already_processed[serialize_pos(pos)] = true
+
+            if minetest.get_item_group(name, "conductor") > 0 then
+                reset_circuits(pos, already_processed)
+            elseif consumer[name] then
+                minetest.get_node_timer(pos):start(0.5)
+            end
+        end
+    end
+end
+
 local function calculate_resis(circuits)
     local circuit_resists = { }
 
@@ -94,8 +118,32 @@ local function measurement_delta(X)
     end
 end
 
+function check_current(meta, consumer)
+    local I = meta:get_float("I")
+    local U = meta:get_float("U")
+    local is_active = meta:get_int("active") == 1
+
+    return
+        (I >= consumer.current.I.min) and
+        (I <= consumer.current.I.max) and
+        (U >= consumer.current.U.min) and
+        (U <= consumer.current.U.max)
+end
+
+local function check_consumer(meta, consumer)
+    local is_active = meta:get_int("active") == 1
+    local is_current_normal = check_current(meta, consumer)
+
+    return {
+        activate = (not is_active) and is_current_normal and consumer.on_activate,
+        deactivate = is_active and (not is_current_normal) and consumer.on_deactivate,
+    }
+end
+
 local function calculate_circuits(resists, circuits, I, U)
     local P = 0
+    local consumers = { }
+
     for circuit_idx, circuit in ipairs(circuits) do
         transformations = { }
         for idx, pos in ipairs(circuit) do
@@ -119,14 +167,20 @@ local function calculate_circuits(resists, circuits, I, U)
             meta:set_float("I", meta:get_float("I") + I)
             meta:set_float("U", meta:get_float("U") + U)
 
-            trans = quadripole[minetest.get_node(pos).name]
+            local name = minetest.get_node(pos).name
+
+            local trans = quadripole[name]
             if trans then
                 table.insert(transformations, trans(meta))
+            end
+
+            if consumer[name] then
+                table.insert(consumers, pos)
             end
         end
     end
 
-    return { P = P }
+    return { P = P, consumers = consumers }
 end
 
 local function process_source(pos, circuits, elapsed)
@@ -152,6 +206,8 @@ local function process_source(pos, circuits, elapsed)
     meta:set_float("U", emf - I * r)
 
     meta:set_float("emf", source[name](meta, values.P, R, emf, elapsed))
+
+    return values.consumers
 end
 
 sources = { }
@@ -183,8 +239,26 @@ minetest.register_globalstep(function(dtime)
         end
     end
 
+    local consumers = { }
     for str, _ in pairs(sources) do
         local pos = deserialize_pos(str)
-        process_source(pos, circuits[str], dtime)
+        for _, pos in ipairs(process_source(pos, circuits[str], dtime)) do
+            table.insert(consumers, pos)
+        end
+    end
+
+    for _, pos in ipairs(consumers) do
+        local meta = minetest.get_meta(pos)
+
+        local consumer = consumer[minetest.get_node(pos).name]
+        local actions = check_consumer(meta, consumer)
+
+        if actions.activate then
+            consumer.on_activate(pos)
+            meta:set_int("active", 1)
+        elseif actions.deactivate then
+            consumer.on_deactivate(pos)
+            meta:set_int("active", 0)
+        end
     end
 end)

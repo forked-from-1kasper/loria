@@ -17,6 +17,7 @@ function run_furnace(conf, pos)
         conf.before_run(pos)
     end
 
+    minetest.get_node_timer(pos):start(0.3)
     minetest.swap_node(pos, { name = "furnace:" .. conf.name .. "_active" })
 end
 
@@ -26,6 +27,8 @@ function stop_furnace(conf, pos)
 
     meta:set_string("formspec", furnace_formspec(conf, 0, meta))
     meta:set_float("cooking", 0)
+
+    minetest.get_node_timer(pos):stop()
 
     if conf.after_stop then
         conf.after_stop(pos)
@@ -111,8 +114,6 @@ function construct_furnace(conf)
             inv:set_size(name, size)
         end
 
-        minetest.get_node_timer(pos):start(0.3)
-
         if conf.on_construct then
             conf.on_construct(pos)
         end
@@ -134,15 +135,6 @@ function register_furnace(conf)
         paramtype2 = "facedir",
         legacy_facedir_simple = true,
         groups = conf.groups or { },
-
-        on_timer = function(pos, elapsed)
-            check_and_run_furnace(conf, pos)
-
-            if conf.on_inactive_timer then
-                conf.on_inactive_timer(pos, elapsed)
-            end
-            return true
-        end,
 
         allow_metadata_inventory_put = function(pos, listname, index, stack, player)
             if listname == "output" then

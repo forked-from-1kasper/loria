@@ -7,7 +7,7 @@ end
 function and_then(f, g)
     return (function(x)
         g(x)
-        f(x)
+        return f(x)
     end)
 end
 

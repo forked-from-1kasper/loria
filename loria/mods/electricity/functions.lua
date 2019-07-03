@@ -1,5 +1,6 @@
 source = {}
 quadripole = {}
+consumer = {}
 
 cable_tick = 0.1
 
@@ -13,5 +14,17 @@ end
 function reset_current(pos)
     local already_processed = {}
     already_processed[serialize_pos(pos)] = true
-    find_circuits(pos, { }, already_processed)
+    reset_circuits(pos, already_processed)
+end
+
+function reset_consumer(name)
+    return (function(pos)
+        local meta = minetest.get_meta(pos)
+        local consumer = consumer[name]
+
+        if not check_current(meta, consumer) and consumer.on_deactivate then
+            consumer.on_deactivate(pos)
+            meta:set_int("active", 0)
+        end
+    end)
 end
