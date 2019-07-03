@@ -186,7 +186,7 @@ end
 local function process_source(pos, circuits, elapsed)
     local name = minetest.get_node(pos).name
     if minetest.get_item_group(name, "source") == 0 then
-        return
+        return { P = 0, consumers = { } }
     end
 
     local resists = calculate_resis(circuits)
