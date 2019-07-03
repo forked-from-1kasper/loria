@@ -43,3 +43,9 @@ function find(f, l)
         end
     end
 end
+
+function const(x)
+    return (function()
+        return x
+    end)
+end

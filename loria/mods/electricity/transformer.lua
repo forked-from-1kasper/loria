@@ -9,10 +9,6 @@ local transformer_box = {
     },
 }
 
-local function nullator(I, U)
-    return { I = 0, U = 0 }
-end
-
 minetest.register_node("electricity:transformer", {
     description = "Transformer",
     tiles = {
@@ -87,7 +83,7 @@ quadripole["electricity:transformer"] = function(meta)
     if N1 == 0 or N2 == 0 or
        minetest.get_item_group(prim_winding:get_name(), "cable") == 0 or
        minetest.get_item_group(sec_winding:get_name(), "cable") == 0 then
-        return nullator
+        return const({ I = 0, U = 0 })
     else
         local n = N2 / N1
         return (function(I, U) return { I = I / n, U = U * n } end)
