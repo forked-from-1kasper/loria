@@ -1,18 +1,19 @@
 function check_craft(craft, inv)
-    for _, reagent in ipairs(craft.input) do
-        if not inv:contains_item("input", reagent) then
-            return false
-        end
-    end
-    return true
+    return all(
+        function(reagent)
+            return inv:contains_item("input", reagent)
+        end,
+        craft.input
+    )
 end
 
 function get_craft(crafts, inv)
-    for _, craft in ipairs(crafts) do
-        if check_craft(craft, inv) then
-            return craft
-        end
-    end
+    return find(
+        function(craft)
+            return check_craft(craft, inv)
+        end,
+        crafts
+    )
 end
 
 function update_preview(player)

@@ -54,6 +54,7 @@ minetest.register_node("electricity:switch_on", {
         local meta = minetest.get_meta(pos)
         meta:set_float("I", 0)
         meta:set_float("U", 0)
+        reset_current(pos)
 
         minetest.swap_node(pos, { name = "electricity:switch_off" })
     end,

@@ -8,11 +8,7 @@ local neighbors = {
 }
 
 function get_neighbors(pos)
-    local res = {}
-    for _, v in ipairs(neighbors) do
-        table.insert(res, vector.add(pos, v))
-    end
-    return res
+    return map(function(v) return vector.add(pos, v) end, neighbors)
 end
 
 function starts_with(str, start)
@@ -25,12 +21,12 @@ end
 
 gas_table = { }
 function detect_gas(name)
-    for _, gas in ipairs(gas_table) do
-        if starts_with(name, "default:" .. gas) then
-            return gas
-        end
-    end
-    return false
+    return find(
+        function(gas)
+            return starts_with(name, "default:" .. gas)
+        end,
+        gas_table
+    ) or false
 end
 
 local function get_gas_value(gas, name)

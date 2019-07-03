@@ -12,6 +12,7 @@ function is_organic(name)
         starts_with(name, "default:rami") or
         starts_with(name, "default:spears") or
         starts_with(name, "default:naga") or
+        starts_with(name, "default:petite") or
         ends_with(name, "_body") or
         (small_mushrooms[name:sub(#"default:" + 1)] ~= nil)
 end
@@ -184,6 +185,4 @@ for _, name in ipairs(evaporates) do
 end
 
 gases = { chlorine, oxygen, hydrogen, sulfur_dioxide, fluorine, fire }
-for _, gas in ipairs(gases) do
-    register_gas(gas)
-end
+foreach(register_gas, gases)
