@@ -55,7 +55,7 @@ minetest.register_node("electricity:battery_box", {
     on_destruct = drop_everything,
 })
 
-local k = 20
+local k = 5
 source["electricity:battery_box"] = function(meta, P, R, emf, elapsed)
     local inv = meta:get_inventory()
 
