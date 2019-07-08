@@ -124,14 +124,15 @@ end
 local function calculate_device(device, info, elapsed)
     local meta = minetest.get_meta(info.pos)
 
-    if not device_info[device .. "-bottom"] then
+    if not device_info[device .. "-bottom"] or
+       not device_info[device .. "-i"] then
         return
     end
 
-    local U = info.U + device_info[device .. "-bottom"].U
-    local R = meta:get_float("resis")
+    local U = info.value + device_info[device .. "-bottom"].value
+    local I = device_info[device .. "-i"].value
 
-    meta:set_float("I", U / R)
+    meta:set_float("I", I)
     meta:set_float("U", U)
 
     local name = minetest.get_node(info.pos).name
@@ -177,7 +178,8 @@ local function process_source(pos, processed_sources, elapsed)
     ngspice_command("tran 1 1")
 
     for device, info in pairs(device_info) do
-        if not ends_with(device, "-bottom") then
+        if (not ends_with(device, "-bottom")) and
+           (not ends_with(device, "-i")) then
             calculate_device(device, info, elapsed)
         end
     end

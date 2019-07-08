@@ -17,13 +17,17 @@ function two_pole(device, pos, value)
     local output = hash_node_connect(pos, vector.add(pos, dir))
 
     return {
-        table.concat({ device, input, output, value }, " "),
+        table.concat({ device, input, "hole-" .. device, value }, " "),
+        table.concat({ "v" .. device, "hole-" .. device, output, 0 }, " "),
         string.format(
             ".measure tran %s RMS v(%s)", device, input
         ),
         string.format(
             ".measure tran %s-bottom RMS v(%s)", device, output
-        )
+        ),
+        string.format(
+            ".measure tran %s-i MAX I(v%s)", device, device
+        ),
     }
 end
 

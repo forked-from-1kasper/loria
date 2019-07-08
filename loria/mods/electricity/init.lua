@@ -113,7 +113,7 @@ local printfcn = ffi.cast("SendChar*",
                 if not device_info[name] then
                     device_info[name] = { }
                 end
-                device_info[name].U = tonumber(value)
+                device_info[name].value = tonumber(value)
             end
 
             minetest.log("info", string.format("ng: SendChar: %s", info))
