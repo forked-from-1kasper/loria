@@ -9,8 +9,10 @@ local ffi = ie.require("ffi")
 local shared_filename
 if jit.os == "Windows" then
     shared_filename = "ngspice"
-elseif jit.os == "OSX" or jit.os == "Linux" then
-    shared_filename = "libngspice"
+elseif jit.os == "OSX" then
+    shared_filename = "libngspice.dylib"
+elseif jit.os == "Linux" then
+    shared_filename = "libngspice.so"
 else
     shared_filename = "ngspice"
 end
