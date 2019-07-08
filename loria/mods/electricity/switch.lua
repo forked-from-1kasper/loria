@@ -18,6 +18,8 @@ minetest.register_node("electricity:switch_off", {
     groups = { crumbly = 3, disabled_electric_tool = 1 },
 
     paramtype = "light",
+    paramtype2 = "facedir",
+
     drawtype = "nodebox",
     node_box = switch_box,
     selection_box = switch_box,
@@ -26,7 +28,7 @@ minetest.register_node("electricity:switch_off", {
         local meta = minetest.get_meta(pos)
         meta:set_float("resis", 0.05)
 
-        minetest.swap_node(pos, { name = "electricity:switch_on" })
+        swap_node(pos, "electricity:switch_on")
     end,
 })
 
@@ -45,6 +47,8 @@ minetest.register_node("electricity:switch_on", {
     groups = { crumbly = 3, conductor = 1, not_in_creative_inventory = 1 },
 
     paramtype = "light",
+    paramtype2 = "facedir",
+
     drawtype = "nodebox",
     node_box = switch_box,
     selection_box = switch_box,
@@ -56,6 +60,7 @@ minetest.register_node("electricity:switch_on", {
         meta:set_float("U", 0)
         reset_current(pos)
 
-        minetest.swap_node(pos, { name = "electricity:switch_off" })
+        swap_node(pos, "electricity:switch_off")
     end,
 })
+model["electricity:switch_on"] = resistor

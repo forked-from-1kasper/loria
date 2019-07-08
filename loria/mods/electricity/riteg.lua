@@ -13,6 +13,16 @@ local riteg_formspec =
     "list[current_player;main;0,2;8,1;]"..
     "list[current_player;main;0,3.5;8,3;8]"
 
+local k = 3 / 20
+local function update_riteg(pos)
+    local meta = minetest.get_meta(pos)
+    local inv = meta:get_inventory()
+    local stack = inv:get_stack("place", 1)
+    local A = activity[minetest.get_content_id(stack:get_name())] or 0
+
+    meta:set_float("emf", k * A)
+end
+
 minetest.register_node("electricity:riteg", {
     description = "RITEG",
     tiles = {
@@ -20,11 +30,13 @@ minetest.register_node("electricity:riteg", {
         "electricity_riteg_bottom.png",
         "electricity_riteg_side.png",
         "electricity_riteg_side.png",
-        "electricity_riteg_side.png",
-        "electricity_riteg_side.png"
+        "electricity_riteg_connect_side.png",
+        "electricity_riteg_connect_side.png"
     },
     drop = 'electricity:riteg',
     groups = { crumbly = 3, source = 1 },
+    paramtype2 = "facedir",
+
     on_construct = function(pos)
         local meta = minetest.get_meta(pos)
         local inv = meta:get_inventory()
@@ -49,14 +61,11 @@ minetest.register_node("electricity:riteg", {
         end
     end,
 
+    on_metadata_inventory_move = update_riteg,
+    on_metadata_inventory_put = update_riteg,
+    on_metadata_inventory_take = update_riteg,
+
     on_destruct = drop_everything,
 })
 
-local k = 3 / 20
-source["electricity:riteg"] = function(meta, P, R, emf, elapsed)
-    local inv = meta:get_inventory()
-    local stack = inv:get_stack("place", 1)
-    local A = activity[minetest.get_content_id(stack:get_name())] or 0
-
-    return k * A
-end
+model["electricity:riteg"] = dc_source

@@ -1,6 +1,7 @@
 source = {}
 quadripole = {}
 consumer = {}
+model = { }
 
 cable_tick = 0.1
 
@@ -28,3 +29,12 @@ function reset_consumer(name)
         end
     end)
 end
+
+neighbors = {
+    vector.new( 1,  0,  0),
+    vector.new(-1,  0,  0),
+    vector.new( 0,  0,  1),
+    vector.new( 0,  0, -1),
+    vector.new( 0,  1,  0),
+    vector.new( 0, -1,  0)
+}

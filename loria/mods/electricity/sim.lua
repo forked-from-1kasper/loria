@@ -1,12 +1,3 @@
-local neighbors = {
-    vector.new( 1,  0,  0),
-    vector.new(-1,  0,  0),
-    vector.new( 0,  0,  1),
-    vector.new( 0,  0, -1),
-    vector.new( 0,  1,  0),
-    vector.new( 0, -1,  0)
-}
-
 function serialize_pos(pos)
     return string.format("%f,%f,%f", pos.x, pos.y, pos.z)
 end
@@ -16,46 +7,10 @@ function deserialize_pos(str)
     return vector.new(tonumber(x), tonumber(y), tonumber(z))
 end
 
-function find_circuits(current, circuit, already_processed)
-    local res = { }
-
-    for _, vect in ipairs(neighbors) do
-        local pos = vector.add(current, vect)
-        local name = minetest.get_node(pos).name
-        
-        if (minetest.get_item_group(name, "consumer") > 0 or
-            minetest.get_item_group(name, "conductor") > 0) and
-           not already_processed[serialize_pos(pos)] then
-            local meta = minetest.get_meta(pos)
-
-            meta:set_float("I", 0)
-            meta:set_float("U", 0)
-
-            local circuit_tail = { }
-            for idx, v in ipairs(circuit) do
-                circuit_tail[idx] = v
-            end
-            table.insert(circuit_tail, pos)
-
-            already_processed[serialize_pos(pos)] = true
-
-            if minetest.get_item_group(name, "consumer") > 0 then
-                table.insert(res, circuit_tail)
-            elseif minetest.get_item_group(name, "conductor") > 0 then
-                local next_circuits = find_circuits(pos, circuit_tail, already_processed)
-
-                if meta:get_float("user_resis") > 0 and #next_circuits == 0 then
-                    table.insert(res, circuit_tail)
-                end
-
-                for _, v in ipairs(next_circuits) do
-                    table.insert(res, v)
-                end
-            end
-        end
-    end
-
-    return res
+local function drop_current(pos)
+    local meta = minetest.get_meta(pos)
+    meta:set_float("I", 0)
+    meta:set_float("U", 0)
 end
 
 function reset_circuits(current, already_processed)
@@ -63,8 +18,8 @@ function reset_circuits(current, already_processed)
         local pos = vector.add(current, vect)
         local name = minetest.get_node(pos).name
 
-        if (minetest.get_item_group(name, "consumer") > 0 or
-            minetest.get_item_group(name, "conductor") > 0) and
+        if (minetest.get_item_group(name, "conductor") > 0 or
+            minetest.get_item_group(name, "cable") > 0) and
            not already_processed[serialize_pos(pos)] then
             local meta = minetest.get_meta(pos)
 
@@ -73,41 +28,12 @@ function reset_circuits(current, already_processed)
 
             already_processed[serialize_pos(pos)] = true
 
-            if minetest.get_item_group(name, "conductor") > 0 then
-                reset_circuits(pos, already_processed)
-            elseif consumer[name] then
+            if consumer[name] then
                 minetest.get_node_timer(pos):start(0.5)
             end
+            reset_circuits(pos, already_processed)
         end
     end
-end
-
-local function calculate_resis(circuits)
-    local circuit_resists = { }
-
-    local R = 0
-    for circuit_idx, circuit in ipairs(circuits) do
-        local R0 = 0
-
-        for idx, pos in ipairs(circuit) do
-            local name = minetest.get_node(pos).name
-
-            if minetest.get_item_group(name, "consumer") > 0 or
-               minetest.get_item_group(name, "conductor") > 0 then
-                local meta = minetest.get_meta(pos)
-                R0 = R0 + meta:get_float("resis") + meta:get_float("user_resis")
-            end
-        end
-
-        circuit_resists[circuit_idx] = R0
-        R = R + (1 / R0)
-    end
-
-    if R ~= 0 then
-        R = 1 / R
-    end
-
-    return { circuit_resists = circuit_resists, R = R }
 end
 
 local function measurement_delta(X)
@@ -119,8 +45,8 @@ local function measurement_delta(X)
 end
 
 function check_current(meta, consumer)
-    local I = meta:get_float("I")
-    local U = meta:get_float("U")
+    local I = math.abs(meta:get_float("I"))
+    local U = math.abs(meta:get_float("U"))
     local is_active = meta:get_int("active") == 1
 
     return
@@ -140,115 +66,137 @@ local function check_consumer(meta, consumer)
     }
 end
 
-local function calculate_circuits(resists, circuits, I, U)
-    local P = 0
-    local consumers = { }
+local function get_emf(pos)
+    return minetest.get_meta(pos):get_float("emf")
+end
 
-    for circuit_idx, circuit in ipairs(circuits) do
-        transformations = { }
-        for idx, pos in ipairs(circuit) do
-            local R = resists.circuit_resists[circuit_idx]
-            local I = U / R -- I = I0
+local function get_resis(pos)
+    return minetest.get_meta(pos):get_float("resis")
+end
 
-            local meta = minetest.get_meta(pos)
-            local R0 = meta:get_float("resis") + meta:get_float("user_resis")
-            local U0 = I * R0
-            P = P + I * U0
+local idx = 0
+local function get_name()
+    idx = idx + 1
+    return idx
+end
 
-            local I = measurement_delta(I)
-            local U = measurement_delta(U0)
+local function is_conductor(name)
+    return minetest.get_item_group(name, "conductor") ~= 0
+end
 
-            for _, trans in ipairs(transformations) do
-                local transformed = trans(I, U)
-                I = transformed.I
-                U = transformed.U
-            end
+local function is_source(name)
+    return minetest.get_item_group(name, "source") ~= 0
+end
 
-            meta:set_float("I", meta:get_float("I") + I)
-            meta:set_float("U", meta:get_float("U") + U)
+function find_circuits(pos, descriptions, processed_sources)
+    local res = { }
+    local queue = { pos }
 
+    for _, current in ipairs(queue) do
+        for _, vect in ipairs(neighbors) do
+            local pos = vector.add(current, vect)
             local name = minetest.get_node(pos).name
+            local str = serialize_pos(pos)
 
-            local trans = quadripole[name]
-            if trans then
-                table.insert(transformations, trans(meta))
-            end
+            if (not descriptions[str]) and (not processed_sources[str]) and
+               (is_conductor(name) or is_source(name)) then
+                local desc, device_name = model[name](pos, get_name())
+                descriptions[str] = desc
+                if device_name then
+                    device_info[device_name] = { pos = pos }
+                end
 
-            if consumer[name] then
-                table.insert(consumers, pos)
+                if is_source(name) then
+                    processed_sources[str] = true
+                end
+
+                table.insert(queue, pos)
             end
         end
     end
-
-    return { P = P, consumers = consumers }
 end
 
-local function process_source(pos, circuits, elapsed)
-    local name = minetest.get_node(pos).name
-    if minetest.get_item_group(name, "source") == 0 then
-        return { P = 0, consumers = { } }
+local function calculate_device(device, info, elapsed)
+    local meta = minetest.get_meta(info.pos)
+
+    if not device_info[device .. "-bottom"] then
+        return
     end
 
-    local resists = calculate_resis(circuits)
+    local U = info.U + device_info[device .. "-bottom"].U
+    local R = meta:get_float("resis")
 
-    local meta = minetest.get_meta(pos)
-    local emf = meta:get_float("emf")
-    local r = meta:get_float("resis")
+    meta:set_float("I", U / R)
+    meta:set_float("U", U)
 
-    local R = resists.R + meta:get_float("user_resis")
+    local name = minetest.get_node(info.pos).name
 
-    local I = emf / (R + r)
-    local U = I * R
+    local consumer = consumer[name]
+    if consumer then
+        local actions = check_consumer(meta, consumer)
+        if actions.activate then
+            consumer.on_activate(info.pos)
+            meta:set_int("active", 1)
+        elseif actions.deactivate then
+            consumer.on_deactivate(info.pos)
+            meta:set_int("active", 0)
+        end
+    end
 
-    local values = calculate_circuits(resists, circuits, I, U)
-
-    meta:set_float("I", I)
-    meta:set_float("U", emf - I * r)
-
-    meta:set_float("emf", source[name](meta, values.P, R, emf, elapsed))
-
-    return values.consumers
+    local source = source[name]
+    if source then
+        source(meta, elapsed)
+    end
 end
 
-function globalstep(dtime)
-    local circuits = { }
+local function process_source(pos, processed_sources, elapsed)
+    local descriptions = { }
+    local str = serialize_pos(pos)
 
+    local desc, device_name = model[minetest.get_node(pos).name](pos, get_name())
+    descriptions[str] = desc
+    device_info[device_name] = { pos = pos }
+
+    processed_sources[str] = true
+
+    find_circuits(pos, descriptions, processed_sources)
+
+    local circ = { ".title electricity" }
+    for _, lines in pairs(descriptions) do
+        append(circ, lines)
+    end
+    table.insert(circ, ".end")
+
+    ngspice_circ(circ)
+    ngspice_command("tran 1 1")
+
+    for device, info in pairs(device_info) do
+        if not ends_with(device, "-bottom") then
+            calculate_device(device, info, elapsed)
+        end
+    end
+
+    ngspice_command("destroy all")
+    ngspice_command("remcirc")
+
+    device_info = { }
+end
+
+local function globalstep(dtime)
+    local processed_sources = { }
     for str, time in pairs(sources) do
         if dtime >= time then
             sources[str] = nil
         else
             sources[str] = time - dtime
 
-            local pos = deserialize_pos(str)
-            local already_processed = {}
-            already_processed[serialize_pos(pos)] = true
-
-            circuits[str] = find_circuits(pos, { }, already_processed)
+            if not processed_sources[str] then
+                local pos = deserialize_pos(str)
+                process_source(pos, processed_sources, dtime)
+            end
         end
     end
-
-    local consumers = { }
-    for str, _ in pairs(sources) do
-        local pos = deserialize_pos(str)
-        for _, pos in ipairs(process_source(pos, circuits[str], dtime)) do
-            table.insert(consumers, pos)
-        end
-    end
-
-    for _, pos in ipairs(consumers) do
-        local meta = minetest.get_meta(pos)
-
-        local consumer = consumer[minetest.get_node(pos).name]
-        local actions = check_consumer(meta, consumer)
-
-        if actions.activate then
-            consumer.on_activate(pos)
-            meta:set_int("active", 1)
-        elseif actions.deactivate then
-            consumer.on_deactivate(pos)
-            meta:set_int("active", 0)
-        end
-    end
+    idx = 0
 end
 
 sources = { }
@@ -266,8 +214,8 @@ minetest.register_abm{
 local timer = 0
 minetest.register_globalstep(function(dtime)
     timer = timer + dtime
-    if timer >= cable_tick then
+    if timer >= 0.5 then
+        globalstep(timer)
         timer = 0
-        globalstep(dtime)
     end
 end)

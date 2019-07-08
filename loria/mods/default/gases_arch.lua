@@ -11,14 +11,6 @@ function get_neighbors(pos)
     return map(function(v) return vector.add(pos, v) end, neighbors)
 end
 
-function starts_with(str, start)
-    return str:sub(1, #start) == start
-end
-
-function ends_with(str, ending)
-    return ending == "" or str:sub(-#ending) == ending
-end
-
 gas_table = { }
 function detect_gas(name)
     return find(

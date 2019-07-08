@@ -18,15 +18,16 @@ function run_furnace(conf, pos)
     end
 
     minetest.get_node_timer(pos):start(0.3)
-    minetest.swap_node(pos, { name = "furnace:" .. conf.name .. "_active" })
+    swap_node(pos, "furnace:" .. conf.name .. "_active")
 end
 
 function stop_furnace(conf, pos)
     local meta = minetest.get_meta(pos)
-    minetest.swap_node(pos, { name = "furnace:" .. conf.name })
+    swap_node(pos, "furnace:" .. conf.name)
 
     meta:set_string("formspec", furnace_formspec(conf, 0, meta))
     meta:set_float("cooking", 0)
+    meta:set_float("cycle", 0)
 
     minetest.get_node_timer(pos):stop()
 
@@ -126,7 +127,8 @@ function register_furnace(conf)
         tiles = {
             conf.textures.side, conf.textures.side,
             conf.textures.side, conf.textures.side,
-            conf.textures.side, conf.textures.front_inactive,
+            conf.textures.back or conf.textures.side,
+            conf.textures.front_inactive,
         },
 
         on_destruct = conf.on_destruct or drop_everything,

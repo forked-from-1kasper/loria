@@ -12,7 +12,7 @@ function and_then(f, g)
 end
 
 function map(f, l)
-    res = { }
+    local res = { }
     for _, x in ipairs(l) do
         table.insert(res, f(x))
     end
@@ -44,8 +44,40 @@ function find(f, l)
     end
 end
 
+function copy(t)
+    local t1 = { }
+    for k, v in pairs(t) do
+        t1[k] = v
+    end
+
+    return t1
+end
+
 function const(x)
     return (function()
         return x
     end)
+end
+
+function starts_with(str, start)
+    return str:sub(1, #start) == start
+end
+
+function ends_with(str, ending)
+    return ending == "" or str:sub(-#ending) == ending
+end
+
+function swap_node(pos, name)
+    local node = minetest.get_node(pos)
+    if node.name == name then
+        return
+    end
+    node.name = name
+    minetest.swap_node(pos, node)
+end
+
+function append(dest, source)
+    for _, x in ipairs(source) do
+        table.insert(dest, x)
+    end
 end

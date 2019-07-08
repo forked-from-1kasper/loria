@@ -249,7 +249,7 @@ minetest.register_on_generated(function(minp0, maxp0, seed)
             local x1 = minp.x + math.floor((divx + 1) * divlen)
             local z1 = minp.z + math.floor((divz + 1) * divlen)
 
-            local amount = math.floor(perlin1:get2d({x = x0, y = z0}))
+            local amount = math.floor(perlin1:get_2d({x = x0, y = z0}))
             for i = 0, amount do
                 local x = g:next(x0, x1)
                 local z = g:next(z0, z1)

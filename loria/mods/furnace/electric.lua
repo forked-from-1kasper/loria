@@ -1,6 +1,6 @@
 optimal = {
-    I = { min = 3, max = 15 },
-    U = { min = 170, max = 300 },
+    I = { min = 0.5, max = 50 },
+    U = { min = 30, max = 300 },
 }
 
 conf = {
@@ -17,11 +17,12 @@ conf = {
     end,
     textures = {
         side = "furnace_side.png",
+        back = "furnace_electric_back.png",
         front_inactive = "furnace_electric_front.png",
         front_active = "furnace_electric_front_active.png",
     },
     light_source = 6,
-    groups = { cracky = 2, consumer = 1 },
+    groups = { cracky = 2, conductor = 1 },
     on_construct = function(pos)
         local meta = minetest.get_meta(pos)
         meta:set_float("resis", 50)
@@ -40,3 +41,5 @@ consumer["furnace:electric"] = {
 --}
 
 register_furnace(conf)
+model["furnace:electric"] = resistor
+model["furnace:electric_active"] = resistor

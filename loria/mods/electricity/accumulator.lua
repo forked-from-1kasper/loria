@@ -21,11 +21,12 @@ minetest.register_node("electricity:charger_box", {
         "electricity_charger_box.png",
         "electricity_charger_box_side.png",
         "electricity_charger_box_side.png",
-        "electricity_charger_box_side.png",
-        "electricity_charger_box_side.png",
+        "electricity_charger_box_connect_side.png",
+        "electricity_charger_box_connect_side.png",
     },
     drop = 'electricity:charger_box',
-    groups = { cracky = 3, consumer = 1 },
+    groups = { cracky = 3, conductor = 1 },
+    paramtype2 = "facedir",
 
     on_construct = function(pos)
         local meta = minetest.get_meta(pos)
@@ -79,3 +80,4 @@ minetest.register_node("electricity:charger_box", {
         end
     end,
 })
+model["electricity:charger_box"] = resistor

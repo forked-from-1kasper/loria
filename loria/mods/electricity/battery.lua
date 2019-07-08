@@ -12,10 +12,12 @@ minetest.register_node("electricity:battery_box", {
         "electricity_battery_bottom.png",
         "electricity_battery_side.png",
         "electricity_battery_side.png",
-        "electricity_battery_side.png",
-        "electricity_battery_side.png"
+        "electricity_battery_connect_side.png",
+        "electricity_battery_connect_side.png"
     },
     drop = 'electricity:battery_box',
+    paramtype2 = "facedir",
+
     groups = { crumbly = 3, source = 1 },
     on_construct = function(pos)
         local meta = minetest.get_meta(pos)
@@ -23,7 +25,6 @@ minetest.register_node("electricity:battery_box", {
 
         inv:set_size("box", 6)
         meta:set_float("resis", 0.4)
-        meta:set_float("emf", 25)
 
         meta:set_string("formspec", battery_box_formspec)
     end,
@@ -56,11 +57,15 @@ minetest.register_node("electricity:battery_box", {
 })
 
 local k = 5
-source["electricity:battery_box"] = function(meta, P, R, emf, elapsed)
+source["electricity:battery_box"] = function(meta, elapsed)
     local inv = meta:get_inventory()
 
+    local I = math.abs(meta:get_float("I"))
+    local U = math.abs(meta:get_float("U"))
+
     local emf = 0
-    local wear = k * P * elapsed
+    local wear = k * I * U * elapsed
+
     for idx, stack in ipairs(inv:get_list("box")) do
         local stack_emf = minetest.get_item_group(stack:get_name(), "item_source")
         if stack_emf > 0 then
@@ -75,5 +80,6 @@ source["electricity:battery_box"] = function(meta, P, R, emf, elapsed)
         end
     end
 
-    return emf
+    meta:set_float("emf", emf)
 end
+model["electricity:battery_box"] = dc_source

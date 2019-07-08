@@ -4,20 +4,24 @@ local transformer_box = {
     type = "fixed",
     fixed = {
         { -1/2, -1/2, -1/2, 1/2, -1/2+2/16, 1/2 },
-        { -1/2+2/16, -1/2+2/16, -1/2+2/16, 1/2-2/16, 1/2-2/16, 1/2-2/16 },
-        { -1/2, 1/2-2/16, -1/2, 1/2, 1/2, 1/2 },
+        { -1/2+5/16, -1/2+2/16, -1/2+2/16, 1/2-5/16, -1/2+4/16, 1/2-2/16 },
+        { -1/2+5/16, 1/2-4/16, -1/2+2/16, 1/2-5/16, 1/2-2/16, 1/2-2/16 },
+        { -1/2+5/16, -1/2+4/16, -1/2+2/16, 1/2-5/16, 1/2-4/16, -1/2+4/16 },
+        { -1/2+5/16, -1/2+4/16, 1/2-4/16, 1/2-5/16, 1/2-4/16, 1/2-2/16 },
+        { -1/2+4/16, -1/2+5/16, -1/2+1/16, 1/2-4/16, 1/2-5/16, -1/2+5/16 },
+        { -1/2+4/16, -1/2+5/16, 1/2-5/16, 1/2-4/16, 1/2-5/16, 1/2-1/16 },
     },
 }
 
 minetest.register_node("electricity:transformer", {
     description = "Transformer",
     tiles = {
+        "electricity_transformer_top.png",
         "electricity_transformer.png",
-        "electricity_transformer.png",
-        "electricity_transformer_side.png",
-        "electricity_transformer_side.png",
-        "electricity_transformer_side.png",
-        "electricity_transformer_side.png",
+        "electricity_transformer_side_primary.png",
+        "electricity_transformer_side_secondary.png",
+        "electricity_transformer_front_primary.png",
+        "electricity_transformer_front_secondary.png",
     },
     drop = 'electricity:transformer',
     groups = { crumbly = 3, conductor = 1 },
@@ -72,7 +76,13 @@ minetest.register_node("electricity:transformer", {
         end
     end,
 })
-quadripole["electricity:transformer"] = function(meta)
+
+local function is_cable(name)
+    return minetest.get_item_group(name, "cable") ~= 0
+end
+
+model["electricity:transformer"] = function(pos, id)
+    local meta = minetest.get_meta(pos)
     local inv = meta:get_inventory()
     local prim_winding = inv:get_stack("primary", 1)
     local sec_winding = inv:get_stack("secondary", 1)
@@ -80,13 +90,40 @@ quadripole["electricity:transformer"] = function(meta)
     local N1 = prim_winding:get_count()
     local N2 = sec_winding:get_count()
 
-    if N1 == 0 or N2 == 0 or
-       minetest.get_item_group(prim_winding:get_name(), "cable") == 0 or
-       minetest.get_item_group(sec_winding:get_name(), "cable") == 0 then
-        return const({ I = 0, U = 0 })
-    else
-        local n = N2 / N1
-        return (function(I, U) return { I = I / n, U = U * n } end)
+    local n = N2 / N1
+    if N1 == 0 and N2 == 0 or
+       (not is_cable(prim_winding:get_name())) or
+       (not is_cable(sec_winding:get_name())) then
+        return
     end
-    meta:set_float("resis", (N1 + N2 + 1) * transformer_resis)
+
+    local in_pin = vector.new(1, 0, 0)
+    local out_pin = vector.new(0, 0, 1)
+
+    local prim0 = vector.add(pos, in_pin)
+    local prim1 = vector.add(pos, out_pin)
+
+    local sec0 = vector.subtract(pos, in_pin)
+    local sec1 = vector.subtract(pos, out_pin)
+
+    return {
+        table.concat({
+            "l" .. id .. "primary",
+            hash_node_connect(pos, prim0),
+            hash_node_connect(pos, prim1),
+            N1 ^ 2
+        }, " "),
+        table.concat({
+            "l" .. id .. "secondary",
+            hash_node_connect(pos, sec0),
+            hash_node_connect(pos, sec1),
+            N2 ^ 2
+        }, " "),
+        table.concat({
+            "k" .. id,
+            "l" .. id .. "primary",
+            "l" .. id .. "secondary",
+            0.999999
+        }, " ")
+    }, nil
 end

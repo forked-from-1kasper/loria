@@ -34,15 +34,28 @@ function register_cable(conf)
         node_box = cable_box,
 
         connects_to = {
-            "group:consumer",
             "group:source",
             "group:conductor",
             "group:disabled_electric_tool",
         },
 
-        on_construct = set_resis(conf.resis),
         on_destruct = reset_current,
     })
+
+    model["electricity:" .. conf.name .. "_cable"] = function(pos, id)
+        local res = { }
+        local center = hash_node_pos(pos)
+    
+        for idx, vect in ipairs(neighbors) do
+            table.insert(res, table.concat({
+                "r" .. id .. idx,
+                center, hash_node_connect(pos, vector.add(pos, vect)),
+                conf.resis
+            }, " "))
+        end
+
+        return res, nil
+    end
 end
 
 register_cable({ name = "aluminium", resis = 0.01 })
