@@ -10,11 +10,9 @@ local shared_filename
 if jit.os == "Windows" then
     shared_filename = "ngspice"
 elseif jit.os == "OSX" then
-    shared_filename = "libngspice.dylib"
-elseif jit.os == "Linux" then
-    shared_filename = "libngspice.so"
+    shared_filename = "libngspice.0.dylib"
 else
-    shared_filename = "ngspice"
+    shared_filename = "libngspice.so"
 end
 
 local ngspice = ffi.load(minetest.get_modpath("electricity").."/" .. shared_filename)
