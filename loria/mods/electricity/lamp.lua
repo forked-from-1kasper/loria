@@ -36,8 +36,8 @@ minetest.register_node("electricity:lamp_on", {
 })
 
 current = {
-    I = { min = 1, max = 50 },
-    U = { min = 5, max = 500 },
+    I = { min = 0.2, max = 5 },
+    U = { min = 1, max = 7 },
 }
 
 consumer["electricity:lamp_off"] = {
