@@ -65,7 +65,7 @@ minetest.register_node("electricity:riteg", {
     on_metadata_inventory_put = update_riteg,
     on_metadata_inventory_take = update_riteg,
 
-    on_destruct = drop_everything,
+    on_destruct = and_then(reset_current, drop_everything),
 })
 
 model["electricity:riteg"] = dc_source

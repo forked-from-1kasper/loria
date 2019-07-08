@@ -27,6 +27,7 @@ conf = {
         local meta = minetest.get_meta(pos)
         meta:set_float("resis", 50)
     end,
+    on_destruct = reset_current,
 }
 
 consumer["furnace:electric"] = {

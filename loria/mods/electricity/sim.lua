@@ -110,6 +110,11 @@ function find_circuits(pos, descriptions, processed_sources)
                     processed_sources[str] = true
                 end
 
+                if consumer[name] then
+                    minetest.get_node_timer(pos):start(0.5)
+                end
+
+                drop_current(pos)
                 table.insert(queue, pos)
             end
         end
@@ -156,6 +161,7 @@ local function process_source(pos, processed_sources, elapsed)
     local desc, device_name = model[minetest.get_node(pos).name](pos, get_name())
     descriptions[str] = desc
     device_info[device_name] = { pos = pos }
+    drop_current(pos)
 
     processed_sources[str] = true
 

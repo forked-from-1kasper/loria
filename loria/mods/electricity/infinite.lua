@@ -13,6 +13,7 @@ minetest.register_node("electricity:infinite_electricity", {
     drop = 'electricity:infinite_electricity',
     groups = { crumbly = 3, source = 1 },
     on_construct = set_resis(0.1),
+    on_destruct = reset_current,
 })
 model["electricity:infinite_electricity"] = function(pos, id)
     local device_name = "v" .. id

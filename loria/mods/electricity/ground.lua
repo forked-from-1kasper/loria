@@ -24,6 +24,8 @@ minetest.register_node("electricity:ground", {
     drawtype = "nodebox",
     node_box = switch_box,
     selection_box = switch_box,
+
+    on_destruct = reset_current,
 })
 model["electricity:ground"] = function(pos, id)
     local dir = minetest.facedir_to_dir(minetest.get_node(pos).param2)
