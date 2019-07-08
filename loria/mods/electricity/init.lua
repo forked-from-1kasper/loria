@@ -6,7 +6,16 @@ end
 
 local ffi = ie.require("ffi")
 
-local ngspice = ffi.load(minetest.get_modpath("electricity").."/ngspice")
+local shared_filename
+if jit.os == "Windows" then
+    shared_filename = "ngspice"
+elseif jit.os == "OSX" or jit.os == "Linux" then
+    shared_filename = "libngspice"
+else
+    shared_filename = "ngspice"
+end
+
+local ngspice = ffi.load(minetest.get_modpath("electricity").."/" .. shared_filename)
 
 -- sharedspice.h
 ffi.cdef[[
