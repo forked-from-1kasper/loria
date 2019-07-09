@@ -154,7 +154,7 @@ minetest.register_globalstep(function(dtime)
             else
                 oxygen = 0
             end
-            
+
             local pos = player:get_pos()
             if get_gas(vector.add(vector.new(0, 1, 0), pos)) ~= "oxygen" and
                get_gas(pos) ~= "oxygen" and oxygen <= 0 then
@@ -181,7 +181,7 @@ function bucket.register_liquid(source, flowing, itemname, inventory_image, desc
     bucket.is_bucket[itemname] = true
 
     if itemname ~= nil then
-        minetest.register_craftitem(itemname, {
+        minetest.register_tool(itemname, {
             description = description,
             inventory_image = inventory_image,
             stack_max = 1,
@@ -196,7 +196,7 @@ function bucket.register_liquid(source, flowing, itemname, inventory_image, desc
                 elseif n.name ~= source then
                     minetest.add_node(pointed_thing.under, { name = source })
                 end
-                return { name = "default:bucket_empty" }
+                return { name = "default:bucket_empty", wear = itemstack:get_wear() }
             end
         })
     end
@@ -216,7 +216,7 @@ minetest.register_craftitem("default:bucket_empty", {
         local liquiddef = bucket.liquids[n.name]
         if liquiddef ~= nil and liquiddef.source == n.name and liquiddef.itemname ~= nil then
             minetest.add_node(pointed_thing.under, { name = "air" })
-            return { name = liquiddef.itemname }
+            return { name = liquiddef.itemname, wear = itemstack:get_wear() }
         end
     end
 })

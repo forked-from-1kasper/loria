@@ -46,21 +46,34 @@ function update_fuel(pos, elapsed)
 
     local cycle = meta:get_float("cycle") + elapsed
     local fuel_name = fuel:get_name()
+
+    if bucket.is_bucket[fuel_name] then
+        local wear = fuel:get_wear()
+        local wear_delta = (elapsed / fuel_list[fuel_name]) * 65535
+
+        if wear + wear_delta >= 65535 then
+            add_or_drop(
+                inv, "output",
+                { name = "default:bucket_empty" },
+                vector.add(pos, vector.new(0, 1, 0))
+            )
+            inv:set_list("fuel", { })
+            return false
+        else
+            fuel:add_wear(wear_delta)
+            inv:set_stack("fuel", 1, fuel)
+
+            cycle = (1 - fuel:get_wear() / 65535) * fuel_list[fuel_name]
+        end
+    end
+
     if cycle > fuel_list[fuel_name] then
         cycle = 0
-
         local count = fuel:get_count() - 1
         fuel:set_count(count)
         inv:set_stack("fuel", 1, fuel)
 
         if count == 0 then
-            if bucket.is_bucket[fuel_name] then
-                add_or_drop(
-                    inv, "output",
-                    { name = "default:bucket_empty" },
-                    vector.add(pos, vector.new(0, 1, 0))
-                )
-            end
             return false
         end
     end
