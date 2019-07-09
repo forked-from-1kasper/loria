@@ -40,7 +40,26 @@ end
 
 function dc_source(pos, id)
     local meta = minetest.get_meta(pos)
-    local device_name = "v" .. id
 
-    return two_pole(device_name, pos, meta:get_float("emf")), device_name
+    local emf = meta:get_float("emf")
+    local resis = meta:get_float("resis")
+
+    local dir = minetest.facedir_to_dir(minetest.get_node(pos).param2)
+
+    local input = hash_node_connect(pos, vector.subtract(pos, dir))
+    local output = hash_node_connect(pos, vector.add(pos, dir))
+
+    return {
+        table.concat({ "v" .. id, input, "hole-" .. id, emf }, " "),
+        table.concat({ "r" .. id, "hole-" .. id, output, resis }, " "),
+        string.format(
+            ".measure tran v%s-u RMS v(%s)", id, input
+        ),
+        string.format(
+            ".measure tran v%s-delta RMS v(%s)", id, output
+        ),
+        string.format(
+            ".measure tran v%s-i MAX I(v%s)", id, id
+        ),
+    }, "v" .. id
 end
