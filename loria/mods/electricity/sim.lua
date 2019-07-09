@@ -154,7 +154,12 @@ local function process_source(pos, processed_sources, elapsed)
     local descriptions = { }
     local str = serialize_pos(pos)
 
-    local desc, device_name = model[minetest.get_node(pos).name](pos, get_name())
+    local func = model[minetest.get_node(pos).name]
+    if not func then
+        return
+    end
+
+    local desc, device_name = func(pos, get_name())
     descriptions[str] = desc
     device_info[device_name] = { pos = pos }
     drop_current(pos)
