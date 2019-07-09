@@ -27,7 +27,6 @@ function stop_furnace(conf, pos)
 
     meta:set_string("formspec", furnace_formspec(conf, 0, meta))
     meta:set_float("cooking", 0)
-    meta:set_float("cycle", 0)
 
     minetest.get_node_timer(pos):stop()
 

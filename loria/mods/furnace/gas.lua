@@ -98,4 +98,7 @@ register_furnace({
     },
     groups = { cracky = 2 },
     light_source = 10,
+    after_stop = function(pos)
+        minetest.get_meta(pos):set_float("cycle", 0)
+    end,
 })
