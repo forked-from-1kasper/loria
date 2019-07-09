@@ -124,13 +124,8 @@ end
 local function calculate_device(device, info, elapsed)
     local meta = minetest.get_meta(info.pos)
 
-    if not device_info[device .. "-bottom"] or
-       not device_info[device .. "-i"] then
-        return
-    end
-
-    local U = info.value + device_info[device .. "-bottom"].value
-    local I = device_info[device .. "-i"].value
+    local U = (info.u or 0) + (info.delta or 0)
+    local I = info.i or 0
 
     meta:set_float("I", I)
     meta:set_float("U", U)
@@ -178,10 +173,7 @@ local function process_source(pos, processed_sources, elapsed)
     ngspice_command("tran 1 1")
 
     for device, info in pairs(device_info) do
-        if (not ends_with(device, "-bottom")) and
-           (not ends_with(device, "-i")) then
-            calculate_device(device, info, elapsed)
-        end
+        calculate_device(device, info, elapsed)
     end
 
     ngspice_command("destroy all")

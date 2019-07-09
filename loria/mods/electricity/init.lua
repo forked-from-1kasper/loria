@@ -108,12 +108,13 @@ local printfcn = ffi.cast("SendChar*",
         if prefix == "stderr " then
             minetest.log("verbose", string.format("ng: SendChar: %s", info))
         else
-            local name, value = info:match("^([^ ]+)%s+=%s+([+-]?[^ ]+)")
+            local name, field, value = info:match("^([^ -]+)-([^ ]+)%s+=%s+([+-]?[^ ]+)")
             if name and value then
                 if not device_info[name] then
                     device_info[name] = { }
                 end
-                device_info[name].value = tonumber(value)
+
+                device_info[name][field] = tonumber(value)
             end
 
             minetest.log("info", string.format("ng: SendChar: %s", info))
@@ -159,6 +160,7 @@ dofile(minetest.get_modpath("electricity").."/switch.lua")
 dofile(minetest.get_modpath("electricity").."/battery.lua")
 dofile(minetest.get_modpath("electricity").."/transformer.lua")
 dofile(minetest.get_modpath("electricity").."/infinite.lua")
+dofile(minetest.get_modpath("electricity").."/resistor.lua")
 dofile(minetest.get_modpath("electricity").."/riteg.lua")
 dofile(minetest.get_modpath("electricity").."/cables.lua")
 dofile(minetest.get_modpath("electricity").."/accumulator.lua")

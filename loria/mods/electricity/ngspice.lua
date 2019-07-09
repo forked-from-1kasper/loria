@@ -20,10 +20,10 @@ function two_pole(device, pos, value)
         table.concat({ device, input, "hole-" .. device, value }, " "),
         table.concat({ "v" .. device, "hole-" .. device, output, 0 }, " "),
         string.format(
-            ".measure tran %s RMS v(%s)", device, input
+            ".measure tran %s-u RMS v(%s)", device, input
         ),
         string.format(
-            ".measure tran %s-bottom RMS v(%s)", device, output
+            ".measure tran %s-delta RMS v(%s)", device, output
         ),
         string.format(
             ".measure tran %s-i MAX I(v%s)", device, device
