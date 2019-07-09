@@ -171,7 +171,7 @@ bucket = {}
 bucket.is_bucket = {}
 bucket.liquids = {}
 
-function bucket.register_liquid(source, flowing, itemname, inventory_image, description)
+function bucket.register_liquid(source, flowing, itemname, inventory_image, description, is_fuel)
     bucket.liquids[source] = {
         source = source,
         flowing = flowing,
@@ -181,7 +181,7 @@ function bucket.register_liquid(source, flowing, itemname, inventory_image, desc
     bucket.is_bucket[itemname] = true
 
     if itemname ~= nil then
-        minetest.register_tool(itemname, {
+        (is_fuel and minetest.register_tool or minetest.register_craftitem)(itemname, {
             description = description,
             inventory_image = inventory_image,
             stack_max = 1,
@@ -258,7 +258,8 @@ bucket.register_liquid(
     "default:trisilane_flowing",
     "default:bucket_trisilane",
     "bucket_trisilane.png",
-    "Bucket with trisilane"
+    "Bucket with trisilane",
+    true
 )
 
 bucket.register_liquid(
