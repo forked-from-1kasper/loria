@@ -1,26 +1,43 @@
-local multimeter_resis = 0.01
-local multimeter_timeout = 0.5
-minetest.register_tool("electricity:multimeter", {
-    inventory_image = "electricity_multimeter.png",
+local multimeter_resis = 0.04
+
+local multimeter_box = {
+    type = "fixed",
+    fixed = {
+        { -1/2, -1/2, -1/2, 1/2, -1/2+1/16, 1/2 },
+        { -4/16, -1/2+1/16, -1/2+2/16, 4/16, 1/2-2/16, 1/2-2/16 },
+    },
+}
+
+minetest.register_node("electricity:multimeter", {
     description = "Multimeter",
-    stack_max = 1,
-    liquids_pointable = true,
-    on_use = function(itemstack, user, pointed_thing)
-        if pointed_thing.type ~= "node" then
-            return
-        end
+    tiles = {
+        "electricity_multimeter_top.png",
+        "electricity_multimeter_bottom.png",
+        "electricity_multimeter_front.png",
+        "electricity_multimeter_back.png",
+        "electricity_multimeter_side.png",
+        "electricity_multimeter_side.png",
+    },
+    paramtype = "light",
+    paramtype2 = "facedir",
 
-        local name = minetest.get_node(pointed_thing.under).name
-        local meta = minetest.get_meta(pointed_thing.under)
+    drop = 'electricity:multimeter',
+    groups = { dig_immediate = 3, conductor = 1, },
 
-        meta:set_float("user_resis", multimeter_resis)
-        minetest.after(multimeter_timeout, function(meta, name)
-            minetest.chat_send_player(name, string.format(
-                "I = %f, U = %f", meta:get_float("I"), meta:get_float("U")
-            ))
+    on_construct = set_resis(multimeter_resis),
+    on_destruct = reset_current,
 
-            meta:set_float("user_resis", 0)
-        end, meta, user:get_player_name())
-        return
+    drawtype = "nodebox",
+    node_box = multimeter_box,
+    selection_box = multimeter_box,
+
+    on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
+        local meta = minetest.get_meta(pos)
+        local I, U = meta:get_float("I"), meta:get_float("U")
+
+        minetest.chat_send_player(clicker:get_player_name(),
+            string.format("I = %f, U = %f", I, U)
+        )
     end,
 })
+model["electricity:multimeter"] = resistor
