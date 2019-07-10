@@ -7,7 +7,7 @@ conf = {
     name = "electric",
     description = "Electric furnace",
     lists = { },
-    on_tick = { and_then(const(true), reset_consumer("furnace:electric")) },
+    on_tick = { and_then(reset_consumer("furnace:electric"), const(true)) },
     on_destruct = and_then(reset_current, drop_everything),
     is_furnace_ready = function(pos)
         return minetest.get_meta(pos):get_int("active") == 1

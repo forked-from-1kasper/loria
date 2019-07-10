@@ -19,6 +19,11 @@ local function multimeter_resis_step(R)
     end
 end
 
+local function update_infotext(meta)
+    local I, U, R = meta:get_float("I"), meta:get_float("U"), meta:get_float("resis")
+    meta:set_string("infotext", string.format("I = %f A\nU = %f V\nR = %f Ohms", I, U, R))
+end
+
 minetest.register_node("electricity:multimeter", {
     description = "Multimeter",
     tiles = {
@@ -35,7 +40,10 @@ minetest.register_node("electricity:multimeter", {
     drop = 'electricity:multimeter',
     groups = { dig_immediate = 3, conductor = 1, },
 
-    on_construct = set_resis(multimeter_resis.min),
+    on_construct = and_then(
+        set_resis(multimeter_resis.min),
+        comp(update_infotext, minetest.get_meta)
+    ),
     on_destruct = reset_current,
 
     drawtype = "nodebox",
@@ -45,13 +53,11 @@ minetest.register_node("electricity:multimeter", {
     on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
         local meta = minetest.get_meta(pos)
         meta:set_float("resis", multimeter_resis_step(meta:get_float("resis")))
+        update_infotext(meta)
     end,
 })
 model["electricity:multimeter"] = resistor
-on_circuit_tick["electricity:multimeter"] = function(meta, elapsed)
-    local I, U, R = meta:get_float("I"), meta:get_float("U"), meta:get_float("resis")
-    meta:set_string("infotext", string.format("I = %f A\nU = %f V\nR = %f Ohms", I, U, R))
-end
+on_circuit_tick["electricity:multimeter"] = update_infotext
 
 minetest.register_craftitem("electricity:multimeter_debug", {
     inventory_image = "electricity_multimeter.png",
