@@ -1,4 +1,4 @@
-source = {}
+on_circuit_tick = {}
 quadripole = {}
 consumer = {}
 model = { }

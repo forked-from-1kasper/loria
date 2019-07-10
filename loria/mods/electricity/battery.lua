@@ -57,7 +57,7 @@ minetest.register_node("electricity:battery_box", {
 })
 
 local k = 5
-source["electricity:battery_box"] = function(meta, elapsed)
+on_circuit_tick["electricity:battery_box"] = function(meta, elapsed)
     local inv = meta:get_inventory()
 
     local I = math.abs(meta:get_float("I"))

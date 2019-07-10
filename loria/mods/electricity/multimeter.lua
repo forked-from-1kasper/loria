@@ -1,4 +1,3 @@
-local multimeter_resis = 0.04
 
 local multimeter_box = {
     type = "fixed",
@@ -7,6 +6,18 @@ local multimeter_box = {
         { -4/16, -1/2+1/16, -1/2+2/16, 4/16, 1/2-2/16, 1/2-2/16 },
     },
 }
+
+local multimeter_resis = { min = 0.015, max = 1500 }
+
+local k = 10
+local function multimeter_resis_step(R)
+    local r = k * R
+    if r > multimeter_resis.max then
+        return multimeter_resis.min
+    else
+        return r
+    end
+end
 
 minetest.register_node("electricity:multimeter", {
     description = "Multimeter",
@@ -24,7 +35,7 @@ minetest.register_node("electricity:multimeter", {
     drop = 'electricity:multimeter',
     groups = { dig_immediate = 3, conductor = 1, },
 
-    on_construct = set_resis(multimeter_resis),
+    on_construct = set_resis(multimeter_resis.min),
     on_destruct = reset_current,
 
     drawtype = "nodebox",
@@ -33,14 +44,14 @@ minetest.register_node("electricity:multimeter", {
 
     on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
         local meta = minetest.get_meta(pos)
-        local I, U = meta:get_float("I"), meta:get_float("U")
-
-        minetest.chat_send_player(clicker:get_player_name(),
-            string.format("I = %f, U = %f", I, U)
-        )
+        meta:set_float("resis", multimeter_resis_step(meta:get_float("resis")))
     end,
 })
 model["electricity:multimeter"] = resistor
+on_circuit_tick["electricity:multimeter"] = function(meta, elapsed)
+    local I, U, R = meta:get_float("I"), meta:get_float("U"), meta:get_float("resis")
+    meta:set_string("infotext", string.format("I = %f A\nU = %f V\nR = %f Ohms", I, U, R))
+end
 
 minetest.register_craftitem("electricity:multimeter_debug", {
     inventory_image = "electricity_multimeter.png",

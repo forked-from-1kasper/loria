@@ -144,9 +144,9 @@ local function calculate_device(device, info, elapsed)
         end
     end
 
-    local source = source[name]
-    if source then
-        source(meta, elapsed)
+    local func = on_circuit_tick[name]
+    if func then
+        func(meta, elapsed)
     end
 end
 
