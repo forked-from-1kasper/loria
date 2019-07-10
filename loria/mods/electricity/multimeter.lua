@@ -41,3 +41,22 @@ minetest.register_node("electricity:multimeter", {
     end,
 })
 model["electricity:multimeter"] = resistor
+
+minetest.register_craftitem("electricity:multimeter_debug", {
+    inventory_image = "electricity_multimeter.png",
+    description = "Multimeter (debug tool)",
+    stack_max = 1,
+    liquids_pointable = true,
+    on_use = function(itemstack, user, pointed_thing)
+        if pointed_thing.type ~= "node" then
+            return
+        end
+
+        local meta = minetest.get_meta(pointed_thing.under)
+        local I, U = meta:get_float("I"), meta:get_float("U")
+
+        minetest.chat_send_player(user:get_player_name(),
+            string.format("I = %f, U = %f", I, U)
+        )
+    end
+})
