@@ -9,7 +9,7 @@ end
 
 function gas(player)
     local pos = player:get_pos()
-    local name = get_gas(vector.add(vector.new(0, 1, 0), pos)) or get_gas(pos) or "N/A"
+    local name = get_gas(vector.add(vector.new(0, 1, 0), pos)) or get_gas(pos) or "argon"
     return "Gas: " .. name
 end
 
