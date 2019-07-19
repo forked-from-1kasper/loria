@@ -2,43 +2,7 @@ dofile(minetest.get_modpath("radiation").."/conf.lua")
 
 radiation_vect = vector.new(16, 16, 16)
 
-DOSE_DECREASE_TIME = 1
-
-local radiation_timer = 0
-minetest.register_globalstep(function(dtime)
-    radiation_timer = radiation_timer + dtime
-    if radiation_timer > DOSE_DECREASE_TIME then
-        radiation_timer = 0
-
-        for _, player in ipairs(minetest.get_connected_players()) do
-            local meta = player:get_meta()
-            local radiation = meta:get_float("radiation")
-
-            local dose = meta:get_float("received_dose") +
-                (radiation / 3600) * DOSE_DECREASE_TIME
-
-            if dose < 0 then dose = 0 end
-
-            meta:set_float("received_dose", dose)
-            local dose_damage_limit = meta:get_float("dose_damage_limit")
-
-            if dose > dose_damage_limit then
-                local inv = player:get_inventory()
-                local drug_stack = inv:get_list("antiradiation")[1]
-
-                local drug_value = antiradiation_drugs[drug_stack:get_name()]
-
-                if drug_value then
-                    meta:set_float("dose_damage_limit", dose_damage_limit + drug_value)
-                    drug_stack:set_count(drug_stack:get_count() - 1)
-                    inv:set_stack("antiradiation", 1, drug_stack)
-                else
-                    player:set_hp(player:get_hp() - 1)
-                end
-            end
-        end
-    end
-end)
+radiation_effects_timeout = 1
 
 local function hypot_sqr(pos1, pos2)
     return
@@ -93,31 +57,72 @@ function calculate_radiation(vm, pos)
     return radiation
 end
 
+local function calculate_player_radiation(player, vm)
+    local pos = player:get_pos()
+    local radiation = calculate_radiation(vm, pos)
+
+    local objs = minetest.get_objects_inside_radius(pos, vector.length(radiation_vect))
+    for _, obj in pairs(objs) do
+        local name = player:get_player_name()
+        local entity = obj:get_luaentity()
+        if entity and entity.name == "__builtin:item" then
+            local stack = ItemStack(entity.itemstring)
+            local A = activity[minetest.get_content_id(stack:get_name())]
+            if A then
+                A = A * stack:get_count()
+                radiation = radiation + A / hypot_sqr(pos, obj:get_pos())
+            end
+        end
+    end
+
+    radiation = radiation + calculate_inventory_radiation(player:get_inventory())
+
+    return radiation
+end
+
+local function radiation_effects(player, radiation)
+    local meta = player:get_meta()
+
+    local dose = meta:get_float("received_dose") +
+        (radiation / 3600) * radiation_effects_timeout
+
+    if dose < 0 then dose = 0 end
+
+    meta:set_float("received_dose", dose)
+    local dose_damage_limit = meta:get_float("dose_damage_limit")
+
+    if dose > dose_damage_limit then
+        local inv = player:get_inventory()
+        local drug_stack = inv:get_list("antiradiation")[1]
+
+        local drug_value = antiradiation_drugs[drug_stack:get_name()]
+
+        if drug_value then
+            meta:set_float("dose_damage_limit", dose_damage_limit + drug_value)
+            drug_stack:set_count(drug_stack:get_count() - 1)
+            inv:set_stack("antiradiation", 1, drug_stack)
+        else
+            player:set_hp(player:get_hp() - 1)
+        end
+    end
+end
+
+local radiation_timer = 0
 minetest.register_globalstep(function(dtime)
+    radiation_timer = radiation_timer + dtime
     local vm = minetest.get_voxel_manip()
 
     for _, player in ipairs(minetest.get_connected_players()) do
-        local pos = player:get_pos()
-        local radiation = calculate_radiation(vm, pos)
-
-        local objs = minetest.get_objects_inside_radius(pos, vector.length(radiation_vect))
-        for _, obj in pairs(objs) do
-            local name = player:get_player_name()
-            local entity = obj:get_luaentity()
-            if entity and entity.name == "__builtin:item" then
-                local stack = ItemStack(entity.itemstring)
-                local A = activity[minetest.get_content_id(stack:get_name())]
-                if A then
-                    A = A * stack:get_count()
-                    radiation = radiation + A / hypot_sqr(pos, obj:get_pos())
-                end
-            end
-        end
-
-        radiation = radiation +
-            calculate_inventory_radiation(player:get_inventory())
-
+        local radiation = calculate_player_radiation(player, vm)
         local meta = player:get_meta()
-        meta:set_float("radiation", radiation)
+        meta:set_float("radiation", (meta:get_float("radiation") + radiation) / 2)
+
+        if radiation_timer > radiation_effects_timeout then
+            radiation_effects(player, radiation)
+        end
+    end
+
+    if radiation_timer > radiation_effects_timeout then
+        radiation_timer = 0
     end
 end)

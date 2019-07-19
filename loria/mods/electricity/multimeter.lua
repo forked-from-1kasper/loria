@@ -1,4 +1,3 @@
-
 local multimeter_box = {
     type = "fixed",
     fixed = {
@@ -21,7 +20,10 @@ end
 
 local function update_infotext(meta)
     local I, U, R = meta:get_float("I"), meta:get_float("U"), meta:get_float("resis")
-    meta:set_string("infotext", string.format("I = %f A\nU = %f V\nR = %f Ohms", I, U, R))
+    meta:set_string("infotext", string.format(
+        "I = %.1f A\nU = %.1f V\nR = %.1f Ohms",
+        I, U, R
+    ))
 end
 
 minetest.register_node("electricity:multimeter", {
