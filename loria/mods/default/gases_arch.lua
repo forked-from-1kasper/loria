@@ -177,6 +177,32 @@ minetest.register_chatcommand("chemical_attack", {
     end,
 })
 
+minetest.register_chatcommand("fill", {
+    params = "<nodename>",
+    description = "Fill 10 × 10 square",
+    privs = {},
+    func = function(name, nodename)
+        local radius = 10
+        if not nodename then
+            minetest.chat_send_player(name, "Invalid command")
+            return
+        end
+
+        local player = minetest.get_player_by_name(name)
+        if player then
+            local pos = player:get_pos()
+            for x = pos.x - radius, pos.x + radius do
+                for z = pos.z - radius, pos.z + radius do
+                    minetest.set_node({ x = x, y = pos.y - 1, z = z }, {
+                        name = nodename
+                    })
+                end
+            end
+            minetest.chat_send_player(name, "Done")
+        end
+    end,
+})
+
 minetest.register_chatcommand("cid", {
     params = "<node>",
     description = "Returns content id.",
