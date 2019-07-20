@@ -149,7 +149,7 @@ local function radiation_effects(player, radiation)
             drug_stack:set_count(drug_stack:get_count() - 1)
             inv:set_stack("antiradiation", 1, drug_stack)
         else
-            player:set_hp(player:get_hp() - 1)
+            player:set_hp(player:get_hp() - math.floor(dose))
         end
     end
 end
