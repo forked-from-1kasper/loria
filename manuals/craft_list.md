@@ -34,7 +34,7 @@
 |default:plutonium_trifluoride × 4, default:oxygen_balloon × 1|default:plutonium_tetrafluoride × 3, default:plutonium_dioxide × 1|
 |default:lead_sulfate × 1, default:bucket_empty × 1|default:lead_oxide × 1, default:bucket_sulfur_trioxide × 1|
 |default:lead_oxide × 1, default:hydrogen_balloon × 1, default:bucket_empty × 1|default:lead × 1, default:empty_balloon × 1, default:bucket_water × 1|
-|default:bucket_potassium_permanganate × 2, default:empty_balloon × 1|default:potassium_manganate × 1, default:manganese_dioxide × 1, default:oxygen_balloon × 1|
+|default:bucket_potassium_permanganate × 2, default:empty_balloon × 1|default:potassium_manganate × 1, default:manganese_dioxide × 1, default:oxygen_balloon × 1, default:bucket_empty × 1|
 |default:manganese_dioxide × 1, default:bucket_empty × 1, default:hydrogen_balloon × 1|default:manganese_oxide × 1, default:bucket_water × 1, default:empty_balloon × 1|
 |default:aluminium × 1|default:aluminium_ingot × 1, default:cinnabar × 1|
 |default:aluminium_azure × 1|default:aluminium_ingot × 1, default:cobalt_blue × 1|
