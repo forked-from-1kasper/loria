@@ -10,14 +10,14 @@ local c_plutonium_dioxide = minetest.get_content_id("default:plutonium_dioxide")
 local c_periculum = minetest.get_content_id("default:periculum")
 
 activity = {
-    [c_uranium_tetrachloride_ore] = 1,
-    [c_uranium_tetrachloride] = 3,
-    [c_uranium] = 5,
-    [c_periculum] = 0.5,
-    [c_plutonium_fluoride_ore] = 7,
-    [c_plutonium_trifluoride] = 10,
-    [c_plutonium_tetrafluoride] = 8,
-    [c_plutonium_dioxide] = 20,
+    [c_uranium_tetrachloride_ore] = { alpha = 1, beta = 0.3, gamma = 0 },
+    [c_uranium_tetrachloride] = { alpha = 3, beta = 1, gamma = 0 },
+    [c_uranium] = { alpha = 5, beta = 3, gamma = 0 },
+    [c_periculum] = { alpha = 0, beta = 0, gamma = 0.5 },
+    [c_plutonium_fluoride_ore] = { alpha = 7, beta = 0, gamma = 0 },
+    [c_plutonium_trifluoride] = { alpha = 10, beta = 0, gamma = 0 },
+    [c_plutonium_tetrafluoride] = { alpha = 8, beta = 0, gamma = 0 },
+    [c_plutonium_dioxide] = { alpha = 20, beta = 0, gamma = 0 },
 }
 
 antiradiation_drugs = {

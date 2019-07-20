@@ -1,21 +1,24 @@
 function health(player)
-    return "Health: "..player:get_hp()
+    return "Health: " .. player:get_hp()
 end
 
 function space_suit(player)
     local meta = player:get_meta()
-    return "Space suit: ".. meta:get_int("space_suit")
+    return "Space suit: " .. meta:get_int("space_suit")
 end
 
 function gas(player)
     local pos = player:get_pos()
-    local name = get_gas(vector.add(vector.new(0, 1, 0), pos)) or get_gas(pos) or "argon"
+    local name =
+        get_gas(vector.add(vector.new(0, 1, 0), pos)) or
+        get_gas(pos) or
+        "argon"
     return "Gas: " .. name
 end
 
 function oxygen(player)
     local meta = player:get_meta()
-    return "Oxygen: "..meta:get_int("oxygen").."/"..meta:get_int("oxygen_max")
+    return "Oxygen: " .. meta:get_int("oxygen") .. "/" .. meta:get_int("oxygen_max")
 end
 
 function gravity(player)

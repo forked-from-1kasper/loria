@@ -4,6 +4,8 @@ radiation_vect = vector.new(16, 16, 16)
 
 radiation_effects_timeout = 1
 
+null = { alpha = 0, beta = 0, gamma = 0 }
+
 local function hypot_sqr(pos1, pos2)
     return
         (pos1.x - pos2.x) ^ 2 +
@@ -11,16 +13,57 @@ local function hypot_sqr(pos1, pos2)
         (pos1.z - pos2.z) ^ 2
 end
 
+local function alpha(A, source, pos)
+    return A * math.exp(-hypot_sqr(source, pos))
+end
+
+local function beta(A, source, pos)
+    local dist_sqr = hypot_sqr(source, pos)
+    return A * math.exp(-math.sqrt(dist_sqr)) / dist_sqr
+end
+
+local function gamma(A, source, pos)
+    return A / hypot_sqr(source, pos)
+end
+
+local function radiation_summary(A, source, pos)
+    return {
+        alpha = alpha(A.alpha, source, pos),
+        beta = beta(A.beta, source, pos),
+        gamma = gamma(A.gamma, source, pos),
+    }
+end
+
+local function add(A1, A2)
+    return {
+        alpha = A1.alpha + A2.alpha,
+        beta = A1.beta + A2.beta,
+        gamma = A1.gamma + A2.gamma,
+    }
+end
+
+local function mult(k, A)
+    return {
+        alpha = k * A.alpha,
+        beta = k * A.beta,
+        gamma = k * A.gamma,
+    }
+end
+
+function total(A)
+    return A.alpha + A.beta + A.gamma
+end
+
 local function calculate_inventory_radiation(inv)
-    local radiation = 0
+    local radiation = { alpha = 0, beta = 0, gamma = 0 }
 
     for listname, list in pairs(inv:get_lists()) do
         if listname ~= "creative_inv" then
             for _, stack in ipairs(list) do
-                local A = activity[minetest.get_content_id(stack:get_name())]
-                if A then
-                    radiation = radiation + A * stack:get_count()
-                end
+                local A = activity[minetest.get_content_id(stack:get_name())] or null
+                -- no radiation.alpha
+                radiation.beta = radiation.beta + A.beta * stack:get_count()
+                radiation.gamma = radiation.gamma + A.gamma * stack:get_count()
             end
         end
     end
@@ -29,7 +72,7 @@ local function calculate_inventory_radiation(inv)
 end
 
 function calculate_radiation(vm, pos)
-    local radiation = 0
+    local radiation = null
 
     local minp, maxp = vm:read_from_map(
         vector.subtract(pos, radiation_vect),
@@ -41,16 +84,17 @@ function calculate_radiation(vm, pos)
     for i = 1, #data do
         local cid = data[i]
         local A = activity[cid]
+
         if A then
             local node = area:position(i)
-            radiation = radiation + A / hypot_sqr(pos, node)
+            radiation = add(radiation, radiation_summary(A, pos, node))
         end
 
         if has_inventory[cid] then
             local node = area:position(i)
             local inv = minetest.get_meta(node):get_inventory()
             local A = calculate_inventory_radiation(inv)
-            radiation = radiation + A / hypot_sqr(pos, node)
+            radiation = add(radiation, radiation_summary(A, pos, node))
         end
     end
 
@@ -67,16 +111,18 @@ local function calculate_player_radiation(player, vm)
         local entity = obj:get_luaentity()
         if entity and entity.name == "__builtin:item" then
             local stack = ItemStack(entity.itemstring)
-            local A = activity[minetest.get_content_id(stack:get_name())]
-            if A then
-                A = A * stack:get_count()
-                radiation = radiation + A / hypot_sqr(pos, obj:get_pos())
-            end
+            local A = activity[minetest.get_content_id(stack:get_name())] or null
+            radiation = add(
+                radiation,
+                mult(
+                    stack:get_count(),
+                    radiation_summary(A, pos, obj:get_pos())
+                )
+            )
         end
     end
 
-    radiation = radiation + calculate_inventory_radiation(player:get_inventory())
-
+    radiation = add(radiation, calculate_inventory_radiation(player:get_inventory()))
     return radiation
 end
 
@@ -113,7 +159,8 @@ minetest.register_globalstep(function(dtime)
     local vm = minetest.get_voxel_manip()
 
     for _, player in ipairs(minetest.get_connected_players()) do
-        local radiation = calculate_player_radiation(player, vm)
+        local radiation = total(calculate_player_radiation(player, vm))
+
         local meta = player:get_meta()
         meta:set_float("radiation", (meta:get_float("radiation") + radiation) / 2)
 

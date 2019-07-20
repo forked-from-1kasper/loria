@@ -6,6 +6,12 @@ riteg_box = {
     },
 }
 
+fuel = {
+    ["default:plutonium_dioxide"] = 3,
+    ["default:plutonium_tetrafluoride"] = 0.5,
+    ["default:plutonium_trifluoride"] = 0.1,
+}
+
 local riteg_formspec =
     "size[8,6.5]" ..
     "label[3.5,0;RITEG]" ..
@@ -13,14 +19,12 @@ local riteg_formspec =
     "list[current_player;main;0,2;8,1;]"..
     "list[current_player;main;0,3.5;8,3;8]"
 
-local k = 3 / 20
 local function update_riteg(pos)
     local meta = minetest.get_meta(pos)
     local inv = meta:get_inventory()
     local stack = inv:get_stack("place", 1)
-    local A = activity[minetest.get_content_id(stack:get_name())] or 0
 
-    meta:set_float("emf", k * A)
+    meta:set_float("emf", fuel[stack:get_name()] or 0)
 end
 
 minetest.register_node("electricity:riteg", {
