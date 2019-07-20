@@ -81,3 +81,7 @@ function append(dest, source)
         table.insert(dest, x)
     end
 end
+
+function capitalization(str)
+    return string.gsub(str:gsub("^%l", string.upper), "_", " ")
+end

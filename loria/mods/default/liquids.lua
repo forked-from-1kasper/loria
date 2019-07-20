@@ -55,7 +55,7 @@ liquids = {
 
 for name, params in pairs(liquids) do
     minetest.register_node("default:" .. name .. "_source", {
-        description = name:gsub("^%l", string.upper) .. " source",
+        description = capitalization(name) .. " source",
         drawtype = "liquid",
         tiles = {
             {

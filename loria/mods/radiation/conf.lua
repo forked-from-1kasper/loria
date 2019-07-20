@@ -1,23 +1,24 @@
-local c_uranium_tetrachloride_ore = minetest.get_content_id("default:uranium_tetrachloride_ore")
-local c_uranium_tetrachloride = minetest.get_content_id("default:uranium_tetrachloride")
-local c_uranium = minetest.get_content_id("default:uranium")
-
-local c_plutonium_fluoride_ore = minetest.get_content_id("default:plutonium_fluoride_ore")
-local c_plutonium_trifluoride = minetest.get_content_id("default:plutonium_trifluoride")
-local c_plutonium_tetrafluoride = minetest.get_content_id("default:plutonium_tetrafluoride")
-local c_plutonium_dioxide = minetest.get_content_id("default:plutonium_dioxide")
-
-local c_periculum = minetest.get_content_id("default:periculum")
+local cid = minetest.get_content_id
 
 activity = {
-    [c_uranium_tetrachloride_ore] = { alpha = 1, beta = 0.3, gamma = 0 },
-    [c_uranium_tetrachloride] = { alpha = 3, beta = 1, gamma = 0 },
-    [c_uranium] = { alpha = 5, beta = 3, gamma = 0 },
-    [c_periculum] = { alpha = 0, beta = 0, gamma = 0.5 },
-    [c_plutonium_fluoride_ore] = { alpha = 7, beta = 0, gamma = 0 },
-    [c_plutonium_trifluoride] = { alpha = 10, beta = 0, gamma = 0 },
-    [c_plutonium_tetrafluoride] = { alpha = 8, beta = 0, gamma = 0 },
-    [c_plutonium_dioxide] = { alpha = 20, beta = 0, gamma = 0 },
+    [cid("default:c_uranium_tetrachloride_cinnabar")] = {
+        alpha = 1, beta = 0.3, gamma = 0
+    },
+    [cid("default:c_uranium_tetrachloride_azure")] = {
+        alpha = 1, beta = 0.3, gamma = 0
+    },
+    [cid("default:uranium_tetrachloride")] = { alpha = 3, beta = 1, gamma = 0 },
+    [cid("default:uranium")] = { alpha = 5, beta = 3, gamma = 0 },
+    [cid("default:periculum")] = { alpha = 0, beta = 0, gamma = 0.5 },
+    [cid("default:plutonium_trifluoride_cinnabar")] = {
+        alpha = 7, beta = 0, gamma = 0
+    },
+    [cid("default:plutonium_trifluoride_azure")] = {
+        alpha = 7, beta = 0, gamma = 0
+    },
+    [cid("default:plutonium_trifluoride")] = { alpha = 10, beta = 0, gamma = 0 },
+    [cid("default:plutonium_tetrafluoride")] = { alpha = 8, beta = 0, gamma = 0 },
+    [cid("default:plutonium_dioxide")] = { alpha = 20, beta = 0, gamma = 0 },
 }
 
 antiradiation_drugs = {

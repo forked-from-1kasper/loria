@@ -5,7 +5,7 @@ minetest.register_alias("mapgen_sand", "default:lead_sulfate")
 minetest.register_alias("mapgen_water_source", "default:mercury_source")
 minetest.register_alias("mapgen_river_water_source", "default:mercury_source")
 minetest.register_alias("mapgen_lava_source", "default:mercury_source")
-minetest.register_alias("mapgen_gravel", "default:uranium_tetrachloride_ore")
+minetest.register_alias("mapgen_gravel", "default:uranium_tetrachloride_cinnabar")
 
 minetest.register_alias("mapgen_tree", "default:viridi_petasum_stem")
 minetest.register_alias("mapgen_leaves", "default:viridi_petasum_body")

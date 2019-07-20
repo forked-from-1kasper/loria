@@ -33,16 +33,16 @@ minetest.register_tool("default:drill", {
         max_drop_level = 1,
         groupcaps = {
             cracky = {
-                times = { [1] = 2.00, [2] = 1.20, [3] = 0.80 },
-                uses = 80
+                times = { [1] = 2.00, [2] = 0.50, [3] = 0.30 },
+                uses = 500
             },
             choppy = {
                 times = { [1] = 1.00, [2] = 0.50, [3] = 0.20 },
-                uses = 360
+                uses = 560
             },
             crumbly = {
                 times = { [1] = 0.50, [2] = 0.30, [3] = 0.10 },
-                uses = 200
+                uses = 600
             },
             oddly_breakable_by_hand = {
                 times = { [1] = 0.50, [2] = 0.30, [3] = 0.10 }
@@ -277,10 +277,3 @@ bucket.register_liquid(
     "bucket_sulfur_trioxide.png",
     "Bucket with sulfur trioxide"
 )
-
-for _, name in ipairs(ores) do
-    minetest.register_craftitem("default:" .. name .."_ingot", {
-        description = name:gsub("^%l", string.upper) .. " ingot",
-        inventory_image = "default_" .. name .. "_ingot.png",
-    })
-end

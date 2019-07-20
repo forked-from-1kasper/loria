@@ -43,7 +43,7 @@ minetest.register_node("default:ammonium_manganese_pyrophosphate", {
 minetest.register_node("default:cinnabar", {
     description = "Cinnabar (HgS)",
     tiles = { "default_cinnabar.png" },
-    groups = { cracky = 1 },
+    groups = { cracky = 2 },
     drop = 'default:cinnabar'
 })
 
@@ -94,13 +94,6 @@ minetest.register_node("default:mercury_chloride", {
     tiles = { "default_mercury_chloride.png" },
     groups = { crumbly = 3 },
     drop = 'default:mercury_chloride'
-})
-
-minetest.register_node("default:uranium_tetrachloride", {
-    description = "Uranium tetrachloride (UCl4)",
-    tiles = { "default_uranium_tetrachloride.png" },
-    groups = { crumbly = 2 },
-    drop = 'default:uranium_tetrachloride'
 })
 
 minetest.register_node("default:potassium_chloride", {

@@ -4,7 +4,8 @@ gases_list = {
 
 fuel_list = {
     ["default:cinnabar"] = 1,
-    ["default:potassium"] = 3,
+    ["default:potassium"] = 2,
+    ["default:potassium_ore"] = 3,
     ["default:potassium_azure"] = 4,
     ["default:potassium_ingot"] = 5,
     ["default:bucket_trisilane"] = 10,

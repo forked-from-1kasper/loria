@@ -11,7 +11,7 @@ local cable_box = {
 
 function register_cable(conf)
     minetest.register_node("electricity:" .. conf.name .. "_cable", {
-        description = conf.name:gsub("^%l", string.upper) .. " cable",
+        description = capitalization(conf.name) .. " cable",
         drawtype = "nodebox",
         tiles = {
             "electricity_" .. conf.name .. "_cable.png",

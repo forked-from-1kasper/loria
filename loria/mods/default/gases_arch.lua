@@ -96,7 +96,7 @@ function register_gas(gas)
         end
 
         minetest.register_node("default:" .. gas.name .. "_" .. i, {
-            description = gas.name:gsub("^%l", string.upper) .. " gas",
+            description = capitalization(gas.name) .. " gas",
             tiles = tiles,
             drawtype = "glasslike",
             paramtype = "light",
@@ -137,7 +137,7 @@ function register_gas(gas)
     if not gas.no_balloon then
         minetest.register_tool("default:" .. gas.name .. "_balloon", {
             inventory_image = "default_empty_balloon.png^[combine:16x16:0,0=" .. gas.icon,
-            description = gas.name:gsub("^%l", string.upper) .. " balloon",
+            description = capitalization(gas.name) .. " balloon",
             stack_max = 1,
             on_use = function(itemstack, user, pointed_thing)
                 if pointed_thing.type ~= "node" then

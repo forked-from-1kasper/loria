@@ -53,7 +53,7 @@ for i, _ in ipairs(truncus_names) do
     })
 end
 
-for _, name in ipairs(ores) do
+for name, params in pairs(ores) do
     minetest.register_ore({
         ore_type       = "blob",
         ore            = "default:" .. name .. "_azure",
@@ -76,7 +76,7 @@ for _, name in ipairs(ores) do
 
     minetest.register_ore({
         ore_type       = "blob",
-        ore            = "default:" .. name,
+        ore            = "default:" .. name .. "_cinnabar",
         wherein        = "default:cinnabar",
         clust_scarcity = 16 * 16 * 16,
         clust_num_ores = 5,
@@ -88,28 +88,6 @@ for _, name in ipairs(ores) do
             offset = 0.5,
             scale = 0.2,
             spread = { x = 3, y = 3, z = 3 },
-            seed = 17676,
-            octaves = 1,
-            persist = 0.0
-        }
-    })
-end
-
-for _, name in ipairs({ "uranium_tetrachloride_ore", "plutonium_fluoride_ore" }) do
-    minetest.register_ore({
-        ore_type       = "blob",
-        ore            = "default:" .. name,
-        wherein        = "default:cinnabar",
-        clust_scarcity = 32 * 32 * 32,
-        clust_num_ores = 10,
-        clust_size     = 4,
-        y_min          = -60,
-        y_max          = 60,
-        noise_threshold = 0.0,
-        noise_params    = {
-            offset = 0.5,
-            scale = 0.2,
-            spread = { x = 4, y = 4, z = 4 },
             seed = 17676,
             octaves = 1,
             persist = 0.0

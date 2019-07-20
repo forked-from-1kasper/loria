@@ -99,7 +99,7 @@ minetest.register_node("default:viriditas", {
 
 for _, name in ipairs({ "rami", "spears" }) do
     minetest.register_node("default:" .. name, {
-        description = name:gsub("^%l", string.upper),
+        description = capitalization(name),
         drawtype = "plantlike",
         tiles = { "default_" .. name .. ".png" },
         wield_image = "default_" .. name .. ".png",
@@ -199,7 +199,7 @@ small_mushrooms = {
 
 for name, params in pairs(small_mushrooms) do
     local info = {
-        description = name:gsub("^%l", string.upper),
+        description = capitalization(name),
         drawtype = "plantlike",
         tiles = { "default_" .. name .. ".png" },
         wield_image = "default_" .. name .. ".png",
@@ -222,7 +222,7 @@ for name, params in pairs(small_mushrooms) do
 
     minetest.register_node("default:" .. name, info)
     minetest.register_abm({
-        label = name:gsub("^%l", string.upper) .. " spread",
+        label = capitalization(name) .. " spread",
         nodenames = { "default:" .. name },
         interval = 11,
         chance = 150,

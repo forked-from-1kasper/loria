@@ -1,4 +1,10 @@
-ores = { "aluminium", "potassium", "zinc" }
+ores = {
+    ["aluminium"] = { formula = "Al", has_ingot = true },
+    ["potassium"] = { formula = "K", has_ingot = true },
+    ["zinc"] = { formula = "Zn", has_ingot = true },
+    ["uranium_tetrachloride"] = { formula = "UCl4", has_ingot = false },
+    ["plutonium_trifluoride"] = { formula = "PuF3", has_ingot = false },
+}
 giant_mushrooms = { "viridi_petasum", "colossus", "turris", "rete" }
 
 inv_crafts = {
@@ -85,12 +91,35 @@ inv_crafts = {
             { name = "default:lead_box", count = 1 },
         }
     },
-    {
-        input = {
-            { name = "default:aluminium_ingot", count = 1 },
-        },
-        output = {
-            { name = "electricity:aluminium_cable", count = 15 }
-        }
-    },
 }
+
+for name, params in pairs(ores) do
+    if params.has_ingot then
+        table.insert(inv_crafts, {
+            input = {
+                { name = "default:" .. name .. "_ingot", count = 9 }
+            },
+            output = {
+                { name = "default:" .. name, count = 1 }
+            },
+        })
+
+        table.insert(inv_crafts, {
+            input = {
+                { name = "default:" .. name, count = 1 }
+            },
+            output = {
+                { name = "default:" .. name .. "_ingot", count = 9 }
+            },
+        })
+    end
+end
+
+table.insert(inv_crafts, {
+    input = {
+        { name = "default:aluminium_ingot", count = 1 },
+    },
+    output = {
+        { name = "electricity:aluminium_cable", count = 15 }
+    }
+})

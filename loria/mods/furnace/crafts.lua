@@ -36,7 +36,7 @@ furnace_crafts = {
     },
     {
         input = {
-            { name = "default:aluminium", count = 1 }
+            { name = "default:aluminium_ore", count = 1 }
         },
         output = {
             { name = "default:aluminium_ingot", count = 1 },
@@ -137,26 +137,6 @@ furnace_crafts = {
     },
     {
         input = {
-            { name = "default:uranium_tetrachloride_ore", count = 1 }
-        },
-        output = {
-            { name = "default:uranium_tetrachloride", count = 1 },
-            { name = "default:cinnabar", count = 1 },
-        },
-        time = 5,
-    },
-    {
-        input = {
-            { name = "default:plutonium_fluoride_ore", count = 1 }
-        },
-        output = {
-            { name = "default:plutonium_trifluoride", count = 1 },
-            { name = "default:cinnabar", count = 1 },
-        },
-        time = 6,
-    },
-    {
-        input = {
             { name = "default:plutonium_trifluoride", count = 4 },
             { name = "default:oxygen_balloon", count = 1 },
         },
@@ -228,14 +208,20 @@ furnace_crafts = {
     }
 }
 
-for _, name in ipairs(ores) do
+for name, params in pairs(ores) do
+    local output
+    if params.has_ingot then
+        output = { name = "default:" .. name .. "_ingot", count = 1 }
+    else
+        output = { name = "default:" .. name, count = 1 }
+    end
+
     table.insert(furnace_crafts, {
         input = {
-            { name = "default:" .. name, count = 1 }
+            { name = "default:" .. name .. "_cinnabar", count = 1 }
         },
         output = {
-            { name = "default:" .. name .. "_ingot", count = 1 },
-            { name = "default:cinnabar", count = 1 }
+            output, { name = "default:cinnabar", count = 1 }
         },
         time = 3
     })
@@ -244,8 +230,7 @@ for _, name in ipairs(ores) do
             { name = "default:" .. name .. "_azure", count = 1 }
         },
         output = {
-            { name = "default:" .. name .. "_ingot", count = 1 },
-            { name = "default:cobalt_blue", count = 1 }
+            output, { name = "default:cobalt_blue", count = 1 }
         },
         time = 3
     })

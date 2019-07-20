@@ -8,8 +8,8 @@ riteg_box = {
 
 fuel = {
     ["default:plutonium_dioxide"] = 3,
-    ["default:plutonium_tetrafluoride"] = 0.5,
-    ["default:plutonium_trifluoride"] = 0.1,
+    ["default:plutonium_tetrafluoride"] = 0.4,
+    ["default:plutonium_trifluoride"] = 0.3,
     ["default:uranium"] = 0.5,
     ["default:uranium_tetrachloride"] = 0.1,
 }

@@ -1,19 +1,33 @@
-for _, name in ipairs(ores) do
-    minetest.register_node("default:" .. name, {
-        description = name:gsub("^%l", string.upper) .. " (in cinnabar)",
+for name, params in pairs(ores) do
+    minetest.register_node("default:" .. name .. "_cinnabar", {
+        description = capitalization(name) .. " (in cinnabar)",
         tiles = { "default_cinnabar.png" },
-        overlay_tiles = { "default_" .. name .. ".png" },
+        overlay_tiles = { "default_" .. name .. "_ore.png" },
+        groups = { cracky = 2 },
+        drop = "default:" .. name .. "_cinnabar"
+    })
+
+    minetest.register_node("default:" .. name .. "_azure", {
+        description = capitalization(name) .. " (in cobalt blue)",
+        tiles = { "default_cobalt_blue.png" },
+        overlay_tiles = { "default_" .. name .. "_ore.png" },
+        groups = { cracky = 2 },
+        drop = "default:" .. name .. "_azure"
+    })
+
+    minetest.register_node("default:" .. name, {
+        description = capitalization(name) .. " (" .. params.formula .. ")",
+        tiles = { "default_" .. name .. ".png" },
         groups = { cracky = 1 },
         drop = "default:" .. name
     })
 
-    minetest.register_node("default:" .. name .. "_azure", {
-        description = name:gsub("^%l", string.upper) .. " (in cobalt blue)",
-        tiles = { "default_cobalt_blue.png" },
-        overlay_tiles = { "default_" .. name .. ".png" },
-        groups = { cracky = 1 },
-        drop = "default:" .. name .. "_azure"
-    })
+    if params.has_ingot then
+        minetest.register_craftitem("default:" .. name .."_ingot", {
+            description = capitalization(name) .. " ingot",
+            inventory_image = "default_" .. name .. "_ingot.png",
+        })
+    end
 end
 
 minetest.register_node("default:plutonium_dioxide", {
@@ -23,26 +37,11 @@ minetest.register_node("default:plutonium_dioxide", {
     drop = 'default:plutonium_dioxide'
 })
 
-minetest.register_node("default:plutonium_trifluoride", {
-    description = "Plutonium (III) trifluoride (PuF3)",
-    tiles = { "default_plutonium_trifluoride.png" },
-    groups = { cracky = 2 },
-    drop = 'default:plutonium_trifluoride'
-})
-
 minetest.register_node("default:plutonium_tetrafluoride", {
     description = "Plutonium (IV) tetrafluoride (PuF4)",
     tiles = { "default_plutonium_tetrafluoride.png" },
     groups = { cracky = 2 },
     drop = 'default:plutonium_tetrafluoride'
-})
-
-minetest.register_node("default:plutonium_fluoride_ore", {
-    description = "Plutonium (III) fluoride ore",
-    tiles = { "default_cinnabar.png" },
-    overlay_tiles = { "default_plutonium_fluoride_ore.png" },
-    groups = { cracky = 1 },
-    drop = 'default:plutonium_fluoride_ore'
 })
 
 minetest.register_node("default:uranium_tetrachloride_ore", {
