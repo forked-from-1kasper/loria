@@ -41,7 +41,16 @@ liquids = {
         texture = "default_potassium_permanganate.png",
         animated_texture = "default_potassium_permanganate_animated.png",
         animated_flowing_texture = "default_potassium_permanganate_animated.png",
-    }
+    },
+    ["lucidum"] = {
+        liquid_viscosity = 3,
+        post_effect_color = { a = 150, r = 0, g = 128, b = 255 },
+        alpha = 150,
+        light_source = 7,
+        texture = "default_liquid.png^[colorize:#0080ff",
+        animated_texture = "default_liquid_source_animated.png^[colorize:#0080ff",
+        animated_flowing_texture = "default_liquid_flowing_animated.png^[colorize:#0080ff",
+    },
 }
 
 for name, params in pairs(liquids) do
@@ -79,6 +88,7 @@ for name, params in pairs(liquids) do
         is_ground_content = false,
         drop = "",
         drowning = 1,
+        light_source = params.light_source or 0,
         liquidtype = "source",
         liquid_renewable = false,
         liquid_alternative_flowing = "default:" .. name .. "_flowing",
@@ -125,6 +135,7 @@ for name, params in pairs(liquids) do
         is_ground_content = false,
         drop = "",
         drowning = 1,
+        light_source = params.light_source or 0,
         liquidtype = "flowing",
         liquid_renewable = false,
         liquid_alternative_flowing = "default:" .. name .. "_flowing",

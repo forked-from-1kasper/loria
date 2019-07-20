@@ -264,7 +264,8 @@ for name, params in pairs(small_mushrooms) do
             fill_ratio = params.fill_ratio,
             biomes = params.biomes,
             decoration = "default:" .. name,
-            height = 1
+            height = 1,
+            y_min = params.y_min or -20,
         })
     end
 end

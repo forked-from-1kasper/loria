@@ -2,8 +2,8 @@
 ## Inventory
 | Input | Output |
 | ----- | ------ |
-|default:purpura × 3, default:bucket_mercury × 1|default:glow_stick × 1, default:bucket_empty × 1|
-|default:naga × 2, default:bucket_mercury × 1|default:glow_stick × 1, default:bucket_empty × 1|
+|default:purpura × 1, default:bucket_empty × 1|default:bucket_lucidum × 1|
+|default:naga × 1, default:bucket_empty × 2|default:bucket_lucidum × 2|
 |default:potassium_ingot × 2, default:bucket_water × 2, default:empty_balloon × 1|default:bucket_potassium_hydroxide × 2, default:hydrogen_balloon × 2|
 |default:broken_drill × 1, default:battery × 1|default:drill × 1|
 |electricity:aluminium_cable × 10, default:lead_case × 1|electricity:battery_box × 1|
@@ -36,6 +36,7 @@
 |default:lead_oxide × 1, default:hydrogen_balloon × 1, default:bucket_empty × 1|default:lead × 1, default:empty_balloon × 1, default:bucket_water × 1|
 |default:bucket_potassium_permanganate × 2, default:empty_balloon × 1|default:potassium_manganate × 1, default:manganese_dioxide × 1, default:oxygen_balloon × 1, default:bucket_empty × 1|
 |default:manganese_dioxide × 1, default:bucket_empty × 1, default:hydrogen_balloon × 1|default:manganese_oxide × 1, default:bucket_water × 1, default:empty_balloon × 1|
+|default:bucket_lucidum × 1|default:bucket_empty × 1, default:glow_stick × 1|
 |default:aluminium × 1|default:aluminium_ingot × 1, default:cinnabar × 1|
 |default:aluminium_azure × 1|default:aluminium_ingot × 1, default:cobalt_blue × 1|
 |default:potassium × 1|default:potassium_ingot × 1, default:cinnabar × 1|

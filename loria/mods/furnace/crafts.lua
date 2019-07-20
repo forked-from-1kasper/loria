@@ -216,6 +216,16 @@ furnace_crafts = {
         },
         time = 3,
     },
+    {
+        input = {
+            { name = "default:bucket_lucidum", count = 1 },
+        },
+        output = {
+            { name = "default:bucket_empty", count = 1 },
+            { name = "default:glow_stick", count = 1 }
+        },
+        time = 1,
+    }
 }
 
 for _, name in ipairs(ores) do

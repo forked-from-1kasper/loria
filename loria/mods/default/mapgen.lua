@@ -6,7 +6,8 @@ for i, _ in ipairs(pars_names) do
         fill_ratio = 0.1,
         biomes = "default:azure",
         decoration = "default:pars_" .. i,
-        height = 1
+        height = 1,
+        y_min = -20,
     })
 end
 
@@ -18,7 +19,8 @@ for i, _ in ipairs(petite_names) do
         fill_ratio = 0.05,
         biomes = "default:purple_swamp",
         decoration = "default:petite_" .. i,
-        height = 1
+        height = 1,
+        y_min = -20,
     })
 end
 
@@ -31,7 +33,8 @@ for _, name in ipairs({ "rami", "spears" }) do
         biomes = "default:purple_swamp",
         decoration = "default:" .. name,
         height = 1,
-        height_max = 4
+        height_max = 4,
+        y_min = -20,
     })
 end
 
@@ -45,7 +48,8 @@ for i, _ in ipairs(truncus_names) do
         biomes = "default:azure",
         decoration = "default:truncus_" .. i,
         height = 1,
-        height_max = max_truncus_height
+        height_max = max_truncus_height,
+        y_min = -20,
     })
 end
 
@@ -120,8 +124,8 @@ minetest.register_ore({
     clust_scarcity = 8 * 8 * 8,
     clust_num_ores = 8,
     clust_size     = 3,
-    y_min     = -10,
-    y_max     = 80,
+    y_min          = -10,
+    y_max          = 80,
 })
 
 minetest.register_ore({
@@ -131,8 +135,8 @@ minetest.register_ore({
     clust_scarcity = 8 * 8 * 8,
     clust_num_ores = 8,
     clust_size     = 3,
-    y_min     = -10,
-    y_max     = 80,
+    y_min          = -10,
+    y_max          = 80,
 })
 
 minetest.register_decoration({
@@ -142,5 +146,6 @@ minetest.register_decoration({
     fill_ratio = 0.01,
     biomes = "default:mercury_ocean",
     decoration = "default:viriditas",
-    height = 1
+    height = 1,
+    y_min = -20,
 })

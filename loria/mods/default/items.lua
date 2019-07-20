@@ -230,6 +230,14 @@ bucket.register_liquid(
 )
 
 bucket.register_liquid(
+    "default:lucidum_source",
+    "default:lucidum_flowing",
+    "default:bucket_lucidum",
+    "bucket_lucidum.png",
+    "Bucket with lucidum"
+)
+
+bucket.register_liquid(
     "default:potassium_permanganate_source",
     "default:potassium_permanganate_flowing",
     "default:bucket_potassium_permanganate",
