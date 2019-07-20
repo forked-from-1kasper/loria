@@ -126,6 +126,7 @@ local function calculate_player_radiation(player, vm)
     return radiation
 end
 
+local maximum_dose = 5
 local function radiation_effects(player, radiation)
     local meta = player:get_meta()
 
@@ -143,7 +144,7 @@ local function radiation_effects(player, radiation)
 
         local drug_value = antiradiation_drugs[drug_stack:get_name()]
 
-        if drug_value then
+        if drug_value and dose <= maximum_dose then
             meta:set_float("dose_damage_limit", dose_damage_limit + drug_value)
             drug_stack:set_count(drug_stack:get_count() - 1)
             inv:set_stack("antiradiation", 1, drug_stack)

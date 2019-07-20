@@ -46,7 +46,7 @@ liquids = {
         liquid_viscosity = 3,
         post_effect_color = { a = 150, r = 0, g = 128, b = 255 },
         alpha = 150,
-        light_source = 7,
+        light_source = 13,
         texture = "default_liquid.png^[colorize:#0080ff",
         animated_texture = "default_liquid_source_animated.png^[colorize:#0080ff",
         animated_flowing_texture = "default_liquid_flowing_animated.png^[colorize:#0080ff",
