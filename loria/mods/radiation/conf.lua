@@ -1,10 +1,10 @@
 local cid = minetest.get_content_id
 
 activity = {
-    [cid("default:c_uranium_tetrachloride_cinnabar")] = {
+    [cid("default:uranium_tetrachloride_cinnabar")] = {
         alpha = 1, beta = 0.3, gamma = 0
     },
-    [cid("default:c_uranium_tetrachloride_azure")] = {
+    [cid("default:uranium_tetrachloride_azure")] = {
         alpha = 1, beta = 0.3, gamma = 0
     },
     [cid("default:uranium_tetrachloride")] = { alpha = 3, beta = 1, gamma = 0 },

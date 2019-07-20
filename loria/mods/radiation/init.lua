@@ -29,7 +29,7 @@ end
 local function gamma(A, source, pos)
     local dist_sqr = hypot_sqr(source, pos)
     if dist_sqr ~= 0 then
-        return A / hypot_sqr(source, pos)
+        return A / dist_sqr
     else
         return A
     end
@@ -95,15 +95,15 @@ function calculate_radiation(vm, pos)
         local A = activity[cid]
 
         if A then
-            local node = vector.add(area:position(i), vector.new(0, -1/2, 0))
-            radiation = add(radiation, radiation_summary(A, pos, node))
+            local source = vector.add(area:position(i), vector.new(0, -1/2, 0))
+            radiation = add(radiation, radiation_summary(A, pos, source))
         end
 
         if has_inventory[cid] then
-            local node = vector.add(area:position(i), vector.new(0, -1/2, 0))
+            local source = vector.add(area:position(i), vector.new(0, -1/2, 0))
             local inv = minetest.get_meta(node):get_inventory()
             local A = calculate_inventory_radiation(inv)
-            radiation = add(radiation, radiation_summary(A, pos, node))
+            radiation = add(radiation, radiation_summary(A, pos, source))
         end
     end
 

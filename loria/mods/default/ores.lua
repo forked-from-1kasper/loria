@@ -44,14 +44,6 @@ minetest.register_node("default:plutonium_tetrafluoride", {
     drop = 'default:plutonium_tetrafluoride'
 })
 
-minetest.register_node("default:uranium_tetrachloride_ore", {
-    description = "Uranium tetrachloride ore (UCl4)",
-    tiles = { "default_cinnabar.png" },
-    overlay_tiles = { "default_uranium_tetrachloride_ore.png" },
-    groups = { cracky = 1 },
-    drop = 'default:uranium_tetrachloride_ore'
-})
-
 minetest.register_node("default:trisilane_source", {
     description = "Trisilane source",
     drawtype = "liquid",
