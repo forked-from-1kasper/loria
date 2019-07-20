@@ -222,7 +222,7 @@ furnace_crafts = {
         },
         output = {
             { name = "default:bucket_empty", count = 1 },
-            { name = "default:glow_stick", count = 1 }
+            { name = "default:glow_stick", count = 12 }
         },
         time = 1,
     }

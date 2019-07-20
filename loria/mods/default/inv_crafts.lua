@@ -4,7 +4,7 @@ giant_mushrooms = { "viridi_petasum", "colossus", "turris", "rete" }
 inv_crafts = {
     {
         input = {
-            { name = "default:purpura", count = 1 },
+            { name = "default:purpura", count = 15 },
             { name = "default:bucket_empty", count = 1 },
         },
         output = {
@@ -13,11 +13,11 @@ inv_crafts = {
     },
     {
         input = {
-            { name = "default:naga", count = 1 },
-            { name = "default:bucket_empty", count = 2 },
+            { name = "default:naga", count = 20 },
+            { name = "default:bucket_empty", count = 1 },
         },
         output = {
-            { name = "default:bucket_lucidum", count = 2 }
+            { name = "default:bucket_lucidum", count = 1 }
         }
     },
     {
