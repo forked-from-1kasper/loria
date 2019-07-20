@@ -35,20 +35,20 @@
 |default:red_mercury_oxide × 1, default:bucket_potassium_hydroxide × 1, default:zinc_ingot × 1, default:aluminium_case × 1|default:battery × 1, default:bucket_empty × 1|
 |default:bucket_empty × 1, default:mercury × 1|default:bucket_mercury × 1|
 |default:silicon_dioxide × 9|default:fused_quartz × 1|
-|default:plutonium_trifluoride × 4, default:oxygen_balloon × 1|default:plutonium_tetrafluoride × 3, default:plutonium_dioxide × 1|
+|default:plutonium_trifluoride × 4, default:oxygen_balloon × 1|default:plutonium_tetrafluoride × 3, default:plutonium_dioxide × 1, default:empty_balloon × 1|
 |default:lead_sulfate × 1, default:bucket_empty × 1|default:lead_oxide × 1, default:bucket_sulfur_trioxide × 1|
 |default:lead_oxide × 1, default:hydrogen_balloon × 1, default:bucket_empty × 1|default:lead × 1, default:empty_balloon × 1, default:bucket_water × 1|
 |default:bucket_potassium_permanganate × 2, default:empty_balloon × 1|default:potassium_manganate × 1, default:manganese_dioxide × 1, default:oxygen_balloon × 1, default:bucket_empty × 1|
 |default:manganese_dioxide × 1, default:bucket_empty × 1, default:hydrogen_balloon × 1|default:manganese_oxide × 1, default:bucket_water × 1, default:empty_balloon × 1|
 |default:bucket_lucidum × 1|default:bucket_empty × 1, default:glow_stick × 12|
-|default:plutonium_trifluoride_cinnabar × 1|default:plutonium_trifluoride × 1, default:cinnabar × 1|
-|default:plutonium_trifluoride_azure × 1|default:plutonium_trifluoride × 1, default:cobalt_blue × 1|
 |default:aluminium_cinnabar × 1|default:aluminium_ingot × 1, default:cinnabar × 1|
 |default:aluminium_azure × 1|default:aluminium_ingot × 1, default:cobalt_blue × 1|
 |default:potassium_cinnabar × 1|default:potassium_ingot × 1, default:cinnabar × 1|
 |default:potassium_azure × 1|default:potassium_ingot × 1, default:cobalt_blue × 1|
 |default:zinc_cinnabar × 1|default:zinc_ingot × 1, default:cinnabar × 1|
 |default:zinc_azure × 1|default:zinc_ingot × 1, default:cobalt_blue × 1|
+|default:plutonium_trifluoride_cinnabar × 1|default:plutonium_trifluoride × 1, default:cinnabar × 1|
+|default:plutonium_trifluoride_azure × 1|default:plutonium_trifluoride × 1, default:cobalt_blue × 1|
 |default:uranium_tetrachloride_cinnabar × 1|default:uranium_tetrachloride × 1, default:cinnabar × 1|
 |default:uranium_tetrachloride_azure × 1|default:uranium_tetrachloride × 1, default:cobalt_blue × 1|
 |default:viridi_petasum_body × 3|default:silicon_dioxide × 1|

@@ -143,6 +143,7 @@ furnace_crafts = {
         output = {
             { name = "default:plutonium_tetrafluoride", count = 3 },
             { name = "default:plutonium_dioxide", count = 1 },
+            { name = "default:empty_balloon", count = 1 },
         },
         time = 3,
     },
