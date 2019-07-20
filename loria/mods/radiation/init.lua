@@ -100,10 +100,13 @@ function calculate_radiation(vm, pos)
         end
 
         if has_inventory[cid] then
-            local source = vector.add(area:position(i), vector.new(0, -1/2, 0))
-            local inv = minetest.get_meta(node):get_inventory()
+            local source = area:position(i)
+            local inv = minetest.get_meta(source):get_inventory()
             local A = calculate_inventory_radiation(inv)
-            radiation = add(radiation, radiation_summary(A, pos, source))
+            radiation = add(
+                radiation,
+                radiation_summary(A, pos, vector.add(source, vector.new(0, -1/2, 0)))
+            )
         end
     end
 
