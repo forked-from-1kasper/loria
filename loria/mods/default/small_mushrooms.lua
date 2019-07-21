@@ -242,15 +242,15 @@ for name, params in pairs(small_mushrooms) do
 
             local optimal_light = params.optimal_light or 7
 
-            local optimal_radiation = params.optimal_radiation or 0.01
-            local max_radiation = params.max_radiation or 5.00
+            local optimal_radiation = params.optimal_radiation or 0.1
+            local max_radiation = params.max_radiation or 2.00
 
             local radiation = total(calculate_radiation(minetest.get_voxel_manip(), pos))
 
             if radiation > max_radiation then
                 minetest.set_node(pos, { name = "air" })
             elseif minetest.get_node_light(pos) <= optimal_light and
-               radiation <= optimal_radiation then
+               radiation >= optimal_radiation then
                 minetest.set_node(pos2, { name = "default:" .. name })
             end
         end

@@ -19,6 +19,13 @@ minetest.register_node("default:potassium_manganate", {
     drop = 'default:potassium_manganate'
 })
 
+minetest.register_node("default:aluminium_oxide", {
+    description = "Aluminium (III) oxide (Al2O3)",
+    tiles = { "default_aluminium_oxide.png" },
+    groups = { crumbly = 3 },
+    drop = 'default:aluminium_oxide'
+})
+
 minetest.register_node("default:manganese_dioxide", {
     description = "Manganese dioxide (MnO2)",
     tiles = { "default_manganese_dioxide.png" },
@@ -81,6 +88,24 @@ minetest.register_node("default:lead", {
     groups = { cracky = 1 },
     drop = 'default:lead'
 })
+
+minetest.register_node("default:brick", {
+    description = "Brick",
+    tiles = { "default_brick.png" },
+    groups = { cracky = 2 },
+    drop = 'default:brick'
+})
+
+for name, _ in pairs(brickable) do
+    local source = minetest.registered_nodes[name]
+    minetest.register_node(name .. "_brick", {
+        description = source.description .. " brick",
+        tiles = source.tiles,
+        overlay_tiles = { "default_brick_mask.png" },
+        groups = { cracky = 3 },
+        drop = name .. "_brick",
+    })
+end
 
 minetest.register_node("default:lead_case", {
     description = "Lead case",
@@ -206,7 +231,7 @@ minetest.register_node("default:lead_box", {
     tiles = {
         "default_lead_box_top.png", "default_lead_box_bottom.png",
         "default_lead_box_side.png", "default_lead_box_side.png",
-        "default_lead_box_side.png", "default_lead_box_side.png"
+        "default_lead_box_side.png", "default_lead_box_front.png"
     },
 
     on_destruct = drop_everything,

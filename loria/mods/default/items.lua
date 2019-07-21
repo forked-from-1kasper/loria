@@ -85,10 +85,86 @@ minetest.register_craftitem("default:super_drill", {
     }
 })
 
+minetest.register_tool("default:copper_hammer", {
+    inventory_image = "default_copper_hammer.png",
+    description = "Copper hammer",
+    stack_max = 1,
+    liquids_pointable = false,
+    range = 2.0,
+    damage_groups = { fleshy = 1 },
+    tool_capabilities = {
+        full_punch_interval = 1.0,
+        max_drop_level = 1,
+        groupcaps = {
+            cracky = {
+                times = { [1] = 5, [2] = 0.9, [3] = 0.3 },
+                uses = 10
+            },
+            crumbly = {
+                times = { [1] = 7, [2] = 5, [3] = 2 },
+                uses = 100
+            }
+        },
+        damage_groups = { fleshy = 2 }
+    },
+    after_use = function(itemstack, user, node, digparams)
+        if itemstack:get_wear() + digparams.wear >= 65535 then
+            return { name = "default:stick", count = 1 }
+        else
+            itemstack:add_wear(digparams.wear)
+            return itemstack
+        end
+    end
+})
+
+minetest.register_tool("default:copper_hammer_head", {
+    inventory_image = "default_copper_hammer_head.png",
+    description = "Copper hammer head",
+    stack_max = 1,
+    liquids_pointable = false,
+    range = 1.0,
+    damage_groups = { fleshy = 2 },
+    tool_capabilities = {
+        full_punch_interval = 1.0,
+        max_drop_level = 1,
+        groupcaps = {
+            cracky = {
+                times = { [1] = 6, [2] = 1.2, [3] = 0.5 },
+                uses = 9
+            },
+            crumbly = {
+                times = { [1] = 15, [2] = 10, [3] = 4 },
+                uses = 90
+            }
+        },
+        damage_groups = { fleshy = 2 }
+    },
+    after_use = function(itemstack, user, node, digparams)
+        if itemstack:get_wear() + digparams.wear >= 65535 then
+            return
+        else
+            itemstack:add_wear(digparams.wear)
+            return itemstack
+        end
+    end
+})
+
 minetest.register_tool("default:battery", {
     inventory_image = "default_battery.png",
     description = "Battery",
     groups = { item_source = 5 },
+})
+
+minetest.register_craftitem("default:stick", {
+    inventory_image = "default_stick.png",
+    description = "Stick",
+    stack_max = 120,
+})
+
+minetest.register_craftitem("default:aluminium_brick_mold", {
+    inventory_image = "default_aluminium_brick_mold.png",
+    description = "Aluminium brick mold",
+    stack_max = 9,
 })
 
 minetest.register_craftitem("default:aluminium_case", {

@@ -8,6 +8,7 @@ activity = {
         alpha = 1, beta = 0.3, gamma = 0
     },
     [cid("default:uranium_tetrachloride")] = { alpha = 3, beta = 1, gamma = 0 },
+    [cid("default:uranium_tetrachloride_brick")] = { alpha = 2, beta = 1, gamma = 0 },
     [cid("default:uranium")] = { alpha = 5, beta = 3, gamma = 0 },
     [cid("default:periculum")] = { alpha = 0, beta = 0, gamma = 0.5 },
     [cid("default:plutonium_trifluoride_cinnabar")] = {
@@ -19,6 +20,7 @@ activity = {
     [cid("default:plutonium_trifluoride")] = { alpha = 10, beta = 0, gamma = 0 },
     [cid("default:plutonium_tetrafluoride")] = { alpha = 8, beta = 0, gamma = 0 },
     [cid("default:plutonium_dioxide")] = { alpha = 20, beta = 0, gamma = 0 },
+    [cid("default:plutonium_dioxide_brick")] = { alpha = 13, beta = 0, gamma = 0 },
 }
 
 antiradiation_drugs = {

@@ -2,10 +2,19 @@ ores = {
     ["aluminium"] = { formula = "Al", has_ingot = true },
     ["potassium"] = { formula = "K", has_ingot = true },
     ["zinc"] = { formula = "Zn", has_ingot = true },
+    ["copper"] = { formula = "Cu", has_ingot = true },
     ["uranium_tetrachloride"] = { formula = "UCl4", has_ingot = false },
     ["plutonium_trifluoride"] = { formula = "PuF3", has_ingot = false },
 }
+
 giant_mushrooms = { "viridi_petasum", "colossus", "turris", "rete" }
+
+brickable = {
+    ["default:cinnabar"] = { crumbly = true },
+    ["default:plutonium_dioxide"] = { crumbly = false },
+    ["default:uranium_tetrachloride"] = { crumbly = true },
+    ["default:ammonium_manganese_pyrophosphate"] = { crumbly = true },
+}
 
 inv_crafts = {
     {
@@ -91,29 +100,16 @@ inv_crafts = {
             { name = "default:lead_box", count = 1 },
         }
     },
+    {
+        input = {
+            { name = "default:stick", count = 1 },
+            { name = "default:copper_hammer_head", count = 1 },
+        },
+        output = {
+            { name = "default:copper_hammer", count = 1 },
+        }
+    },
 }
-
-for name, params in pairs(ores) do
-    if params.has_ingot then
-        table.insert(inv_crafts, {
-            input = {
-                { name = "default:" .. name .. "_ingot", count = 9 }
-            },
-            output = {
-                { name = "default:" .. name, count = 1 }
-            },
-        })
-
-        table.insert(inv_crafts, {
-            input = {
-                { name = "default:" .. name, count = 1 }
-            },
-            output = {
-                { name = "default:" .. name .. "_ingot", count = 9 }
-            },
-        })
-    end
-end
 
 table.insert(inv_crafts, {
     input = {
@@ -123,3 +119,31 @@ table.insert(inv_crafts, {
         { name = "electricity:aluminium_cable", count = 15 }
     }
 })
+
+for _, mushroom in ipairs(giant_mushrooms) do
+    table.insert(inv_crafts, {
+        input = {
+            { name = "default:" .. mushroom .. "_stem", count = 1 }
+        },
+        output = {
+            { name = "default:stick", count = 6 }
+        },
+    })
+end
+
+for name, params in pairs(brickable) do
+    if params.crumbly then
+        table.insert(inv_crafts, {
+            input = {
+                { name = "default:aluminium_brick_mold", count = 5 },
+                { name = "default:copper_hammer", count = 1 },
+                { name = name, count = 1 },
+            },
+            output = {
+                { name = "default:aluminium_brick_mold", count = 5 },
+                { name = "default:copper_hammer", count = 1 },
+                { name = name .. "_brick", count = 1 },
+            }
+        })
+    end
+end

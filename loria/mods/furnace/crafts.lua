@@ -83,6 +83,24 @@ furnace_crafts = {
     },
     {
         input = {
+            { name = "default:aluminium_ingot", count = 2 }
+        },
+        output = {
+            { name = "default:aluminium_brick_mold", count = 1 }
+        },
+        time = 3
+    },
+    {
+        input = {
+            { name = "default:copper_ingot", count = 3 }
+        },
+        output = {
+            { name = "default:copper_hammer_head", count = 1 }
+        },
+        time = 3
+    },
+    {
+        input = {
             { name = "default:aluminium_ingot", count = 1 }
         },
         output = {
@@ -206,6 +224,29 @@ furnace_crafts = {
             { name = "default:glow_stick", count = 12 }
         },
         time = 1,
+    },
+    {
+        input = {
+            { name = "default:aluminium", count = 4 },
+            { name = "default:oxygen_balloon", count = 1 },
+        },
+        output = {
+            { name = "default:aluminium_oxide", count = 2 },
+            { name = "default:empty_balloon", count = 1 },
+        },
+        time = 3,
+    },
+    {
+        input = {
+            { name = "default:aluminium_oxide", count = 4 },
+            { name = "default:silicon_dioxide", count = 4 },
+            { name = "default:bucket_water", count = 1 },
+        },
+        output = {
+            { name = "default:brick", count = 4 },
+            { name = "default:bucket_empty", count = 1 },
+        },
+        time = 2,
     }
 }
 
@@ -235,6 +276,28 @@ for name, params in pairs(ores) do
         },
         time = 3
     })
+
+    if params.has_ingot then
+        table.insert(inv_crafts, {
+            input = {
+                { name = "default:" .. name .. "_ingot", count = 9 }
+            },
+            output = {
+                { name = "default:" .. name, count = 1 }
+            },
+            time = 4,
+        })
+
+        table.insert(inv_crafts, {
+            input = {
+                { name = "default:" .. name, count = 1 }
+            },
+            output = {
+                { name = "default:" .. name .. "_ingot", count = 9 }
+            },
+            time = 4,
+        })
+    end
 end
 
 for _, mushroom in ipairs(giant_mushrooms) do
@@ -257,4 +320,18 @@ for _, mushroom in ipairs(giant_mushrooms) do
         },
         time = 8
     })
+end
+
+for name, params in pairs(brickable) do
+    if not params.crumbly then
+        table.insert(furnace_crafts, {
+            input = {
+                { name = name, count = 1 },
+            },
+            output = {
+                { name = name .. "_brick", count = 2 },
+            },
+            time = 3,
+        })
+    end
 end
