@@ -19,6 +19,16 @@ brickable = {
 inv_crafts = {
     {
         input = {
+            { name = "default:lead", count = 1 },
+            { name = "default:copper_sulfate", count = 1 }
+        },
+        output = {
+            { name = "default:copper", count = 1 },
+            { name = "default:lead_sulfate", count = 1 },
+        }
+    },
+    {
+        input = {
             { name = "default:purpura", count = 15 },
             { name = "default:bucket_empty", count = 1 },
         },

@@ -70,7 +70,6 @@ local function process_gas(gas, pos, node)
 end
 
 gas_levels = 128
-gas_timer = 1
 gas_vect = vector.new(16, 16, 16)
 function register_gas(gas)
     table.insert(gas_table, gas.name)
@@ -98,7 +97,7 @@ function register_gas(gas)
         minetest.register_node("default:" .. gas.name .. "_" .. i, {
             description = capitalization(gas.name) .. " gas",
             tiles = tiles,
-            drawtype = "glasslike",
+            drawtype = "allfaces",
             paramtype = "light",
             paramtype2 = "glasslikeliquidlevel",
             damage_per_second = gas.damage,

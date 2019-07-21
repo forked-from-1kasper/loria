@@ -179,9 +179,13 @@ evaporates = {
 }
 
 for _, name in ipairs(evaporates) do
-    fire.reactions[name] = {
-        result = "air"
-    }
+    fire.reactions[name] = { result = "air" }
+end
+
+for name, _ in pairs(ores) do
+    fire.reactions["default:" .. name] = { result = "air" }
+    fire.reactions["default:" .. name .. "_cinnabar"] = { result = "air" }
+    fire.reactions["default:" .. name .. "_azure"] = { result = "air" }
 end
 
 gases = { chlorine, oxygen, hydrogen, sulfur_dioxide, fluorine, fire }

@@ -2,6 +2,7 @@
 ## Inventory
 | Input | Output |
 | ----- | ------ |
+|default:lead × 1, default:copper_sulfate × 1|default:copper × 1, default:lead_sulfate × 1|
 |default:purpura × 15, default:bucket_empty × 1|default:bucket_lucidum × 1|
 |default:naga × 20, default:bucket_empty × 1|default:bucket_lucidum × 1|
 |default:potassium_ingot × 2, default:bucket_water × 2, default:empty_balloon × 1|default:bucket_potassium_hydroxide × 2, default:hydrogen_balloon × 2|
@@ -17,9 +18,9 @@
 |default:colossus_stem × 1|default:stick × 6|
 |default:turris_stem × 1|default:stick × 6|
 |default:rete_stem × 1|default:stick × 6|
-|default:aluminium_brick_mold × 5, default:copper_hammer × 1, default:uranium_tetrachloride × 1|default:aluminium_brick_mold × 5, default:copper_hammer × 1, default:uranium_tetrachloride_brick × 1|
-|default:aluminium_brick_mold × 5, default:copper_hammer × 1, default:cinnabar × 1|default:aluminium_brick_mold × 5, default:copper_hammer × 1, default:cinnabar_brick × 1|
 |default:aluminium_brick_mold × 5, default:copper_hammer × 1, default:ammonium_manganese_pyrophosphate × 1|default:aluminium_brick_mold × 5, default:copper_hammer × 1, default:ammonium_manganese_pyrophosphate_brick × 1|
+|default:aluminium_brick_mold × 5, default:copper_hammer × 1, default:cinnabar × 1|default:aluminium_brick_mold × 5, default:copper_hammer × 1, default:cinnabar_brick × 1|
+|default:aluminium_brick_mold × 5, default:copper_hammer × 1, default:uranium_tetrachloride × 1|default:aluminium_brick_mold × 5, default:copper_hammer × 1, default:uranium_tetrachloride_brick × 1|
 |default:aluminium_ingot × 9|default:aluminium × 1|
 |default:aluminium × 1|default:aluminium_ingot × 9|
 |default:potassium_ingot × 9|default:potassium × 1|
@@ -55,12 +56,12 @@
 |default:bucket_lucidum × 1|default:bucket_empty × 1, default:glow_stick × 12|
 |default:aluminium × 4, default:oxygen_balloon × 1|default:aluminium_oxide × 2, default:empty_balloon × 1|
 |default:aluminium_oxide × 4, default:silicon_dioxide × 4, default:bucket_water × 1|default:brick × 4, default:bucket_empty × 1|
+|default:uranium_tetrachloride_cinnabar × 1|default:uranium_tetrachloride × 1, default:cinnabar × 1|
+|default:uranium_tetrachloride_azure × 1|default:uranium_tetrachloride × 1, default:cobalt_blue × 1|
 |default:aluminium_cinnabar × 1|default:aluminium_ingot × 1, default:cinnabar × 1|
 |default:aluminium_azure × 1|default:aluminium_ingot × 1, default:cobalt_blue × 1|
 |default:potassium_cinnabar × 1|default:potassium_ingot × 1, default:cinnabar × 1|
 |default:potassium_azure × 1|default:potassium_ingot × 1, default:cobalt_blue × 1|
-|default:uranium_tetrachloride_cinnabar × 1|default:uranium_tetrachloride × 1, default:cinnabar × 1|
-|default:uranium_tetrachloride_azure × 1|default:uranium_tetrachloride × 1, default:cobalt_blue × 1|
 |default:plutonium_trifluoride_cinnabar × 1|default:plutonium_trifluoride × 1, default:cinnabar × 1|
 |default:plutonium_trifluoride_azure × 1|default:plutonium_trifluoride × 1, default:cobalt_blue × 1|
 |default:copper_cinnabar × 1|default:copper_ingot × 1, default:cinnabar × 1|
