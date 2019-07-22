@@ -28,7 +28,7 @@ liquids = {
     ["mercury"] = {
         damage_per_second = 2,
         liquid_viscosity = 7,
-        post_effect_color = { a = 200, r = 150, g = 150, b = 150 },
+        post_effect_color = { a = 252, r = 150, g = 150, b = 150 },
         alpha = 255,
         texture = "default_mercury.png",
         animated_texture = "default_mercury_animated.png",
