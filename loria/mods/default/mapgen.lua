@@ -61,8 +61,8 @@ for name, params in pairs(ores) do
         clust_scarcity = 16 * 16 * 16,
         clust_num_ores = 5,
         clust_size     = 3,
-        y_min          = -60,
-        y_max          = 60,
+        y_min          = params.y_min or -60,
+        y_max          = params.y_max or 60,
         noise_threshold = 0.0,
         noise_params    = {
             offset = 0.5,
@@ -81,8 +81,8 @@ for name, params in pairs(ores) do
         clust_scarcity = 16 * 16 * 16,
         clust_num_ores = 5,
         clust_size     = 3,
-        y_min          = -60,
-        y_max          = 60,
+        y_min          = params.y_min or -60,
+        y_max          = params.y_max or 60,
         noise_threshold = 0.0,
         noise_params    = {
             offset = 0.5,

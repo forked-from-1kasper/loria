@@ -100,8 +100,9 @@ for name, _ in pairs(brickable) do
     local source = minetest.registered_nodes[name]
     minetest.register_node(name .. "_brick", {
         description = source.description .. " brick",
-        tiles = source.tiles,
-        overlay_tiles = { "default_brick_mask.png" },
+        tiles = map(function(tile)
+            return tile .. "^default_brick_mask.png"
+        end, source.tiles),
         groups = { cracky = 3 },
         drop = name .. "_brick",
     })

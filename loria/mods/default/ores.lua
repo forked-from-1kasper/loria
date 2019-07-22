@@ -1,16 +1,14 @@
 for name, params in pairs(ores) do
     minetest.register_node("default:" .. name .. "_cinnabar", {
         description = capitalization(name) .. " (in cinnabar)",
-        tiles = { "default_cinnabar.png" },
-        overlay_tiles = { "default_" .. name .. "_ore.png" },
+        tiles = { "default_cinnabar.png^default_" .. name .. "_ore.png" },
         groups = { cracky = 2 },
         drop = "default:" .. name .. "_cinnabar"
     })
 
     minetest.register_node("default:" .. name .. "_azure", {
         description = capitalization(name) .. " (in cobalt blue)",
-        tiles = { "default_cobalt_blue.png" },
-        overlay_tiles = { "default_" .. name .. "_ore.png" },
+        tiles = { "default_cobalt_blue.png^default_" .. name .. "_ore.png" },
         groups = { cracky = 2 },
         drop = "default:" .. name .. "_azure"
     })
@@ -134,8 +132,7 @@ minetest.register_node("default:trisilane_flowing", {
 
 minetest.register_node("default:trisilane_cinnabar", {
     description = "Trisilane (in cinnabar)",
-    tiles = { "default_cinnabar.png" },
-    overlay_tiles = { "default_trisilane_ore.png" },
+    tiles = { "default_cinnabar.png^default_trisilane_ore.png" },
     groups = { cracky = 1 },
     drop = {},
     after_destruct = function(pos, oldnode)
@@ -145,8 +142,7 @@ minetest.register_node("default:trisilane_cinnabar", {
 
 minetest.register_node("default:trisilane_cobalt_blue", {
     description = "Trisilane (in cobalt blue)",
-    tiles = { "default_cobalt_blue.png" },
-    overlay_tiles = { "default_trisilane_ore.png" },
+    tiles = { "default_cobalt_blue.png^default_trisilane_ore.png" },
     groups = { cracky = 1 },
     drop = {},
     after_destruct = function(pos, oldnode)
