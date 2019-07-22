@@ -96,18 +96,6 @@ minetest.register_node("default:brick", {
     drop = 'default:brick'
 })
 
-for name, _ in pairs(brickable) do
-    local source = minetest.registered_nodes[name]
-    minetest.register_node(name .. "_brick", {
-        description = source.description .. " brick",
-        tiles = map(function(tile)
-            return tile .. "^default_brick_mask.png"
-        end, source.tiles),
-        groups = { cracky = 3 },
-        drop = name .. "_brick",
-    })
-end
-
 minetest.register_node("default:lead_case", {
     description = "Lead case",
     tiles = { "default_lead_case.png" },
@@ -249,3 +237,15 @@ minetest.register_node("default:lead_box", {
     paramtype2 = "facedir",
     groups = { cracky = 2 },
 })
+
+for name, _ in pairs(brickable) do
+    local source = minetest.registered_nodes[name]
+    minetest.register_node(name .. "_brick", {
+        description = source.description .. " brick",
+        tiles = map(function(tile)
+            return tile .. "^default_brick_mask.png"
+        end, source.tiles),
+        groups = { cracky = 3 },
+        drop = name .. "_brick",
+    })
+end

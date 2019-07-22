@@ -14,6 +14,9 @@ brickable = {
     ["default:plutonium_dioxide"] = { crumbly = false },
     ["default:uranium_tetrachloride"] = { crumbly = true },
     ["default:ammonium_manganese_pyrophosphate"] = { crumbly = true },
+    ["default:mercury_oxide"] = { crumbly = true },
+    ["default:red_mercury_oxide"] = { crumbly = true },
+    ["default:lead_sulfate"] = { crumbly = true },
 }
 
 inv_crafts = {
