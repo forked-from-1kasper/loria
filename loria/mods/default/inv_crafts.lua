@@ -29,7 +29,7 @@ ores = {
     },
     ["americium_trifluoride"] = { -- 243
         formula = "AmF3", has_ingot = false, y_min = -200,
-        azure = false, cinnabar = true, light_source = 3,
+        azure = false, cinnabar = true, light_source = 10,
     },
 }
 
@@ -146,6 +146,42 @@ inv_crafts = {
         },
         output = {
             { name = "default:copper_hammer", count = 1 },
+        }
+    },
+    {
+        input = {
+            { name = "default:zinc", count = 1 },
+            { name = "default:bucket_hydrochloric_acid", count = 2 },
+            { name = "default:empty_balloon", count = 1 },
+        },
+        output = {
+            { name = "default:zinc_chloride", count = 1 },
+            { name = "default:bucket_empty", count = 2 },
+            { name = "default:hydrogen_balloon", count = 1 },
+        }
+    },
+    {
+        input = {
+            { name = "default:aluminium", count = 1 },
+            { name = "default:bucket_hydrochloric_acid", count = 3 },
+            { name = "default:empty_balloon", count = 1 },
+        },
+        output = {
+            { name = "default:aluminium_chloride", count = 1 },
+            { name = "default:bucket_empty", count = 3 },
+            { name = "default:hydrogen_balloon", count = 1 },
+        }
+    },
+    {
+        input = {
+            { name = "default:potassium", count = 2 },
+            { name = "default:bucket_hydrochloric_acid", count = 2 },
+            { name = "default:empty_balloon", count = 1 },
+        },
+        output = {
+            { name = "default:potassium_chloride", count = 2 },
+            { name = "default:bucket_empty", count = 2 },
+            { name = "default:hydrogen_balloon", count = 1 },
         }
     },
 }

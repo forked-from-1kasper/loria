@@ -43,7 +43,7 @@ minetest.register_node("default:manganese_oxide", {
 minetest.register_node("default:ammonium_manganese_pyrophosphate", {
     description = "Ammonium manganese (III) pyrophosphate",
     tiles = { "default_ammonium_manganese_pyrophosphate.png" },
-    groups = { crumbly = 3 },
+    groups = { crumbly = 2 },
     drop = 'default:ammonium_manganese_pyrophosphate'
 })
 
@@ -108,6 +108,20 @@ minetest.register_node("default:mercury_chloride", {
     tiles = { "default_mercury_chloride.png" },
     groups = { crumbly = 3 },
     drop = 'default:mercury_chloride'
+})
+
+minetest.register_node("default:zinc_chloride", {
+    description = "Zinc chloride (ZnCl2)",
+    tiles = { "default_zinc_chloride.png" },
+    groups = { crumbly = 3 },
+    drop = 'default:zinc_chloride'
+})
+
+minetest.register_node("default:aluminium_chloride", {
+    description = "Aluminium chloride (AlCl3)",
+    tiles = { "default_aluminium_chloride.png" },
+    groups = { crumbly = 3 },
+    drop = 'default:aluminium_chloride'
 })
 
 minetest.register_node("default:potassium_chloride", {

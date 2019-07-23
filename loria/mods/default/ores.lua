@@ -47,110 +47,56 @@ minetest.register_node("default:plutonium_tetrafluoride", {
     drop = 'default:plutonium_tetrafluoride'
 })
 
-minetest.register_node("default:trisilane_source", {
-    description = "Trisilane source",
-    drawtype = "liquid",
-    tiles = {
-        {
-            name = "default_liquid_source_animated.png",
-            backface_culling = false,
-            animation = {
-                type = "vertical_frames",
-                aspect_w = 16,
-                aspect_h = 16,
-                length = 2.0,
-            },
-        },
-        {
-            name = "default_liquid_source_animated.png",
-            backface_culling = true,
-            animation = {
-                type = "vertical_frames",
-                aspect_w = 16,
-                aspect_h = 16,
-                length = 2.0,
-            },
-        },
+liquid_ores = {
+    ["trisilane"] = {
+        liquid = "default:trisilane_source",
     },
-    alpha = 70,
-    paramtype = "light",
-    walkable = false,
-    pointable = false,
-    diggable = false,
-    buildable_to = true,
-    is_ground_content = false,
-    drop = "",
-    drowning = 1,
-    liquidtype = "source",
-    liquid_renewable = false,
-    liquid_alternative_flowing = "default:trisilane_flowing",
-    liquid_alternative_source = "default:trisilane_source",
-    liquid_viscosity = 1,
-    post_effect_color = { a = 70, r = 255, g = 255, b = 255 },
-    groups = { water = 3, liquid = 3, not_in_creative_inventory = 1 },
-})
+    ["hydrochloric_acid"] = {
+        liquid = "default:hydrochloric_acid_source",
+        y_min = -150, y_max = 50,
+    }
+}
 
-minetest.register_node("default:trisilane_flowing", {
-    description = "Flowing trisilane",
-    drawtype = "flowingliquid",
-    tiles = {"default_liquid.png"},
-    special_tiles = {
-        {
-            name = "default_liquid_flowing_animated.png",
-            backface_culling = false,
-            animation = {
-                type = "vertical_frames",
-                aspect_w = 16,
-                aspect_h = 16,
-                length = 0.8,
-            },
-        },
-        {
-            name = "default_liquid_flowing_animated.png",
-            backface_culling = true,
-            animation = {
-                type = "vertical_frames",
-                aspect_w = 16,
-                aspect_h = 16,
-                length = 0.8,
-            },
-        },
-    },
-    alpha = 70,
-    paramtype = "light",
-    paramtype2 = "flowingliquid",
-    walkable = false,
-    pointable = false,
-    diggable = false,
-    buildable_to = true,
-    is_ground_content = false,
-    drop = "",
-    drowning = 1,
-    liquidtype = "flowing",
-    liquid_renewable = false,
-    liquid_alternative_flowing = "default:trisilane_flowing",
-    liquid_alternative_source = "default:trisilane_source",
-    liquid_viscosity = 1,
-    post_effect_color = { a = 70, r = 255, g = 255, b = 255 },
-    groups = { water = 3, liquid = 3, not_in_creative_inventory = 1 },
-})
+for name, params in pairs(liquid_ores) do
+    minetest.register_node("default:" .. name .. "_cinnabar", {
+        description = capitalization(name) .. " (in cinnabar)",
+        tiles = { "default_cinnabar.png^default_" .. name .. "_ore.png" },
+        groups = { cracky = 1 },
+        drop = {},
+        after_destruct = function(pos, oldnode)
+            minetest.set_node(pos, { name = params.liquid })
+        end
+    })
 
-minetest.register_node("default:trisilane_cinnabar", {
-    description = "Trisilane (in cinnabar)",
-    tiles = { "default_cinnabar.png^default_trisilane_ore.png" },
-    groups = { cracky = 1 },
-    drop = {},
-    after_destruct = function(pos, oldnode)
-        minetest.set_node(pos, { name = "default:trisilane_source" })
-    end
-})
+    minetest.register_node("default:" .. name .. "_cobalt_blue", {
+        description = capitalization(name) .. " (in cobalt blue)",
+        tiles = { "default_cobalt_blue.png^default_" .. name .. "_ore.png" },
+        groups = { cracky = 1 },
+        drop = {},
+        after_destruct = function(pos, oldnode)
+            minetest.set_node(pos, { name = params.liquid })
+        end
+    })
 
-minetest.register_node("default:trisilane_cobalt_blue", {
-    description = "Trisilane (in cobalt blue)",
-    tiles = { "default_cobalt_blue.png^default_trisilane_ore.png" },
-    groups = { cracky = 1 },
-    drop = {},
-    after_destruct = function(pos, oldnode)
-        minetest.set_node(pos, { name = "default:trisilane_source" })
-    end
-})
+    minetest.register_ore({
+        ore_type       = "scatter",
+        ore            = "default:" .. name .. "_cinnabar",
+        wherein        = "default:cinnabar",
+        clust_scarcity = 8 * 8 * 8,
+        clust_num_ores = 8,
+        clust_size     = 3,
+        y_min          = params.y_min or -10,
+        y_max          = params.y_max or 80,
+    })
+    
+    minetest.register_ore({
+        ore_type       = "scatter",
+        ore            = "default:" .. name .. "_cobalt_blue",
+        wherein        = "default:cobalt_blue",
+        clust_scarcity = 8 * 8 * 8,
+        clust_num_ores = 8,
+        clust_size     = 3,
+        y_min          = params.y_min or -10,
+        y_max          = params.y_max or 80,
+    })
+end

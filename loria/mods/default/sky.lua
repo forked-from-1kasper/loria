@@ -2,16 +2,12 @@ local default_color = { r = 140, g = 186, b = 250 }
 local night_color = { r = 0, g = 0, b = 16 }
 
 local colors = {
-    [minetest.get_biome_id("default:redland")] = {r = 255, g = 200, b = 150 },
+    [minetest.get_biome_id("default:redland")] = { r = 255, g = 200, b = 150 },
     [minetest.get_biome_id("default:purple_swamp")] = { r = 190, g = 105, b = 255 },
 }
 
 local sunrise = { start = 4500/24000, finish = 5751/24000 }
 local sunset = { start = 18600/24000, finish = 19502/24000 }
-
-local function animation_curve(x)
-    return math.sin(x) + (1 - math.sin(1))
-end
 
 local function brightness(color, x)
     return {
@@ -54,6 +50,8 @@ minetest.register_globalstep(function(dtime)
         local pos = player:get_pos()
         local color = colors[minetest.get_biome_data(pos).biome] or default_color
 
-        player:set_sky(addition(get_sky_color(color, timeofday), night_color), "plain")
+        player:set_sky(
+            addition(get_sky_color(color, timeofday), night_color), "plain"
+        )
     end
 end)
