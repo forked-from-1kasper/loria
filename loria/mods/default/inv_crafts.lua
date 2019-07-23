@@ -1,10 +1,36 @@
 ores = {
-    ["aluminium"] = { formula = "Al", has_ingot = true },
-    ["potassium"] = { formula = "K", has_ingot = true },
-    ["zinc"] = { formula = "Zn", has_ingot = true },
-    ["copper"] = { formula = "Cu", has_ingot = true },
-    ["uranium_tetrachloride"] = { formula = "UCl4", has_ingot = false },
-    ["plutonium_trifluoride"] = { formula = "PuF3", has_ingot = false },
+    ["aluminium"] = {
+        formula = "Al", has_ingot = true,
+        azure = true, cinnabar = true
+    },
+    ["potassium"] = {
+        formula = "K", has_ingot = true,
+        azure = true, cinnabar = true
+    },
+    ["zinc"] = {
+        formula = "Zn", has_ingot = true,
+        azure = true, cinnabar = true
+    },
+    ["copper"] = {
+        formula = "Cu", has_ingot = true,
+        azure = true, cinnabar = true
+    },
+    ["uranium_tetrachloride"] = { -- 234
+        formula = "UCl4", has_ingot = false,
+        azure = true, cinnabar = true
+    },
+    ["thorium_iodide"] = { -- 232
+        formula = "ThI4", has_ingot = false,
+        azure = true, cinnabar = true
+    },
+    ["plutonium_trifluoride"] = { -- 238
+        formula = "PuF3", has_ingot = false,
+        azure = true, cinnabar = true
+    },
+    ["americium_trifluoride"] = { -- 243
+        formula = "AmF3", has_ingot = false, y_min = -200,
+        azure = false, cinnabar = true, light_source = 3,
+    },
 }
 
 giant_mushrooms = { "viridi_petasum", "colossus", "turris", "rete" }

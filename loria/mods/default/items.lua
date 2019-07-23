@@ -302,7 +302,7 @@ bucket.register_liquid(
     "default:mercury_flowing",
     "default:bucket_mercury",
     "bucket_mercury.png",
-    "Bucket with dirty (U, Th) mercury"
+    "Bucket with polluted (U, Th) mercury"
 )
 
 bucket.register_liquid(

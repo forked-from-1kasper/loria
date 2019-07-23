@@ -54,45 +54,49 @@ for i, _ in ipairs(truncus_names) do
 end
 
 for name, params in pairs(ores) do
-    minetest.register_ore({
-        ore_type       = "blob",
-        ore            = "default:" .. name .. "_azure",
-        wherein        = "default:cobalt_blue",
-        clust_scarcity = 16 * 16 * 16,
-        clust_num_ores = 5,
-        clust_size     = 3,
-        y_min          = params.y_min or -60,
-        y_max          = params.y_max or 60,
-        noise_threshold = 0.0,
-        noise_params    = {
-            offset = 0.5,
-            scale = 0.2,
-            spread = { x = 3, y = 3, z = 3 },
-            seed = 17676,
-            octaves = 1,
-            persist = 0.0
-        }
-    })
+    if params.azure then
+        minetest.register_ore({
+            ore_type       = "blob",
+            ore            = "default:" .. name .. "_azure",
+            wherein        = "default:cobalt_blue",
+            clust_scarcity = 16 * 16 * 16,
+            clust_num_ores = 5,
+            clust_size     = 3,
+            y_min          = params.y_min or -60,
+            y_max          = params.y_max or 60,
+            noise_threshold = 0.0,
+            noise_params    = {
+                offset = 0.5,
+                scale = 0.2,
+                spread = { x = 3, y = 3, z = 3 },
+                seed = 17676,
+                octaves = 1,
+                persist = 0.0
+            }
+        })
+    end
 
-    minetest.register_ore({
-        ore_type       = "blob",
-        ore            = "default:" .. name .. "_cinnabar",
-        wherein        = "default:cinnabar",
-        clust_scarcity = 16 * 16 * 16,
-        clust_num_ores = 5,
-        clust_size     = 3,
-        y_min          = params.y_min or -60,
-        y_max          = params.y_max or 60,
-        noise_threshold = 0.0,
-        noise_params    = {
-            offset = 0.5,
-            scale = 0.2,
-            spread = { x = 3, y = 3, z = 3 },
-            seed = 17676,
-            octaves = 1,
-            persist = 0.0
-        }
-    })
+    if params.cinnabar then
+        minetest.register_ore({
+            ore_type       = "blob",
+            ore            = "default:" .. name .. "_cinnabar",
+            wherein        = "default:cinnabar",
+            clust_scarcity = 16 * 16 * 16,
+            clust_num_ores = 5,
+            clust_size     = 3,
+            y_min          = params.y_min or -60,
+            y_max          = params.y_max or 60,
+            noise_threshold = 0.0,
+            noise_params    = {
+                offset = 0.5,
+                scale = 0.2,
+                spread = { x = 3, y = 3, z = 3 },
+                seed = 17676,
+                octaves = 1,
+                persist = 0.0
+            }
+        })
+    end
 end
 
 minetest.register_ore({

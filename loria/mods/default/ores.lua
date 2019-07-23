@@ -1,23 +1,28 @@
 for name, params in pairs(ores) do
+    local light_source = params.light_source or 0
+
     minetest.register_node("default:" .. name .. "_cinnabar", {
         description = capitalization(name) .. " (in cinnabar)",
         tiles = { "default_cinnabar.png^default_" .. name .. "_ore.png" },
         groups = { cracky = 2 },
-        drop = "default:" .. name .. "_cinnabar"
+        drop = "default:" .. name .. "_cinnabar",
+        light_source = math.floor(light_source / 2),
     })
 
     minetest.register_node("default:" .. name .. "_azure", {
         description = capitalization(name) .. " (in cobalt blue)",
         tiles = { "default_cobalt_blue.png^default_" .. name .. "_ore.png" },
         groups = { cracky = 2 },
-        drop = "default:" .. name .. "_azure"
+        drop = "default:" .. name .. "_azure",
+        light_source = math.floor(light_source / 2),
     })
 
     minetest.register_node("default:" .. name, {
         description = capitalization(name) .. " (" .. params.formula .. ")",
         tiles = { "default_" .. name .. ".png" },
         groups = { cracky = 1 },
-        drop = "default:" .. name
+        drop = "default:" .. name,
+        light_source = light_source,
     })
 
     if params.has_ingot then

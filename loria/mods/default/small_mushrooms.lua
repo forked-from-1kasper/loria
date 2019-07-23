@@ -139,6 +139,8 @@ small_mushrooms = {
         optimal_light = 11,
         fill_ratio = 0.01,
         biomes = "default:redland",
+        optimal_radiation = 5,
+        max_radiation = 10,
     },
     ["rosea"] = {
         damage = 4,
@@ -168,6 +170,8 @@ small_mushrooms = {
         optimal_light = 11,
         fill_ratio = 0.01,
         biomes = "default:redland",
+        optimal_radiation = 5,
+        max_radiation = 10,
     },
     ["periculum"] = {
         features = { light_source = 3 },
