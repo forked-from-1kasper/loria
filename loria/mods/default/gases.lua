@@ -30,9 +30,10 @@ end
 chlorine = {
     name = "chlorine",
     icon = "default_chlorine_symbol.png",
-    color = { r = 210, g = 255, b = 0 },
+    palette = "chlorine_palette.png",
+    post_effect_color = { a = 50, r = 210, g = 255, b = 0 },
     destroys = is_organic,
-    transparent = false,
+    heavy = true,
     damage = 2,
     reactions = {
         ["default:mercury"] = {
@@ -50,10 +51,7 @@ chlorine = {
 oxygen = {
     name = "oxygen",
     icon = "default_oxygen_symbol.png",
-    color = { r = 255, g = 255, b = 255 },
-    destroys = function(name)
-        return false
-    end,
+    destroys = const(false),
     transparent = true,
     damage = 0,
     reactions = {
@@ -71,10 +69,7 @@ oxygen = {
 hydrogen = {
     name = "hydrogen",
     icon = "default_hydrogen_symbol.png",
-    color = { r = 255, g = 255, b = 255 },
-    destroys = function(name)
-        return false
-    end,
+    destroys = const(false),
     transparent = true,
     damage = 0,
     reactions = {
@@ -88,10 +83,8 @@ hydrogen = {
 sulfur_dioxide = {
     name = "sulfur_dioxide",
     icon = "default_sulfur_dioxide_symbol.png",
-    color = { r = 255, g = 255, b = 255 },
-    destroys = function(name)
-        return false
-    end,
+    destroys = const(false),
+    heavy = true,
     transparent = true,
     damage = 1,
     reactions = {},
@@ -100,11 +93,12 @@ sulfur_dioxide = {
 fluorine = {
     name = "fluorine",
     icon = "default_fluorine_symbol.png",
-    color = { r = 255, g = 251, b = 164 },
+    post_effect_color = { a = 50, r = 255, g = 251, b = 164 },
+    palette = "fluorine_palette.png",
     destroys = function(name)
         return is_organic(name) or is_heavy_organic(name)
     end,
-    transparent = false,
+    heavy = true,
     damage = 5,
     reactions = {
         ["default:mercury_oxide"] = {
@@ -121,50 +115,34 @@ fluorine = {
 fire = {
     name = "fire",
     no_balloon = true,
-    color = { r = 255, g = 255, b = 255 },
+    post_effect_color = { a = 150, r = 255, g = 255, b = 255 },
+    palette = "fire_palette.png",
     destroys = function(name)
         return
             is_organic(name) or
             is_heavy_organic(name) or
             is_fuel(name)
     end,
-    transparent = false,
     damage = 10,
     light_source = 14,
-    texture = function(alpha)
-        local postfix
-        if alpha > 90 then
-            postfix = "^[colorize:#ffffff^[opacity:" .. alpha + 128
-        elseif alpha > 32 then
-            postfix = "^[colorize:#ffff00^[opacity:" .. alpha + 128
-        else
-            postfix = "^[colorize:#ff0000^[opacity:" .. alpha
-        end
-        return {
-            "default_gas.png" .. postfix
-        }
-    end
+    alpha = 230,
 }
 
 fire.reactions = {
     ["default:hydrogen"] = {
-        result = "default:fire_" .. gas_levels,
+        result = "default:fire",
         gas = "default:fire"
     },
     ["default:oxygen"] = {
-        result = "default:fire_" .. gas_levels,
-        gas = "default:fire"
-    },
-    ["default:mercury"] = {
-        result = "default:mercury_source",
+        result = "default:fire",
         gas = "default:fire"
     },
     ["default:trisilane_source"] = {
-        result = "default:fire_" .. gas_levels,
+        result = "default:fire",
         gas = "default:fire"
     },
     ["default:trisilane_flowing"] = {
-        result = "default:fire_" .. gas_levels,
+        result = "default:fire",
         gas = "default:fire"
     }
 }

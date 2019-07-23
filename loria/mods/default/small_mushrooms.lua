@@ -44,6 +44,7 @@ for i, name in ipairs(truncus_names) do
         paramtype = "light",
         walkable = false,
         groups = { snappy = 3, column = 1 },
+        sunlight_propagates = true,
     })
 end
 
@@ -65,6 +66,7 @@ for i, name in ipairs(pars_names) do
         paramtype = "light",
         walkable = false,
         groups = { snappy = 3, attached_node = 1 },
+        sunlight_propagates = true,
     })
 end
 
@@ -83,6 +85,7 @@ for i, name in ipairs(petite_names) do
         paramtype = "light",
         walkable = false,
         groups = { snappy = 3, attached_node = 1 },
+        sunlight_propagates = true,
     })
 end
 
@@ -95,6 +98,7 @@ minetest.register_node("default:viriditas", {
     paramtype = "light",
     walkable = false,
     groups = { snappy = 3, attached_node = 1 },
+    sunlight_propagates = true,
 })
 
 for _, name in ipairs({ "rami", "spears" }) do
@@ -106,7 +110,8 @@ for _, name in ipairs({ "rami", "spears" }) do
         inventory_image = "default_" .. name .. ".png",
         paramtype = "light",
         walkable = false,
-        groups = { snappy = 3, column = 1 }
+        groups = { snappy = 3, column = 1 },
+        sunlight_propagates = true,
     })
 end
 
@@ -119,7 +124,8 @@ minetest.register_node("default:naga", {
     paramtype = "light",
     walkable = false,
     light_source = 5,
-    groups = { snappy = 3, attached_node = 1 }
+    groups = { snappy = 3, attached_node = 1 },
+    sunlight_propagates = true,
 })
 
 small_mushrooms = {
@@ -213,7 +219,8 @@ for name, params in pairs(small_mushrooms) do
 
             itemstack:set_count(itemstack:get_count() - 1)
             return itemstack
-        end
+        end,
+        sunlight_propagates = true,
     }
 
     for key, value in pairs(params.features or {}) do

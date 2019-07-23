@@ -21,6 +21,8 @@ activity = {
     [cid("default:plutonium_tetrafluoride")] = { alpha = 8, beta = 0, gamma = 0 },
     [cid("default:plutonium_dioxide")] = { alpha = 20, beta = 0, gamma = 0 },
     [cid("default:plutonium_dioxide_brick")] = { alpha = 13, beta = 0, gamma = 0 },
+    [cid("default:mercury_source")] = { alpha = 1, beta = 0.3, gamma = 0 },
+    [cid("default:mercury_flowing")] = { alpha = 1, beta = 0.3, gamma = 0 },
 }
 
 antiradiation_drugs = {

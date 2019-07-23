@@ -7,129 +7,95 @@ local neighbors = {
     vector.new( 0, 0,-1)
 }
 
-function get_neighbors(pos)
-    return map(function(v) return vector.add(pos, v) end, neighbors)
+local no_top_neighbors = {
+    vector.new( 1, 0, 0),
+    vector.new(-1, 0, 0),
+    vector.new( 0,-1, 0),
+    vector.new( 0, 0, 1),
+    vector.new( 0, 0,-1)
+}
+
+function get_neighbors(pos, heavy)
+    local add = function(v) return vector.add(pos, v) end
+    return map(add, heavy and no_top_neighbors or neighbors)
 end
 
-gas_table = { }
+is_heavy = { }
 function detect_gas(name)
-    return find(
-        function(gas)
-            return starts_with(name, "default:" .. gas)
-        end,
-        gas_table
-    ) or false
+    return minetest.get_item_group(name, "gas") > 0 and
+           minetest.registered_nodes[name].description
 end
 
-local function get_gas_value(gas, name)
-    return tonumber(name:sub(#("default:" .. gas.name) + 2))
-end
-
-local function process_gas(gas, pos, node)
+local function process_gas(gas, pos)
     local accepted = { pos }
 
-    local value = get_gas_value(gas, node.name)
-    for _, v in ipairs(get_neighbors(pos)) do
-        local node = minetest.get_node(v)
+    local node = minetest.get_node(pos)
+    for _, v in ipairs(get_neighbors(pos, is_heavy[gas.name])) do
+        local neighbor = minetest.get_node(v)
+        local reaction = gas.reactions[neighbor.name]
 
-        local reaction
-
-        local gas_name = detect_gas(node.name)
-        if gas_name ~= false then
-            reaction = gas.reactions["default:" .. gas_name]
-        else
-            reaction = gas.reactions[node.name]
-        end
         if reaction ~= nil then
-            minetest.swap_node(v, { name = reaction.result })
+            minetest.swap_node(v, {
+                name = reaction.result,
+                param1 = neighbor.param1,
+                param2 = neighbor.param2,
+            })
             if reaction.gas then
-                minetest.set_node(pos, {
-                    name = reaction.gas .. "_" .. value
+                minetest.swap_node(pos, {
+                    name = reaction.gas,
+                    param1 = node.param1,
+                    param2 = node.param2,
                 })
             else
                 minetest.set_node(pos, { name = "air" })
             end
             return
-        elseif starts_with(node.name, "default:" .. gas.name) or
-              (node.name == "air") or
-               gas.destroys(node.name) then
+        elseif neighbor.name == node.name or
+               neighbor.name == "air" or
+               gas.destroys(neighbor.name) then
             table.insert(accepted, v)
         end
     end
 
-    local value_new = value - (#accepted - 1)
-    if value_new > 0 then
+    node.param2 = node.param2 - #accepted + 1
+    if node.param2 >= 128 then
         for _, v in ipairs(accepted) do
-            minetest.set_node(v, {
-                name = "default:" .. gas.name .. "_" .. value_new
-            })
+            minetest.swap_node(v, node)
         end
     else
         minetest.set_node(pos, { name = "air" })
     end
 end
 
-gas_levels = 128
-gas_vect = vector.new(16, 16, 16)
+local gas_levels = 255
+local gas_vect = vector.new(16, 16, 16)
 function register_gas(gas)
-    table.insert(gas_table, gas.name)
-    for i = 1, gas_levels do
-        local level = gas_levels - i
-        local alpha = 150 - (128 / gas_levels) * level
-        local color = string.format(
-            "#%02x%02x%02x",
-            gas.color.r,
-            gas.color.g,
-            gas.color.b
-        )
-
-        if gas.transparent then
-            alpha = 0
-        end
-
-        local tiles = {
-            "default_gas.png^[colorize:" .. color .. "^[opacity:"..alpha
-        }
-        if gas.texture ~= nil then
-            tiles = gas.texture(alpha)
-        end
-
-        minetest.register_node("default:" .. gas.name .. "_" .. i, {
-            description = capitalization(gas.name) .. " gas",
-            tiles = tiles,
-            drawtype = "allfaces",
-            paramtype = "light",
-            paramtype2 = "glasslikeliquidlevel",
-            damage_per_second = gas.damage,
-            sunlight_propagates = true,
-            walkable = false,
-            alpha = alpha,
-            post_effect_color = {
-                a = alpha,
-                r = gas.color.r,
-                g = gas.color.g,
-                b = gas.color.b
-            },
-            drop = {},
-            pointable = false,
-            buildable_to = true,
-            light_source = gas.light_source or 0,
-            groups = { not_in_creative_inventory = 1 },
-        })
-
-    end
-
-    local nodenames = {}
-    for i = 1, gas_levels do
-        table.insert(nodenames, "default:" .. gas.name .. "_" .. i)
-    end
+    is_heavy[gas.name] = gas.heavy or false
+    minetest.register_node("default:" .. gas.name, {
+        description = gas.name,
+        tiles = { "default_gas.png^[opacity:" .. (gas.alpha or 128) },
+        drawtype = gas.transparent and "airlike" or "glasslike",
+        paramtype = "light",
+        paramtype2 = "color",
+        palette = gas.palette,
+        damage_per_second = gas.damage,
+        sunlight_propagates = true,
+        use_texture_alpha = true,
+        walkable = false,
+        post_effect_color = gas.post_effect_color,
+        drop = {},
+        pointable = false,
+        buildable_to = true,
+        light_source = gas.light_source or 0,
+        groups = { not_in_creative_inventory = 1, gas = 1 },
+    })
 
     minetest.register_abm({
-        nodenames = nodenames,
+        nodenames = { "default:" .. gas.name },
         interval = 1,
         chance = 2,
         action = function(pos)
-            process_gas(gas, pos, minetest.get_node(pos))
+            process_gas(gas, pos)
         end
     })
 
@@ -144,9 +110,9 @@ function register_gas(gas)
                 end
 
                 local wear = 65535 - itemstack:get_wear()
-                local value = math.ceil(wear * gas_levels / 65536)
+                local value = math.ceil(wear * 128 / 65535)
                 minetest.add_node(pointed_thing.above, {
-                    name = "default:" .. gas.name .. "_" .. value
+                    name = "default:" .. gas.name, param2 = 127 + value
                 })
                 return { name = "default:empty_balloon" }
             end
@@ -167,7 +133,7 @@ minetest.register_chatcommand("chemical_attack", {
             for x = pos.x - attack_radius, pos.x + attack_radius, attack_step do
                 for z = pos.z - attack_radius, pos.z + attack_radius, attack_step do
                     minetest.set_node({ x = x, y = pos.y, z = z }, {
-                        name = "default:" .. gas .. "_" .. gas_levels
+                        name = "default:" .. gas, param2 = gas_levels
                     })
                 end
             end
@@ -219,7 +185,7 @@ minetest.register_abm({
     action = function(pos)
         pos = vector.add(pos, vector.new(0, 1, 0))
         if minetest.get_node(pos).name == "air" then
-            minetest.set_node(pos, { name = "default:chlorine_" .. gas_levels })
+            minetest.set_node(pos, { name = "default:chlorine", param2 = gas_levels })
         end
     end
 })
@@ -241,7 +207,7 @@ minetest.register_abm({
         for _, vect in ipairs(vects) do
             local v = vector.add(pos, vect)
             if minetest.get_node(v).name == "air" then
-                minetest.set_node(v, { name = "default:oxygen_" .. gas_levels })
+                minetest.set_node(v, { name = "default:oxygen", param2 = gas_levels })
             end
         end
     end
