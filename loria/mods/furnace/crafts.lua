@@ -198,7 +198,7 @@ furnace_crafts = {
             { name = "default:potassium_manganate", count = 1 },
             { name = "default:manganese_dioxide", count = 1 },
             { name = "default:oxygen_balloon", count = 1 },
-            { name = "default:bucket_empty", count = 1 },
+            { name = "default:bucket_empty", count = 2 },
         },
         time = 2,
     },

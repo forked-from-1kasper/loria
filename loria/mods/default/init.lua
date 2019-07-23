@@ -14,6 +14,7 @@ dofile(minetest.get_modpath("default").."/items.lua")
 dofile(minetest.get_modpath("default").."/craft.lua")
 dofile(minetest.get_modpath("default").."/mushrooms.lua")
 dofile(minetest.get_modpath("default").."/hud.lua")
+dofile(minetest.get_modpath("default").."/sky.lua")
 dofile(minetest.get_modpath("default").."/player.lua")
 
 player_api.register_model("player.b3d", {
