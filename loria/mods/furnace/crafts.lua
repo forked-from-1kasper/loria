@@ -1,6 +1,39 @@
 refiner_crafts = {
     {
         input = {
+            { name = "default:copper_sulfate_pure", count = 2 },
+            { name = "default:empty_balloon", count = 3 },
+        },
+        output = {
+            { name = "default:copper_oxide", count = 2 },
+            { name = "default:sulfur_dioxide_balloon", count = 2 },
+            { name = "default:oxygen_balloon", count = 1 },
+        },
+        time = 4
+    },
+    {
+        input = {
+            { name = "default:cuprous_oxide", count = 2 },
+            { name = "default:empty_balloon", count = 1 },
+        },
+        output = {
+            { name = "default:copper", count = 4 },
+            { name = "default:oxygen_balloon", count = 1 },
+        },
+        time = 2
+    },
+    {
+        input = {
+            { name = "default:copper", count = 1 },
+            { name = "default:copper_oxide", count = 1 },
+        },
+        output = {
+            { name = "default:cuprous_oxide", count = 1 },
+        },
+        time = 4
+    },
+    {
+        input = {
             { name = "default:mercury_oxide", count = 2 },
             { name = "default:empty_balloon", count = 1 },
             { name = "default:bucket_empty", count = 2 }

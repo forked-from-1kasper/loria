@@ -54,6 +54,20 @@ minetest.register_node("default:cinnabar", {
     drop = 'default:cinnabar'
 })
 
+minetest.register_node("default:copper_oxide", {
+    description = "Copper (II) oxide (CuO)",
+    tiles = { "default_copper_oxide.png" },
+    groups = { crumbly = 2 },
+    drop = 'default:copper_oxide'
+})
+
+minetest.register_node("default:cuprous_oxide", {
+    description = "Copper (I) oxide (Cu2O)",
+    tiles = { "default_cuprous_oxide.png" },
+    groups = { crumbly = 2 },
+    drop = 'default:cuprous_oxide'
+})
+
 minetest.register_node("default:copper_sulfate_pure", {
     description = "Copper (II) sulfate (CuSO4)",
     tiles = { "default_copper_sulfate_pure.png" },
