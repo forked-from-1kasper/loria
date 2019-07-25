@@ -123,7 +123,7 @@ inv_crafts = {
     },
     {
         input = {
-            { name = "default:lead", count = 9 },
+            { name = "default:lead", count = 3 },
         },
         output = {
             { name = "furnace:gas", count = 1 },
@@ -173,7 +173,7 @@ inv_crafts = {
     },
     {
         input = {
-            { name = "default:potassium", count = 2 },
+            { name = "default:potassium_ingot", count = 2 },
             { name = "default:bucket_hydrochloric_acid", count = 2 },
             { name = "default:empty_balloon", count = 1 },
         },
