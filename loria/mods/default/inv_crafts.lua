@@ -123,8 +123,7 @@ inv_crafts = {
     },
     {
         input = {
-            { name = "default:lead_case", count = 1 },
-            { name = "default:lead", count = 3 }
+            { name = "default:lead", count = 9 },
         },
         output = {
             { name = "furnace:gas", count = 1 },

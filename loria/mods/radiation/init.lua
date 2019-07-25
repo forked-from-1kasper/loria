@@ -6,6 +6,16 @@ radiation_effects_timeout = 1
 
 null = { alpha = 0, beta = 0, gamma = 0 }
 
+local function get_activity(name)
+    local cid = minetest.get_content_id(name)
+
+    if cid ~= 127 then
+        return activity[cid] or null
+    else
+        return activity[name] or null
+    end
+end
+
 local function hypot_sqr(pos1, pos2)
     return
         (pos1.x - pos2.x) ^ 2 +
@@ -69,8 +79,8 @@ local function calculate_inventory_radiation(inv)
     for listname, list in pairs(inv:get_lists()) do
         if listname ~= "creative_inv" then
             for _, stack in ipairs(list) do
-                local A = activity[minetest.get_content_id(stack:get_name())] or null
-                -- no radiation.alpha
+                local A = get_activity(stack:get_name())
+                -- no alpha here
                 radiation.beta = radiation.beta + A.beta * stack:get_count()
                 radiation.gamma = radiation.gamma + A.gamma * stack:get_count()
             end
@@ -123,7 +133,7 @@ local function calculate_player_radiation(player, vm)
         local entity = obj:get_luaentity()
         if entity and entity.name == "__builtin:item" then
             local stack = ItemStack(entity.itemstring)
-            local A = activity[minetest.get_content_id(stack:get_name())] or null
+            local A = get_activity(stack:get_name())
             radiation = add(
                 radiation,
                 mult(
@@ -133,6 +143,11 @@ local function calculate_player_radiation(player, vm)
             )
         end
     end
+
+    -- wielded item alpha
+    local wielded = player:get_wielded_item()
+    radiation.alpha = radiation.alpha +
+        get_activity(wielded:get_name()).alpha * wielded:get_count()
 
     radiation = add(radiation, calculate_inventory_radiation(player:get_inventory()))
     return radiation

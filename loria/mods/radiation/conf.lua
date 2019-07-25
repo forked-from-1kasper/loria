@@ -37,8 +37,9 @@ minetest.register_on_mods_loaded(function()
         [cid("default:plutonium_tetrafluoride")] = { alpha = 16, beta = 0, gamma = 0 },
         [cid("default:plutonium_dioxide")] = { alpha = 40, beta = 0, gamma = 0 },
         [cid("default:plutonium_dioxide_brick")] = { alpha = 26, beta = 0, gamma = 0 },
-        [cid("default:mercury_source")] = { alpha = 5, beta = 2.3, gamma = 0 },
-        [cid("default:mercury_flowing")] = { alpha = 5, beta = 2.3, gamma = 0 },
+        ["default:bucket_polluted_mercury"] = { alpha = 5, beta = 2.3, gamma = 0 },
+        [cid("default:polluted_mercury_source")] = { alpha = 5, beta = 2.3, gamma = 0 },
+        [cid("default:polluted_mercury_flowing")] = { alpha = 5, beta = 2.3, gamma = 0 },
         [cid("furnace:refiner_active")] = { alpha = 0, beta = 0, gamma = 0.3 },
     }
 end)

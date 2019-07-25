@@ -62,6 +62,17 @@ liquids = {
         animated_texture = "default_mercury_animated.png",
         animated_flowing_texture = "default_mercury_animated.png",
         bucket_image = "bucket_mercury.png",
+        bucket_description = "Mercury (Hg)",
+    },
+    ["polluted_mercury"] = {
+        damage_per_second = 3,
+        liquid_viscosity = 7,
+        post_effect_color = { a = 252, r = 150, g = 150, b = 150 },
+        alpha = 255,
+        texture = "default_mercury.png",
+        animated_texture = "default_mercury_animated.png",
+        animated_flowing_texture = "default_mercury_animated.png",
+        bucket_image = "bucket_mercury.png",
         bucket_description = "Polluted (U, Th) mercury",
     },
     ["potassium_permanganate"] = {
