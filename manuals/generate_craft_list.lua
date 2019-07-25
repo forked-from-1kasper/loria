@@ -1,3 +1,4 @@
+dofile("../loria/mods/default/prelude.lua")
 dofile("../loria/mods/default/inv_crafts.lua")
 dofile("../loria/mods/furnace/crafts.lua")
 
@@ -19,29 +20,22 @@ function process_craft(craft)
 end
 
 template =
-    "# Craft list\n" ..
-    "## Inventory\n" ..
-    "| Input | Output |\n" ..
-    "| ----- | ------ |\n" ..
-    "%s\n\n" ..
-    "## Furnace\n" ..
+    "## %s\n" ..
     "| Input | Output |\n" ..
     "| ----- | ------ |\n" ..
     "%s\n"
 
+function mk_table(name, values)
+    return string.format(
+        template, name,
+        table.concat(map(process_craft, values), "\n")
+    )
+end
+
 inventory = { }
 furnace = { }
 
-for _, craft in ipairs(inv_crafts) do
-    table.insert(inventory, process_craft(craft))
-end
-
-for _, craft in ipairs(furnace_crafts) do
-    table.insert(furnace, process_craft(craft))
-end
-
-print(string.format(
-    template,
-    table.concat(inventory, "\n"),
-    table.concat(furnace, "\n")
-))
+print("# Craft list\n")
+print(mk_table("Inventory", inv_crafts))
+print(mk_table("Furnace", furnace_crafts))
+print(mk_table("Refiner", refiner_crafts))

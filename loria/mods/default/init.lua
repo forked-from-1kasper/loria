@@ -87,8 +87,10 @@ minetest.register_on_player_hpchange(function(player, hp_change, reason)
 end, true)
 
 START_ITEMS = {
+    ["furnace:refiner_item"] = 1,
     ["default:oxygen_balloon"] = 1,
-    ["furnace:gas"] = 1
+    ["default:empty_balloon"] = 1,
+    ["default:bucket_empty"] = 2,
 }
 
 function init_inv(player)

@@ -68,7 +68,7 @@ function furnace_on_timer(conf)
         end
 
         local cooking = meta:get_float("cooking") + elapsed
-        local recipe = get_craft(furnace_crafts, inv)
+        local recipe = get_craft(conf.crafts, inv)
 
         if recipe ~= nil and cooking >= recipe.time then
             cooking = 0
@@ -123,19 +123,21 @@ end
 function register_furnace(conf)
     minetest.register_node("furnace:" .. conf.name, {
         description = conf.description,
-        tiles = {
-            conf.textures.side, conf.textures.side,
-            conf.textures.side, conf.textures.side,
-            conf.textures.back or conf.textures.side,
-            conf.textures.front_inactive,
-        },
+        drop = conf.drop or "furnace:" .. conf.name,
+        tiles = conf.textures.inactive,
 
-        on_destruct = conf.on_destruct or drop_everything,
+        on_destruct = and_then(conf.on_destruct or nope, drop_everything),
         on_construct = construct_furnace(conf),
 
         paramtype2 = "facedir",
         legacy_facedir_simple = true,
         groups = conf.groups or { },
+
+        paramtype = conf.paramtype,
+        drawtype = conf.drawtype,
+        mesh = conf.mesh,
+        collision_box = conf.collision_box,
+        selection_box = conf.selection_box,
 
         allow_metadata_inventory_put = function(pos, listname, index, stack, player)
             if listname == "output" then
@@ -154,21 +156,25 @@ function register_furnace(conf)
         on_metadata_inventory_take = function(pos, listname, index, stack, player)
             check_and_run_furnace(conf, pos)
         end,
+
+        on_receive_fields = conf.on_receive_fields,
     })
 
     minetest.register_node("furnace:" .. conf.name .. "_active", {
         description = conf.description .. " (active)",
-        drop = "furnace:" .. conf.name,
-        tiles = {
-            conf.textures.side, conf.textures.side,
-            conf.textures.side, conf.textures.side,
-            conf.textures.side, conf.textures.front_active,
-        },
+        drop = conf.drop or "furnace:" .. conf.name,
+        tiles = conf.textures.active,
 
         light_source = conf.light_source,
         paramtype2 = "facedir",
         legacy_facedir_simple = true,
-        groups = conf.groups or { },
+        groups = join(conf.groups or { }, { not_in_creative_inventory = 1 }),
+
+        paramtype = conf.paramtype,
+        drawtype = conf.drawtype,
+        mesh = conf.mesh,
+        collision_box = conf.collision_box,
+        selection_box = conf.selection_box,
 
         allow_metadata_inventory_put = function(pos, listname, index, stack, player)
             if listname == "output" then
@@ -203,7 +209,9 @@ function register_furnace(conf)
             check_and_stop_furnace(conf, pos)
         end,
 
-        on_destruct = conf.on_destruct or drop_everything,
+        on_destruct = and_then(conf.on_destruct or nope, drop_everything),
         on_timer = furnace_on_timer(conf),
+
+        on_receive_fields = conf.on_receive_fields,
     })
 end

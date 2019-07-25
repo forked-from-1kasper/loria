@@ -1,9 +1,9 @@
-optimal = {
+local optimal = {
     I = { min = 0.5, max = 50 },
     U = { min = 30, max = 300 },
 }
 
-conf = {
+local conf = {
     name = "electric",
     description = "Electric furnace",
     lists = { },
@@ -16,10 +16,16 @@ conf = {
         return "label[1,2;Electric furnace]"
     end,
     textures = {
-        side = "furnace_side.png",
-        back = "furnace_electric_back.png",
-        front_inactive = "furnace_electric_front.png",
-        front_active = "furnace_electric_front_active.png",
+        inactive = {
+            "furnace_side.png", "furnace_side.png",
+            "furnace_side.png", "furnace_side.png",
+            "furnace_electric_back.png", "furnace_electric_front.png",
+        },
+        active = {
+            "furnace_side.png", "furnace_side.png",
+            "furnace_side.png", "furnace_side.png",
+            "furnace_electric_back.png", "furnace_electric_front_active.png",
+        }
     },
     light_source = 6,
     groups = { cracky = 2, conductor = 1 },
@@ -28,6 +34,8 @@ conf = {
         meta:set_float("resis", 50)
     end,
     on_destruct = reset_current,
+
+    crafts = furnace_crafts,
 }
 
 consumer["furnace:electric"] = {
@@ -35,11 +43,6 @@ consumer["furnace:electric"] = {
     on_deactivate = function(pos) stop_furnace(conf, pos) end,
     current = optimal,
 }
-
---consumer["furnace:electric_active"] = {
---    on_deactivate = function(pos) stop_furnace(conf, pos) end,
---    current = optimal,
---}
 
 register_furnace(conf)
 model["furnace:electric"] = resistor

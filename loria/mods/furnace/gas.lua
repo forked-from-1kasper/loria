@@ -1,8 +1,8 @@
-gases_list = {
+local gases_list = {
     ["default:oxygen_balloon"] = balloon_coeff * 3
 }
 
-fuel_list = {
+local fuel_list = {
     ["default:cinnabar"] = 1,
     ["default:potassium"] = 2,
     ["default:potassium_cinnabar"] = 3,
@@ -11,7 +11,7 @@ fuel_list = {
     ["default:bucket_trisilane"] = 10,
 }
 
-function is_furnace_ready(pos)
+local function is_furnace_ready(pos)
     local meta = minetest.get_meta(pos)
     local inv = meta:get_inventory()
 
@@ -97,22 +97,33 @@ register_furnace({
             "list[context;fuel;2,2;1,1;]"
     end,
     textures = {
-        side = "furnace_side.png",
-        front_inactive = "furnace_gas_front.png",
-        front_active = {
-            image = "furnace_gas_front_active.png",
-            backface_culling = false,
-            animation = {
-                type = "vertical_frames",
-                aspect_w = 16,
-                aspect_h = 16,
-                length = 1.5
-            }
+        inactive = {
+            "furnace_side.png", "furnace_side.png",
+            "furnace_side.png", "furnace_side.png",
+            "furnace_side.png", "furnace_gas_front.png"
         },
+        active = {
+            "furnace_side.png", "furnace_side.png",
+            "furnace_side.png", "furnace_side.png",
+            "furnace_side.png", {
+                image = "furnace_gas_front_active.png",
+                backface_culling = false,
+                animation = {
+                    type = "vertical_frames",
+                    aspect_w = 16,
+                    aspect_h = 16,
+                    length = 1.5
+                }
+            }
+        }
     },
     groups = { cracky = 2 },
+
     light_source = 10,
+
     after_stop = function(pos)
         minetest.get_meta(pos):set_float("cycle", 0)
     end,
+
+    crafts = furnace_crafts,
 })

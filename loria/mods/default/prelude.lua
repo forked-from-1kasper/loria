@@ -85,3 +85,20 @@ end
 function capitalization(str)
     return string.gsub(str:gsub("^%l", string.upper), "_", " ")
 end
+
+function join(lst1, lst2)
+    local res = {}
+
+    for idx, x in pairs(lst1) do
+        res[idx] = x
+    end
+
+    for idx, y in pairs(lst2) do
+        res[idx] = y
+    end
+
+    return res
+end
+
+function nope()
+end

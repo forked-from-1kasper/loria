@@ -1,4 +1,4 @@
-furnace_crafts = {
+refiner_crafts = {
     {
         input = {
             { name = "default:mercury_oxide", count = 2 },
@@ -46,70 +46,6 @@ furnace_crafts = {
     },
     {
         input = {
-            { name = "default:aluminium_azure", count = 1 }
-        },
-        output = {
-            { name = "default:aluminium_ingot", count = 1 },
-            { name = "default:cobalt_blue", count = 1 }
-        },
-        time = 3
-    },
-    {
-        input = {
-            { name = "default:aluminium_ingot", count = 5 }
-        },
-        output = {
-            { name = "default:bucket_empty", count = 1 }
-        },
-        time = 8
-    },
-    {
-        input = {
-            { name = "default:zinc_ingot", count = 4 }
-        },
-        output = {
-            { name = "default:bucket_empty", count = 1 }
-        },
-        time = 10
-    },
-    {
-        input = {
-            { name = "default:aluminium_ingot", count = 3 }
-        },
-        output = {
-            { name = "default:empty_balloon", count = 1 }
-        },
-        time = 3
-    },
-    {
-        input = {
-            { name = "default:aluminium_ingot", count = 2 }
-        },
-        output = {
-            { name = "default:aluminium_brick_mold", count = 1 }
-        },
-        time = 3
-    },
-    {
-        input = {
-            { name = "default:copper_ingot", count = 3 }
-        },
-        output = {
-            { name = "default:copper_hammer_head", count = 1 }
-        },
-        time = 3
-    },
-    {
-        input = {
-            { name = "default:aluminium_ingot", count = 1 }
-        },
-        output = {
-            { name = "default:aluminium_case", count = 1 }
-        },
-        time = 3
-    },
-    {
-        input = {
             { name = "default:mercury_oxide", count = 1 },
             { name = "default:bucket_potassium_hydroxide", count = 1 },
             { name = "default:zinc_ingot", count = 1 },
@@ -133,16 +69,6 @@ furnace_crafts = {
             { name = "default:bucket_empty", count = 1 }
         },
         time = 2,
-    },
-    {
-        input = {
-            { name = "default:bucket_empty", count = 1 },
-            { name = "default:mercury", count = 1 }
-        },
-        output = {
-            { name = "default:bucket_mercury" }
-        },
-        time = 5,
     },
     {
         input = {
@@ -217,16 +143,6 @@ furnace_crafts = {
     },
     {
         input = {
-            { name = "default:bucket_lucidum", count = 1 },
-        },
-        output = {
-            { name = "default:bucket_empty", count = 1 },
-            { name = "default:glow_stick", count = 12 }
-        },
-        time = 1,
-    },
-    {
-        input = {
             { name = "default:aluminium", count = 4 },
             { name = "default:oxygen_balloon", count = 1 },
         },
@@ -235,6 +151,83 @@ furnace_crafts = {
             { name = "default:empty_balloon", count = 1 },
         },
         time = 3,
+    },
+}
+
+furnace_crafts = {
+    {
+        input = {
+            { name = "default:aluminium_ingot", count = 5 }
+        },
+        output = {
+            { name = "default:bucket_empty", count = 1 }
+        },
+        time = 8
+    },
+    {
+        input = {
+            { name = "default:zinc_ingot", count = 4 }
+        },
+        output = {
+            { name = "default:bucket_empty", count = 1 }
+        },
+        time = 10
+    },
+    {
+        input = {
+            { name = "default:aluminium_ingot", count = 3 }
+        },
+        output = {
+            { name = "default:empty_balloon", count = 1 }
+        },
+        time = 3
+    },
+    {
+        input = {
+            { name = "default:aluminium_ingot", count = 2 }
+        },
+        output = {
+            { name = "default:aluminium_brick_mold", count = 1 }
+        },
+        time = 3
+    },
+    {
+        input = {
+            { name = "default:copper_ingot", count = 3 }
+        },
+        output = {
+            { name = "default:copper_hammer_head", count = 1 }
+        },
+        time = 3
+    },
+    {
+        input = {
+            { name = "default:aluminium_ingot", count = 1 }
+        },
+        output = {
+            { name = "default:aluminium_case", count = 1 }
+        },
+        time = 3
+    },
+    {
+        input = {
+            { name = "default:bucket_empty", count = 1 },
+            { name = "default:mercury", count = 1 }
+        },
+        output = {
+            { name = "default:bucket_mercury" }
+        },
+        time = 5,
+    },
+    {
+        input = {
+            { name = "default:bucket_lucidum", count = 1 },
+        },
+        output = {
+            { name = "default:bucket_empty", count = 1 },
+            { name = "default:glow_stick", count = 12 }
+        },
+        time = 1,
     },
     {
         input = {
@@ -258,7 +251,7 @@ for name, params in pairs(ores) do
         output = { name = "default:" .. name, count = 1 }
     end
 
-    table.insert(furnace_crafts, {
+    table.insert(refiner_crafts, {
         input = {
             { name = "default:" .. name .. "_cinnabar", count = 1 }
         },
@@ -267,7 +260,7 @@ for name, params in pairs(ores) do
         },
         time = 3
     })
-    table.insert(furnace_crafts, {
+    table.insert(refiner_crafts, {
         input = {
             { name = "default:" .. name .. "_azure", count = 1 }
         },
@@ -278,7 +271,7 @@ for name, params in pairs(ores) do
     })
 
     if params.has_ingot then
-        table.insert(inv_crafts, {
+        table.insert(refiner_crafts, {
             input = {
                 { name = "default:" .. name .. "_ingot", count = 9 }
             },
@@ -288,7 +281,7 @@ for name, params in pairs(ores) do
             time = 4,
         })
 
-        table.insert(inv_crafts, {
+        table.insert(refiner_crafts, {
             input = {
                 { name = "default:" .. name, count = 1 }
             },
