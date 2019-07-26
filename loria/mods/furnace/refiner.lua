@@ -146,6 +146,10 @@ minetest.register_node("furnace:refiner_item", {
     node_box = rolled_refiner_box,
     selection_box = rolled_refiner_box,
 
+    on_construct = function(pos)
+        minetest.get_meta(pos):set_string("infotext", "Right click to unroll")
+    end,
+
     on_rightclick = function(pos, node, clicker, itemstack, pointed_thing)
         if (not pointed_thing) or pointed_thing.type ~= "node" then
             return
