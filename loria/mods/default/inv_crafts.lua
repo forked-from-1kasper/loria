@@ -15,6 +15,16 @@ ores = {
         formula = "Cu", has_ingot = true,
         azure = true, cinnabar = true
     },
+    ["cuprous_oxide"] = {
+        formula = "Cu2O", has_ingot = false,
+        azure = true, cinnabar = false,
+        y_min = -70, y_max = 0,
+    },
+    ["platinum"] = {
+        formula = "Pt", has_ingot = true,
+        azure = true, cinnabar = true,
+        y_min = -300, y_max = -150,
+    },
     ["uranium_tetrachloride"] = { -- 234
         formula = "UCl4", has_ingot = false,
         azure = true, cinnabar = true

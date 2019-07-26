@@ -109,23 +109,3 @@ minetest.register_decoration({
     height = 1,
     y_min = -20,
 })
-
-minetest.register_ore({
-    ore_type       = "blob",
-    ore            = "default:cuprous_oxide",
-    wherein        = "default:cobalt_blue",
-    clust_scarcity = 16 * 16 * 16,
-    clust_num_ores = 3,
-    clust_size     = 3,
-    y_min          = -200,
-    y_max          = 10,
-    noise_threshold = 0.0,
-    noise_params    = {
-        offset = 0.5,
-        scale = 0.2,
-        spread = { x = 3, y = 3, z = 3 },
-        seed = 17676,
-        octaves = 1,
-        persist = 0.0
-    }
-})

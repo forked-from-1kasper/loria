@@ -45,6 +45,10 @@ chlorine = {
         ["default:mercury_flowing"] = {
             result = "default:mercury_chloride"
         },
+        ["default:glow_stick"] = {
+            result = "default:blowed_out_glow_stick",
+            gas = "default:chlorine"
+        }
     },
 }
 
@@ -109,6 +113,10 @@ fluorine = {
             result = "default:mercury_fluoride",
             gas = "default:oxygen"
         },
+        ["default:glow_stick"] = {
+            result = "default:blowed_out_glow_stick",
+            gas = "default:fluorine"
+        }
     },
 }
 

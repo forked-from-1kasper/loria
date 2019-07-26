@@ -61,13 +61,6 @@ minetest.register_node("default:copper_oxide", {
     drop = 'default:copper_oxide'
 })
 
-minetest.register_node("default:cuprous_oxide", {
-    description = "Copper (I) oxide (Cu2O)",
-    tiles = { "default_cuprous_oxide.png" },
-    groups = { crumbly = 2 },
-    drop = 'default:cuprous_oxide'
-})
-
 minetest.register_node("default:copper_sulfate_pure", {
     description = "Copper (II) sulfate (CuSO4)",
     tiles = { "default_copper_sulfate_pure.png" },
@@ -204,6 +197,31 @@ minetest.register_node("default:red_mercury_oxide", {
     drop = 'default:red_mercury_oxide'
 })
 
+minetest.register_node("default:blowed_out_glow_stick", {
+    description = "Blowed out glow stick",
+    drawtype = "torchlike",
+    tiles = {
+        "default_blowed_out_glow_stick_on_floor.png",
+        "default_blowed_out_glow_stick_on_ceiling.png",
+        "default_blowed_out_glow_stick.png"
+    },
+    inventory_image = "default_blowed_out_glow_stick_on_floor.png",
+    wield_image = "default_blowed_out_glow_stick_on_floor.png",
+    paramtype = "light",
+    paramtype2 = "wallmounted",
+    sunlight_propagates = true,
+    is_ground_content = false,
+    walkable = false,
+    selection_box = {
+        type = "wallmounted",
+        wall_top = {-0.1, 0.5-0.6, -0.1, 0.1, 0.5, 0.1},
+        wall_bottom = {-0.1, -0.5, -0.1, 0.1, -0.5+0.6, 0.1},
+        wall_side = {-0.5, -0.3, -0.1, -0.5+0.3, 0.3, 0.1},
+    },
+    groups = { choppy = 2, dig_immediate = 3, attached_node = 1 },
+    legacy_wallmounted = true,
+})
+
 minetest.register_node("default:glow_stick", {
     description = "Glow stick",
     drawtype = "torchlike",
@@ -222,7 +240,7 @@ minetest.register_node("default:glow_stick", {
         wall_bottom = {-0.1, -0.5, -0.1, 0.1, -0.5+0.6, 0.1},
         wall_side = {-0.5, -0.3, -0.1, -0.5+0.3, 0.3, 0.1},
     },
-    groups = { choppy = 2, dig_immediate = 3, attached_node=1 },
+    groups = { choppy = 2, dig_immediate = 3, attached_node = 1 },
     legacy_wallmounted = true,
 })
 

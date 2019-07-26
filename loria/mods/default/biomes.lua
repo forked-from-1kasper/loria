@@ -25,7 +25,7 @@ minetest.register_biome({
     depth_top = 1,
     node_filler = "default:mercury_oxide",
     depth_filler = 1,
-    y_min = 5,
+    y_min = -31000,
     y_max = 31000,
     heat_point = 50,
     humidity_point = 50,
