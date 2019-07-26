@@ -280,3 +280,55 @@ for name, params in pairs(small_mushrooms) do
         })
     end
 end
+
+terribilis_names = {
+    chloric = { gas = "default:chlorine" },
+    fluoro = { gas = "default:fluorine" },
+}
+
+for name, params in pairs(terribilis_names) do
+    minetest.register_node("default:terribilis_" .. name, {
+        description = "Terribilis " .. name,
+        tiles = {
+            "default_cobalt_blue.png^default_terribilis_" .. name .. ".png"
+        },
+        groups = { cracky = 2 },
+
+        on_punch = function(pos, node, puncher, pointed_thing)
+            for _, dir in ipairs(neighbors) do
+                local vect = vector.add(pos, dir)
+                if minetest.get_node(vect).name == "air" then
+                    minetest.set_node(vect, {
+                        name = params.gas, param2 = params.value or 200
+                    })
+                end
+            end
+        end,
+
+        after_destruct = function(pos, oldnode)
+            minetest.set_node(pos, { name = "default:cobalt_blue" })
+        end,
+
+        drop = "",
+    })
+
+    minetest.register_ore({
+        ore_type       = "blob",
+        ore            = "default:terribilis_" .. name,
+        wherein        = "default:cobalt_blue",
+        clust_scarcity = 16 * 16 * 16,
+        clust_num_ores = 50,
+        clust_size     = 3,
+        y_min          = params.y_min or -400,
+        y_max          = params.y_max or 400,
+        noise_threshold = 0.0,
+        noise_params    = {
+            offset = 0.5,
+            scale = 0.2,
+            spread = { x = 3, y = 3, z = 3 },
+            seed = 17676,
+            octaves = 1,
+            persist = 0.0
+        }
+    })
+end

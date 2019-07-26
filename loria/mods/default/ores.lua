@@ -88,7 +88,7 @@ for name, params in pairs(liquid_ores) do
         y_min          = params.y_min or -10,
         y_max          = params.y_max or 80,
     })
-    
+
     minetest.register_ore({
         ore_type       = "scatter",
         ore            = "default:" .. name .. "_cobalt_blue",
