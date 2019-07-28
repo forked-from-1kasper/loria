@@ -44,11 +44,22 @@ local function is_furnace_ready(pos)
       meta:get_int("switch") == 1
 end
 
+local function reset_sound(pos)
+    minetest.sound_stop(minetest.get_meta(pos):get_int("sound"))
+    minetest.get_meta(pos):set_int(
+        "sound", minetest.sound_play("refiner", { pos = pos })
+    )
+end
+
 local conf = {
     name = "refiner",
     description = "Refiner",
     lists = { gas = 1, fuel = 1 },
-    on_tick = { update_fuel, update_gas },
+    on_tick = {
+        update_fuel, update_gas,
+        and_then(reset_sound, const(true))
+    },
+
     is_furnace_ready = is_furnace_ready,
     additional_formspec = function(meta)
         return
@@ -96,6 +107,7 @@ local conf = {
 
     after_stop = function(pos)
         minetest.get_meta(pos):set_int("switch", 0)
+        minetest.sound_stop(minetest.get_meta(pos):get_int("sound"))
     end,
 
     drop = "furnace:refiner_item",
