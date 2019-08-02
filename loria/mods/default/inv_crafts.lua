@@ -159,7 +159,7 @@ inv_crafts = {
     },
     {
         input = {
-            { name = "default:zinc", count = 1 },
+            { name = "default:zinc_ingot", count = 1 },
             { name = "default:bucket_hydrochloric_acid", count = 2 },
             { name = "default:empty_balloon", count = 1 },
         },
@@ -171,7 +171,7 @@ inv_crafts = {
     },
     {
         input = {
-            { name = "default:aluminium", count = 1 },
+            { name = "default:aluminium_ingot", count = 1 },
             { name = "default:bucket_hydrochloric_acid", count = 3 },
             { name = "default:empty_balloon", count = 1 },
         },
