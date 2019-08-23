@@ -3,7 +3,7 @@ local night_color = { r = 0, g = 0, b = 16 }
 
 local colors = {
     [minetest.get_biome_id("default:redland")] = { r = 255, g = 200, b = 150 },
-    [minetest.get_biome_id("default:purple_swamp")] = { r = 190, g = 105, b = 255 },
+    [minetest.get_biome_id("default:purple_swamp")] = { r = 190, g = 155, b = 255 },
 }
 
 local sunrise = { start = 4500/24000, finish = 5751/24000 }
