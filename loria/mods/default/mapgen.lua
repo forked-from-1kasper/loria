@@ -66,6 +66,19 @@ minetest.register_decoration({
     y_min = -20,
 })
 
+max_veteris_height = 8
+minetest.register_decoration({
+    deco_type = "simple",
+    place_on = "default:sodium_peroxide",
+    sidelen = 16,
+    fill_ratio = 0.05,
+    biomes = "default:acidic_landscapes",
+    decoration = "default:veteris",
+    height = 1,
+    height_max = max_veteris_height,
+    y_min = -20,
+})
+
 for name, params in pairs(ores) do
     if params.azure then
         minetest.register_ore({

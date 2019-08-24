@@ -60,6 +60,18 @@ minetest.register_node("default:lectica", {
     sunlight_propagates = true,
 })
 
+minetest.register_node("default:veteris", {
+    description = "Veteris",
+    drawtype = "plantlike",
+    tiles = { "default_veteris.png" },
+    wield_image = "default_veteris.png",
+    inventory_image = "default_veteris.png",
+    paramtype = "light",
+    walkable = false,
+    groups = { snappy = 3, column = 1 },
+    sunlight_propagates = true,
+})
+
 pars_names = {
     "ordinarius",
     "insignis",
