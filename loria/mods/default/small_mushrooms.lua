@@ -48,6 +48,18 @@ for i, name in ipairs(truncus_names) do
     })
 end
 
+minetest.register_node("default:lectica", {
+    description = "Lectica",
+    drawtype = "plantlike",
+    tiles = { "default_lectica.png" },
+    wield_image = "default_lectica.png",
+    inventory_image = "default_lectica.png",
+    paramtype = "light",
+    walkable = false,
+    groups = { snappy = 3, column = 1 },
+    sunlight_propagates = true,
+})
+
 pars_names = {
     "ordinarius",
     "insignis",
@@ -88,6 +100,30 @@ for i, name in ipairs(petite_names) do
         sunlight_propagates = true,
     })
 end
+
+minetest.register_node("default:imitationis", {
+    description = "Imitationis",
+    drawtype = "plantlike",
+    tiles = { "default_imitationis.png" },
+    wield_image = "default_imitationis.png",
+    inventory_image = "default_imitationis.png",
+    paramtype = "light",
+    walkable = false,
+    groups = { snappy = 3, attached_node = 1 },
+    sunlight_propagates = true,
+})
+
+minetest.register_node("default:nihil", {
+    description = "Nihil",
+    drawtype = "plantlike",
+    tiles = { "default_nihil.png" },
+    wield_image = "default_nihil.png",
+    inventory_image = "default_nihil.png",
+    paramtype = "light",
+    walkable = false,
+    groups = { snappy = 3, attached_node = 1 },
+    sunlight_propagates = true,
+})
 
 minetest.register_node("default:viriditas", {
     description = "Viriditas",

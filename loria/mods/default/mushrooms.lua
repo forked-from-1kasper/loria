@@ -26,6 +26,11 @@ local c_red_mercury_oxide = minetest.get_content_id("default:red_mercury_oxide")
 local c_colossus_stem = minetest.get_content_id("default:colossus_stem")
 local c_colossus_body = minetest.get_content_id("default:colossus_body")
 
+local c_sodium_peroxide = minetest.get_content_id("default:sodium_peroxide")
+
+local c_altitudo_stem = minetest.get_content_id("default:altitudo_stem")
+local c_altitudo_body = minetest.get_content_id("default:altitudo_body")
+
 viridi_petasum = {
     min_height = 7,
     max_height = 30,
@@ -56,6 +61,29 @@ colossus = {
     max_radius = 20
 }
 
+altitudo = {
+    min_height = 3,
+    max_height = 6,
+    min_radius = 5,
+    max_radius = 7,
+    radius_delta = 4,
+    second_hat = 2,
+}
+
+local function generate_hat(x, y, z, height, radius, data, area, obj)
+    local t = 0
+    while t < 2 * math.pi do
+        for k = 1, radius do
+            local delta_x = math.floor(k * math.cos(t))
+            local delta_z = math.floor(k * math.sin(t))
+
+            data[area:index(x + delta_x, y + height, z + delta_z)] = obj
+        end
+
+        t = t + 0.4
+    end
+end
+
 local function generate_viridi_petasum(x, y, z, g, data, area)
     local height = g:next(viridi_petasum.min_height, viridi_petasum.max_height)
     local radius = g:next(viridi_petasum.min_radius, math.floor(height / 2))
@@ -71,17 +99,7 @@ local function generate_viridi_petasum(x, y, z, g, data, area)
     end
 
     -- body
-    local t = 0
-    while t < 2 * math.pi do
-        for k = 1, radius do
-            local delta_x = math.floor(k * math.cos(t))
-            local delta_z = math.floor(k * math.sin(t))
-
-            data[area:index(x + delta_x, y + height, z + delta_z)] = c_viridi_body
-        end
-
-        t = t + 0.4
-    end
+    generate_hat(x, y, z, height, radius, data, area, c_viridi_body)
 end
 
 local function generate_rete(x, y, z, g, data, area)
@@ -145,6 +163,33 @@ local function generate_colossus(x, y, z, g, data, area)
 
     for k = 1, radius do
 
+    end
+end
+
+local function generate_altitudo(x, y, z, g, data, area)
+    local height = g:next(altitudo.min_height, altitudo.max_height)
+    local radius = g:next(altitudo.min_radius, altitudo.max_radius)
+
+    if not (area:contains(x - radius, y, z - radius)) or
+       not (area:contains(x + radius, y + height, z + radius)) then
+        return
+    end
+
+    -- stem
+    for k = -height, height do
+        data[area:index(x, y + k, z)] = c_altitudo_stem
+    end
+
+    -- body
+    generate_hat(x, y, z, height, radius, data, area, c_altitudo_body)
+
+    if height >= 5 then
+        generate_hat(
+            x, y, z,
+            height - altitudo.second_hat,
+            radius - altitudo.radius_delta,
+            data, area, c_altitudo_body
+        )
     end
 end
 
@@ -215,9 +260,12 @@ mushrooms = {
         { func = generate_column, prob = 1 },
         { func = generate_turris, prob = 1 },
     },
+    [c_sodium_peroxide] = {
+        { func = generate_altitudo, prob = 0.1 },
+    },
     --[c_red_mercury_oxide] = {
     --    { func = generate_colossus, prob = 0.001 },
-    --}
+    --},
 }
 
 minetest.register_on_generated(function(minp0, maxp0, seed)

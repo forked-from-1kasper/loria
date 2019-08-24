@@ -53,6 +53,19 @@ for i, _ in ipairs(truncus_names) do
     })
 end
 
+max_lectica_height = 5
+minetest.register_decoration({
+    deco_type = "simple",
+    place_on = "default:sodium_peroxide",
+    sidelen = 16,
+    fill_ratio = 0.05,
+    biomes = "default:acidic_landscapes",
+    decoration = "default:lectica",
+    height = 1,
+    height_max = max_lectica_height,
+    y_min = -20,
+})
+
 for name, params in pairs(ores) do
     if params.azure then
         minetest.register_ore({
@@ -106,6 +119,28 @@ minetest.register_decoration({
     fill_ratio = 0.01,
     biomes = "default:mercury_ocean",
     decoration = "default:viriditas",
+    height = 1,
+    y_min = -20,
+})
+
+minetest.register_decoration({
+    deco_type = "simple",
+    place_on = "default:sodium_peroxide",
+    sidelen = 16,
+    fill_ratio = 0.05,
+    biomes = "default:acidic_landscapes",
+    decoration = "default:imitationis",
+    height = 1,
+    y_min = -20,
+})
+
+minetest.register_decoration({
+    deco_type = "simple",
+    place_on = "default:sodium_peroxide",
+    sidelen = 16,
+    fill_ratio = 0.06,
+    biomes = "default:acidic_landscapes",
+    decoration = "default:nihil",
     height = 1,
     y_min = -20,
 })

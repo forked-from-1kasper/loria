@@ -35,6 +35,20 @@ minetest.register_biome({
 })
 
 minetest.register_biome({
+    name = "default:acidic_landscapes",
+    node_top = "default:sodium_peroxide",
+    depth_top = 5,
+    node_stone = "default:chromia",
+    y_min = -31000,
+    y_max = 31000,
+    heat_point = 60,
+    humidity_point = 50,
+
+    node_riverbed = "default:lead_sulfate",
+    depth_riverbed = 4,
+})
+
+minetest.register_biome({
     name = "default:azure",
     node_top = "default:copper_sulfate",
     depth_top = 2,

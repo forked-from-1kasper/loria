@@ -41,6 +41,9 @@ minetest.register_on_mods_loaded(function()
         [cid("default:polluted_mercury_source")] = { alpha = 5, beta = 2.3, gamma = 0 },
         [cid("default:polluted_mercury_flowing")] = { alpha = 5, beta = 2.3, gamma = 0 },
         [cid("furnace:refiner_active")] = { alpha = 0, beta = 0, gamma = 0.3 },
+        [cid("default:imitationis")] = { alpha = 0, beta = 0, gamma = 0.05 },
+        [cid("default:nihil")] = { alpha = 0, beta = 0, gamma = 0.01 },
+        [cid("default:lectica")] = { alpha = 0, beta = 0, gamma = 0.07 },
     }
 end)
 

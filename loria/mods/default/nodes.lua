@@ -152,6 +152,20 @@ minetest.register_node("default:lead_sulfate", {
     drop = 'default:lead_sulfate'
 })
 
+minetest.register_node("default:sodium_peroxide", {
+    description = "Sodium peroxide (Na2O2)",
+    tiles = { "default_sodium_peroxide.png" },
+    groups = { crumbly = 3 },
+    drop = 'default:sodium_peroxide'
+})
+
+minetest.register_node("default:chromia", {
+    description = "Chromium (III) oxide (Cr2O3)",
+    tiles = { "default_chromia.png" },
+    groups = { crumbly = 1 },
+    drop = 'default:chromia'
+})
+
 minetest.register_node("default:lead_oxide", {
     description = "Lead (II) oxide (PbO)",
     tiles = { "default_lead_oxide.png" },

@@ -27,6 +27,20 @@ minetest.register_node("default:colossus_body", {
     drop = 'default:colossus_body'
 })
 
+minetest.register_node("default:altitudo_stem", {
+    description = "Altitudo stem",
+    tiles = { "default_altitudo_stem.png" },
+    groups = { cracky = 1 },
+    drop = 'default:altitudo_stem'
+})
+
+minetest.register_node("default:altitudo_body", {
+    description = "Altitudo body",
+    tiles = { "default_altitudo_body.png" },
+    groups = { cracky = 1 },
+    drop = 'default:altitudo_body'
+})
+
 minetest.register_node("default:turris_stem", {
     description = "Turris stem",
     tiles = { "default_turris_stem.png" },
