@@ -183,7 +183,7 @@ local function generate_altitudo(x, y, z, g, data, area)
     -- body
     generate_hat(x, y, z, height, radius, data, area, c_altitudo_body)
 
-    if height >= 5 then
+    if height >= altitudo.min_height + altitudo.second_hat then
         generate_hat(
             x, y, z,
             height - altitudo.second_hat,

@@ -148,14 +148,14 @@ minetest.register_node("default:mercury_fluoride", {
 minetest.register_node("default:lead_sulfate", {
     description = "Lead (II) sulfate (PbSO4)",
     tiles = { "default_lead_sulfate.png" },
-    groups = { crumbly = 2 },
+    groups = { crumbly = 1 },
     drop = 'default:lead_sulfate'
 })
 
 minetest.register_node("default:sodium_peroxide", {
     description = "Sodium peroxide (Na2O2)",
     tiles = { "default_sodium_peroxide.png" },
-    groups = { crumbly = 3 },
+    groups = { crumbly = 2 },
     drop = 'default:sodium_peroxide'
 })
 
