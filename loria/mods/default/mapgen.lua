@@ -11,6 +11,32 @@ for i, _ in ipairs(pars_names) do
     })
 end
 
+for i, _ in ipairs(odorantur_names) do
+    minetest.register_decoration({
+        deco_type = "simple",
+        place_on = "default:sodium_peroxide",
+        sidelen = 16,
+        fill_ratio = 0.1,
+        biomes = "default:acidic_landscapes",
+        decoration = "default:odorantur_" .. i,
+        height = 1,
+        y_min = -20,
+    })
+end
+
+for i, _ in ipairs(qui_lucem_names) do
+    minetest.register_decoration({
+        deco_type = "simple",
+        place_on = "default:nickel_nitrate",
+        sidelen = 16,
+        fill_ratio = 0.05,
+        biomes = "default:reptile_house",
+        decoration = "default:qui_lucem_" .. i,
+        height = 1,
+        y_min = -20,
+    })
+end
+
 for i, _ in ipairs(petite_names) do
     minetest.register_decoration({
         deco_type = "simple",

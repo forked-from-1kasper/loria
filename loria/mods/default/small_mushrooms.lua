@@ -94,6 +94,27 @@ for i, name in ipairs(pars_names) do
     })
 end
 
+odorantur_names = {
+    "comantem",
+    "aspero",
+    "aequaliter",
+    "agrariae"
+}
+
+for i, name in ipairs(odorantur_names) do
+    minetest.register_node("default:odorantur_" .. i, {
+        description = "Odorantur " .. name,
+        drawtype = "plantlike",
+        tiles = { "default_odorantur_" .. i .. ".png" },
+        wield_image = "default_odorantur_" .. i .. ".png",
+        inventory_image = "default_odorantur_" .. i .. ".png",
+        paramtype = "light",
+        walkable = false,
+        groups = { snappy = 3, attached_node = 1 },
+        sunlight_propagates = true,
+    })
+end
+
 petite_names = {
     "longus",
     "humilis"
@@ -106,6 +127,25 @@ for i, name in ipairs(petite_names) do
         tiles = { "default_petite_" .. i .. ".png" },
         wield_image = "default_petite_" .. i .. ".png",
         inventory_image = "default_petite_" .. i .. ".png",
+        paramtype = "light",
+        walkable = false,
+        groups = { snappy = 3, attached_node = 1 },
+        sunlight_propagates = true,
+    })
+end
+
+qui_lucem_names = {
+    "vulgaris",
+    "genu"
+}
+
+for i, name in ipairs(qui_lucem_names) do
+    minetest.register_node("default:qui_lucem_" .. i, {
+        description = "Qui lucem " .. name,
+        drawtype = "plantlike",
+        tiles = { "default_qui_lucem_" .. i .. ".png" },
+        wield_image = "default_qui_lucem_" .. i .. ".png",
+        inventory_image = "default_qui_lucem_" .. i .. ".png",
         paramtype = "light",
         walkable = false,
         groups = { snappy = 3, attached_node = 1 },
@@ -252,7 +292,12 @@ small_mushrooms = {
         biomes = "default:purple_swamp",
     },
     ["pulchram"] = { damage = 3 },
-    ["conc"] = { damage = 16 }
+    ["conc"] = {
+        damage = 16,
+        place_on = "default:sodium_peroxide",
+        fill_ratio = 0.01,
+        biomes = "default:acidic_landscapes",
+    }
 }
 
 for name, params in pairs(small_mushrooms) do

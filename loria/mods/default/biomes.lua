@@ -35,6 +35,20 @@ minetest.register_biome({
 })
 
 minetest.register_biome({
+    name = "default:reptile_house",
+    node_top = "default:nickel_nitrate",
+    depth_top = 2,
+    node_stone = "default:chromium_fluoride",
+    y_min = -31000,
+    y_max = 31000,
+    heat_point = 90,
+    humidity_point = 50,
+
+    node_riverbed = "default:lead_sulfate",
+    depth_riverbed = 4,
+})
+
+minetest.register_biome({
     name = "default:acidic_landscapes",
     node_top = "default:sodium_peroxide",
     depth_top = 5,

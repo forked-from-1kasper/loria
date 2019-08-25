@@ -159,11 +159,39 @@ minetest.register_node("default:sodium_peroxide", {
     drop = 'default:sodium_peroxide'
 })
 
+minetest.register_node("default:cobalt_sulfate", {
+    description = "Cobalt sulfate (CoSO4)",
+    tiles = { "default_cobalt_sulfate.png" },
+    groups = { crumbly = 2 },
+    drop = 'default:cobalt_sulfate'
+})
+
 minetest.register_node("default:chromia", {
     description = "Chromium (III) oxide (Cr2O3)",
     tiles = { "default_chromia.png" },
     groups = { crumbly = 1 },
     drop = 'default:chromia'
+})
+
+minetest.register_node("default:chromium_trioxide", {
+    description = "Chromium trioxide (CrO3)",
+    tiles = { "default_chromium_trioxide.png" },
+    groups = { cracky = 2 },
+    drop = 'default:chromium_trioxide'
+})
+
+minetest.register_node("default:nickel_nitrate", {
+    description = "Nickel (II) nitrate (Ni(NO3)2)",
+    tiles = { "default_nickel_nitrate.png" },
+    groups = { crumbly = 1 },
+    drop = 'default:nickel_nitrate'
+})
+
+minetest.register_node("default:chromium_fluoride", {
+    description = "Chromium (III) fluoride (CrF3)",
+    tiles = { "default_chromium_fluoride.png" },
+    groups = { cracky = 2 },
+    drop = 'default:chromium_fluoride'
 })
 
 minetest.register_node("default:lead_oxide", {

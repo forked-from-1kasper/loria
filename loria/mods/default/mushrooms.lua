@@ -31,6 +31,11 @@ local c_sodium_peroxide = minetest.get_content_id("default:sodium_peroxide")
 local c_altitudo_stem = minetest.get_content_id("default:altitudo_stem")
 local c_altitudo_body = minetest.get_content_id("default:altitudo_body")
 
+local c_nickel_nitrate = minetest.get_content_id("default:nickel_nitrate")
+
+local c_timor_stem = minetest.get_content_id("default:timor_stem")
+local c_timor_body = minetest.get_content_id("default:timor_body")
+
 viridi_petasum = {
     min_height = 7,
     max_height = 30,
@@ -68,6 +73,15 @@ altitudo = {
     max_radius = 7,
     radius_delta = 4,
     second_hat = 2,
+}
+
+timor = {
+    min_height = 7,
+    max_height = 20,
+    min_radius = 10,
+    max_radius = 60,
+    min_hat_count = 3,
+    max_hat_count = 5,
 }
 
 local function generate_hat(x, y, z, height, radius, data, area, obj)
@@ -247,6 +261,30 @@ local function generate_turris(x, y, z, g, data, area)
     end
 end
 
+local function generate_timor(x, y, z, g, data, area)
+    local height = g:next(timor.min_height, timor.max_height)
+    local radius = g:next(timor.min_radius, timor.max_radius)
+    local hat_count = g:next(timor.min_hat_count, timor.max_hat_count)
+
+    if not (area:contains(x - radius, y, z - radius)) or
+       not (area:contains(x + radius, y + height, z + radius)) then
+        return
+    end
+
+    for k = 1, height do
+        data[area:index(x, y + k, z)] = c_timor_stem
+    end
+
+    for k = 0, hat_count do
+        generate_hat(
+            x, y, z,
+            height - k * 2,
+            radius - k * 2,
+            data, area, c_timor_body
+        )
+    end
+end
+
 mushrooms = {
     [c_copper_sulfate] = {
         { func = generate_viridi_petasum, prob = 1 },
@@ -263,6 +301,9 @@ mushrooms = {
     [c_sodium_peroxide] = {
         { func = generate_altitudo, prob = 0.1 },
     },
+    [c_nickel_nitrate] = {
+        { func = generate_timor, prob = 0.1 },
+    }
     --[c_red_mercury_oxide] = {
     --    { func = generate_colossus, prob = 0.001 },
     --},
