@@ -268,7 +268,12 @@ small_mushrooms = {
         fill_ratio = 0.01,
         biomes = "default:purple_swamp",
     },
-    ["vastatorem"] = { features = { light_source = 8 } },
+    ["vastatorem"] = {
+        features = { light_source = 8 },
+        place_on = "default:nickel_nitrate",
+        fill_ratio = 0.005,
+        biomes = "default:reptile_house",
+    },
     ["quercu"] = {
         damage = 7,
         place_on = {
