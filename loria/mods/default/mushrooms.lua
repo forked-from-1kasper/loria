@@ -168,16 +168,28 @@ local function generate_colossus(x, y, z, g, data, area)
     local height = g:next(colossus.min_height, colossus.max_height)
     local radius = g:next(colossus.min_radius, colossus.max_radius)
 
+    if not (area:contains(x - radius, y, z - radius)) or
+       not (area:contains(x + radius, y + height, z + radius)) then
+       return
+    end
+
     for k = -height, height do
-        data[area:index(x, y + k, z)] = c_colossus_stem
-        data[area:index(x + 1, y + k, z)] = c_colossus_stem
-        data[area:index(x, y + k, z + 1)] = c_colossus_stem
-        data[area:index(x + 1, y + k, z + 1)] = c_colossus_stem
+        for delta_x = -1, 1 do
+            for delta_z = -1, 1 do
+                x1, y1, z1 = x + delta_x, y + k, z + delta_z
+                if math.abs(delta_x * delta_z) ~= 1 and
+                   area:contains(x1, y1, z1) then
+                    data[area:index(x1, y1, z1)] = c_colossus_stem
+                end
+            end
+        end
+        x = x + g:next(-1, 1)
+        z = z + g:next(-1, 1)
     end
 
-    for k = 1, radius do
-
-    end
+    generate_hat(x, y, z, height, radius,
+        data, area, c_colossus_body
+    )
 end
 
 local function generate_altitudo(x, y, z, g, data, area)
@@ -300,13 +312,11 @@ mushrooms = {
     },
     [c_sodium_peroxide] = {
         { func = generate_altitudo, prob = 0.1 },
+        { func = generate_colossus, prob = 0.1 },
     },
     [c_nickel_nitrate] = {
         { func = generate_timor, prob = 0.1 },
     }
-    --[c_red_mercury_oxide] = {
-    --    { func = generate_colossus, prob = 0.001 },
-    --},
 }
 
 minetest.register_on_generated(function(minp0, maxp0, seed)
