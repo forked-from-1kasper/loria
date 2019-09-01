@@ -176,7 +176,7 @@ local function generate_colossus(x, y, z, g, data, area)
     for k = -height, height do
         for delta_x = -1, 1 do
             for delta_z = -1, 1 do
-                x1, y1, z1 = x + delta_x, y + k, z + delta_z
+                local x1, y1, z1 = x + delta_x, y + k, z + delta_z
                 if math.abs(delta_x * delta_z) ~= 1 and
                    area:contains(x1, y1, z1) then
                     data[area:index(x1, y1, z1)] = c_colossus_stem
