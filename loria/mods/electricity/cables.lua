@@ -58,4 +58,6 @@ function register_cable(conf)
     end
 end
 
-register_cable({ name = "aluminium", resis = 0.01 })
+for _, conf in ipairs(cables) do
+    register_cable(conf)
+end

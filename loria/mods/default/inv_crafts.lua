@@ -45,6 +45,11 @@ ores = {
 
 giant_mushrooms = { "viridi_petasum", "colossus", "turris", "rete" }
 
+cables = {
+    { name = "copper", resis = 0.005 },
+    { name = "aluminium", resis = 0.01 }
+}
+
 brickable = {
     ["default:cinnabar"] = { crumbly = true },
     ["default:plutonium_dioxide"] = { crumbly = false },
@@ -195,14 +200,16 @@ inv_crafts = {
     },
 }
 
-table.insert(inv_crafts, {
-    input = {
-        { name = "default:aluminium_ingot", count = 1 },
-    },
-    output = {
-        { name = "electricity:aluminium_cable", count = 15 }
-    }
-})
+for _, conf in ipairs(cables) do
+    table.insert(inv_crafts, {
+        input = {
+            { name = "default:" .. conf.name .. "_ingot", count = 1 },
+        },
+        output = {
+            { name = "electricity:" .. conf.name .. "_cable", count = 15 }
+        }
+    })
+end
 
 for _, mushroom in ipairs(giant_mushrooms) do
     table.insert(inv_crafts, {
