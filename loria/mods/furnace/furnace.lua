@@ -47,14 +47,6 @@ function check_and_stop_furnace(conf, pos)
     end
 end
 
-function add_or_drop(inv, listname, stack, pos)
-    if inv:room_for_item(listname, stack) then
-        inv:add_item(listname, stack)
-    else
-        minetest.add_item(pos, stack)
-    end
-end
-
 function furnace_on_timer(conf)
     return (function(pos, elapsed)
         local meta = minetest.get_meta(pos)

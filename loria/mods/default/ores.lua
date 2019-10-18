@@ -100,3 +100,14 @@ for name, params in pairs(liquid_ores) do
         y_max          = params.y_max or 80,
     })
 end
+
+minetest.register_ore({
+    ore_type       = "scatter",
+    ore            = "default:sulfur",
+    wherein        = "default:chromium_fluoride",
+    clust_scarcity = 8 * 8 * 8,
+    clust_num_ores = 8,
+    clust_size     = 7,
+    y_min          = -200,
+    y_max          = 120,
+})

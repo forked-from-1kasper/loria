@@ -76,6 +76,14 @@ function swap_node(pos, name)
     minetest.swap_node(pos, node)
 end
 
+function add_or_drop(inv, listname, stack, pos)
+    if inv:room_for_item(listname, stack) then
+        inv:add_item(listname, stack)
+    else
+        minetest.add_item(pos, stack)
+    end
+end
+
 function append(dest, source)
     for _, x in ipairs(source) do
         table.insert(dest, x)

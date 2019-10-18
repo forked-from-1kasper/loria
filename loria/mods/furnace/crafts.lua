@@ -46,6 +46,17 @@ refiner_crafts = {
     },
     {
         input = {
+            { name = "default:cinnabar", count = 1 },
+            { name = "default:bucket_empty", count = 1 }
+        },
+        output = {
+            { name = "default:sulfur", count = 1 },
+            { name = "default:bucket_mercury", count = 1 }
+        },
+        time = 5
+    },
+    {
+        input = {
             { name = "default:red_mercury_oxide", count = 2 },
             { name = "default:empty_balloon", count = 1 },
             { name = "default:bucket_empty", count = 2 }

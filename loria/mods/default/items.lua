@@ -107,7 +107,17 @@ minetest.register_tool("default:copper_hammer", {
         },
         damage_groups = { fleshy = 2 }
     },
+
     after_use = function(itemstack, user, node, digparams)
+        if brickable[node.name] ~= nil then
+            local inv = user:get_inventory()
+            add_or_drop(
+                inv, "main", { name = node.name .. "_brick", count = 1 },
+                vector.add(user:get_pos(), vector.new(0, 1, 0))
+            )
+            inv:remove_item("main", { name = node.name, count = 1 })
+        end
+
         if itemstack:get_wear() + digparams.wear >= 65535 then
             return { name = "default:stick", count = 1 }
         else

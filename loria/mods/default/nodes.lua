@@ -239,6 +239,13 @@ minetest.register_node("default:red_mercury_oxide", {
     drop = 'default:red_mercury_oxide'
 })
 
+minetest.register_node("default:sulfur", {
+    description = "Sulfur (S)",
+    tiles = { "default_sulfur.png" },
+    groups = { crumbly = 2 },
+    drop = 'default:sulfur'
+})
+
 minetest.register_node("default:blowed_out_glow_stick", {
     description = "Blowed out glow stick",
     drawtype = "torchlike",

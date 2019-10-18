@@ -221,20 +221,3 @@ for _, mushroom in ipairs(giant_mushrooms) do
         },
     })
 end
-
-for name, params in pairs(brickable) do
-    if params.crumbly then
-        table.insert(inv_crafts, {
-            input = {
-                { name = "default:aluminium_brick_mold", count = 5 },
-                { name = "default:copper_hammer", count = 1 },
-                { name = name, count = 1 },
-            },
-            output = {
-                { name = "default:aluminium_brick_mold", count = 5 },
-                { name = "default:copper_hammer", count = 1 },
-                { name = name .. "_brick", count = 1 },
-            }
-        })
-    end
-end
