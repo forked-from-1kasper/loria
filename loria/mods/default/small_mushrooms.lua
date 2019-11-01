@@ -136,7 +136,10 @@ end
 
 qui_lucem_names = {
     "vulgaris",
-    "genu"
+    "genu",
+    "hyacinthum",
+    "lucidum",
+    "fluctuatur"
 }
 
 for i, name in ipairs(qui_lucem_names) do

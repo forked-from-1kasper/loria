@@ -287,13 +287,19 @@ local function generate_timor(x, y, z, g, data, area)
         data[area:index(x, y + k, z)] = c_timor_stem
     end
 
-    for k = 0, hat_count do
-        generate_hat(
-            x, y, z,
-            height - k * 2,
-            radius - k * 2,
-            data, area, c_timor_body
-        )
+    for level = height, height - hat_count * 2, -2 do
+        local t = 0
+        while t < 2 * math.pi do
+            for k = 1, radius do
+                local delta_x = math.floor(k * math.cos(t))
+                local delta_z = math.floor(k * math.sin(t))
+
+                local idx = area:index(x + delta_x, y + level, z + delta_z)
+                data[idx] = c_timor_body
+            end
+    
+            t = t + math.random() / 2 + 0.1
+        end
     end
 end
 

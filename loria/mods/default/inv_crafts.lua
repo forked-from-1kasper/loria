@@ -15,6 +15,16 @@ ores = {
         formula = "Cu", has_ingot = true,
         azure = true, cinnabar = true
     },
+    ["wolfram"] = {
+        formula = "W", has_ingot = true,
+        y_max = -300, y_min = -1500,
+        azure = true, cinnabar = true
+    },
+    ["molybdenum"] = {
+        formula = "Mo", has_ingot = true,
+        y_max = -500, y_min = -800,
+        azure = true, cinnabar = true
+    },
     ["cuprous_oxide"] = {
         formula = "Cu2O", has_ingot = false,
         azure = true, cinnabar = false,
@@ -40,6 +50,11 @@ ores = {
     ["americium_trifluoride"] = { -- 243
         formula = "AmF3", has_ingot = false, y_min = -200,
         azure = false, cinnabar = true, light_source = 10,
+    },
+    ["magnetite"] = {
+        formula = "FeO * Fe2O3", has_ingot = false,
+        y_max = -200, y_min = -500,
+        azure = true, cinnabar = true,
     },
 }
 
