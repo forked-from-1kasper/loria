@@ -196,6 +196,15 @@ refiner_crafts = {
         },
         time = 3,
     },
+    {
+        input = {
+            { name = "default:wolfram_ingot", count = 1 },
+        },
+        output = {
+            { name = "default:wolfram_filament", count = 15 },
+        },
+        time = 25,
+    },
 }
 
 furnace_crafts = {

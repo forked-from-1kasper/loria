@@ -183,6 +183,12 @@ minetest.register_craftitem("default:aluminium_case", {
     stack_max = 16,
 })
 
+minetest.register_craftitem("default:wolfram_filament", {
+    inventory_image = "default_wolfram_filament.png",
+    description = "Wolfram filament",
+    stack_max = 30,
+})
+
 minetest.register_craftitem("default:empty_balloon", {
     inventory_image = "default_empty_balloon.png",
     description = "Empty balloon",

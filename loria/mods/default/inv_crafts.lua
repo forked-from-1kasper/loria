@@ -213,6 +213,17 @@ inv_crafts = {
             { name = "default:hydrogen_balloon", count = 1 },
         }
     },
+    {
+        input = {
+            { name = "default:lead_case", count = 1 },
+            { name = "default:wolfram_filament", count = 1 },
+            { name = "default:fused_quartz", count = 1 },
+            { name = "electricity:aluminium_cable", count = 1 },
+        },
+        output = {
+            { name = "electricity:lamp_off", count = 1 },
+        }
+    },
 }
 
 for _, conf in ipairs(cables) do
