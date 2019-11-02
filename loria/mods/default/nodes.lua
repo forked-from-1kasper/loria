@@ -194,6 +194,87 @@ minetest.register_node("default:chromium_fluoride", {
     drop = 'default:chromium_fluoride'
 })
 
+minetest.register_node("default:chromium_fluoride_capital", {
+    description = "Machined chromium fluoride (I)",
+    tiles = { "default_chromium_fluoride.png^default_capital.png" },
+    groups = { cracky = 1 },
+})
+
+minetest.register_node("default:chromium_fluoride_shaft", {
+    description = "Machined chromium fluoride (II)",
+    tiles = map(function(postfix)
+                    return "default_chromium_fluoride.png^" .. postfix
+                end,
+                { "default_shaft_top_bottom.png",
+                  "default_shaft_top_bottom.png",
+                  "default_shaft.png",
+                  "default_shaft.png",
+                  "default_shaft.png",
+                  "default_shaft.png" }),
+    groups = { cracky = 1 },
+    paramtype2 = "wallmounted",
+})
+
+minetest.register_node("default:chromium_fluoride_base", {
+    description = "Machined chromium fluoride (III)",
+    tiles = map(function(postfix)
+                    return "default_chromium_fluoride.png^" .. postfix
+                end,
+                { "default_base_top.png",
+                  "default_base_bottom.png",
+                  "default_base.png",
+                  "default_base.png",
+                  "default_base.png",
+                  "default_base.png" }),
+    groups = { cracky = 1 },
+    paramtype2 = "wallmounted",
+})
+
+minetest.register_node("default:chromium_fluoride_volutes", {
+    description = "Machined chromium fluoride (IV)",
+    tiles = map(function(postfix)
+                    return "default_chromium_fluoride.png^" .. postfix
+                end,
+                { "default_volutes_top.png",
+                  "default_volutes_bottom.png",
+                  "default_volutes.png",
+                  "default_volutes.png",
+                  "default_volutes.png",
+                  "default_volutes.png" }),
+    groups = { cracky = 1 },
+    paramtype2 = "wallmounted",
+})
+
+minetest.register_node("default:chromium_fluoride_floor", {
+    description = "Machined chromium fluoride (V)",
+    tiles = { "default_chromium_fluoride.png^default_floor.png" },
+    groups = { cracky = 1 },
+})
+
+minetest.register_node("default:chromium_fluoride_cross", {
+    description = "Machined chromium fluoride (VI)",
+    tiles = { "default_chromium_fluoride.png^default_cross.png" },
+    groups = { cracky = 1 },
+})
+
+minetest.register_node("default:chromium_fluoride_hooked_cross", {
+    description = "Machined chromium fluoride (VII)",
+    tiles = { "default_chromium_fluoride.png^default_hooked_cross.png" },
+    groups = { cracky = 1 },
+})
+
+minetest.register_node("default:chromium_fluoride_block", {
+    description = "Machined chromium fluoride (VIII)",
+    tiles = { "default_chromium_fluoride.png^default_block.png" },
+    groups = { cracky = 1 },
+})
+
+minetest.register_node("default:chromium_fluoride_filled_floor", {
+    description = "Machined chromium fluoride (IX)",
+    tiles = { "default_chromium_fluoride.png^default_filled_floor.png" },
+    groups = { cracky = 1 },
+})
+
 minetest.register_node("default:lead_oxide", {
     description = "Lead (II) oxide (PbO)",
     tiles = { "default_lead_oxide.png" },
