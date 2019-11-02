@@ -6,14 +6,16 @@ dofile("../loria/mods/furnace/crafts.lua")
 
 function process_craft(tag)
     return function(craft)
+	local lines = {}
         for _, ing1 in ipairs(craft.input) do
             for _, ing2 in ipairs(craft.output) do
-                return string.format(
+                table.insert(lines, string.format(
                     '  "%s" -> "%s" [label="%s"];',
                     ing1.name, ing2.name, tag
-                )
+                ))
             end
         end
+	return table.concat(lines, "\n")
     end
 end
 
