@@ -219,6 +219,15 @@ minetest.register_node("default:naga", {
     sunlight_propagates = true,
 })
 
+for _, grass in ipairs(pressable) do
+    local original_desc = minetest.registered_nodes["default:" .. grass].description
+    minetest.register_node("default:" .. grass .. "_pressed", {
+        description = "Pressed " .. original_desc:lower(),
+        tiles = { "default_" .. grass .. "_pressed.png" },
+        groups = { crumbly = 3 },
+    })
+end
+
 small_mushrooms = {
     ["pusilli"] = {
         damage = 5,

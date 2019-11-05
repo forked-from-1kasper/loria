@@ -12,6 +12,24 @@ minetest.register_node("default:infinite_oxygen", {
     groups = { crumbly = 3 }
 })
 
+minetest.register_node("default:silicon", {
+    description = "Silicon (Si)",
+    tiles = { "default_silicon.png" },
+    groups = { crumbly = 2 },
+})
+
+minetest.register_node("default:magnesium_silicide", {
+    description = "Magnesium silicide (Mg2Si)",
+    tiles = { "default_magnesium_silicide.png" },
+    groups = { crumbly = 2 },
+})
+
+minetest.register_node("default:magnesium_oxide", {
+    description = "Magnesium oxide (MgO)",
+    tiles = { "default_magnesium_oxide.png" },
+    groups = { crumbly = 2 },
+})
+
 minetest.register_node("default:potassium_manganate", {
     description = "Potassium manganate (K2MnO4)",
     tiles = { "default_potassium_manganate.png" },
@@ -385,6 +403,14 @@ function drop_everything(pos)
     end
 end
 
+function setup_formspec(inv_size, formspec)
+    return function(pos)
+        local meta = minetest.get_meta(pos)
+        meta:set_string("formspec", formspec)
+        meta:get_inventory():set_size('main', inv_size)
+    end
+end
+
 lead_box_formspec =
     "size[8,10.5]"..
     "list[context;main;0,0;8,5;]"..
@@ -400,16 +426,27 @@ minetest.register_node("default:lead_box", {
     },
 
     on_destruct = drop_everything,
+    on_construct = setup_formspec(40, lead_box_formspec),
+    paramtype2 = "facedir",
+    groups = { cracky = 2 },
+})
 
-    on_construct = function(pos)
-        local meta = minetest.get_meta(pos)
-        meta:set_string("formspec", lead_box_formspec)
+silicon_box_formspec =
+    "size[8,8.5]"..
+    "list[context;main;0,0;8,3;]"..
+    "list[current_player;main;0,4;8,1;]"..
+    "list[current_player;main;0,5.5;8,3;8]"
 
-        local inv = meta:get_inventory()
+minetest.register_node("default:silicon_box", {
+    description = "Silicon box",
+    tiles = {
+        "default_silicon_box_top.png", "default_silicon_box_bottom.png",
+        "default_silicon_box_side.png", "default_silicon_box_side.png",
+        "default_silicon_box_side.png", "default_silicon_box_front.png"
+    },
 
-        inv:set_size('main', 40)
-    end,
-
+    on_destruct = drop_everything,
+    on_construct = setup_formspec(24, silicon_box_formspec),
     paramtype2 = "facedir",
     groups = { cracky = 2 },
 })

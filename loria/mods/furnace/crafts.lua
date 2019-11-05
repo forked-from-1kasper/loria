@@ -205,6 +205,41 @@ refiner_crafts = {
         },
         time = 25,
     },
+    {
+        input = {
+            { name = "default:silicon_dioxide", count = 1 },
+            { name = "default:hydrogen_balloon", count = 2 },
+            { name = "default:bucket_empty", count = 2 },
+        },
+        output = {
+            { name = "default:silicon", count = 1 },
+            { name = "default:bucket_water", count = 2 },
+            { name = "default:empty_balloon", count = 2 },
+        },
+        time = 2,
+    },
+    {
+        input = {
+            { name = "default:silicon_dioxide", count = 1 },
+            { name = "default:magnesium", count = 2 },
+        },
+        output = {
+            { name = "default:silicon", count = 1 },
+            { name = "default:magnesium_oxide", count = 2 },
+        },
+        time = 5,
+    },
+    {
+        input = {
+            { name = "default:silicon_dioxide", count = 3 },
+            { name = "default:aluminium", count = 4 },
+        },
+        output = {
+            { name = "default:silicon", count = 3 },
+            { name = "default:aluminium_oxide", count = 2 },
+        },
+        time = 6,
+    },
 }
 
 furnace_crafts = {

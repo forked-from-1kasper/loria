@@ -20,6 +20,11 @@ ores = {
         y_max = -300, y_min = -1500,
         azure = true, cinnabar = true
     },
+    ["magnesium"] = {
+        formula = "Mg", has_ingot = true,
+        y_max = -600, y_min = -900,
+        azure = true, cinnabar = true
+    },
     ["molybdenum"] = {
         formula = "Mo", has_ingot = true,
         y_max = -500, y_min = -800,
@@ -56,6 +61,11 @@ ores = {
         y_max = -200, y_min = -500,
         azure = true, cinnabar = true,
     },
+}
+
+pressable = {
+    "rami", "spears", "veteris", "lectica",
+    "truncus_1", "truncus_2", "truncus_3"
 }
 
 giant_mushrooms = { "viridi_petasum", "colossus", "turris", "rete" }
@@ -170,6 +180,14 @@ inv_crafts = {
     },
     {
         input = {
+            { name = "default:silicon", count = 3 },
+        },
+        output = {
+            { name = "default:silicon_box", count = 1 },
+        }
+    },
+    {
+        input = {
             { name = "default:stick", count = 1 },
             { name = "default:copper_hammer_head", count = 1 },
         },
@@ -244,6 +262,17 @@ for _, mushroom in ipairs(giant_mushrooms) do
         },
         output = {
             { name = "default:stick", count = 6 }
+        },
+    })
+end
+
+for _, grass in ipairs(pressable) do
+    table.insert(inv_crafts, {
+        input = {
+            { name = "default:" .. grass, count = 20 }
+        },
+        output = {
+            { name = "default:" .. grass .. "_pressed", count = 1 }
         },
     })
 end
