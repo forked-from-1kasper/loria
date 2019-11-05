@@ -106,33 +106,11 @@ minetest.register_decoration({
 })
 
 for name, params in pairs(ores) do
-    if params.azure then
+    for _, place in ipairs(params.wherein) do
         minetest.register_ore({
             ore_type       = "blob",
-            ore            = "default:" .. name .. "_azure",
-            wherein        = "default:cobalt_blue",
-            clust_scarcity = 16 * 16 * 16,
-            clust_num_ores = 5,
-            clust_size     = 3,
-            y_min          = params.y_min or -60,
-            y_max          = params.y_max or 60,
-            noise_threshold = 0.0,
-            noise_params    = {
-                offset = 0.5,
-                scale = 0.2,
-                spread = { x = 3, y = 3, z = 3 },
-                seed = 17676,
-                octaves = 1,
-                persist = 0.0
-            }
-        })
-    end
-
-    if params.cinnabar then
-        minetest.register_ore({
-            ore_type       = "blob",
-            ore            = "default:" .. name .. "_cinnabar",
-            wherein        = "default:cinnabar",
+            ore            = "default:" .. name .. "_" .. place,
+            wherein        = "default:" .. place,
             clust_scarcity = 16 * 16 * 16,
             clust_num_ores = 5,
             clust_size     = 3,

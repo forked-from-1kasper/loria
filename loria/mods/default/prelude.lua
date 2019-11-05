@@ -90,6 +90,16 @@ function append(dest, source)
     end
 end
 
+function contains(arr, val)
+    for _, elem in ipairs(arr) do
+        if val == elem then
+            return true
+        end
+    end
+
+    return false
+end
+
 function capitalization(str)
     return string.gsub(str:gsub("^%l", string.upper), "_", " ")
 end

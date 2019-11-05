@@ -1,65 +1,66 @@
 ores = {
     ["aluminium"] = {
         formula = "Al", has_ingot = true,
-        azure = true, cinnabar = true
+        wherein = { "cobalt_blue", "cinnabar", "chromia" },
     },
     ["potassium"] = {
         formula = "K", has_ingot = true,
-        azure = true, cinnabar = true
+        wherein = { "cobalt_blue", "cinnabar" },
     },
     ["zinc"] = {
         formula = "Zn", has_ingot = true,
-        azure = true, cinnabar = true
+        wherein = { "cobalt_blue", "cinnabar" },
     },
     ["copper"] = {
         formula = "Cu", has_ingot = true,
-        azure = true, cinnabar = true
+        wherein = { "cobalt_blue", "cinnabar" },
     },
     ["wolfram"] = {
         formula = "W", has_ingot = true,
         y_max = -300, y_min = -1500,
-        azure = true, cinnabar = true
+        wherein = { "cobalt_blue", "cinnabar" },
     },
     ["magnesium"] = {
         formula = "Mg", has_ingot = true,
         y_max = -600, y_min = -900,
-        azure = true, cinnabar = true
+        wherein = { "cobalt_blue", "cinnabar", "chromia" },
     },
     ["molybdenum"] = {
         formula = "Mo", has_ingot = true,
         y_max = -500, y_min = -800,
-        azure = true, cinnabar = true
+        wherein = { "cobalt_blue", "cinnabar" },
     },
     ["cuprous_oxide"] = {
         formula = "Cu2O", has_ingot = false,
-        azure = true, cinnabar = false,
+        wherein = { "cobalt_blue", "chromia" },
         y_min = -70, y_max = 0,
     },
     ["platinum"] = {
         formula = "Pt", has_ingot = true,
-        azure = true, cinnabar = true,
+        wherein = { "cobalt_blue", "cinnabar" },
         y_min = -300, y_max = -150,
     },
     ["uranium_tetrachloride"] = { -- 234
         formula = "UCl4", has_ingot = false,
-        azure = true, cinnabar = true
+        wherein = { "cobalt_blue", "cinnabar", "chromium_fluoride", "chromia" },
     },
     ["thorium_iodide"] = { -- 232
         formula = "ThI4", has_ingot = false,
-        azure = true, cinnabar = true
+        wherein = { "cobalt_blue", "cinnabar", "chromium_fluoride", "chromia" },
     },
     ["plutonium_trifluoride"] = { -- 238
         formula = "PuF3", has_ingot = false,
-        azure = true, cinnabar = true
+        wherein = { "cobalt_blue", "cinnabar", "chromium_fluoride" },
     },
     ["americium_trifluoride"] = { -- 243
-        formula = "AmF3", has_ingot = false, y_min = -200,
-        azure = false, cinnabar = true, light_source = 10,
+        formula = "AmF3", has_ingot = false,
+        y_min = -243, light_source = 10,
+        wherein = { "cobalt_blue", "cinnabar", "chromium_fluoride" },
     },
     ["magnetite"] = {
         formula = "FeO * Fe2O3", has_ingot = false,
         y_max = -200, y_min = -500,
-        azure = true, cinnabar = true,
+        wherein = { "cobalt_blue", "cinnabar", "chromium_fluoride" },
     },
 }
 

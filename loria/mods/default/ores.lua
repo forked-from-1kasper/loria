@@ -1,21 +1,22 @@
 for name, params in pairs(ores) do
     local light_source = params.light_source or 0
 
-    minetest.register_node("default:" .. name .. "_cinnabar", {
-        description = capitalization(name) .. " (in cinnabar)",
-        tiles = { "default_cinnabar.png^default_" .. name .. "_ore.png" },
-        groups = { cracky = 2 },
-        drop = "default:" .. name .. "_cinnabar",
-        light_source = math.floor(light_source / 2),
-    })
+    for _, place in ipairs(params.wherein) do
+        minetest.register_node("default:" .. name .. "_" .. place, {
+            description = capitalization(name) .. " (in " .. place .. ")",
+            tiles = { "default_" .. place .. ".png^default_" .. name .. "_ore.png" },
+            groups = { cracky = 2 },
+            light_source = math.floor(light_source / 2),
+        })
+    end
 
-    minetest.register_node("default:" .. name .. "_azure", {
-        description = capitalization(name) .. " (in cobalt blue)",
-        tiles = { "default_cobalt_blue.png^default_" .. name .. "_ore.png" },
-        groups = { cracky = 2 },
-        drop = "default:" .. name .. "_azure",
-        light_source = math.floor(light_source / 2),
-    })
+    -- backward compatibility
+    if contains(params.wherein, "cobalt_blue") then
+        minetest.register_alias(
+            "default:" .. name .. "_azure",
+            "default:" .. name .. "_cobalt_blue"
+        )
+    end
 
     minetest.register_node("default:" .. name, {
         description = capitalization(name) .. " (" .. params.formula .. ")",
