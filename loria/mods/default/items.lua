@@ -216,8 +216,8 @@ minetest.register_globalstep(function(dtime)
         local oxygen = 0
         local oxygen_max = 0
 
-        local meta = player:get_meta("oxygen")
         if oxygen_timer > oxygen_decrease_time then
+            local meta = player:get_meta("oxygen")
             oxygen_timer = 0
 
             local inv = player:get_inventory()

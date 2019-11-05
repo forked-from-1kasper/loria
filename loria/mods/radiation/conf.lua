@@ -24,8 +24,8 @@ minetest.register_on_mods_loaded(function()
 
     for name, params in pairs(ores) do
         if params.radioactive then
-            A0 = activity[cid("default:" .. name)]
-            A = { alpha = A0.alpha / 5, beta = A0.beta / 3, gamma = A0.gamma / 2 }
+            local A0 = activity[cid("default:" .. name)]
+            local A = { alpha = A0.alpha / 5, beta = A0.beta / 3, gamma = A0.gamma / 2 }
             for _, place in ipairs(params.wherein) do
                 activity[cid("default:" .. name .. "_" .. place)] = A
             end
