@@ -21,6 +21,12 @@
 |default:lead_case × 1, default:wolfram_filament × 1, default:fused_quartz × 1, electricity:aluminium_cable × 1|electricity:lamp_off × 1|
 |default:copper_ingot × 1|electricity:copper_cable × 15|
 |default:aluminium_ingot × 1|electricity:aluminium_cable × 15|
+|default:wolfram_ingot × 1|electricity:wolfram_cable × 15|
+|default:platinum_ingot × 1|electricity:platinum_cable × 15|
+|default:calcium_ingot × 1|electricity:calcium_cable × 15|
+|default:uranium_ingot × 1|electricity:uranium_cable × 15|
+|default:thorium_ingot × 1|electricity:thorium_cable × 15|
+|default:plutonium_ingot × 1|electricity:plutonium_cable × 15|
 |default:viridi_petasum_stem × 1|default:stick × 6|
 |default:colossus_stem × 1|default:stick × 6|
 |default:turris_stem × 1|default:stick × 6|
@@ -45,6 +51,12 @@
 |default:bucket_empty × 1, default:mercury × 1|default:bucket_mercury × 1|
 |default:bucket_lucidum × 1|default:bucket_empty × 1, default:glow_stick × 12|
 |default:aluminium_oxide × 4, default:silicon_dioxide × 4, default:bucket_water × 1|default:brick × 4, default:bucket_empty × 1|
+|default:thorium_ingot × 9|default:thorium × 1|
+|default:thorium × 1|default:thorium_ingot × 9|
+|default:uranium_ingot × 9|default:uranium × 1|
+|default:uranium × 1|default:uranium_ingot × 9|
+|default:plutonium_ingot × 9|default:plutonium × 1|
+|default:plutonium × 1|default:plutonium_ingot × 9|
 |default:viridi_petasum_body × 3|default:silicon_dioxide × 1|
 |default:viridi_petasum_stem × 5|default:silicon_dioxide × 1|
 |default:colossus_body × 3|default:silicon_dioxide × 1|
@@ -79,48 +91,55 @@
 |default:silicon_dioxide × 1, default:hydrogen_balloon × 2, default:bucket_empty × 2|default:silicon × 1, default:bucket_water × 2, default:empty_balloon × 2|
 |default:silicon_dioxide × 1, default:magnesium × 2|default:silicon × 1, default:magnesium_oxide × 2|
 |default:silicon_dioxide × 3, default:aluminium × 4|default:silicon × 3, default:aluminium_oxide × 2|
-|default:uranium_tetrachloride_cinnabar × 1|default:uranium_tetrachloride × 1, default:cinnabar × 1|
-|default:uranium_tetrachloride_azure × 1|default:uranium_tetrachloride × 1, default:cobalt_blue × 1|
-|default:wolfram_cinnabar × 1|default:wolfram_ingot × 1, default:cinnabar × 1|
-|default:wolfram_azure × 1|default:wolfram_ingot × 1, default:cobalt_blue × 1|
-|default:wolfram_ingot × 9|default:wolfram × 1|
-|default:wolfram × 1|default:wolfram_ingot × 9|
+|default:thorium_iodide × 1|default:thorium × 1, default:iodine × 2|
+|default:plutonium_tetrafluoride × 3|default:plutonium_trifluoride × 2, default:plutonium_hexafluoride × 1|
+|default:plutonium_trifluoride × 2, default:calcium × 3|default:plutonium × 2, default:calcium_fluoride × 3|
 |default:magnesium_cinnabar × 1|default:magnesium_ingot × 1, default:cinnabar × 1|
-|default:magnesium_azure × 1|default:magnesium_ingot × 1, default:cobalt_blue × 1|
+|default:magnesium_cobalt_blue × 1|default:magnesium_ingot × 1, default:cobalt_blue × 1|
 |default:magnesium_ingot × 9|default:magnesium × 1|
 |default:magnesium × 1|default:magnesium_ingot × 9|
-|default:americium_trifluoride_cinnabar × 1|default:americium_trifluoride × 1, default:cinnabar × 1|
-|default:americium_trifluoride_azure × 1|default:americium_trifluoride × 1, default:cobalt_blue × 1|
-|default:cuprous_oxide_cinnabar × 1|default:cuprous_oxide × 1, default:cinnabar × 1|
-|default:cuprous_oxide_azure × 1|default:cuprous_oxide × 1, default:cobalt_blue × 1|
-|default:zinc_cinnabar × 1|default:zinc_ingot × 1, default:cinnabar × 1|
-|default:zinc_azure × 1|default:zinc_ingot × 1, default:cobalt_blue × 1|
-|default:zinc_ingot × 9|default:zinc × 1|
-|default:zinc × 1|default:zinc_ingot × 9|
-|default:thorium_iodide_cinnabar × 1|default:thorium_iodide × 1, default:cinnabar × 1|
-|default:thorium_iodide_azure × 1|default:thorium_iodide × 1, default:cobalt_blue × 1|
-|default:aluminium_cinnabar × 1|default:aluminium_ingot × 1, default:cinnabar × 1|
-|default:aluminium_azure × 1|default:aluminium_ingot × 1, default:cobalt_blue × 1|
-|default:aluminium_ingot × 9|default:aluminium × 1|
-|default:aluminium × 1|default:aluminium_ingot × 9|
-|default:potassium_cinnabar × 1|default:potassium_ingot × 1, default:cinnabar × 1|
-|default:potassium_azure × 1|default:potassium_ingot × 1, default:cobalt_blue × 1|
-|default:potassium_ingot × 9|default:potassium × 1|
-|default:potassium × 1|default:potassium_ingot × 9|
-|default:copper_cinnabar × 1|default:copper_ingot × 1, default:cinnabar × 1|
-|default:copper_azure × 1|default:copper_ingot × 1, default:cobalt_blue × 1|
-|default:copper_ingot × 9|default:copper × 1|
-|default:copper × 1|default:copper_ingot × 9|
-|default:platinum_cinnabar × 1|default:platinum_ingot × 1, default:cinnabar × 1|
-|default:platinum_azure × 1|default:platinum_ingot × 1, default:cobalt_blue × 1|
-|default:platinum_ingot × 9|default:platinum × 1|
-|default:platinum × 1|default:platinum_ingot × 9|
 |default:molybdenum_cinnabar × 1|default:molybdenum_ingot × 1, default:cinnabar × 1|
-|default:molybdenum_azure × 1|default:molybdenum_ingot × 1, default:cobalt_blue × 1|
+|default:molybdenum_cobalt_blue × 1|default:molybdenum_ingot × 1, default:cobalt_blue × 1|
 |default:molybdenum_ingot × 9|default:molybdenum × 1|
 |default:molybdenum × 1|default:molybdenum_ingot × 9|
+|default:americium_trifluoride_cinnabar × 1|default:americium_trifluoride × 1, default:cinnabar × 1|
+|default:americium_trifluoride_cobalt_blue × 1|default:americium_trifluoride × 1, default:cobalt_blue × 1|
+|default:platinum_cinnabar × 1|default:platinum_ingot × 1, default:cinnabar × 1|
+|default:platinum_cobalt_blue × 1|default:platinum_ingot × 1, default:cobalt_blue × 1|
+|default:platinum_ingot × 9|default:platinum × 1|
+|default:platinum × 1|default:platinum_ingot × 9|
+|default:copper_cinnabar × 1|default:copper_ingot × 1, default:cinnabar × 1|
+|default:copper_cobalt_blue × 1|default:copper_ingot × 1, default:cobalt_blue × 1|
+|default:copper_ingot × 9|default:copper × 1|
+|default:copper × 1|default:copper_ingot × 9|
 |default:magnetite_cinnabar × 1|default:magnetite × 1, default:cinnabar × 1|
-|default:magnetite_azure × 1|default:magnetite × 1, default:cobalt_blue × 1|
+|default:magnetite_cobalt_blue × 1|default:magnetite × 1, default:cobalt_blue × 1|
 |default:plutonium_trifluoride_cinnabar × 1|default:plutonium_trifluoride × 1, default:cinnabar × 1|
-|default:plutonium_trifluoride_azure × 1|default:plutonium_trifluoride × 1, default:cobalt_blue × 1|
+|default:plutonium_trifluoride_cobalt_blue × 1|default:plutonium_trifluoride × 1, default:cobalt_blue × 1|
+|default:potassium_cinnabar × 1|default:potassium_ingot × 1, default:cinnabar × 1|
+|default:potassium_cobalt_blue × 1|default:potassium_ingot × 1, default:cobalt_blue × 1|
+|default:potassium_ingot × 9|default:potassium × 1|
+|default:potassium × 1|default:potassium_ingot × 9|
+|default:wolfram_cinnabar × 1|default:wolfram_ingot × 1, default:cinnabar × 1|
+|default:wolfram_cobalt_blue × 1|default:wolfram_ingot × 1, default:cobalt_blue × 1|
+|default:wolfram_ingot × 9|default:wolfram × 1|
+|default:wolfram × 1|default:wolfram_ingot × 9|
+|default:cuprous_oxide_cinnabar × 1|default:cuprous_oxide × 1, default:cinnabar × 1|
+|default:cuprous_oxide_cobalt_blue × 1|default:cuprous_oxide × 1, default:cobalt_blue × 1|
+|default:aluminium_cinnabar × 1|default:aluminium_ingot × 1, default:cinnabar × 1|
+|default:aluminium_cobalt_blue × 1|default:aluminium_ingot × 1, default:cobalt_blue × 1|
+|default:aluminium_ingot × 9|default:aluminium × 1|
+|default:aluminium × 1|default:aluminium_ingot × 9|
+|default:uranium_tetrachloride_cinnabar × 1|default:uranium_tetrachloride × 1, default:cinnabar × 1|
+|default:uranium_tetrachloride_cobalt_blue × 1|default:uranium_tetrachloride × 1, default:cobalt_blue × 1|
+|default:calcium_cinnabar × 1|default:calcium_ingot × 1, default:cinnabar × 1|
+|default:calcium_cobalt_blue × 1|default:calcium_ingot × 1, default:cobalt_blue × 1|
+|default:calcium_ingot × 9|default:calcium × 1|
+|default:calcium × 1|default:calcium_ingot × 9|
+|default:thorium_iodide_cinnabar × 1|default:thorium_iodide × 1, default:cinnabar × 1|
+|default:thorium_iodide_cobalt_blue × 1|default:thorium_iodide × 1, default:cobalt_blue × 1|
+|default:zinc_cinnabar × 1|default:zinc_ingot × 1, default:cinnabar × 1|
+|default:zinc_cobalt_blue × 1|default:zinc_ingot × 1, default:cobalt_blue × 1|
+|default:zinc_ingot × 9|default:zinc × 1|
+|default:zinc × 1|default:zinc_ingot × 9|
 
