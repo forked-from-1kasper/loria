@@ -4,35 +4,11 @@ activity = { }
 minetest.register_on_mods_loaded(function()
     activity = {
         [cid("default:thorium_iodide")] = { alpha = 12, beta = 4, gamma = 0 },
-        [cid("default:thorium_iodide_cinnabar")] = {
-            alpha = 7, beta = 3, gamma = 0
-        },
-        [cid("default:thorium_iodide_azure")] = {
-            alpha = 7, beta = 3, gamma = 0
-        },
-        [cid("default:uranium_tetrachloride_cinnabar")] = {
-            alpha = 1, beta = 0.3, gamma = 0
-        },
-        [cid("default:uranium_tetrachloride_azure")] = {
-            alpha = 1, beta = 0.3, gamma = 0
-        },
         [cid("default:uranium_tetrachloride")] = { alpha = 3, beta = 1, gamma = 0 },
         [cid("default:uranium_tetrachloride_brick")] = { alpha = 2, beta = 1, gamma = 0 },
         [cid("default:uranium")] = { alpha = 5, beta = 3, gamma = 0 },
         [cid("default:periculum")] = { alpha = 0, beta = 0, gamma = 0.5 },
-        [cid("default:plutonium_trifluoride_cinnabar")] = {
-            alpha = 7, beta = 0, gamma = 0
-        },
-        [cid("default:plutonium_trifluoride_azure")] = {
-            alpha = 7, beta = 0, gamma = 0
-        },
         [cid("default:americium_trifluoride")] = { alpha = 5, beta = 0, gamma = 7 },
-        [cid("default:americium_trifluoride_cinnabar")] = {
-            alpha = 3, beta = 0, gamma = 4
-        },
-        [cid("default:americium_trifluoride_azure")] = {
-            alpha = 3, beta = 0, gamma = 4
-        },
         [cid("default:plutonium_trifluoride")] = { alpha = 20, beta = 0, gamma = 0 },
         [cid("default:plutonium_tetrafluoride")] = { alpha = 16, beta = 0, gamma = 0 },
         [cid("default:plutonium_dioxide")] = { alpha = 40, beta = 0, gamma = 0 },
@@ -45,6 +21,16 @@ minetest.register_on_mods_loaded(function()
         [cid("default:nihil")] = { alpha = 0, beta = 0, gamma = 0.01 },
         [cid("default:lectica")] = { alpha = 0, beta = 0, gamma = 0.07 },
     }
+
+    for name, params in pairs(ores) do
+        if params.radioactive then
+            A0 = activity[cid("default:" .. name)]
+            A = { alpha = A0.alpha / 3, beta = A0.beta / 2, gamma = A0.gamma }
+            for _, place in ipairs(params.wherein) do
+                activity[cid("default:" .. name .. "_" .. place)] = A
+            end
+        end
+    end
 end)
 
 antiradiation_drugs = {

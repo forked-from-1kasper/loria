@@ -43,19 +43,23 @@ ores = {
     ["uranium_tetrachloride"] = { -- 234
         formula = "UCl4", has_ingot = false,
         wherein = { "cobalt_blue", "cinnabar", "chromium_fluoride", "chromia" },
+        radioactive = true,
     },
     ["thorium_iodide"] = { -- 232
         formula = "ThI4", has_ingot = false,
         wherein = { "cobalt_blue", "cinnabar", "chromium_fluoride", "chromia" },
+        radioactive = true,
     },
     ["plutonium_trifluoride"] = { -- 238
         formula = "PuF3", has_ingot = false,
         wherein = { "cobalt_blue", "cinnabar", "chromium_fluoride" },
+        radioactive = true,
     },
     ["americium_trifluoride"] = { -- 243
         formula = "AmF3", has_ingot = false,
         y_min = -243, light_source = 10,
         wherein = { "cobalt_blue", "cinnabar", "chromium_fluoride" },
+        radioactive = true,
     },
     ["magnetite"] = {
         formula = "FeO * Fe2O3", has_ingot = false,
