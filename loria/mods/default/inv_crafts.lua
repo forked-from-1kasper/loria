@@ -11,6 +11,11 @@ ores = {
         formula = "Zn", has_ingot = true,
         wherein = { "cobalt_blue", "cinnabar" },
     },
+    ["calcium"] = {
+        formula = "Ca", has_ingot = true,
+        y_max = -700, y_min = -1200,
+        wherein = { "chromium_fluoride" },
+    },
     ["copper"] = {
         formula = "Cu", has_ingot = true,
         wherein = { "cobalt_blue", "cinnabar" },
@@ -76,8 +81,14 @@ pressable = {
 giant_mushrooms = { "viridi_petasum", "colossus", "turris", "rete" }
 
 cables = {
-    { name = "copper", resis = 0.005 },
-    { name = "aluminium", resis = 0.01 }
+    { name = "copper", resis = 0.0225 },
+    { name = "aluminium", resis = 0.036 },
+    { name = "wolfram", resis = 0.055 },
+    { name = "platinum", resis = 0.098 },
+    { name = "calcium", resis = 0.046 },
+    { name = "uranium", resis = 0.295 },
+    { name = "thorium", resis = 0.1862 },
+    { name = "plutonium", resis = 150 },
 }
 
 brickable = {

@@ -45,7 +45,12 @@ minetest.register_node("default:plutonium_tetrafluoride", {
     description = "Plutonium (IV) tetrafluoride (PuF4)",
     tiles = { "default_plutonium_tetrafluoride.png" },
     groups = { cracky = 2 },
-    drop = 'default:plutonium_tetrafluoride'
+})
+
+minetest.register_node("default:plutonium_hexafluoride", {
+    description = "Plutonium (VI) hexafluoride (PuF6)",
+    tiles = { "default_plutonium_hexafluoride.png" },
+    groups = { cracky = 2 },
 })
 
 liquid_ores = {

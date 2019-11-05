@@ -240,6 +240,37 @@ refiner_crafts = {
         },
         time = 6,
     },
+    {
+        input = {
+            { name = "default:thorium_iodide", count = 1 },
+        },
+        output = {
+            { name = "default:thorium", count = 1 },
+            { name = "default:iodine", count = 2 },
+        },
+        time = 3,
+    },
+    {
+        input = {
+            { name = "default:plutonium_tetrafluoride", count = 3 },
+        },
+        output = {
+            { name = "default:plutonium_trifluoride", count = 2 },
+            { name = "default:plutonium_hexafluoride", count = 1 },
+        },
+        time = 6
+    },
+    {
+        input = {
+            { name = "default:plutonium_trifluoride", count = 2 },
+            { name = "default:calcium", count = 3 },
+        },
+        output = {
+            { name = "default:plutonium", count = 2 },
+            { name = "default:calcium_fluoride", count = 3 },
+        },
+        time = 6
+    },
 }
 
 furnace_crafts = {
@@ -328,7 +359,61 @@ furnace_crafts = {
             { name = "default:bucket_empty", count = 1 },
         },
         time = 2,
-    }
+    },
+    {
+        input = {
+            { name = "default:thorium_ingot", count = 9 }
+        },
+        output = {
+            { name = "default:thorium", count = 1 }
+        },
+        time = 4,
+    },
+    {
+        input = {
+            { name = "default:thorium", count = 1 }
+        },
+        output = {
+            { name = "default:thorium_ingot", count = 9 }
+        },
+        time = 4,
+    },
+    {
+        input = {
+            { name = "default:uranium_ingot", count = 9 }
+        },
+        output = {
+            { name = "default:uranium", count = 1 }
+        },
+        time = 4,
+    },
+    {
+        input = {
+            { name = "default:uranium", count = 1 }
+        },
+        output = {
+            { name = "default:uranium_ingot", count = 9 }
+        },
+        time = 4,
+    },
+    {
+        input = {
+            { name = "default:plutonium_ingot", count = 9 }
+        },
+        output = {
+            { name = "default:plutonium", count = 1 }
+        },
+        time = 4,
+    },
+    {
+        input = {
+            { name = "default:plutonium", count = 1 }
+        },
+        output = {
+            { name = "default:plutonium_ingot", count = 9 }
+        },
+        time = 4,
+    },
 }
 
 for name, params in pairs(ores) do
@@ -350,7 +435,7 @@ for name, params in pairs(ores) do
     })
     table.insert(refiner_crafts, {
         input = {
-            { name = "default:" .. name .. "_azure", count = 1 }
+            { name = "default:" .. name .. "_cobalt_blue", count = 1 }
         },
         output = {
             output, { name = "default:cobalt_blue", count = 1 }

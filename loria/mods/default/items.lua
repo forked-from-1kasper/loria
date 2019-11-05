@@ -195,6 +195,21 @@ minetest.register_craftitem("default:empty_balloon", {
     stack_max = 1
 })
 
+minetest.register_craftitem("default:thorium_ingot", {
+    description = "Thorium ingot",
+    inventory_image = "default_thorium_ingot.png",
+})
+
+minetest.register_craftitem("default:uranium_ingot", {
+    description = "Uranium ingot",
+    inventory_image = "default_uranium_ingot.png",
+})
+
+minetest.register_craftitem("default:plutonium_ingot", {
+    description = "Plutonium ingot",
+    inventory_image = "default_plutonium_ingot.png",
+})
+
 function get_gas(pos)
     return detect_gas(minetest.get_node(pos).name)
 end

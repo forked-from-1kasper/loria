@@ -317,6 +317,12 @@ minetest.register_node("default:fused_quartz", {
     groups = { snappy = 2, cracky = 3, oddly_breakable_by_hand = 3 },
 })
 
+minetest.register_node("default:calcium_fluoride", {
+    description = "Calcium fluoride (CaF2)",
+    tiles = { "default_calcium_fluoride.png" },
+    groups = { crumbly = 2 },
+})
+
 minetest.register_node("default:cobalt_blue", {
     description = "Cobalt blue (CoAl2O4)",
     tiles = { "default_cobalt_blue.png" },
@@ -342,7 +348,24 @@ minetest.register_node("default:sulfur", {
     description = "Sulfur (S)",
     tiles = { "default_sulfur.png" },
     groups = { crumbly = 2 },
-    drop = 'default:sulfur'
+})
+
+minetest.register_node("default:iodine", {
+    description = "Iodine (I)",
+    tiles = { "default_iodine.png" },
+    groups = { crumbly = 2 },
+})
+
+minetest.register_node("default:thorium", {
+    description = "Thorium (Th)",
+    tiles = { "default_thorium.png" },
+    groups = { cracky = 1 },
+})
+
+minetest.register_node("default:plutonium", {
+    description = "Plutonium (Pu)",
+    tiles = { "default_plutonium.png" },
+    groups = { cracky = 1 },
 })
 
 minetest.register_node("default:blowed_out_glow_stick", {
