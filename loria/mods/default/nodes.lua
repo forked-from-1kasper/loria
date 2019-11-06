@@ -368,6 +368,12 @@ minetest.register_node("default:plutonium", {
     groups = { cracky = 1 },
 })
 
+minetest.register_node("default:mushroom_mass", {
+    description = "Mushroom mass",
+    tiles = { "default_mushroom_mass.png" },
+    groups = { crumbly = 3 },
+})
+
 minetest.register_node("default:blowed_out_glow_stick", {
     description = "Blowed out glow stick",
     drawtype = "torchlike",

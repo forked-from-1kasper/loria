@@ -21,7 +21,8 @@ end)
 minetest.register_on_placenode(function(pos, newnode, placer, oldnode, itemstack, pointed_thing)
     if minetest.get_item_group(newnode.name, "column") > 0 then
         local under = minetest.get_node(vector.add(pos, vector.new(0, -1, 0)))
-        if not (under.walkable or under.name == newnode.name) then
+        local walkable = minetest.registered_nodes[under.name].walkable
+        if not (walkable or under.name == newnode.name) then
             minetest.set_node(pos, { name = "air" })
             minetest.add_item(pos, { name = newnode.name })
         end
@@ -227,95 +228,6 @@ for _, grass in ipairs(pressable) do
         groups = { crumbly = 3 },
     })
 end
-
-small_mushrooms = {
-    ["pusilli"] = {
-        damage = 5,
-        place_on = {
-            "default:cinnabar",
-            "default:red_mercury_oxide",
-            "default:mercury_oxide"
-        },
-        optimal_light = 11,
-        fill_ratio = 0.01,
-        biomes = "default:redland",
-        optimal_radiation = 5,
-        max_radiation = 10,
-    },
-    ["rosea"] = {
-        damage = 4,
-        place_on = "default:copper_sulfate",
-        fill_ratio = 0.05,
-        biomes = "default:azure",
-    },
-    ["purpura"] = {
-        features = { light_source = 5 },
-        place_on = "default:copper_sulfate",
-        fill_ratio = 0.05,
-        biomes = "default:azure",
-    },
-    ["picea"] = {
-        damage = 9,
-        place_on = "default:copper_sulfate",
-        fill_ratio = 0.05,
-        biomes = "default:azure",
-    },
-    ["caput"] = {
-        damage = 15,
-        place_on = {
-            "default:cinnabar",
-            "default:red_mercury_oxide",
-            "default:mercury_oxide"
-        },
-        optimal_light = 11,
-        fill_ratio = 0.01,
-        biomes = "default:redland",
-        optimal_radiation = 5,
-        max_radiation = 10,
-    },
-    ["periculum"] = {
-        features = { light_source = 3 },
-        damage = 18,
-        place_on = "default:ammonium_manganese_pyrophosphate",
-        fill_ratio = 0.01,
-        biomes = "default:purple_swamp",
-    },
-    ["vastatorem"] = {
-        features = { light_source = 8 },
-        place_on = "default:nickel_nitrate",
-        fill_ratio = 0.005,
-        biomes = "default:reptile_house",
-    },
-    ["quercu"] = {
-        damage = 7,
-        place_on = {
-            "default:cinnabar",
-            "default:red_mercury_oxide",
-            "default:mercury_oxide"
-        },
-        optimal_light = 11,
-        biomes = "default:redland",
-    },
-    ["grebe"] = {
-        damage = 11,
-        place_on = "default:ammonium_manganese_pyrophosphate",
-        fill_ratio = 0.01,
-        biomes = "default:purple_swamp",
-    },
-    ["secreta"] = {
-        damage = 12,
-        place_on = "default:ammonium_manganese_pyrophosphate",
-        fill_ratio = 0.01,
-        biomes = "default:purple_swamp",
-    },
-    ["pulchram"] = { damage = 3 },
-    ["conc"] = {
-        damage = 16,
-        place_on = "default:sodium_peroxide",
-        fill_ratio = 0.01,
-        biomes = "default:acidic_landscapes",
-    }
-}
 
 for name, params in pairs(small_mushrooms) do
     local info = {

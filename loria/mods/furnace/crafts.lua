@@ -276,6 +276,15 @@ refiner_crafts = {
 furnace_crafts = {
     {
         input = {
+            { name = "default:mushroom_mass", count = 1 },
+        },
+        output = {
+            { name = "default:silicon_dioxide", count = 1 },
+        },
+        time = 7,
+    },
+    {
+        input = {
             { name = "default:aluminium_ingot", count = 5 }
         },
         output = {
