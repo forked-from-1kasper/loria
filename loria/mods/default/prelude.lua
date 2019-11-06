@@ -120,3 +120,15 @@ end
 
 function nope()
 end
+
+i = vector.new(1, 0, 0)
+j = vector.new(0, 0, 1)
+k = vector.new(0, 1, 0)
+
+function above(pos)
+    return vector.add(pos, k)
+end
+
+function under(pos)
+    return vector.subtract(pos, k)
+end

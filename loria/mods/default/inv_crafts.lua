@@ -73,10 +73,54 @@ ores = {
     },
 }
 
-pressable = {
-    "rami", "spears", "veteris", "lectica",
-    "truncus_1", "truncus_2", "truncus_3"
+grasses = {
+    rami = {
+        max_height = 4,
+        place_on = "default:ammonium_manganese_pyrophosphate",
+        biomes = "default:purple_swamp",
+    },
+    spears = {
+        max_height = 4,
+        place_on = "default:ammonium_manganese_pyrophosphate",
+        biomes = "default:purple_swamp",
+    },
+    veteris = {
+        max_height = 8,
+        place_on = "default:sodium_peroxide",
+        biomes = "default:acidic_landscapes",
+    },
+    lectica = {
+        max_height = 5,
+        place_on = "default:sodium_peroxide",
+        biomes = "default:acidic_landscapes",
+    },
+    truncus = {
+        variants = {
+            "hyacinthum",
+            "viridi",
+            "purpura"
+        },
+        max_height = 7,
+        place_on = "default:copper_sulfate",
+        biomes = "default:azure",
+    }
 }
+
+function on_grasses(func)
+    for grass, params in pairs(grasses) do
+        if params.variants then
+            for id, var in ipairs(params.variants) do
+                func(
+                    grass .. "_" .. id,
+                    grass .. " " .. var,
+                    params
+                )
+            end
+        else
+            func(grass, grass, params)
+        end
+    end
+end
 
 giant_mushrooms = { "viridi_petasum", "colossus", "turris", "rete" }
 
@@ -382,13 +426,21 @@ for _, mushroom in ipairs(giant_mushrooms) do
     })
 end
 
-for _, grass in ipairs(pressable) do
-    table.insert(inv_crafts, {
-        input = {
-            { name = "default:" .. grass, count = 20 }
-        },
-        output = {
-            { name = "default:" .. grass .. "_pressed", count = 1 }
-        },
-    })
+for grass, params in pairs(grasses) do
+    if params.variants then
+        for id, _ in ipairs(params.variants) do
+            table.insert(inv_crafts, {
+                input = { { name = "default:" .. grass .. "_" .. id, count = 20 } },
+                output = { {
+                    name = "default:" .. grass .. "_" .. id .. "_pressed",
+                    count = 1
+                } },
+            })
+        end
+    else
+        table.insert(inv_crafts, {
+            input = { { name = "default:" .. grass, count = 20 } },
+            output = { { name = "default:" .. grass .. "_pressed", count = 1 } },
+        })
+    end
 end

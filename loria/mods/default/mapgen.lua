@@ -50,60 +50,19 @@ for i, _ in ipairs(petite_names) do
     })
 end
 
-for _, name in ipairs({ "rami", "spears" }) do
+on_grasses(function(name, _, params)
     minetest.register_decoration({
         deco_type = "simple",
-        place_on = "default:ammonium_manganese_pyrophosphate",
-        sidelen = 16,
-        fill_ratio = 0.05,
-        biomes = "default:purple_swamp",
+        place_on = params.place_on,
+        sidelen = params.sidelen or 16,
+        fill_ratio = params.fill_ratio or 0.05,
+        biomes = params.biomes,
         decoration = "default:" .. name,
-        height = 1,
-        height_max = 4,
-        y_min = -20,
+        height = params.min_height or 1,
+        height_max = params.max_height,
+        y_min = params.y_min or -20,
     })
-end
-
-max_truncus_height = 7
-for i, _ in ipairs(truncus_names) do
-    minetest.register_decoration({
-        deco_type = "simple",
-        place_on = "default:copper_sulfate",
-        sidelen = 16,
-        fill_ratio = 0.05,
-        biomes = "default:azure",
-        decoration = "default:truncus_" .. i,
-        height = 1,
-        height_max = max_truncus_height,
-        y_min = -20,
-    })
-end
-
-max_lectica_height = 5
-minetest.register_decoration({
-    deco_type = "simple",
-    place_on = "default:sodium_peroxide",
-    sidelen = 16,
-    fill_ratio = 0.05,
-    biomes = "default:acidic_landscapes",
-    decoration = "default:lectica",
-    height = 1,
-    height_max = max_lectica_height,
-    y_min = -20,
-})
-
-max_veteris_height = 8
-minetest.register_decoration({
-    deco_type = "simple",
-    place_on = "default:sodium_peroxide",
-    sidelen = 16,
-    fill_ratio = 0.05,
-    biomes = "default:acidic_landscapes",
-    decoration = "default:veteris",
-    height = 1,
-    height_max = max_veteris_height,
-    y_min = -20,
-})
+end)
 
 for name, params in pairs(ores) do
     for _, place in ipairs(params.wherein) do

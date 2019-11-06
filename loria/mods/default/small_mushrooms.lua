@@ -29,49 +29,42 @@ minetest.register_on_placenode(function(pos, newnode, placer, oldnode, itemstack
     end
 end)
 
-truncus_names = {
-    "hyacinthum",
-    "viridi",
-    "purpura"
-}
-
-for i, name in ipairs(truncus_names) do
-    minetest.register_node("default:truncus_" .. i, {
-        description = "Truncus " .. name,
+on_grasses(function(name, desc, _)
+    minetest.register_node("default:" .. name, {
+        description = capitalization(desc),
         drawtype = "plantlike",
-        tiles = { "default_truncus_" .. i .. ".png" },
-        wield_image = "default_truncus_" .. i .. ".png",
-        inventory_image = "default_truncus_" .. i .. ".png",
+        tiles = { "default_" .. name .. ".png" },
+        wield_image = "default_" .. name .. ".png",
+        inventory_image = "default_" .. name .. ".png",
         paramtype = "light",
         walkable = false,
         groups = { snappy = 3, column = 1 },
         sunlight_propagates = true,
     })
-end
 
-minetest.register_node("default:lectica", {
-    description = "Lectica",
-    drawtype = "plantlike",
-    tiles = { "default_lectica.png" },
-    wield_image = "default_lectica.png",
-    inventory_image = "default_lectica.png",
-    paramtype = "light",
-    walkable = false,
-    groups = { snappy = 3, column = 1 },
-    sunlight_propagates = true,
-})
+    minetest.register_abm{
+        label = desc .. " growth",
+        nodenames = { "default:" .. name },
+        interval = 15,
+        chance = 500,
+        action = function(pos)
+            local name = minetest.get_node(pos).name
+            if minetest.get_node(above(pos)).name == "air" then
+                local height = 0
+                local curr = pos
 
-minetest.register_node("default:veteris", {
-    description = "Veteris",
-    drawtype = "plantlike",
-    tiles = { "default_veteris.png" },
-    wield_image = "default_veteris.png",
-    inventory_image = "default_veteris.png",
-    paramtype = "light",
-    walkable = false,
-    groups = { snappy = 3, column = 1 },
-    sunlight_propagates = true,
-})
+                while minetest.get_node(curr).name == name do
+                    height = height + 1
+                    curr = under(curr)
+                end
+
+                if math.random() <= (1 / height) then
+                    minetest.set_node(above(pos), minetest.get_node(pos))
+                end
+            end
+        end,
+    }
+end)
 
 pars_names = {
     "ordinarius",
@@ -193,20 +186,6 @@ minetest.register_node("default:viriditas", {
     sunlight_propagates = true,
 })
 
-for _, name in ipairs({ "rami", "spears" }) do
-    minetest.register_node("default:" .. name, {
-        description = capitalization(name),
-        drawtype = "plantlike",
-        tiles = { "default_" .. name .. ".png" },
-        wield_image = "default_" .. name .. ".png",
-        inventory_image = "default_" .. name .. ".png",
-        paramtype = "light",
-        walkable = false,
-        groups = { snappy = 3, column = 1 },
-        sunlight_propagates = true,
-    })
-end
-
 minetest.register_node("default:naga", {
     description = "Naga",
     drawtype = "plantlike",
@@ -220,14 +199,13 @@ minetest.register_node("default:naga", {
     sunlight_propagates = true,
 })
 
-for _, grass in ipairs(pressable) do
-    local original_desc = minetest.registered_nodes["default:" .. grass].description
-    minetest.register_node("default:" .. grass .. "_pressed", {
-        description = "Pressed " .. original_desc:lower(),
-        tiles = { "default_" .. grass .. "_pressed.png" },
+on_grasses(function(name, desc, _)
+    minetest.register_node("default:" .. name .. "_pressed", {
+        description = "Pressed " .. desc,
+        tiles = { "default_" .. name .. "_pressed.png" },
         groups = { crumbly = 3 },
     })
-end
+end)
 
 for name, params in pairs(small_mushrooms) do
     local info = {
