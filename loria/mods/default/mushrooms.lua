@@ -325,8 +325,63 @@ mushrooms = {
     }
 }
 
+function isthere(arr, x)
+    if #arr == 0 then
+        return true
+    else
+        return contains(arr, x)
+    end
+end
+
+local noise_depth = 4
+function noise(x, z, minp, maxp, area, data)
+    local y = maxp.y
+
+    while data[area:index(x, y, z)] == c_air do
+        y = y - 1
+        if y < minp.y then
+            return
+        end
+    end
+
+    if data[area:index(x, y, z)] ~= c_ammonium_manganese_pyrophosphate then
+        return
+    end
+
+    while data[area:index(x, y, z)] ~= c_air do
+        y = y - 1
+        if y < minp.y then
+            return
+        end
+    end
+
+    for delta = 0, math.random(0, noise_depth) do
+        data[area:index(x, y + delta, z)] = c_air
+    end
+
+    while data[area:index(x, y, z)] ~= c_potassium_permanganate_source and
+          data[area:index(x, y, z)] ~= c_potassium_permanganate_flowing do
+        y = y - 1
+        if y < minp.y then
+            return
+        end
+    end
+
+    while data[area:index(x, y, z)] == c_potassium_permanganate_source or
+          data[area:index(x, y, z)] == c_potassium_permanganate_flowing do
+        y = y - 1
+        if y < minp.y then
+            return
+        end
+    end
+
+    for delta = 0, math.random(0, noise_depth) do
+        data[area:index(x, y - delta, z)] = c_potassium_permanganate_source
+    end
+end
+
 minetest.register_on_generated(function(minp0, maxp0, seed)
-    local height_min = 0
+    local height_min = -31000
     local height_max = 31000
     
     local vm = minetest.get_voxel_manip()
@@ -338,6 +393,12 @@ minetest.register_on_generated(function(minp0, maxp0, seed)
 
     local area = VoxelArea:new({MinEdge = minp, MaxEdge = maxp})
     local data = vm:get_data()
+
+    for x = minp.x, maxp.x do
+        for z = minp.z, maxp.z do
+            noise(x, z, minp, maxp, area, data)
+        end
+    end
 
     local y_min = math.max(minp.y, height_min)
     local y_max = math.min(maxp.y, height_max)

@@ -266,7 +266,7 @@ for name, params in pairs(small_mushrooms) do
             if radiation > max_radiation then
                 minetest.set_node(pos, { name = "air" })
             elseif minetest.get_node_light(pos) <= optimal_light and
-               radiation >= optimal_radiation then
+                   radiation >= optimal_radiation then
                 minetest.set_node(pos2, { name = "default:" .. name })
             end
         end
