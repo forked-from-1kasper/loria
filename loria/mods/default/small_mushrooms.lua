@@ -22,7 +22,12 @@ minetest.register_on_placenode(function(pos, newnode, placer, oldnode, itemstack
     if minetest.get_item_group(newnode.name, "column") > 0 then
         local under = minetest.get_node(vector.add(pos, vector.new(0, -1, 0)))
         local walkable = minetest.registered_nodes[under.name].walkable
-        if not (walkable or under.name == newnode.name) then
+
+        local key, _ = newnode.name:match("^default:([^%d]+)_%d+$")
+        key = newnode.name:match("^default:([^%d]+)$") or key
+        local cant_grow = walkable and key and grasses[key] and grasses[key].place_on ~= under.name
+
+        if cant_grow or not (walkable or under.name == newnode.name) then
             minetest.set_node(pos, { name = "air" })
             minetest.add_item(pos, { name = newnode.name })
         end

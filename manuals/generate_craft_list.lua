@@ -1,4 +1,5 @@
 dofile("../loria/mods/default/prelude.lua")
+dofile("../loria/mods/default/conf.lua")
 dofile("../loria/mods/default/inv_crafts.lua")
 dofile("../loria/mods/furnace/crafts.lua")
 

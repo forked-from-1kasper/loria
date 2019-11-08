@@ -1,6 +1,7 @@
 -- lua5.3 generate_craft_graph.lua | dot.exe -Tsvg -o pictures/crafts.svg
 
 dofile("../loria/mods/default/prelude.lua")
+dofile("../loria/mods/default/conf.lua")
 dofile("../loria/mods/default/inv_crafts.lua")
 dofile("../loria/mods/furnace/crafts.lua")
 

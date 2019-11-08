@@ -8,7 +8,7 @@ local fuel_list = {
     ["default:potassium_cinnabar"] = 3,
     ["default:potassium_azure"] = 4,
     ["default:potassium_ingot"] = 5,
-    ["default:bucket_trisilane"] = 10,
+    ["default:bucket_trisilane"] = 30,
 }
 
 local function is_furnace_ready(pos)
