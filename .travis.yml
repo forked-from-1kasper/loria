@@ -5,7 +5,7 @@ notifications:
   email: true
 before_install:
   - sudo apt-get install lua5.1
-  - git https://github.com/bakpakin/Fennel
+  - git clone https://github.com/bakpakin/Fennel
   - export PATH=$PATH:`pwd`/Fennel
 install:
   - make fennel
