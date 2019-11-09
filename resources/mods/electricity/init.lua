@@ -15,7 +15,9 @@ else
     shared_filename = "libngspice.so"
 end
 
-local ngspice = ffi.load(minetest.get_modpath("electricity").."/" .. shared_filename)
+-- “../../..” is “.minetest/games”
+local libpath = minetest.get_modpath("electricity") .. "/../../../" .. shared_filename
+local ngspice = ffi.load(libpath)
 
 -- sharedspice.h
 ffi.cdef[[
