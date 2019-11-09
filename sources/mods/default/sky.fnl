@@ -13,12 +13,12 @@
 (fn brightness [color x]
   { :r (* x color.r)
     :g (* x color.g)
-    :b (* x color.b) })
+    :b (* x color.b)})
 
 (fn addition [c1 c2]
   { :r (math.min (+ c1.r c2.r) 255)
     :g (math.min (+ c1.g c2.g) 255)
-    :b (math.min (+ c1.b c2.b) 255) })
+    :b (math.min (+ c1.b c2.b) 255)})
 
 (fn get_sky_color [color timeofday]
   (if (< timeofday sunrise.start)
