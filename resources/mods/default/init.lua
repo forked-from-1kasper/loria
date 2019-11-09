@@ -1,5 +1,6 @@
 default = {}
 dofile(minetest.get_modpath("default").."/greet.lua")
+dofile(minetest.get_modpath("default").."/basic.lua")
 dofile(minetest.get_modpath("default").."/prelude.lua")
 dofile(minetest.get_modpath("default").."/conf.lua")
 dofile(minetest.get_modpath("default").."/inv_crafts.lua")

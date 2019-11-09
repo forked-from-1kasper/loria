@@ -57,7 +57,7 @@ local conf = {
     lists = { gas = 1, fuel = 1 },
     on_tick = {
         update_fuel, update_gas,
-        and_then(reset_sound, const(true))
+        andthen(reset_sound, const(true))
     },
 
     is_furnace_ready = is_furnace_ready,

@@ -50,7 +50,7 @@ minetest.register_node("electricity:transformer", {
 
         set_resis(transformer_resis)(pos)
     end,
-    on_destruct = and_then(reset_current, drop_everything),
+    on_destruct = andthen(reset_current, drop_everything),
 
     allow_metadata_inventory_put = function(pos, listname, index, stack, player)
         if minetest.get_item_group(stack:get_name(), "cable") > 0 then

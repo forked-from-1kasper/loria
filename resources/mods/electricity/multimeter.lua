@@ -42,7 +42,7 @@ minetest.register_node("electricity:multimeter", {
     drop = 'electricity:multimeter',
     groups = { dig_immediate = 3, conductor = 1, },
 
-    on_construct = and_then(
+    on_construct = andthen(
         set_resis(multimeter_resis.min),
         comp(update_infotext, minetest.get_meta)
     ),

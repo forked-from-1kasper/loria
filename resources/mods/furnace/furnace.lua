@@ -118,7 +118,7 @@ function register_furnace(conf)
         drop = conf.drop or "furnace:" .. conf.name,
         tiles = conf.textures.inactive,
 
-        on_destruct = and_then(conf.on_destruct or nope, drop_everything),
+        on_destruct = andthen(conf.on_destruct or nope, drop_everything),
         on_construct = construct_furnace(conf),
 
         paramtype2 = "facedir",
@@ -201,7 +201,7 @@ function register_furnace(conf)
             check_and_stop_furnace(conf, pos)
         end,
 
-        on_destruct = and_then(conf.on_destruct or nope, drop_everything),
+        on_destruct = andthen(conf.on_destruct or nope, drop_everything),
         on_timer = furnace_on_timer(conf),
 
         on_receive_fields = conf.on_receive_fields,

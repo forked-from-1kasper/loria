@@ -32,7 +32,7 @@
 (local hud-elems [ health space-suit gas oxygen gravity radiation copyright ])
 
 (minetest.register_globalstep
-  (λ [_]
+  (fn [_]
     (each [_ player (ipairs (minetest.get_connected_players))]
       (var text "")
       (each [_ func (ipairs hud-elems)]

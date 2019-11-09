@@ -53,7 +53,7 @@ minetest.register_node("electricity:battery_box", {
         end
     end,
 
-    on_destruct = and_then(reset_current, drop_everything),
+    on_destruct = andthen(reset_current, drop_everything),
 })
 
 local k = 5
