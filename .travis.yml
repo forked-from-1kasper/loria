@@ -19,3 +19,4 @@ deploy:
   file: loria.tgz
   on:
     repo: forked-from-1kasper/loria
+    tags: true
