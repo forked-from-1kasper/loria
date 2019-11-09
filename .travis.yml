@@ -1,0 +1,14 @@
+language: generic
+os:
+  - linux
+notifications:
+  email: true
+before_deploy:
+  - make tar
+deploy:
+  provider: releases
+  api_key:
+    secure: fhrwEhQOj5849FtxvEEP3TdqDE9UcLPEFornertf/yEvW7mfBQY5QSrOZmMnrND4GOVtjgaopnPTJwxMaWGAQftabceHl+YD4vmW/I5BP382yvJPhrN9Pk2dn61hIjiUufYhmWVt3QUI3ebc+JywcHm7vsDuaJ7QAAvhBvQism3vmTSlVTUUSsnqdK+MWc1b/4xzFg5p3m9TbToKzJeNNcc5V9kdcfvoElM2V4CDNZ+cDDl2yjTGpmZFc0/Cxx8y3auJDsdALeqjuYbidmlGiB6UJm27FrZMQEe8ZUPxMNdWuyKTfgOMACMtBB25Bw/rNPwQrm2towNUmZFDhv9SZuBnARUz4TGj0aFbPnWUKs73odDfcQuzNj/6YfEvT9ob6OfXoqBPp1hPaoZreABHPtSjts9R1pE+lJlSnZtWKDjexNRV2jhxmciOu6q9u7snpJRRwM0EMyrj8+mv9EhwLDctsxaZORxP9YKo9T/mIZtTSDb3+9aIYzX223FNJW9Ziu3sGFsNofy7+AVOkl5RuzrlFgwOUP1bH59GZ8lO9gA++6IYQvMhbi+Voa+cDxt3QTUthqI4HTMyFZdP+LxNFq766kQglc2qk/CIreDO0wTXeQ1AkHzGoAAleU8KEzvOlhgO/msU8fgxHAoHJZJIXaDS/OI06FE3Sz0S7QwFakg=
+  file: loria.tgz
+  on:
+    repo: forked-from-1kasper/loria
