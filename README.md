@@ -1,6 +1,13 @@
 # Loria
 
-Minetest 5.0.1+, still WIP. [Craft list](manuals/craft_list.md).
+Minetest 5.1.0+, still WIP. [Craft list](manuals/craft_list.md).
+
+You can get the latest build via:
+
+```bash
+wget `curl -s https://api.github.com/repos/forked-from-1kasper/loria/releases/latest | jq -r '.asset
+s[0].browser_download_url'`
+```
 
 **Do not use v6 map generator.**
 

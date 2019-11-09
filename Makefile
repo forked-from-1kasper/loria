@@ -1,6 +1,16 @@
-ARCHIVE=loria.tgz
+ARCHIVE = loria.tgz
+SRC := $(shell find sources -type f -name *.fnl)
+
+fennel: $(SRC:.fnl=.lua)
+	# Fennel done
+
+$(SRC:.fnl=.lua): %.lua: %.fnl
+	rm -f $@
+	fennel --compile $< > $@
 
 tar:
-	find resources -type f | tar cfz $(ARCHIVE) -T - --transform='s,resources/,,'
+	(find resources -type f; find sources -type f -name *.lua) | \
+	tar cfz $(ARCHIVE) -T - --transform='s,resources/\|sources/,,'
 clean:
-	rm $(ARCHIVE)
+	rm -f $(SRC:.fnl=.lua)
+	rm -f $(ARCHIVE)

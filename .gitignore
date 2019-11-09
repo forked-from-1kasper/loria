@@ -1,3 +1,6 @@
-/minetest_game/*
-/minimal/*
+minetest_game/*
+minimal/*
+loria/*
+sources/**/*.lua
 *.dll
+*.tgz
