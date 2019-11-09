@@ -26,6 +26,12 @@ function foreach(f, l)
     end
 end
 
+function foreach2(f, l)
+    for key, value in pairs(l) do
+        f(key, value)
+    end
+end
+
 function all(f, l)
     for _, x in ipairs(l) do
         if not f(x) then
