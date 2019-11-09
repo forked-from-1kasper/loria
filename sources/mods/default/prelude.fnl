@@ -62,3 +62,7 @@
 
 (global above (fn [pos] (vector.add pos k)))
 (global under (fn [pos] (vector.subtract pos k)))
+
+(global import
+  (partial foreach
+    (comp dofile (partial .. (minetest.get_modpath :default) "/"))))
