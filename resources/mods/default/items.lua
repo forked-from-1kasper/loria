@@ -159,6 +159,30 @@ minetest.register_tool("default:copper_hammer_head", {
     end
 })
 
+minetest.register_tool("default:nail_file", {
+    inventory_image = "default_nail_file.png",
+    description = "Nail file",
+    stack_max = 1,
+    on_use = function(itemstack, user, pointed_thing)
+        itemstack:set_name("default:broken_nail_file")
+        return itemstack
+    end
+})
+
+minetest.register_tool("default:broken_nail_file", {
+    inventory_image = "default_broken_nail_file.png",
+    description = "Broken nail file",
+    stack_max = 1,
+    range = 0,
+    tool_capabilities = {
+        full_punch_interval = 1.0,
+        max_drop_level = 0,
+        groupcaps = {
+            snappy = { times = {100, 60, 30}, uses = 5 },
+        }
+    },
+})
+
 minetest.register_tool("default:battery", {
     inventory_image = "default_battery.png",
     description = "Battery",

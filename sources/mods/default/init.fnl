@@ -56,8 +56,8 @@
           (> space-suit 0)
           (do (when (~= reason.type "node_damage")
                 (let [new (+ space-suit (math.floor (/ hp-change 2)))]
-                  if (> new 0) (meta:set_int "space_suit" new)
-                     (meta:set_int "space_suit" 0))) 0)
+                  (if (> new 0) (meta:set_int "space_suit" new)
+                      (meta:set_int "space_suit" 0))) 0))
           hp-change)))
   true)
 
