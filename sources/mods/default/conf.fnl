@@ -156,6 +156,10 @@
     { :max_height 4
       :place_on "default:ammonium_manganese_pyrophosphate"
       :biomes "default:purple_swamp" }
+    "cruento"
+    { :max_height 6 :fill_ratio 0.001
+      :place_on "default:ammonium_manganese_pyrophosphate"
+      :biomes "default:purple_swamp" }
     "veteris"
     { :max_height 8
       :place_on "default:sodium_peroxide"
