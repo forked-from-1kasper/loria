@@ -1,20 +1,19 @@
-(minetest.register_alias "mapgen_stone" "default:cinnabar")
-(minetest.register_alias "mapgen_dirt" "default:mercury_oxide")
-(minetest.register_alias "mapgen_dirt_with_grass" "default:red_mercury_oxide")
-(minetest.register_alias "mapgen_sand" "default:lead_sulfate")
-(minetest.register_alias "mapgen_water_source" "default:polluted_mercury_source")
-(minetest.register_alias "mapgen_river_water_source" "default:polluted_mercury_source")
-(minetest.register_alias "mapgen_lava_source" "default:mercury_source")
-(minetest.register_alias "mapgen_gravel" "default:uranium_tetrachloride_cinnabar")
-
-(minetest.register_alias "mapgen_tree" "default:viridi_petasum_stem")
-(minetest.register_alias "mapgen_leaves" "default:viridi_petasum_body")
-(minetest.register_alias "mapgen_apple" "default:cinnabar")
-(minetest.register_alias "mapgen_junglegrass" "default:cinnabar")
-
-(minetest.register_alias "mapgen_cobble" "default:cinnabar")
-(minetest.register_alias "mapgen_stair_cobble" "default:cinnabar")
-(minetest.register_alias "mapgen_mossycobble" "default:cinnabar")
+(foreach2 minetest.register_alias
+  { "mapgen_stone" "default:cinnabar"
+    "mapgen_dirt" "default:mercury_oxide"
+    "mapgen_dirt_with_grass" "default:red_mercury_oxide"
+    "mapgen_sand" "default:lead_sulfate"
+    "mapgen_water_source" "default:polluted_mercury_source"
+    "mapgen_river_water_source" "default:polluted_mercury_source"
+    "mapgen_lava_source" "default:mercury_source"
+    "mapgen_gravel" "default:uranium_tetrachloride_cinnabar"
+    "mapgen_tree" "default:viridi_petasum_stem"
+    "mapgen_leaves" "default:viridi_petasum_body"
+    "mapgen_apple" "default:cinnabar"
+    "mapgen_junglegrass" "default:cinnabar"
+    "mapgen_cobble" "default:cinnabar"
+    "mapgen_stair_cobble" "default:cinnabar"
+    "mapgen_mossycobble" "default:cinnabar" })
 
 (minetest.clear_registered_biomes)
 (minetest.clear_registered_decorations)

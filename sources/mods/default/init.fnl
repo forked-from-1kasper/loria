@@ -12,7 +12,7 @@
   { :animation_speed 30
     :textures [ "player.png" ]
     :animations
-     {  :stand     { :x 0   :y 79  }
+      { :stand     { :x 0   :y 79  }
         :lay       { :x 162 :y 166 }
         :walk      { :x 168 :y 187 }
         :mine      { :x 189 :y 198 }
