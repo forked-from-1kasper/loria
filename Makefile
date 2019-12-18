@@ -1,5 +1,5 @@
 ARCHIVE = loria.tgz
-SRC := $(shell find sources -type f -name *.fnl)
+SRC := $(shell find sources -type f -name '*.fnl')
 
 fennel: $(SRC:.fnl=.lua)
 	# Fennel done

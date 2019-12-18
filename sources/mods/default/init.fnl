@@ -2,11 +2,11 @@
 (dofile (.. (minetest.get_modpath :default) "/" "basic.lua"))
 (dofile (.. (minetest.get_modpath :default) "/" "prelude.lua"))
 
-(import
-  [ "greet.lua" "conf.lua" "inv_crafts.lua" "creative.lua" "biomes.lua"
-    "ores.lua" "mushrooms_nodes.lua" "small_mushrooms.lua" "mapgen.lua"
-    "liquids.lua" "nodes.lua" "gases.lua" "items.lua" "craft.lua"
-    "mushrooms.lua" "hud.lua" "sky.lua" "player.lua" ])
+(import :default
+  "greet" "conf" "inv_crafts" "creative" "biomes"
+  "ores" "mushrooms_nodes" "small_mushrooms" "mapgen"
+  "liquids" "nodes" "gases" "items" "craft"
+  "mushrooms" "hud" "sky" "player")
 
 (player_api.register_model "player.b3d"
   { :animation_speed 30

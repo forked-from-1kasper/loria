@@ -63,6 +63,7 @@
 (global above (fn [pos] (vector.add pos k)))
 (global under (fn [pos] (vector.subtract pos k)))
 
-(global import
-  (partial foreach
-    (comp dofile (partial .. (minetest.get_modpath :default) "/"))))
+(global import (fn [mod ...]
+  (let [modpath (minetest.get_modpath mod)
+        get-path (fn [name] (.. modpath "/" name ".lua"))]
+    (foreach (comp dofile get-path) [...]))))

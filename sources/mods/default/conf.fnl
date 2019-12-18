@@ -177,14 +177,14 @@
 (global giant_mushrooms [ "viridi_petasum" "colossus" "turris" "rete" ])
 
 (global cables
-  { { :name "copper"    :resis 0.0225 }
+  [ { :name "copper"    :resis 0.0225 }
     { :name "aluminium" :resis 0.036  }
     { :name "wolfram"   :resis 0.055  }
     { :name "platinum"  :resis 0.098  }
     { :name "calcium"   :resis 0.046  }
     { :name "uranium"   :resis 0.295  }
     { :name "thorium"   :resis 0.1862 }
-    { :name "plutonium" :resis 150    } })
+    { :name "plutonium" :resis 150    } ])
 
 (global brickable
   { "default:cinnabar" { :crumbly true }
