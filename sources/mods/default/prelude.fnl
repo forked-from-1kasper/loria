@@ -1,69 +1,68 @@
-(global comp (fn [f g]
-  (fn [x] (f (g x)))))
+(require-macros :useful-macroses)
 
-(global andthen (fn [f g]
-  (fn [x] (f x) (g x))))
+(defun comp [f g]
+  (fn [x] (f (g x))))
 
-(global map (fn [f l]
-  (var res [])
-  (each [_ x (ipairs l)]
-    (table.insert res (f x)))
-  res))
+(defun andthen [f g]
+  (fn [x] (f x) (g x)))
 
-(global foreach (fn [f l]
-  (each [_ x (ipairs l)] (f x))))
+(defun map [f l]
+  (var res {})
+  (each [key val (pairs l)]
+    (tset res key (f val)))
+  res)
 
-(global foreach2 (fn [f l]
-  (each [key value (pairs l)] (f key value))))
+(defun foreach [f l]
+  (each [_ x (ipairs l)] (f x)))
 
-(global copy (fn [t0]
+(defun foreach2 [f l]
+  (each [key value (pairs l)] (f key value)))
+
+(defun copy [t₀]
   (var t {})
-  (each [k v (pairs t0)]
-    (tset t k v))
-  t))
+  (each [k v (pairs t₀)] (tset t k v))
+  t)
 
-(global const (fn [x] (fn [...] x)))
+(defun const [x] (fn [...] x))
 
-(global starts_with (fn [str start]
-  (= (str:sub 1 (length start)) start)))
+(defun starts_with [str start]
+  (= (str:sub 1 (length start)) start))
 
-(global ends_with (fn [str ending]
-  (or (= ending "") (= (str:sub (- (length ending))) ending))))
+(defun ends_with [str ending]
+  (or (= ending "") (= (str:sub (- (length ending))) ending)))
 
-(global swap_node (fn [pos name]
+(defun swap_node [pos name]
   (var node (minetest.get_node pos))
   (when (~= node.name name)
     (tset node :name name)
-    (minetest.swap_node pos node))))
+    (minetest.swap_node pos node)))
 
-(global add_or_drop (fn [inv listname stack pos]
+(defun add_or_drop [inv listname stack pos]
   (if (inv:room_for_item listname stack)
       (inv:add_item listname stack)
-      (minetest.add_item pos stack))))
+      (minetest.add_item pos stack)))
 
-(global append (fn [dest source]
+(defun append [dest source]
   (each [_ x (ipairs source)]
-    (table.insert dest x))))
+    (table.insert dest x)))
 
-(global capitalization (fn [str]
-  (string.gsub (str:gsub "^%l" string.upper) "_" " ")))
+(defun capitalization [str]
+  (string.gsub (str:gsub "^%l" string.upper) "_" " "))
 
-(global join (fn [lst1 lst2]
-    (var res {})
-    (each [idx x (pairs lst1)]
-      (tset res idx x))
-    (each [idx y (pairs lst2)]
-      (tset res idx y))
-    res))
+(defun join [lst₁ lst₂]
+  (var res {})
+  (each [id x (pairs lst₁)] (tset res id x))
+  (each [id y (pairs lst₂)] (tset res id y))
+  res)
 
 (global i (vector.new 1 0 0))
 (global j (vector.new 0 0 1))
 (global k (vector.new 0 1 0))
 
-(global above (fn [pos] (vector.add pos k)))
-(global under (fn [pos] (vector.subtract pos k)))
+(defun above [pos] (vector.add pos k))
+(defun under [pos] (vector.subtract pos k))
 
-(global import (fn [mod ...]
+(defun import [mod ...]
   (let [modpath (minetest.get_modpath mod)
         get-path (fn [name] (.. modpath "/" name ".lua"))]
-    (foreach (comp dofile get-path) [...]))))
+    (foreach (comp dofile get-path) [...])))

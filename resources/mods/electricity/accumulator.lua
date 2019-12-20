@@ -54,7 +54,7 @@ minetest.register_node("electricity:charger_box", {
 
             local wear = stack:get_wear()
             local wear_delta = charge_speed * I * (U / emf) * elapsed
-            
+
             if U >= (emf - voltage_delta) and
                U <= (emf + voltage_delta) then
                 if wear > wear_delta then
