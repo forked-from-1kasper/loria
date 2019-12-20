@@ -11,7 +11,9 @@
   (match jit.os
     :Windows "ngspice"
     :OSX     "libngspice.0.dylib"
-    _        "libngspice.so"))
+    :Linux   "libngspice.so"
+    :BSD     "libngspice.so"
+    :POSIX   "libngspice.so"))
 
 ;; “../../..” is “.minetest/games”
 (local libpath (.. (minetest.get_modpath :electricity) "/../../../" shared-filename))
@@ -134,7 +136,8 @@
 (defun ngflush []
   (ngspice_command "destroy all")
   (ngspice_command "remcirc")
-  (global ngparsed {}))
+  (each [key _ (pairs ngparsed)]
+    (tset ngparsed key nil)))
 
 (defun initdevice [device-name pos]
   (tset ngparsed device-name { :pos pos }))
