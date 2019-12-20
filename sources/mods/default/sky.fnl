@@ -1,3 +1,5 @@
+(require-macros :useful-macroses)
+
 (local default_color { :r 140 :g 186 :b 250 })
 (local night_color { :r 0 :g 0 :b 16 })
 
@@ -34,9 +36,9 @@
       ; (>= timeofday >= sunset.finish)
       (brightness color 0)))
 
-(minetest.register_globalstep (λ [_]
-    (let [timeofday (minetest.get_timeofday)]
-      (each [_ player (ipairs (minetest.get_connected_players))]
-        (let [pos (player:get_pos)
-              color (or (. colors (. (minetest.get_biome_data pos) :biome)) default_color)]
-          (player:set_sky (addition (get_sky_color color timeofday) night_color) "plain"))))))
+(def-globalstep [_]
+  (let [timeofday (minetest.get_timeofday)]
+    (each [_ player (ipairs (minetest.get_connected_players))]
+      (let [pos (player:get_pos)
+            color (or (. colors (. (minetest.get_biome_data pos) :biome)) default_color)]
+        (player:set_sky (addition (get_sky_color color timeofday) night_color) "plain")))))

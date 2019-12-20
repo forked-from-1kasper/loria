@@ -1,3 +1,5 @@
+(require-macros :useful-macroses)
+
 (global default {})
 (dofile (.. (minetest.get_modpath :default) "/" "basic.lua"))
 (dofile (.. (minetest.get_modpath :default) "/" "prelude.lua"))
@@ -99,13 +101,13 @@
     (meta:set_int "space_suit" space_suit_strength))))
 
 (global MAX_HEIGHT 31000)
-(minetest.register_globalstep (fn [_]
+(def-globalstep [_]
   (each [_ player (ipairs (minetest.get_connected_players))]
     (let [pos (player:get_pos)]
       (if (~= pos.y (- MAX_HEIGHT))
           (let [gravity (^ (/ MAX_HEIGHT (+ (. (player:get_pos) :y) MAX_HEIGHT)) 2)]
             (player:set_physics_override {:gravity gravity}))
-          (player:set_physics_override {:gravity 1}))))))
+          (player:set_physics_override {:gravity 1})))))
 
 (local clear-radius 500)
 (minetest.register_chatcommand "clearitems"

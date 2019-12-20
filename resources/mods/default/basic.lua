@@ -26,5 +26,9 @@ function contains(arr, val)
     return false
 end
 
+function funcall(f, ...)
+    return f(...)
+end
+
 function nope()
 end

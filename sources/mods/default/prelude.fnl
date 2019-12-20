@@ -13,7 +13,7 @@
   res)
 
 (defun foreach [f l]
-  (each [_ x (ipairs l)] (f x)))
+  (each [_ x (pairs l)] (f x)))
 
 (defun foreach2 [f l]
   (each [key value (pairs l)] (f key value)))

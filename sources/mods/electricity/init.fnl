@@ -96,7 +96,7 @@
 
 (local prefix-length (length "stdXXX "))
 
-(global device_info {})
+(global ngparsed {})
 
 (ffi-proc printfcn "SendChar*" [str id p]
   (let [ s (ffi.string str)
@@ -106,9 +106,9 @@
         (->> (string.format "ng: SendChar: %s" info) (minetest.log "verbose"))
         (let [(name field value) (info:match "^([^ -]+)-([^ ]+)%s+=%s+([+-]?[^ ]+)")]
           (when (and name value)
-            (when (not (. device_info name))
-              (tset device_info name {}))
-            (tset device_info name field (tonumber value)))
+            (when (not (. ngparsed name))
+              (tset ngparsed name {}))
+            (tset ngparsed name field (tonumber value)))
 
           (minetest.log "info" (string.format "ng: SendChar: %s" info))))
     1))
@@ -130,6 +130,14 @@
 
 (global ngspice_command (fn [str]
   (ngspice.ngSpice_Command (c-lit str))))
+
+(defun ngflush []
+  (ngspice_command "destroy all")
+  (ngspice_command "remcirc")
+  (global ngparsed {}))
+
+(defun initdevice [device-name pos]
+  (tset ngparsed device-name { :pos pos }))
 
 (ngspice_command "set nomoremode")
 (import :electricity

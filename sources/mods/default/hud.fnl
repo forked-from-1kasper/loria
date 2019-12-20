@@ -1,3 +1,5 @@
+(require-macros :useful-macroses)
+
 (fn health [player]
   (.. "Health: " (player:get_hp)))
 
@@ -31,12 +33,11 @@
 
 (local hud-elems [ health space-suit gas oxygen gravity radiation copyright ])
 
-(minetest.register_globalstep
-  (fn [_]
-    (each [_ player (ipairs (minetest.get_connected_players))]
-      (var text "")
-      (each [_ func (ipairs hud-elems)]
-          (set text (.. text "\n" (func player))))
+(def-globalstep [_]
+  (each [_ player (ipairs (minetest.get_connected_players))]
+    (var text "")
+    (each [_ func (ipairs hud-elems)]
+        (set text (.. text "\n" (func player))))
 
-      (let [hud (. oxygen_hud (player:get_player_name))]
-        (player:hud_change hud "text" text)))))
+    (let [hud (. oxygen_hud (player:get_player_name))]
+      (player:hud_change hud "text" text))))

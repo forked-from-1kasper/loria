@@ -7,4 +7,8 @@
 (fn local-require [name]
   `(local ,name (ie.require ,(tostring name))))
 
-{ :defun defun :local-require local-require :ffi-proc ffi-proc }
+(fn def-globalstep [args ...]
+  `(minetest.register_globalstep (fn ,args ,(unpack [...]))))
+
+{ :defun defun :local-require local-require
+  :ffi-proc ffi-proc :def-globalstep def-globalstep }
