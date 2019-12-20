@@ -1,15 +1,17 @@
+(require-macros :useful-macroses)
+
 (local ie (minetest.request_insecure_environment))
 (when (not ie)
   (error (.. "Electricity mod requires access to insecure functions in order "
              "to work. Please add the electricity mod to your secure.trusted_mods.")))
 
-(local ffi (ie.require "ffi"))
+(local-require ffi)
 
 (local shared-filename
   (match jit.os
-    "Windows" "ngspice"
-    "OSX" "libngspice.0.dylib"
-    _ "libngspice.so"))
+    :Windows "ngspice"
+    :OSX     "libngspice.0.dylib"
+    _        "libngspice.so"))
 
 ;; “../../..” is “.minetest/games”
 (local libpath (.. (minetest.get_modpath :electricity) "/../../../" shared-filename))
@@ -32,7 +34,7 @@
         ngcomplex_t *v_compdata;
         int v_length;
     } vector_info, *pvector_info;
-    
+
     typedef struct vecvalues {
         char* name;
         double creal;
@@ -96,26 +98,24 @@
 
 (global device_info {})
 
-(local printfcn (ffi.cast "SendChar*"
-  (fn [str id p]
-    (let [ s (ffi.string str)
-           prefix (s:sub 1 prefix-length)
-           info (s:sub (+ prefix-length 1))]
-      (if (= prefix "stderr ")
-          (->> (string.format "ng: SendChar: %s" info) (minetest.log "verbose"))
-          (let [(name field value) (info:match "^([^ -]+)-([^ ]+)%s+=%s+([+-]?[^ ]+)")]
-            (when (and name value)
-              (when (not (. device_info name))
-                (tset device_info name {}))
-              (tset device_info name field (tonumber value)))
+(ffi-proc printfcn "SendChar*" [str id p]
+  (let [ s (ffi.string str)
+         prefix (s:sub 1 prefix-length)
+         info (s:sub (+ prefix-length 1))]
+    (if (= prefix "stderr ")
+        (->> (string.format "ng: SendChar: %s" info) (minetest.log "verbose"))
+        (let [(name field value) (info:match "^([^ -]+)-([^ ]+)%s+=%s+([+-]?[^ ]+)")]
+          (when (and name value)
+            (when (not (. device_info name))
+              (tset device_info name {}))
+            (tset device_info name field (tonumber value)))
 
-            (minetest.log "info" (string.format "ng: SendChar: %s" info))))
-      1))))
+          (minetest.log "info" (string.format "ng: SendChar: %s" info))))
+    1))
 
-(local ngexit (ffi.cast "ControlledExit*"
-  (fn [status immediateunload quit id p]
-    (minetest.log (string.format "ng: ControlledExit: id = %d" id))
-    0)))
+(ffi-proc ngexit "ControlledExit*" [status immediateunload quit id p]
+  (minetest.log (string.format "ng: ControlledExit: id = %d" id))
+  0)
 
 (ngspice.ngSpice_Init printfcn nil ngexit nil nil nil nil)
 
