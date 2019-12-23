@@ -10,5 +10,10 @@
 (fn def-globalstep [args ...]
   `(minetest.register_globalstep (fn ,args ,(unpack [...]))))
 
+(fn table-contains [elem tbl] `(. ,tbl ,elem))
+(fn table-not-contains [elem tbl] `(not (. ,tbl ,elem)))
+(fn neq [a b] `(~= ,a ,b))
+
 { :defun defun :local-require local-require
+  :∈ table-contains :∉ table-not-contains :≠ neq
   :ffi-proc ffi-proc :def-globalstep def-globalstep }

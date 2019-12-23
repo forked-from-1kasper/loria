@@ -33,7 +33,7 @@
 
 (defun swap_node [pos name]
   (var node (minetest.get_node pos))
-  (when (~= node.name name)
+  (when (≠ node.name name)
     (tset node :name name)
     (minetest.swap_node pos node)))
 

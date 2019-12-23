@@ -18,12 +18,12 @@
            name (-> (minetest.get_node pos) (. :name)) ]
       (when (and (or (> (minetest.get_item_group name :conductor) 0)
                      (> (minetest.get_item_group name :cable) 0))
-                 (not (. already-processed (serialize_pos pos))))
+                 (∉ (serialize_pos pos) already-processed))
         (let [meta (minetest.get_meta pos)]
           (meta:set_float :I 0) (meta:set_float :U 0)
           (tset already-processed (serialize_pos pos) true)
 
-          (when (. consumer name)
+          (when (∈ name consumer)
             (-> (minetest.get_node_timer pos) (: :start 0.5)))
           (reset_circuits pos already-processed))))))
 
@@ -54,10 +54,10 @@
 (fn get-name [] (set idx (+ idx 1)) idx)
 
 (fn is-conductor [name]
-  (~= (minetest.get_item_group name :conductor) 0))
+  (≠ (minetest.get_item_group name :conductor) 0))
 
 (fn is-source [name]
-  (~= (minetest.get_item_group name :source) 0))
+  (≠ (minetest.get_item_group name :source) 0))
 
 (defun find_circuits [pos descriptions processed-sources]
   (var res []) (var queue [ pos ])
@@ -67,15 +67,15 @@
       (let [ pos (vector.add current vect)
              name (-> (minetest.get_node pos) (. :name))
              str (serialize_pos pos) ]
-        (when (and (not (. descriptions str))
-                   (not (. processed-sources str))
+        (when (and (∉ str descriptions)
+                   (∉ str processed-sources)
                    (or (is-conductor name) (is-source name)))
           (let [(desc device-name) ((. model name) pos (get-name))]
             (tset descriptions str desc)
             (when device-name (initdevice device-name pos))
 
             (when (is-source name) (tset processed-sources str true))
-            (when (. consumer name)
+            (when (∈ name consumer)
               (-> (minetest.get_node_timer pos) (: :start 0.5)))
 
             (drop-current pos) (table.insert queue pos)))))))
@@ -131,7 +131,7 @@
     (if (>= Δt t)
       (tset sources str nil)
       (do (tset sources str (- t Δt))
-          (when (not (. processed-sources str))
+          (when (∉ str processed-sources)
             (process-source (deserialize_pos str) processed-sources Δt)))))
   (set idx 0))
 

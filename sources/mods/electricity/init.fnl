@@ -108,7 +108,7 @@
         (->> (string.format "ng: SendChar: %s" info) (minetest.log "verbose"))
         (let [(name field value) (info:match "^([^ -]+)-([^ ]+)%s+=%s+([+-]?[^ ]+)")]
           (when (and name value)
-            (when (not (. ngparsed name))
+            (when (∉ name ngparsed)
               (tset ngparsed name {}))
             (tset ngparsed name field (tonumber value)))
 

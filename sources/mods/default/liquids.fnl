@@ -1,3 +1,5 @@
+(require-macros :useful-macroses)
+
 (global bucket { :is_bucket {} :liquids {} })
 
 (minetest.register_craftitem "default:bucket_empty"
@@ -111,9 +113,9 @@
           (λ [itemstack user pointed_thing]
             (when (= pointed_thing.type "node")
               (let [n (minetest.get_node pointed_thing.under)]
-                (if (= (. bucket.liquids n.name) nil)
+                (if (∉ n.name bucket.liquids)
                     (minetest.add_node pointed_thing.above {:name source})
-                    (~= n.name source)
+                    (≠ n.name source)
                     (minetest.add_node pointed_thing.under {:name source})
                     (nope))
                 {:name "default:bucket_empty" :wear (itemstack:get_wear)})))})))
