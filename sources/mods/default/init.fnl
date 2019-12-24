@@ -1,4 +1,5 @@
 (require-macros :useful-macros)
+(require-macros :infix)
 
 (global default {})
 (dofile (.. (minetest.get_modpath :default) "/" "basic.lua"))
@@ -9,6 +10,15 @@
   "ores" "mushrooms_nodes" "small_mushrooms" "mapgen"
   "liquids" "nodes" "gases" "items" "craft"
   "mushrooms" "hud" "sky" "player")
+
+(local start-items
+  {"furnace:refiner_item"   1
+   "default:oxygen_balloon" 1
+   "default:empty_balloon"  1
+   "default:bucket_empty"   2})
+
+(local max-height 31000)
+(local space-suit-strength 20)
 
 (player_api.register_model "player.b3d"
   { :animation_speed 30
@@ -30,25 +40,23 @@
   (let [name (player:get_player_name)]
     (player:hud_set_flags {:healthbar false})
     (tset oxygen_hud name (player:hud_add
-      { :hud_elem_type "text"
-        :position { :x 0 :y 0.9 }
-        :text "N/A"
-        :number 0xFFFFFF
-        :alignment "right"
-        :offset { :x 150 :y 0 }}))
+      {:hud_elem_type "text"
+       :position {:x 0 :y 0.9}
+       :text "N/A"
+       :number 0xFFFFFF
+       :alignment "right"
+       :offset {:x 150 :y 0}}))
     (player:set_clouds {:density 0})
 
     (player_api.set_model player "player.b3d")
     (player:set_local_animation
-      { :x 0   :y 79 }
-      { :x 168 :y 187 }
-      { :x 189 :y 198 }
-      { :x 200 :y 219 }
+      {:x 0   :y 79 }
+      {:x 168 :y 187}
+      {:x 189 :y 198}
+      {:x 200 :y 219}
       30)
 
     (minetest.chat_send_player name "Welcome to Loria!"))))
-
-(global space_suit_strength 20)
 
 (minetest.register_on_player_hpchange
   (fn [player hp-change reason]
@@ -56,23 +64,16 @@
           space-suit (meta:get_int "space_suit")]
       (if (= reason.type "set_hp") hp-change
           (> space-suit 0)
-          (do (when (~= reason.type "node_damage")
+          (do (when (≠ reason.type "node_damage")
                 (let [new (+ space-suit (math.floor (/ hp-change 2)))]
                   (if (> new 0) (meta:set_int "space_suit" new)
                       (meta:set_int "space_suit" 0))) 0))
           hp-change)))
   true)
 
-(global START_ITEMS
-  { "furnace:refiner_item" 1
-    "default:oxygen_balloon" 1
-    "default:empty_balloon" 1
-    "default:bucket_empty" 2 })
-
-(global init_inv (fn [player]
+(fn init-inv [player]
   (let [name (player:get_player_name)
         inv (player:get_inventory)]
-
     (inv:set_size "oxygen" 1)
     (inv:set_size "antiradiation" 1)
     (inv:set_size "input" 9)
@@ -81,31 +82,31 @@
     (inv:add_item "main" {:name "default:drill" :count 1})
     (inv:add_item "oxygen" {:name "default:oxygen_balloon"})
 
-    (each [name count (pairs START_ITEMS)]
-      (inv:add_item "main" {:name name :count count})))))
+    (each [name count (pairs start-items)]
+      (inv:add_item "main" {:name name :count count}))))
 
 (minetest.register_on_newplayer (fn [player]
-  (init_inv player)
+  (init-inv player)
   (let [meta (player:get_meta)]
     (meta:set_int "oxygen" 0)
     (meta:set_float "radiation" 0)
     (meta:set_float "received_dose" 0)
     (meta:set_float "dose_damage_limit" 1)
-    (meta:set_int "space_suit" space_suit_strength))))
+    (meta:set_int "space_suit" space-suit-strength))))
 
 (minetest.register_on_respawnplayer (fn [player]
   (let [meta (player:get_meta)]
     (player:set_hp 20)
     (meta:set_float "received_dose" 0)
     (meta:set_float "dose_damage_limit" 1)
-    (meta:set_int "space_suit" space_suit_strength))))
+    (meta:set_int "space_suit" space-suit-strength))))
 
-(global MAX_HEIGHT 31000)
 (def-globalstep [_]
   (each [_ player (ipairs (minetest.get_connected_players))]
     (let [pos (player:get_pos)]
-      (if (~= pos.y (- MAX_HEIGHT))
-          (let [gravity (^ (/ MAX_HEIGHT (+ (. (player:get_pos) :y) MAX_HEIGHT)) 2)]
+      (if (≠ pos.y (- max-height))
+          (let [h (. (player:get_pos) :y)
+                gravity (infix (max-height / (h + max-height)) ^ 2)]
             (player:set_physics_override {:gravity gravity}))
           (player:set_physics_override {:gravity 1})))))
 

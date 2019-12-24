@@ -1,12 +1,12 @@
 (require-macros :useful-macros)
 
-(global check_craft (fn [inv craft]
-  (∀ x ∈ craft.input (inv:contains_item "input" x))))
+(defun check_craft [inv craft]
+  (∀ x ∈ craft.input (inv:contains_item "input" x)))
 
-(global get_craft (fn [crafts inv]
-  (∃ x ∈ crafts (check_craft inv x))))
+(defun get_craft [crafts inv]
+  (∃ x ∈ crafts (check_craft inv x)))
 
-(global update_preview (fn [player]
+(defun update_preview [player]
   (let [inv (player:get_inventory)
         recipe (get_craft inv_crafts inv)]
     ; clear first
@@ -14,7 +14,7 @@
 
     (when (≠ recipe nil)
       (each [_ result (ipairs recipe.output)]
-        (inv:add_item "output" result))))))
+        (inv:add_item "output" result)))))
 
 (minetest.register_on_player_receive_fields (λ [player formname fields]
   (when (= fields.craft_it "Craft")

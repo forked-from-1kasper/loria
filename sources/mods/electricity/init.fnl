@@ -124,16 +124,16 @@
 (fn c-lit [str]
   (ffi.new "char[?]" (+ (length str) 1) str))
 
-(global ngspice_circ (fn [circ]
+(defun ngspice_circ [circ]
   (foreach (comp (partial minetest.log "info")
                  (partial string.format "ng: User: %s")) circ)
   (var circ (map c-lit circ))
   (table.insert circ (ffi.cast "char*" 0))
 
-  (ngspice.ngSpice_Circ (ffi.new "char*[?]" (length circ) circ))))
+  (ngspice.ngSpice_Circ (ffi.new "char*[?]" (length circ) circ)))
 
-(global ngspice_command (fn [str]
-  (ngspice.ngSpice_Command (c-lit str))))
+(defun ngspice_command [str]
+  (ngspice.ngSpice_Command (c-lit str)))
 
 (defun ngflush []
   (ngspice_command "destroy all")
