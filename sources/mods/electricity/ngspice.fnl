@@ -6,9 +6,9 @@
     (string.format "%s&%s" (hash_node_pos pos1) (hash_node_pos pos2)))))
 
 (global two_pole (fn [device pos value]
-  (let [ dir (-> (minetest.get_node pos) (. :param2) minetest.facedir_to_dir)
-         input (->> (vector.subtract pos dir) (hash_node_connect pos))
-         output (->> (vector.add pos dir) (hash_node_connect pos)) ]
+  (let [dir (-> (minetest.get_node pos) (. :param2) minetest.facedir_to_dir)
+        input (->> (vector.subtract pos dir) (hash_node_connect pos))
+        output (->> (vector.add pos dir) (hash_node_connect pos))]
     [ (table.concat [ device input (.. "hole-" device) value ] " ")
       (table.concat [ (.. "v" device) (.. "hole-" device) output 0 ] " ")
       (string.format ".measure tran %s-u RMS v(%s)" device input)
@@ -16,21 +16,21 @@
       (string.format ".measure tran %s-i MAX I(v%s)" device device) ])))
 
 (global resistor (fn [pos id]
-  (let [ meta (minetest.get_meta pos)
-         device-name (.. "r" id) ]
+  (let [meta (minetest.get_meta pos)
+        device-name (.. "r" id)]
     (values (->> (meta:get_float :resis)
                  (two_pole device-name pos))
             device-name))))
 
 (global dc_source (fn [pos id]
-  (let [ meta (minetest.get_meta pos)
-         emf (meta:get_float :emf)
+  (let [meta (minetest.get_meta pos)
+        emf (meta:get_float :emf)
 
-         resis (meta:get_float :resis)
-         dir (-> (minetest.get_node pos) (. :param2) minetest.facedir_to_dir)
+        resis (meta:get_float :resis)
+        dir (-> (minetest.get_node pos) (. :param2) minetest.facedir_to_dir)
 
-         input (->> (vector.subtract pos dir) (hash_node_connect pos))
-         output (->> (vector.add pos dir) (hash_node_connect pos)) ]
+        input (->> (vector.subtract pos dir) (hash_node_connect pos))
+        output (->> (vector.add pos dir) (hash_node_connect pos))]
 
   (values [ (table.concat [ (.. "v" id) input (.. "hole-" id) emf ] " ")
             (table.concat [ (.. "r" id) (.. "hole-" id) output resis ] " ")

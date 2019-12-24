@@ -18,9 +18,9 @@
 
 (global reset_consumer (fn [name]
   (fn [pos]
-    (let [ meta (minetest.get_meta pos)
-           consumer (. consumer name) ]
-      (when (and (¬ check_current meta consumer) consumer.on_deactivate)
+    (let [meta (minetest.get_meta pos)
+          consumer (. consumer name)]
+      (when (∧ (¬ check_current meta consumer) consumer.on_deactivate)
         (consumer.on_deactivate pos)
         (meta:set_int :active 0))))))
 

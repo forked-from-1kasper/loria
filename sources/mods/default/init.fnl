@@ -122,5 +122,5 @@
                objs (minetest.get_objects_inside_radius pos clear-radius)]
            (each [_ obj (pairs objs)]
              (let [entity (obj:get_luaentity)]
-               (when (and entity (= entity.name "__builtin:item"))
+               (when (∧ entity (= entity.name "__builtin:item"))
                      (obj:remove)))))))) })

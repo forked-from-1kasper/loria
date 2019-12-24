@@ -11,7 +11,9 @@
         (when (= pointed_thing.type "node")
           (let [n (minetest.get_node pointed_thing.under)
                 liquiddef (. bucket.liquids n.name)]
-            (when (and (~= liquiddef nil) (= liquiddef.source n.name) (~= liquiddef.itemname nil))
+            (when (∧ (≠ liquiddef nil)
+                     (= liquiddef.source n.name)
+                     (∈ :itemname liquiddef))
               (minetest.add_node pointed_thing.under {:name "air"})
               {:name liquiddef.itemname :wear (itemstack:get_wear)}))))})
 

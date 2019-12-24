@@ -16,7 +16,8 @@
 (fn table-contains [elem tbl] `(. ,tbl ,elem))
 (fn table-not-contains [elem tbl] `(not (. ,tbl ,elem)))
 
-(fn neq [a b] `(not= ,a ,b))
+(fn alias [func-name]
+  (fn [...] `(,(sym func-name) ,(unpack [...]))))
 
 (fn check-symbol [s val]
   (and (sym? s) (= (tostring s) val)))
@@ -46,9 +47,11 @@
               inst#) })))
 
 { ;; Unicode aliases and syntaxes
-  "∈" table-contains "∉" table-not-contains "≠" neq
+  "∈" table-contains "∉" table-not-contains
+  "≠" (alias :not=) "∧" (alias :and) "∨" (alias :or)
+  "≥" (alias ">=")  "≤" (alias "<=")
   "∃" (quantifier :find "existential")
-  "∀" (quantifier :all "universal")
+  "∀" (quantifier :all  "universal")
   "¬" (prefix :not)
   ;; Some useful macros for defining various functions
   :defun defun :on-mods-loaded on-mods-loaded

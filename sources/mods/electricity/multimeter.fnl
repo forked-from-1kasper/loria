@@ -61,8 +61,8 @@
     :liquids_pointable true
     :on_use (fn [itemstack user pointed_thing]
       (when (= pointed_thing.type :node)
-        (let [ meta (minetest.get_meta pointed_thing.under)
-               I (meta:get_float :I)
-               U (meta:get_float :U)]
+        (let [meta (minetest.get_meta pointed_thing.under)
+              I (meta:get_float :I)
+              U (meta:get_float :U)]
           (minetest.chat_send_player (user:get_player_name)
             (string.format "I = %f, U = %f" I U))))) })

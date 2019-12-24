@@ -36,15 +36,11 @@
    :U { :min 1   :max 7 } })
 
 (tset consumer "electricity:lamp_off"
-  { :on_activate
-    (fn [pos]
-      (swap_node pos "electricity:lamp_on"))
+  { :on_activate (fn [pos] (swap_node pos "electricity:lamp_on"))
     :current current })
 
 (tset consumer "electricity:lamp_on"
- { :on_deactivate
-    (fn [pos]
-      (swap_node pos "electricity:lamp_off"))
+ { :on_deactivate (fn [pos] (swap_node pos "electricity:lamp_off"))
     :current current })
 
 (tset model "electricity:lamp_off" resistor)

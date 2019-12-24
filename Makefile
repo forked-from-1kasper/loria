@@ -5,7 +5,6 @@ fennel: $(SRC:.fnl=.lua)
 	# Fennel done
 
 $(SRC:.fnl=.lua): %.lua: %.fnl
-	rm -f $@
 	fennel --compile $< > $@
 
 tar:

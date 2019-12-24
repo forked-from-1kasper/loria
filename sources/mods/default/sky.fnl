@@ -25,15 +25,15 @@
 (fn get_sky_color [color timeofday]
   (if (< timeofday sunrise.start)
       (brightness color 0)
-      (and (>= timeofday sunrise.start) (< timeofday sunrise.finish))
+      (∧ (≥ timeofday sunrise.start) (< timeofday sunrise.finish))
       (brightness color
         (/ (- timeofday sunrise.start) (- sunrise.finish sunrise.start)))
-      (and (>= timeofday sunrise.finish) (< timeofday sunset.start))
+      (∧ (≥ timeofday sunrise.finish) (< timeofday sunset.start))
       (brightness color 1)
-      (and (>= timeofday sunset.start) (< timeofday sunset.finish))
+      (∧ (≥ timeofday sunset.start) (< timeofday sunset.finish))
       (brightness color
         (/ (- sunset.finish timeofday) (- sunset.finish sunset.start)))
-      ; (>= timeofday >= sunset.finish)
+      ;(≥ timeofday sunset.finish)
       (brightness color 0)))
 
 (def-globalstep [_]

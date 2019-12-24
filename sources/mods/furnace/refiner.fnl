@@ -28,13 +28,12 @@
     "default:bucket_trisilane"   10 })
 
 (fn furnace-ready? [pos]
-  (let [ meta (minetest.get_meta pos)
-         inv (meta:get_inventory)
-         gas (-> (inv:get_list :gas) (. 1) (: :get_name))
-         fuel (-> (inv:get_list :fuel) (. 1) (: :get_name)) ]
-    (and
-      (∈ gas gases-list) (∈ fuel fuel-list)
-      (= (meta:get_int :switch) 1))))
+  (let [meta (minetest.get_meta pos)
+        inv (meta:get_inventory)
+        gas (-> (inv:get_list :gas) (. 1) (: :get_name))
+        fuel (-> (inv:get_list :fuel) (. 1) (: :get_name))]
+    (∧ (∈ gas gases-list) (∈ fuel fuel-list)
+       (= (meta:get_int :switch) 1))))
 
 (fn reset-sound [pos]
     (-> (minetest.get_meta pos) (: :get_int :sound) minetest.sound_stop)
@@ -79,11 +78,11 @@
 
     :on_destruct
       (fn [pos]
-        (let [ node (minetest.get_node pos)
-               back (->> (minetest.facedir_to_dir node.param2) (vector.add pos))
-               node′ (minetest.get_node back) ]
-          (when (and (= (. (minetest.get_node back) :name) "furnace:barrier")
-                     (= node.param2 node′.param2))
+        (let [node (minetest.get_node pos)
+              back (->> (minetest.facedir_to_dir node.param2) (vector.add pos))
+              node′ (minetest.get_node back)]
+          (when (∧ (= (. (minetest.get_node back) :name) "furnace:barrier")
+                   (= node.param2 node′.param2))
             (minetest.set_node back { :name "air" }))))
 
     :after_stop
@@ -96,8 +95,8 @@
 
 (fn conf.on_receive_fields [pos formname fields sender]
   (when (∈ :switch fields)
-    (let [ meta (minetest.get_meta pos)
-           active (meta:get_int :switch) ]
+    (let [meta (minetest.get_meta pos)
+          active (meta:get_int :switch)]
       (if (= active 1)
           (do (meta:set_int :switch 0)
               (check_and_stop_furnace conf pos))
@@ -111,7 +110,7 @@
     :fixed [ [ (/ -7 16) (/ -1 2) (/ -7 16) (/ 7 16) (/ 6 16) (/ 7 16) ] ] })
 
 (fn buildable? [pos]
-  (let [ name (-> (minetest.get_node pos) (. :name)) ]
+  (let [name (-> (minetest.get_node pos) (. :name))]
     (or (∈ :buildable_to (. minetest.registered_nodes name))
         (= name "furnace:refiner_item"))))
 
@@ -134,11 +133,11 @@
 
     :on_rightclick
       (fn [pos node clicker itemstack pointed_thing]
-        (when (and pointed_thing (= pointed_thing.type "node"))
-          (let [ param2 (-> (clicker:get_look_dir) minetest.dir_to_facedir)
-                 dir (minetest.facedir_to_dir param2)
-                 back (vector.add pos dir) ]
-            (when (and (buildable? pos) (buildable? back))
+        (when (∧ pointed_thing (= pointed_thing.type "node"))
+          (let [param2 (-> (clicker:get_look_dir) minetest.dir_to_facedir)
+                dir (minetest.facedir_to_dir param2)
+                back (vector.add pos dir)]
+            (when (∧ (buildable? pos) (buildable? back))
               (minetest.set_node pos  { :name "furnace:refiner" :param2 param2 })
               (minetest.set_node back { :name "furnace:barrier" :param2 param2 })))
           {})) })

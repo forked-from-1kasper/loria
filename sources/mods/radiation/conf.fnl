@@ -59,8 +59,8 @@
 
   (each [name params (pairs ores)]
     (when (∈ :radioactive params)
-      (let [ A₀ (. activity (cid (.. "default:" name)))
-             A  (α-β-γ (/ A₀.alpha 5) (/ A₀.beta 3) (/ A₀.gamma 2)) ]
+      (let [A₀ (. activity (cid (.. "default:" name)))
+            A  (α-β-γ (/ A₀.alpha 5) (/ A₀.beta 3) (/ A₀.gamma 2))]
         (each [_ place (ipairs params.wherein)]
           (tset activity (cid (.. "default:" name "_" place)) A))))))
 

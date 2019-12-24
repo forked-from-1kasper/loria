@@ -48,7 +48,7 @@ function register_cable(conf)
     
         for idx, vect in ipairs(neighbors) do
             table.insert(res, table.concat({
-                "r" .. id .. idx,
+                "r" .. id .. "-" .. idx,
                 center, hash_node_connect(pos, vector.add(pos, vect)),
                 conf.resis
             }, " "))

@@ -101,13 +101,13 @@
 (global ngparsed {})
 
 (ffi-proc printfcn "SendChar*" [str id p]
-  (let [ s (ffi.string str)
-         prefix (s:sub 1 prefix-length)
-         info (s:sub (+ prefix-length 1))]
+  (let [s (ffi.string str)
+        prefix (s:sub 1 prefix-length)
+        info (s:sub (+ prefix-length 1))]
     (if (= prefix "stderr ")
         (->> (string.format "ng: SendChar: %s" info) (minetest.log "verbose"))
         (let [(name field value) (info:match "^([^ -]+)-([^ ]+)%s+=%s+([+-]?[^ ]+)")]
-          (when (and name value)
+          (when (∧ name value)
             (when (∉ name ngparsed)
               (tset ngparsed name {}))
             (tset ngparsed name field (tonumber value)))
@@ -125,6 +125,8 @@
   (ffi.new "char[?]" (+ (length str) 1) str))
 
 (global ngspice_circ (fn [circ]
+  (foreach (comp (partial minetest.log "info")
+                 (partial string.format "ng: User: %s")) circ)
   (var circ (map c-lit circ))
   (table.insert circ (ffi.cast "char*" 0))
 
