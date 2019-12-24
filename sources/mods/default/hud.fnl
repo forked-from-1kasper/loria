@@ -1,4 +1,4 @@
-(require-macros :useful-macroses)
+(require-macros :useful-macros)
 
 (fn health [player]
   (.. "Health: " (player:get_hp)))

@@ -1,4 +1,4 @@
-(require-macros :useful-macroses)
+(require-macros :useful-macros)
 
 (defun comp [f g]
   (fn [x] (f (g x))))

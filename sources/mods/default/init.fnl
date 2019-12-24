@@ -1,4 +1,4 @@
-(require-macros :useful-macroses)
+(require-macros :useful-macros)
 
 (global default {})
 (dofile (.. (minetest.get_modpath :default) "/" "basic.lua"))

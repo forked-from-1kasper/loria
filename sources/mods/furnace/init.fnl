@@ -1,0 +1,1 @@
+(import :furnace "crafts" "furnace" "gas" "refiner" "electric")

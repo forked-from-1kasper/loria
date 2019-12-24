@@ -1,4 +1,4 @@
-(require-macros :useful-macroses)
+(require-macros :useful-macros)
 
 (local default_color { :r 140 :g 186 :b 250 })
 (local night_color { :r 0 :g 0 :b 16 })

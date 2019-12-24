@@ -1,4 +1,4 @@
-(require-macros :useful-macroses)
+(require-macros :useful-macros)
 
 (local cid minetest.get_content_id)
 

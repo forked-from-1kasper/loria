@@ -1,4 +1,4 @@
-(require-macros :useful-macroses)
+(require-macros :useful-macros)
 
 (defun serialize_pos [pos]
   (string.format "%f,%f,%f" pos.x pos.y pos.z))

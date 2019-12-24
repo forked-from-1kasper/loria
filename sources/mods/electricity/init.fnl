@@ -1,4 +1,4 @@
-(require-macros :useful-macroses)
+(require-macros :useful-macros)
 
 (local ie (minetest.request_insecure_environment))
 (when (not ie)

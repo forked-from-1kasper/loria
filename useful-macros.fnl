@@ -15,7 +15,22 @@
 
 (fn table-contains [elem tbl] `(. ,tbl ,elem))
 (fn table-not-contains [elem tbl] `(not (. ,tbl ,elem)))
+
 (fn neq [a b] `(not= ,a ,b))
+
+(fn check-symbol [s val]
+  (and (sym? s) (= (tostring s) val)))
+
+(fn quantifier [func-name name]
+  (fn [x sep X P]
+    (assert (sym? x)
+            (.. "‘" (tostring x) "’" " is not a symbol"))
+    (assert (check-symbol sep "∈")
+            (.. "invalid " name " quantifier syntax"))
+    `(,(sym func-name) (fn [,x] ,P) ,X)))
+
+(fn prefix [func-name]
+  (fn [...] `(,(sym func-name) ,(list (unpack [...])))))
 
 (fn alpha-beta-gamma [α β γ] { :alpha α :beta β :gamma γ })
 
@@ -30,8 +45,14 @@
               (setmetatable inst# cls#)
               inst#) })))
 
-{ :defun defun :local-require local-require
-  :∈ table-contains :∉ table-not-contains :≠ neq
+{ ;; Unicode aliases and syntaxes
+  "∈" table-contains "∉" table-not-contains "≠" neq
+  "∃" (quantifier :find "existential")
+  "∀" (quantifier :all "universal")
+  "¬" (prefix :not)
+  ;; Some useful macros for defining various functions
+  :defun defun :on-mods-loaded on-mods-loaded
   :ffi-proc ffi-proc :def-globalstep def-globalstep
-  :on-mods-loaded on-mods-loaded :α-β-γ alpha-beta-gamma
+  ;; Other
+  :local-require local-require :α-β-γ alpha-beta-gamma
   :define-type define-type }

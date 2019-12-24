@@ -1,8 +1,10 @@
+(require-macros :useful-macros)
+
 (global check_craft (fn [inv craft]
-  (all (partial inv:contains_item "input") craft.input)))
+  (∀ x ∈ craft.input (inv:contains_item "input" x))))
 
 (global get_craft (fn [crafts inv]
-  (find (partial check_craft inv) crafts)))
+  (∃ x ∈ crafts (check_craft inv x))))
 
 (global update_preview (fn [player]
   (let [inv (player:get_inventory)
@@ -10,7 +12,7 @@
     ; clear first
     (inv:set_list "output" [])
 
-    (when (~= recipe nil)
+    (when (≠ recipe nil)
       (each [_ result (ipairs recipe.output)]
         (inv:add_item "output" result))))))
 
@@ -19,7 +21,7 @@
     (let [inv (player:get_inventory)
           pos (player:get_pos)
           recipe (get_craft inv_crafts inv)]
-      (when (~= recipe nil)
+      (when (≠ recipe nil)
         (foreach (partial inv:remove_item "input") recipe.input)
         (foreach (λ [result] (add_or_drop inv "main" result pos))
                  recipe.output))))

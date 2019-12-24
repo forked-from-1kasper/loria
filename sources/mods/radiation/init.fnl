@@ -1,4 +1,4 @@
-(require-macros :useful-macroses)
+(require-macros :useful-macros)
 (import :radiation "conf")
 
 (local radiation-vect (vector.new 16 16 16))
