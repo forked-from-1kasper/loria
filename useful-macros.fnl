@@ -52,7 +52,7 @@
   "≥" (alias ">=")  "≤" (alias "<=")
   "∃" (quantifier :find "existential")
   "∀" (quantifier :all  "universal")
-  "¬" (prefix :not)
+  "¬" (prefix :not) "−" (prefix "-")
   ;; Some useful macros for defining various functions
   :defun defun :on-mods-loaded on-mods-loaded
   :ffi-proc ffi-proc :def-globalstep def-globalstep

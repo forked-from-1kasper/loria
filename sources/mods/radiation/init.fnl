@@ -1,10 +1,12 @@
 (require-macros :useful-macros)
+(require-macros :infix)
+
 (import :radiation "conf")
 
 (local radiation-vect (vector.new 16 16 16))
 (local radiation-effects-timeout 1)
 
-(fn null [] { :alpha 0 :beta 0 :gamma 0 })
+(fn null [] {:alpha 0 :beta 0 :gamma 0})
 
 (fn get-activity [name]
   (let [cid (minetest.get_content_id name)]
@@ -16,43 +18,43 @@
      (^ (- pos₁.z pos₂.z) 2)))
 
 (fn alpha [A source pos]
-  (* A (math.exp (- (hypot-sqr source pos)))))
+  (infix A * (math.exp (− hypot-sqr source pos))))
 
 (fn beta [A source pos]
   (let [dist² (hypot-sqr source pos)]
-    (if (≠ dist² 0) (/ (* A (math.exp (- (math.sqrt dist²)))) dist²) A)))
+    (if (≠ dist² 0) (infix A * (math.exp (− math.sqrt dist²)) / dist²) A)))
 
 (fn gamma [A source pos]
-  (let [dist² (hypot-sqr source pos) ]
+  (let [dist² (hypot-sqr source pos)]
     (if (≠ dist² 0) (/ A dist²) A)))
 
 (fn radiation-summary [A source pos]
-  { :alpha (alpha A.alpha source pos)
-    :beta  (beta  A.beta  source pos)
-    :gamma (gamma A.gamma source pos) })
+  {:alpha (alpha A.alpha source pos)
+   :beta  (beta  A.beta  source pos)
+   :gamma (gamma A.gamma source pos)})
 
 (fn add [A₁ A₂]
-  { :alpha (+ A₁.alpha A₂.alpha)
-    :beta  (+ A₁.beta  A₂.beta)
-    :gamma (+ A₁.gamma A₂.gamma) })
+  {:alpha (+ A₁.alpha A₂.alpha)
+   :beta  (+ A₁.beta  A₂.beta)
+   :gamma (+ A₁.gamma A₂.gamma)})
 
 (fn mult [k A]
-  { :alpha  (* k A.alpha)
-    :beta   (* k A.beta)
-    :gamma  (* k A.gamma) })
+  {:alpha  (* k A.alpha)
+   :beta   (* k A.beta)
+   :gamma  (* k A.gamma)})
 
 (defun total [A]
   (+ A.alpha A.beta A.gamma))
 
 (fn calculate-inventory-radiation [inv]
-  (var radiation { :alpha 0 :beta 0 :gamma 0 })
+  (var radiation {:alpha 0 :beta 0 :gamma 0})
   (each [listname lst (pairs (inv:get_lists))]
     (when (≠ listname "creative_inv")
       (each [_ stack (ipairs lst)]
         (let [A (get-activity (stack:get_name))
               stack-count (stack:get_count)]
           ;; no alpha here
-          (tset radiation :beta (+ radiation.beta (* A.beta stack-count)))
+          (tset radiation :beta  (+ radiation.beta  (* A.beta  stack-count)))
           (tset radiation :gamma (+ radiation.gamma (* A.gamma stack-count)))))))
   radiation)
 
@@ -111,9 +113,8 @@
 
 (fn radiation-effects [player radiation]
   (local meta (player:get_meta))
-  (var dose
-    (+ (meta:get_float :received_dose)
-       (* (/ radiation 3600) radiation-effects-timeout)))
+  (local dose₀ (meta:get_float :received_dose))
+  (var dose (infix dose₀ + radiation-effects-timeout * radiation / 3600))
   (when (< dose 0) (set dose 0))
 
   (meta:set_float :received_dose dose)
@@ -135,9 +136,10 @@
   (set radiation-timer (+ radiation-timer Δt))
   (let [vm (minetest.get_voxel_manip)]
     (each [_ player (ipairs (minetest.get_connected_players))]
-      (let [radiation (total (calculate-player-radiation player vm))
-            meta (player:get_meta)
-            radiation′ (/ (+ (meta:get_float :radiation) radiation) 2)]
+      (let [meta (player:get_meta)
+            radiation₀ (meta:get_float :radiation)
+            radiation  (total (calculate-player-radiation player vm))
+            radiation′ (infix (radiation₀ + radiation) / 2)]
         (meta:set_float :radiation radiation′)
         (when (> radiation-timer radiation-effects-timeout)
           (radiation-effects player radiation))))
