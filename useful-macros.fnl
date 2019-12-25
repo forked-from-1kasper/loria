@@ -33,6 +33,8 @@
 (fn prefix [func-name]
   (fn [...] `(,(sym func-name) ,(list (unpack [...])))))
 
+(fn first [...] `(. ,(list (unpack [...])) 1))
+
 (fn alpha-beta-gamma [α β γ] { :alpha α :beta β :gamma γ })
 
 (fn define-type [name init-func]
@@ -58,4 +60,4 @@
   :ffi-proc ffi-proc :def-globalstep def-globalstep
   ;; Other
   :local-require local-require :α-β-γ alpha-beta-gamma
-  :define-type define-type }
+  :define-type define-type :first first }
