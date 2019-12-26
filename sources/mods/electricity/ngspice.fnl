@@ -8,14 +8,14 @@
     (string.format "%s&%s" (hash_node_pos pos1) (hash_node_pos pos2))))
 
 (defun two_pole [device pos value]
-  (let [dir (-> (minetest.get_node pos) (. :param2) minetest.facedir_to_dir)
-        input (->> (vector.subtract pos dir) (hash_node_connect pos))
+  (let [dir    (-> (minetest.get_node pos) (. :param2) minetest.facedir_to_dir)
+        input  (->> (vector.subtract pos dir) (hash_node_connect pos))
         output (->> (vector.add pos dir) (hash_node_connect pos))]
     [(table.concat [device input (.. "hole-" device) value] " ")
-     (table.concat [(.. "v" device) (.. "hole-" device) output 0] " ")
+     (table.concat [(.. "v-" device) (.. "hole-" device) output 0] " ")
      (string.format ".measure tran %s-u RMS v(%s)" device input)
      (string.format ".measure tran %s-delta RMS v(%s)" device output)
-     (string.format ".measure tran %s-i MAX I(v%s)" device device)]))
+     (string.format ".measure tran %s-i MAX I(v-%s)" device device)]))
 
 (defun resistor [pos id]
   (let [meta (minetest.get_meta pos)
