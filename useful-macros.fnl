@@ -48,6 +48,9 @@
               (setmetatable inst# cls#)
               inst#) })))
 
+(fn incf [x] `(set ,x (+ ,x 1)))
+(fn decf [x] `(set ,x (- ,x 1)))
+
 { ;; Unicode aliases and syntaxes
   "∈" table-contains "∉" table-not-contains
   "≠" (alias :not=) "∧" (alias :and) "∨" (alias :or)
@@ -60,4 +63,5 @@
   :ffi-proc ffi-proc :def-globalstep def-globalstep
   ;; Other
   :local-require local-require :α-β-γ alpha-beta-gamma
-  :define-type define-type :first first }
+  :define-type define-type :first first
+  :incf incf :decf decf }

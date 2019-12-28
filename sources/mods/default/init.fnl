@@ -8,7 +8,7 @@
 (import :default
   "greet" "conf" "inv_crafts" "creative" "biomes"
   "ores" "mushrooms_nodes" "small_mushrooms" "mapgen"
-  "liquids" "nodes" "gases" "items" "craft"
+  "liquids" "nodes" "gases_arch" "gases" "items" "craft"
   "mushrooms" "hud" "sky" "player")
 
 (local start-items
@@ -67,7 +67,7 @@
           (do (when (≠ reason.type "node_damage")
                 (let [new (+ space-suit (math.floor (/ hp-change 2)))]
                   (if (> new 0) (meta:set_int "space_suit" new)
-                      (meta:set_int "space_suit" 0))) 0))
+                      (meta:set_int "space_suit" 0)))) 0)
           hp-change)))
   true)
 

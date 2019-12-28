@@ -1,5 +1,3 @@
-dofile(minetest.get_modpath("default").."/gases_arch.lua")
-
 gas_levels = 128
 gas_timer = 1
 gas_vect = vector.new(16, 16, 16)

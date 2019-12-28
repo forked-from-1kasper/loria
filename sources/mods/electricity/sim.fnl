@@ -51,7 +51,7 @@
 (local get-resis (get-float-by-pos :resis))
 
 (var idx 0)
-(fn get-name [] (set idx (+ idx 1)) idx)
+(fn get-name [] (incf idx) idx)
 
 (fn is-conductor [name]
   (≠ (minetest.get_item_group name :conductor) 0))
