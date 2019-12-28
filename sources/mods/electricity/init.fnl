@@ -11,9 +11,7 @@
   (match jit.os
     :Windows "ngspice"
     :OSX     "libngspice.0.dylib"
-    :Linux   "libngspice.so"
-    :BSD     "libngspice.so"
-    :POSIX   "libngspice.so"))
+    _        "libngspice.so"))
 
 ;; “../../..” is “.minetest/games”
 (local libpath (.. (minetest.get_modpath :electricity) "/../../../" shared-filename))

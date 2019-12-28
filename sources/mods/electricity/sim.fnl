@@ -99,6 +99,11 @@
     (-?> (. on_circuit_tick name)
          (funcall meta elapsed))))
 
+(local maximum-period 60)
+(fn get-time []
+  "Returns gametime in seconds"
+  (* (minetest.get_timeofday) 60 60 24))
+
 (fn process-source [pos processed-sources elapsed]
   (var descriptions []) (local str (serialize_pos pos))
   (local func (. model (-> (minetest.get_node pos) (. :name))))
@@ -117,7 +122,10 @@
       (table.insert circ ".end")
 
       (ngspice_circ circ)
-      (ngspice_command "tran 1 1")
+      (local t₀ (% (get-time) maximum-period))
+      (local t₁ (+ t₀ elapsed))
+      (local step (/ elapsed 10))
+      (ngspice_command (string.format "tran %fs %fs %fs" step t₁ t₀))
 
       (each [device info (pairs ngparsed)]
         (calculate-device device info elapsed))
