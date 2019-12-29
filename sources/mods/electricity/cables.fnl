@@ -48,10 +48,9 @@
         (var res [])
         (each [idx vect (ipairs neighbors)]
           (table.insert res
-            (table.concat
-              [(.. "r" id "-" idx)
-               center (hash_node_connect pos (vector.add pos vect))
-               conf.resis] " ")))
+            (join " " (.. "r" id "-" idx) center
+                      (hash_node_connect pos (vector.add pos vect))
+                      conf.resis)))
         res))))
 
 (foreach register-cable cables)

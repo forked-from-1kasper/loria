@@ -41,8 +41,8 @@
 (fn check-consumer [meta consumer]
   (let [active?     (= (meta:get_int :active) 1)
         current-ok? (check_current meta consumer)]
-    { :activate   (∧ (not active?) current-ok? consumer.on_activate)
-      :deactivate (∧ active? (not current-ok?) consumer.on_deactivate) }))
+    {:activate   (∧ (not active?) current-ok? consumer.on_activate)
+     :deactivate (∧ active? (not current-ok?) consumer.on_deactivate)}))
 
 (fn get-float-by-pos [key]
   (fn [pos] (-> (minetest.get_meta pos) (: :get_float key))))
@@ -145,11 +145,11 @@
 (global sources {})
 
 (minetest.register_abm
-  { :label "Enable electrcity sources"
-    :nodenames [ "group:source" ]
-    :interval 1
-    :chance 1
-    :action (fn [pos] (tset sources (serialize_pos pos) 1)) })
+  {:label "Enable electrcity sources"
+   :nodenames [ "group:source" ]
+   :interval 1
+   :chance 1
+   :action (fn [pos] (tset sources (serialize_pos pos) 1))})
 
 (local electricity-step 0.5) (var timer 0)
 (def-globalstep [Δt]

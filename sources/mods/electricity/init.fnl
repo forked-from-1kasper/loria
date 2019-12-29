@@ -140,7 +140,7 @@
     (tset ngparsed key nil)))
 
 (defun initdevice [device-name pos]
-  (tset ngparsed device-name { :pos pos }))
+  (tset ngparsed device-name {:pos pos}))
 
 (ngspice_command "set nomoremode")
 (import :electricity

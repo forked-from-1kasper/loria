@@ -114,7 +114,7 @@
          (let [pos (player:get_pos)]
            (for [x (- pos.x fill-radius) (+ pos.x fill-radius)]
              (for [z (- pos.z fill-radius) (+ pos.z fill-radius)]
-               (minetest.set_node {:x x :y (- pos.y 1) :z z }
+               (minetest.set_node {:x x :y (- pos.y 1) :z z}
                                   {:name nodename})))
            (minetest.chat_send_player name "Done")))))})
 

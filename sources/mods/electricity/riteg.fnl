@@ -4,9 +4,9 @@
   {:type "fixed"
    :fixed
      [[(/ -4 16) (infix -1 / 2 + 3 / 16) (/ -4 16)
-       (/ 4 16)  (/ 1 2)                 (/ 4 16)]
+       (/  4 16) (/  1 2)                (/  4 16)]
       [(/ -1 2)  (/ -1 2)                (/ -1 2)
-       (/ 1 2)   (infix -1 / 2 + 3 / 16) (/ 1 2)]]})
+       (/  1 2)  (infix -1 / 2 + 3 / 16) (/  1 2)]]})
 
 (local fuel 
   {"default:plutonium_dioxide" 3
@@ -38,7 +38,7 @@
       "electricity_riteg_side.png"
       "electricity_riteg_connect_side.png"
       "electricity_riteg_connect_side.png"]
-   :groups {:crumbly 3 :source 1 }
+   :groups {:crumbly 3 :source 1}
    :paramtype2 "facedir"
 
    :on_construct

@@ -46,18 +46,18 @@
       (list (unpack (map list-to-expr x))) x))
 
 (local operator-precedence
-  { "^"    4   "%"  5
-    "*"    5   "/"  5
-    "+"    6   "-"  6
-    "<"    8   ">"  8
-    "<="   8   "≤"  8
-    ">="   8   "≥"  8
-    "="    9   "~=" 9
-    "not=" 9   "≠"  9
-    "and"  13  "∧"  13
-    "or"   14  "∨"  14
-    "∈"    15  "∉"  15 })
+  {"^"    4   "%"  5
+   "*"    5   "/"  5
+   "+"    6   "-"  6
+   "<"    8   ">"  8
+   "<="   8   "≤"  8
+   ">="   8   "≥"  8
+   "="    9   "~=" 9
+   "not=" 9   "≠"  9
+   "and"  13  "∧"  13
+   "or"   14  "∨"  14
+   "∈"    15  "∉"  15})
 
 (fn infix [...] (list-to-expr (shunting-yard operator-precedence [...])))
 
-{ :infix infix }
+{:infix infix}

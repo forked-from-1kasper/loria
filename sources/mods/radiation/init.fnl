@@ -66,7 +66,7 @@
       (vector.subtract pos radiation-vect)
       (vector.add pos radiation-vect)))
 
-  (local area (VoxelArea:new { :MinEdge minp :MaxEdge maxp }))
+  (local area (VoxelArea:new {:MinEdge minp :MaxEdge maxp}))
   (local data (vm:get_data))
 
   (for [i 1 (length data)]

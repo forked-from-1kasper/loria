@@ -21,18 +21,18 @@
 (local space-suit-strength 20)
 
 (player_api.register_model "player.b3d"
-  { :animation_speed 30
-    :textures [ "player.png" ]
-    :animations
-      { :stand     { :x 0   :y 79  }
-        :lay       { :x 162 :y 166 }
-        :walk      { :x 168 :y 187 }
-        :mine      { :x 189 :y 198 }
-        :walk_mine { :x 200 :y 219 }
-        :sit       { :x 81  :y 160 } }
-    :collisionbox [ -0.3 0.0 -0.3 0.3 1.7 0.3 ]
-    :stepheight 0.6
-    :eye_height 1.47 })
+  {:animation_speed 30
+   :textures ["player.png"]
+   :animations
+     {:stand     {:x 0   :y 79}
+      :lay       {:x 162 :y 166}
+      :walk      {:x 168 :y 187}
+      :mine      {:x 189 :y 198}
+      :walk_mine {:x 200 :y 219}
+      :sit       {:x 81  :y 160}}
+   :collisionbox [-0.3 0.0 -0.3 0.3 1.7 0.3]
+   :stepheight 0.6
+   :eye_height 1.47})
 
 (global oxygen_hud {})
 
@@ -50,7 +50,7 @@
 
     (player_api.set_model player "player.b3d")
     (player:set_local_animation
-      {:x 0   :y 79 }
+      {:x 0   :y 79}
       {:x 168 :y 187}
       {:x 189 :y 198}
       {:x 200 :y 219}
@@ -112,16 +112,16 @@
 
 (local clear-radius 500)
 (minetest.register_chatcommand "clearitems"
-  { :params ""
-    :description (.. "Deletes all items in " clear-radius " meters")
-    :privs []
-    :func (fn [name]
-      (let [player (minetest.get_player_by_name name)]
-       (when player
-         (let [pos (player:get_pos)
-               name (player:get_player_name)
-               objs (minetest.get_objects_inside_radius pos clear-radius)]
-           (each [_ obj (pairs objs)]
-             (let [entity (obj:get_luaentity)]
-               (when (∧ entity (= entity.name "__builtin:item"))
-                     (obj:remove)))))))) })
+  {:params ""
+   :description (.. "Deletes all items in " clear-radius " meters")
+   :privs []
+   :func (fn [name]
+     (let [player (minetest.get_player_by_name name)]
+      (when player
+        (let [pos (player:get_pos)
+              name (player:get_player_name)
+              objs (minetest.get_objects_inside_radius pos clear-radius)]
+          (each [_ obj (pairs objs)]
+            (let [entity (obj:get_luaentity)]
+              (when (∧ entity (= entity.name "__builtin:item"))
+                    (obj:remove))))))))})

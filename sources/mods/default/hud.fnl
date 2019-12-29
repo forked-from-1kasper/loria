@@ -26,10 +26,9 @@
         (string.format "Received dose: %.3f mCU" (* (meta:get_float "received_dose") 1000)))))
 
 (fn copyright [player]
-  (table.concat
-    [ ""
-      "Just Another Space Suit v15.0"
-      "© 2073—2081 Skolkovo" ] "\n"))
+  (join "\n" ""
+             "Just Another Space Suit v15.0"
+             "© 2073—2081 Skolkovo"))
 
 (local hud-elems [ health space-suit gas oxygen gravity radiation copyright ])
 

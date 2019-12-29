@@ -49,11 +49,14 @@
 (defun capitalization [str]
   (string.gsub (str:gsub "^%l" string.upper) "_" " "))
 
-(defun join [lst₁ lst₂]
+(defun union [lst₁ lst₂]
   (var res {})
   (each [id x (pairs lst₁)] (tset res id x))
   (each [id y (pairs lst₂)] (tset res id y))
   res)
+
+(defun join [sep ...]
+  (table.concat [...] sep))
 
 (global i (vector.new 1 0 0))
 (global j (vector.new 0 0 1))

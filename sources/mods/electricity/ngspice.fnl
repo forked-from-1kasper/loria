@@ -11,8 +11,8 @@
   (let [dir    (-> (minetest.get_node pos) (. :param2) minetest.facedir_to_dir)
         input  (->> (vector.subtract pos dir) (hash_node_connect pos))
         output (->> (vector.add pos dir) (hash_node_connect pos))]
-    [(table.concat [device input (.. "hole-" device) value] " ")
-     (table.concat [(.. "v-" device) (.. "hole-" device) output 0] " ")
+    [(join " " device input (.. "hole-" device) value)
+     (join " " (.. "v-" device) (.. "hole-" device) output 0)
      (string.format ".measure tran %s-u RMS v(%s)" device input)
      (string.format ".measure tran %s-delta RMS v(%s)" device output)
      (string.format ".measure tran %s-i MAX I(v-%s)" device device)]))

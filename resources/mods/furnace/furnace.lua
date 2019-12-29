@@ -160,7 +160,7 @@ function register_furnace(conf)
         light_source = conf.light_source,
         paramtype2 = "facedir",
         legacy_facedir_simple = true,
-        groups = join(conf.groups or { }, { not_in_creative_inventory = 1 }),
+        groups = union(conf.groups or { }, { not_in_creative_inventory = 1 }),
 
         paramtype = conf.paramtype,
         drawtype = conf.drawtype,

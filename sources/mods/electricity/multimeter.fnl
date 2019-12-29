@@ -1,11 +1,14 @@
-(local multimeter-box {
-  :type "fixed"
-  :fixed
-    [ [ (/ -1 2) (/ -1 2) (/ -1 2) (/ 1 2) (+ (/ -1 2) (/ 1 16)) (/ 1 2) ]
-      [ (/ -4 16) (+ (/ -1 2) (/ 1 16)) (+ (/ -1 2) (/ 2 16))
-        (/ 4 16) (- (/ 1 2) (/ 2 16)) (- (/ 1 2) (/ 2 16)) ] ] })
+(require-macros :infix)
 
-(local multimeter-resis { :min 0.015 :max 1500 })
+(local multimeter-box
+  {:type "fixed"
+   :fixed
+     [[(/ -1 2)  (/ -1 2)                (/ -1 2)
+       (/  1 2)  (infix -1 / 2 + 1 / 16) (/  1 2)]
+      [(/ -4 16) (infix -1 / 2 + 1 / 16) (infix -1 / 2 + 2 / 16)
+       (/  4 16) (infix  1 / 2 - 2 / 16) (infix  1 / 2 - 2 / 16)]]})
+
+(local multimeter-resis {:min 0.015 :max 1500})
 
 (local k 10)
 (fn multimeter-resis-step [R]
@@ -21,48 +24,47 @@
       (string.format "I = %.1f A\nU = %.1f V\nR = %.3f Ohms" I U R))))
 
 (minetest.register_node "electricity:multimeter"
-  { :description "Multimeter"
-    :tiles
-      [ "electricity_multimeter_top.png"
-        "electricity_multimeter_bottom.png"
-        "electricity_multimeter_front.png"
-        "electricity_multimeter_back.png"
-        "electricity_multimeter_side.png"
-        "electricity_multimeter_side.png" ]
-    :paramtype "light"
-    :paramtype2 "facedir"
+  {:description "Multimeter"
+   :tiles
+     ["electricity_multimeter_top.png"
+      "electricity_multimeter_bottom.png"
+      "electricity_multimeter_front.png"
+      "electricity_multimeter_back.png"
+      "electricity_multimeter_side.png"
+      "electricity_multimeter_side.png"]
+   :paramtype "light"
+   :paramtype2 "facedir"
 
-    :drop "electricity:multimeter"
-    :groups { :dig_immediate 3 :conductor 1 }
+   :drop "electricity:multimeter"
+   :groups {:dig_immediate 3 :conductor 1}
 
-    :on_construct (andthen
-      (set_resis multimeter-resis.min)
-      (comp update-infotext minetest.get_meta))
-    :on_destruct reset_current
+   :on_construct (andthen
+     (set_resis multimeter-resis.min)
+     (comp update-infotext minetest.get_meta))
+   :on_destruct reset_current
 
-    :drawtype "nodebox"
-    :node_box multimeter-box
-    :selection_box multimeter-box
+   :drawtype "nodebox"
+   :node_box multimeter-box :selection_box multimeter-box
 
-    :on_rightclick (fn [pos node clicker itemstack pointed_thing]
-        (let [meta (minetest.get_meta pos)]
-          (->> (meta:get_float :resis)
-                multimeter-resis-step
-               (meta:set_float :resis))
-          (update-infotext meta))) })
+   :on_rightclick (fn [pos node clicker itemstack pointed_thing]
+       (let [meta (minetest.get_meta pos)]
+         (->> (meta:get_float :resis)
+               multimeter-resis-step
+              (meta:set_float :resis))
+         (update-infotext meta)))})
 
 (tset model "electricity:multimeter" resistor)
 (tset on_circuit_tick "electricity:multimeter" update-infotext)
 
 (minetest.register_craftitem "electricity:multimeter_debug"
-  { :inventory_image "electricity_multimeter.png"
-    :description "Multimeter (debug tool)"
-    :stack_max 1
-    :liquids_pointable true
-    :on_use (fn [itemstack user pointed_thing]
-      (when (= pointed_thing.type :node)
-        (let [meta (minetest.get_meta pointed_thing.under)
-              I (meta:get_float :I)
-              U (meta:get_float :U)]
-          (minetest.chat_send_player (user:get_player_name)
-            (string.format "I = %f, U = %f" I U))))) })
+  {:inventory_image "electricity_multimeter.png"
+   :description "Multimeter (debug tool)"
+   :stack_max 1
+   :liquids_pointable true
+   :on_use (fn [itemstack user pointed_thing]
+     (when (= pointed_thing.type :node)
+       (let [meta (minetest.get_meta pointed_thing.under)
+             I (meta:get_float :I)
+             U (meta:get_float :U)]
+         (minetest.chat_send_player (user:get_player_name)
+           (string.format "I = %f, U = %f" I U)))))})
