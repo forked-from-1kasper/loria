@@ -43,7 +43,7 @@ template =
 function mk_table(name, values)
     return string.format(
         template, name,
-        table.concat(map(process_craft, values), "\n")
+        table.concat(imap(process_craft, values), "\n")
     )
 end
 

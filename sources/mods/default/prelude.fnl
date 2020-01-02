@@ -12,8 +12,17 @@
     (tset res key (f val)))
   res)
 
+(defun imap [f l]
+  (var res [])
+  (each [key val (ipairs l)]
+    (tset res key (f val)))
+  res)
+
 (defun foreach [f l]
   (each [_ x (pairs l)] (f x)))
+
+(defun iforeach [f l]
+  (each [_ x (ipairs l)] (f x)))
 
 (defun foreach2 [f l]
   (each [key value (pairs l)] (f key value)))
