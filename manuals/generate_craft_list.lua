@@ -3,7 +3,7 @@ vector = { new = function() end }
 dofile("../sources/mods/default/prelude.lua")
 dofile("../sources/mods/default/conf.lua")
 dofile("../resources/mods/default/inv_crafts.lua")
-dofile("../resources/mods/furnace/crafts.lua")
+dofile("../sources/mods/furnace/crafts.lua")
 
 function process_stack_list(stack_list)
     local components = { }

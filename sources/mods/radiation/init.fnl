@@ -76,7 +76,7 @@
     (when (∈ cid has_inventory)
       (let [source (area:position i)
             inv (-> (minetest.get_meta source) (: :get_inventory))
-            A (calculate-inventory-radiation inv) ]
+            A (calculate-inventory-radiation inv)]
         (set radiation (add radiation
           (radiation-summary A pos
             (vector.add source (vector.new 0 (/ -1 2) 0))))))))

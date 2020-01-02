@@ -17,12 +17,12 @@
 (minetest.register_node "electricity:lamp_on"
   {:description "Lamp (active)"
    :tiles
-     [ "electricity_lamp.png"
-       "electricity_lamp.png"
-       "electricity_lamp.png"
-       "electricity_lamp.png"
-       "electricity_lamp_connect_side.png"
-       "electricity_lamp_connect_side.png" ]
+     ["electricity_lamp.png"
+      "electricity_lamp.png"
+      "electricity_lamp.png"
+      "electricity_lamp.png"
+      "electricity_lamp_connect_side.png"
+      "electricity_lamp_connect_side.png"]
    :drop "electricity:lamp_off"
    :groups {:cracky 3 :conductor 1}
    :paramtype2 "facedir"

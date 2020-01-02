@@ -30,7 +30,7 @@
              "Just Another Space Suit v15.0"
              "© 2073—2081 Skolkovo"))
 
-(local hud-elems [ health space-suit gas oxygen gravity radiation copyright ])
+(local hud-elems [health space-suit gas oxygen gravity radiation copyright])
 
 (def-globalstep [_]
   (each [_ player (ipairs (minetest.get_connected_players))]

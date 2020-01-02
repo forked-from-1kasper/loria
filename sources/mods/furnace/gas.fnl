@@ -84,7 +84,7 @@
      {:inactive
         ["furnace_side.png" "furnace_side.png"
          "furnace_side.png" "furnace_side.png"
-         "furnace_side.png" "furnace_gas_front.png" ]
+         "furnace_side.png" "furnace_gas_front.png"]
       :active
         ["furnace_side.png" "furnace_side.png"
          "furnace_side.png" "furnace_side.png"

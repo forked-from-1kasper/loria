@@ -60,7 +60,7 @@
   (≠ (minetest.get_item_group name :source) 0))
 
 (defun find_circuits [pos descriptions processed-sources]
-  (var res []) (var queue [ pos ])
+  (var res []) (var queue [pos])
 
   (each [_ current (ipairs queue)]
     (each [_ vect (ipairs neighbors)]
@@ -117,7 +117,7 @@
 
       (find_circuits pos descriptions processed-sources)
 
-      (var circ [ ".title electricity" ])
+      (var circ [".title electricity"])
       (foreach (partial append circ) descriptions)
       (table.insert circ ".end")
 
@@ -146,7 +146,7 @@
 
 (minetest.register_abm
   {:label "Enable electrcity sources"
-   :nodenames [ "group:source" ]
+   :nodenames ["group:source"]
    :interval 1
    :chance 1
    :action (fn [pos] (tset sources (serialize_pos pos) 1))})
