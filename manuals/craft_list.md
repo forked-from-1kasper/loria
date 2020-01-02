@@ -19,38 +19,18 @@
 |14|Aluminium ingot × 1, Bucket hydrochloric acid × 3, Empty balloon × 1|Aluminium chloride × 1, Bucket empty × 3, Hydrogen balloon × 1|
 |15|Potassium ingot × 2, Bucket hydrochloric acid × 2, Empty balloon × 1|Potassium chloride × 2, Bucket empty × 2, Hydrogen balloon × 1|
 |16|Lead case × 1, Wolfram filament × 1, Fused quartz × 1, Aluminium cable × 1|Lamp off × 1|
-|17|Secreta × 20|Mushroom mass × 1|
-|18|Periculum × 20|Mushroom mass × 1|
-|19|Purpura × 20|Mushroom mass × 1|
-|20|Caput × 20|Mushroom mass × 1|
-|21|Rosea × 20|Mushroom mass × 1|
-|22|Conc × 20|Mushroom mass × 1|
-|23|Grebe × 20|Mushroom mass × 1|
-|24|Vastatorem × 20|Mushroom mass × 1|
-|25|Quercu × 20|Mushroom mass × 1|
-|26|Pulchram × 20|Mushroom mass × 1|
-|27|Picea × 20|Mushroom mass × 1|
-|28|Pusilli × 20|Mushroom mass × 1|
-|29|Copper ingot × 1|Copper cable × 15|
-|30|Aluminium ingot × 1|Aluminium cable × 15|
-|31|Wolfram ingot × 1|Wolfram cable × 15|
-|32|Platinum ingot × 1|Platinum cable × 15|
-|33|Calcium ingot × 1|Calcium cable × 15|
-|34|Uranium ingot × 1|Uranium cable × 15|
-|35|Thorium ingot × 1|Thorium cable × 15|
-|36|Plutonium ingot × 1|Plutonium cable × 15|
-|37|Viridi petasum stem × 1|Stick × 6|
-|38|Colossus stem × 1|Stick × 6|
-|39|Turris stem × 1|Stick × 6|
-|40|Rete stem × 1|Stick × 6|
-|41|Rami × 20|Rami pressed × 1|
-|42|Veteris × 20|Veteris pressed × 1|
-|43|Truncus 1 × 20|Truncus 1 pressed × 1|
-|44|Truncus 2 × 20|Truncus 2 pressed × 1|
-|45|Truncus 3 × 20|Truncus 3 pressed × 1|
-|46|Cruento × 20|Cruento pressed × 1|
-|47|Spears × 20|Spears pressed × 1|
-|48|Lectica × 20|Lectica pressed × 1|
+|17|Copper ingot × 1|Copper cable × 15|
+|18|Aluminium ingot × 1|Aluminium cable × 15|
+|19|Wolfram ingot × 1|Wolfram cable × 15|
+|20|Platinum ingot × 1|Platinum cable × 15|
+|21|Calcium ingot × 1|Calcium cable × 15|
+|22|Uranium ingot × 1|Uranium cable × 15|
+|23|Thorium ingot × 1|Thorium cable × 15|
+|24|Plutonium ingot × 1|Plutonium cable × 15|
+|25|Viridi petasum stem × 1|Stick × 6|
+|26|Colossus stem × 1|Stick × 6|
+|27|Turris stem × 1|Stick × 6|
+|28|Rete stem × 1|Stick × 6|
 
 ## Furnace
 | № | Input | Output |

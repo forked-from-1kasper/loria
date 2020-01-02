@@ -173,7 +173,7 @@ inv_crafts = {
     },
 }
 
-for name, params in pairs(small_mushrooms) do
+for name, params in opairs(small_mushrooms) do
     table.insert(inv_crafts, {
         input = {
             { name = "default:" .. name, count = 20 },
@@ -206,7 +206,7 @@ for _, mushroom in ipairs(giant_mushrooms) do
     })
 end
 
-for grass, params in pairs(grasses) do
+for grass, params in opairs(grasses) do
     if params.variants then
         for id, _ in ipairs(params.variants) do
             table.insert(inv_crafts, {
