@@ -5,11 +5,23 @@ dofile("../sources/mods/default/conf.lua")
 dofile("../resources/mods/default/inv_crafts.lua")
 dofile("../sources/mods/furnace/crafts.lua")
 
+function process_content_name(name)
+    local text = capitalization(name:gsub("^%a+:", ""))
+    return string.format("<abbr title=\"%s\">%s</abbr>", name, text)
+end
+
 function process_stack_list(stack_list)
     local components = { }
     for _, stack in ipairs(stack_list) do
         local count = stack.count or 1
-        table.insert(components, string.format("%s × %d", stack.name, count))
+        table.insert(
+            components,
+            string.format(
+                "%s × %d",
+                process_content_name(stack.name),
+                count
+            )
+        )
     end
     return table.concat(components, ", ")
 end
