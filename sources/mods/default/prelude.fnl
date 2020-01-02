@@ -78,3 +78,28 @@
   (let [modpath (minetest.get_modpath mod)
         get-path (fn [name] (.. modpath "/" name ".lua"))]
     (foreach (comp dofile get-path) [...])))
+
+;;; from http://lua-users.org/wiki/SortedIteration
+
+(fn gen-ordered-index [t]
+  (var ordered-index [])
+  (each [key _ (pairs t)]
+    (table.insert ordered-index key))
+  (table.sort ordered-index)
+
+  ordered-index)
+
+(defun onext [t state]
+  (var key nil)
+
+  (if (= state nil)
+    (do (tset t :ordered-index (gen-ordered-index t))
+        (set key (. t.ordered-index 1)))
+    (for [i 1 (length t.ordered-index)]
+      (when (= (. t.ordered-index i) state)
+        (set key (. t.ordered-index (+ i 1))))))
+
+  (when key (values key (. t key)))
+  (tset t :ordered-index nil))
+
+(defun opairs [t] (values onext t nil))

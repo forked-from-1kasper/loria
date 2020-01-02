@@ -183,7 +183,7 @@
     :output [{:name "default:plutonium_ingot" :count 9 }]
     :time 4}])
 
-(each [name params (pairs ores)]
+(each [name params (opairs ores)]
   (local ingot-or-node
     (if params.has_ingot
       {:name (.. "default:" name "_ingot") :count 1}
@@ -220,7 +220,7 @@
     :output [{:name "default:silicon_dioxide" }]
     :time 8}))
 
-(each [name params (pairs brickable)]
+(each [name params (opairs brickable)]
   (when (not params.crumbly)
     (table.insert furnace_crafts
       {:input  [{:name name :count 1 }]
