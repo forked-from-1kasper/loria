@@ -15,7 +15,7 @@
 (defun imap [f l]
   (var res [])
   (each [key val (ipairs l)]
-    (tset res key (f val)))
+    (tset res key (f key val)))
   res)
 
 (defun foreach [f l]

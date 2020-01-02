@@ -1,156 +1,156 @@
 # Craft list
 
 ## Inventory
-| Input | Output |
-| ----- | ------ |
-|<abbr title="default:lead">Lead</abbr> × 1, <abbr title="default:copper_sulfate">Copper sulfate</abbr> × 1|<abbr title="default:copper">Copper</abbr> × 1, <abbr title="default:lead_sulfate">Lead sulfate</abbr> × 1|
-|<abbr title="default:purpura">Purpura</abbr> × 15, <abbr title="default:bucket_empty">Bucket empty</abbr> × 1|<abbr title="default:bucket_lucidum">Bucket lucidum</abbr> × 1|
-|<abbr title="default:naga">Naga</abbr> × 20, <abbr title="default:bucket_empty">Bucket empty</abbr> × 1|<abbr title="default:bucket_lucidum">Bucket lucidum</abbr> × 1|
-|<abbr title="default:potassium_ingot">Potassium ingot</abbr> × 2, <abbr title="default:bucket_water">Bucket water</abbr> × 2, <abbr title="default:empty_balloon">Empty balloon</abbr> × 1|<abbr title="default:bucket_potassium_hydroxide">Bucket potassium hydroxide</abbr> × 2, <abbr title="default:hydrogen_balloon">Hydrogen balloon</abbr> × 2|
-|<abbr title="default:broken_drill">Broken drill</abbr> × 1, <abbr title="default:battery">Battery</abbr> × 1|<abbr title="default:drill">Drill</abbr> × 1|
-|<abbr title="electricity:aluminium_cable">Aluminium cable</abbr> × 10, <abbr title="default:lead_case">Lead case</abbr> × 1|<abbr title="electricity:battery_box">Battery box</abbr> × 1|
-|<abbr title="default:uranium_tetrachloride">Uranium tetrachloride</abbr> × 1, <abbr title="default:potassium_ingot">Potassium ingot</abbr> × 1|<abbr title="default:uranium">Uranium</abbr> × 1, <abbr title="default:potassium_chloride">Potassium chloride</abbr> × 4|
-|<abbr title="default:lead">Lead</abbr> × 4|<abbr title="default:lead_case">Lead case</abbr> × 1|
-|<abbr title="default:lead">Lead</abbr> × 3|<abbr title="furnace:gas">Gas</abbr> × 1|
-|<abbr title="default:lead_case">Lead case</abbr> × 1, <abbr title="default:lead">Lead</abbr> × 1|<abbr title="default:lead_box">Lead box</abbr> × 1|
-|<abbr title="default:silicon">Silicon</abbr> × 3|<abbr title="default:silicon_box">Silicon box</abbr> × 1|
-|<abbr title="default:stick">Stick</abbr> × 1, <abbr title="default:copper_hammer_head">Copper hammer head</abbr> × 1|<abbr title="default:copper_hammer">Copper hammer</abbr> × 1|
-|<abbr title="default:zinc_ingot">Zinc ingot</abbr> × 1, <abbr title="default:bucket_hydrochloric_acid">Bucket hydrochloric acid</abbr> × 2, <abbr title="default:empty_balloon">Empty balloon</abbr> × 1|<abbr title="default:zinc_chloride">Zinc chloride</abbr> × 1, <abbr title="default:bucket_empty">Bucket empty</abbr> × 2, <abbr title="default:hydrogen_balloon">Hydrogen balloon</abbr> × 1|
-|<abbr title="default:aluminium_ingot">Aluminium ingot</abbr> × 1, <abbr title="default:bucket_hydrochloric_acid">Bucket hydrochloric acid</abbr> × 3, <abbr title="default:empty_balloon">Empty balloon</abbr> × 1|<abbr title="default:aluminium_chloride">Aluminium chloride</abbr> × 1, <abbr title="default:bucket_empty">Bucket empty</abbr> × 3, <abbr title="default:hydrogen_balloon">Hydrogen balloon</abbr> × 1|
-|<abbr title="default:potassium_ingot">Potassium ingot</abbr> × 2, <abbr title="default:bucket_hydrochloric_acid">Bucket hydrochloric acid</abbr> × 2, <abbr title="default:empty_balloon">Empty balloon</abbr> × 1|<abbr title="default:potassium_chloride">Potassium chloride</abbr> × 2, <abbr title="default:bucket_empty">Bucket empty</abbr> × 2, <abbr title="default:hydrogen_balloon">Hydrogen balloon</abbr> × 1|
-|<abbr title="default:lead_case">Lead case</abbr> × 1, <abbr title="default:wolfram_filament">Wolfram filament</abbr> × 1, <abbr title="default:fused_quartz">Fused quartz</abbr> × 1, <abbr title="electricity:aluminium_cable">Aluminium cable</abbr> × 1|<abbr title="electricity:lamp_off">Lamp off</abbr> × 1|
-|<abbr title="default:periculum">Periculum</abbr> × 20|<abbr title="default:mushroom_mass">Mushroom mass</abbr> × 1|
-|<abbr title="default:caput">Caput</abbr> × 20|<abbr title="default:mushroom_mass">Mushroom mass</abbr> × 1|
-|<abbr title="default:secreta">Secreta</abbr> × 20|<abbr title="default:mushroom_mass">Mushroom mass</abbr> × 1|
-|<abbr title="default:purpura">Purpura</abbr> × 20|<abbr title="default:mushroom_mass">Mushroom mass</abbr> × 1|
-|<abbr title="default:conc">Conc</abbr> × 20|<abbr title="default:mushroom_mass">Mushroom mass</abbr> × 1|
-|<abbr title="default:picea">Picea</abbr> × 20|<abbr title="default:mushroom_mass">Mushroom mass</abbr> × 1|
-|<abbr title="default:pulchram">Pulchram</abbr> × 20|<abbr title="default:mushroom_mass">Mushroom mass</abbr> × 1|
-|<abbr title="default:grebe">Grebe</abbr> × 20|<abbr title="default:mushroom_mass">Mushroom mass</abbr> × 1|
-|<abbr title="default:pusilli">Pusilli</abbr> × 20|<abbr title="default:mushroom_mass">Mushroom mass</abbr> × 1|
-|<abbr title="default:quercu">Quercu</abbr> × 20|<abbr title="default:mushroom_mass">Mushroom mass</abbr> × 1|
-|<abbr title="default:vastatorem">Vastatorem</abbr> × 20|<abbr title="default:mushroom_mass">Mushroom mass</abbr> × 1|
-|<abbr title="default:rosea">Rosea</abbr> × 20|<abbr title="default:mushroom_mass">Mushroom mass</abbr> × 1|
-|<abbr title="default:copper_ingot">Copper ingot</abbr> × 1|<abbr title="electricity:copper_cable">Copper cable</abbr> × 15|
-|<abbr title="default:aluminium_ingot">Aluminium ingot</abbr> × 1|<abbr title="electricity:aluminium_cable">Aluminium cable</abbr> × 15|
-|<abbr title="default:wolfram_ingot">Wolfram ingot</abbr> × 1|<abbr title="electricity:wolfram_cable">Wolfram cable</abbr> × 15|
-|<abbr title="default:platinum_ingot">Platinum ingot</abbr> × 1|<abbr title="electricity:platinum_cable">Platinum cable</abbr> × 15|
-|<abbr title="default:calcium_ingot">Calcium ingot</abbr> × 1|<abbr title="electricity:calcium_cable">Calcium cable</abbr> × 15|
-|<abbr title="default:uranium_ingot">Uranium ingot</abbr> × 1|<abbr title="electricity:uranium_cable">Uranium cable</abbr> × 15|
-|<abbr title="default:thorium_ingot">Thorium ingot</abbr> × 1|<abbr title="electricity:thorium_cable">Thorium cable</abbr> × 15|
-|<abbr title="default:plutonium_ingot">Plutonium ingot</abbr> × 1|<abbr title="electricity:plutonium_cable">Plutonium cable</abbr> × 15|
-|<abbr title="default:viridi_petasum_stem">Viridi petasum stem</abbr> × 1|<abbr title="default:stick">Stick</abbr> × 6|
-|<abbr title="default:colossus_stem">Colossus stem</abbr> × 1|<abbr title="default:stick">Stick</abbr> × 6|
-|<abbr title="default:turris_stem">Turris stem</abbr> × 1|<abbr title="default:stick">Stick</abbr> × 6|
-|<abbr title="default:rete_stem">Rete stem</abbr> × 1|<abbr title="default:stick">Stick</abbr> × 6|
-|<abbr title="default:cruento">Cruento</abbr> × 20|<abbr title="default:cruento_pressed">Cruento pressed</abbr> × 1|
-|<abbr title="default:truncus_1">Truncus 1</abbr> × 20|<abbr title="default:truncus_1_pressed">Truncus 1 pressed</abbr> × 1|
-|<abbr title="default:truncus_2">Truncus 2</abbr> × 20|<abbr title="default:truncus_2_pressed">Truncus 2 pressed</abbr> × 1|
-|<abbr title="default:truncus_3">Truncus 3</abbr> × 20|<abbr title="default:truncus_3_pressed">Truncus 3 pressed</abbr> × 1|
-|<abbr title="default:veteris">Veteris</abbr> × 20|<abbr title="default:veteris_pressed">Veteris pressed</abbr> × 1|
-|<abbr title="default:spears">Spears</abbr> × 20|<abbr title="default:spears_pressed">Spears pressed</abbr> × 1|
-|<abbr title="default:rami">Rami</abbr> × 20|<abbr title="default:rami_pressed">Rami pressed</abbr> × 1|
-|<abbr title="default:lectica">Lectica</abbr> × 20|<abbr title="default:lectica_pressed">Lectica pressed</abbr> × 1|
+| № | Input | Output |
+| - | ----- | ------ |
+|1|Lead × 1, Copper sulfate × 1|Copper × 1, Lead sulfate × 1|
+|2|Purpura × 15, Bucket empty × 1|Bucket lucidum × 1|
+|3|Naga × 20, Bucket empty × 1|Bucket lucidum × 1|
+|4|Potassium ingot × 2, Bucket water × 2, Empty balloon × 1|Bucket potassium hydroxide × 2, Hydrogen balloon × 2|
+|5|Broken drill × 1, Battery × 1|Drill × 1|
+|6|Aluminium cable × 10, Lead case × 1|Battery box × 1|
+|7|Uranium tetrachloride × 1, Potassium ingot × 1|Uranium × 1, Potassium chloride × 4|
+|8|Lead × 4|Lead case × 1|
+|9|Lead × 3|Gas × 1|
+|10|Lead case × 1, Lead × 1|Lead box × 1|
+|11|Silicon × 3|Silicon box × 1|
+|12|Stick × 1, Copper hammer head × 1|Copper hammer × 1|
+|13|Zinc ingot × 1, Bucket hydrochloric acid × 2, Empty balloon × 1|Zinc chloride × 1, Bucket empty × 2, Hydrogen balloon × 1|
+|14|Aluminium ingot × 1, Bucket hydrochloric acid × 3, Empty balloon × 1|Aluminium chloride × 1, Bucket empty × 3, Hydrogen balloon × 1|
+|15|Potassium ingot × 2, Bucket hydrochloric acid × 2, Empty balloon × 1|Potassium chloride × 2, Bucket empty × 2, Hydrogen balloon × 1|
+|16|Lead case × 1, Wolfram filament × 1, Fused quartz × 1, Aluminium cable × 1|Lamp off × 1|
+|17|Caput × 20|Mushroom mass × 1|
+|18|Quercu × 20|Mushroom mass × 1|
+|19|Grebe × 20|Mushroom mass × 1|
+|20|Pulchram × 20|Mushroom mass × 1|
+|21|Vastatorem × 20|Mushroom mass × 1|
+|22|Periculum × 20|Mushroom mass × 1|
+|23|Secreta × 20|Mushroom mass × 1|
+|24|Picea × 20|Mushroom mass × 1|
+|25|Rosea × 20|Mushroom mass × 1|
+|26|Conc × 20|Mushroom mass × 1|
+|27|Purpura × 20|Mushroom mass × 1|
+|28|Pusilli × 20|Mushroom mass × 1|
+|29|Copper ingot × 1|Copper cable × 15|
+|30|Aluminium ingot × 1|Aluminium cable × 15|
+|31|Wolfram ingot × 1|Wolfram cable × 15|
+|32|Platinum ingot × 1|Platinum cable × 15|
+|33|Calcium ingot × 1|Calcium cable × 15|
+|34|Uranium ingot × 1|Uranium cable × 15|
+|35|Thorium ingot × 1|Thorium cable × 15|
+|36|Plutonium ingot × 1|Plutonium cable × 15|
+|37|Viridi petasum stem × 1|Stick × 6|
+|38|Colossus stem × 1|Stick × 6|
+|39|Turris stem × 1|Stick × 6|
+|40|Rete stem × 1|Stick × 6|
+|41|Lectica × 20|Lectica pressed × 1|
+|42|Cruento × 20|Cruento pressed × 1|
+|43|Spears × 20|Spears pressed × 1|
+|44|Veteris × 20|Veteris pressed × 1|
+|45|Truncus 1 × 20|Truncus 1 pressed × 1|
+|46|Truncus 2 × 20|Truncus 2 pressed × 1|
+|47|Truncus 3 × 20|Truncus 3 pressed × 1|
+|48|Rami × 20|Rami pressed × 1|
 
 ## Furnace
-| Input | Output |
-| ----- | ------ |
-|<abbr title="default:mushroom_mass">Mushroom mass</abbr> × 1|<abbr title="default:silicon_dioxide">Silicon dioxide</abbr> × 1|
-|<abbr title="default:aluminium_ingot">Aluminium ingot</abbr> × 5|<abbr title="default:bucket_empty">Bucket empty</abbr> × 1|
-|<abbr title="default:zinc_ingot">Zinc ingot</abbr> × 4|<abbr title="default:bucket_empty">Bucket empty</abbr> × 1|
-|<abbr title="default:aluminium_ingot">Aluminium ingot</abbr> × 3|<abbr title="default:empty_balloon">Empty balloon</abbr> × 1|
-|<abbr title="default:aluminium_ingot">Aluminium ingot</abbr> × 2|<abbr title="default:aluminium_brick_mold">Aluminium brick mold</abbr> × 1|
-|<abbr title="default:copper_ingot">Copper ingot</abbr> × 3|<abbr title="default:copper_hammer_head">Copper hammer head</abbr> × 1|
-|<abbr title="default:aluminium_ingot">Aluminium ingot</abbr> × 1|<abbr title="default:aluminium_case">Aluminium case</abbr> × 1|
-|<abbr title="default:bucket_empty">Bucket empty</abbr> × 1, <abbr title="default:mercury">Mercury</abbr> × 1|<abbr title="default:bucket_mercury">Bucket mercury</abbr> × 1|
-|<abbr title="default:bucket_lucidum">Bucket lucidum</abbr> × 1|<abbr title="default:bucket_empty">Bucket empty</abbr> × 1, <abbr title="default:glow_stick">Glow stick</abbr> × 12|
-|<abbr title="default:aluminium_oxide">Aluminium oxide</abbr> × 4, <abbr title="default:silicon_dioxide">Silicon dioxide</abbr> × 4, <abbr title="default:bucket_water">Bucket water</abbr> × 1|<abbr title="default:brick">Brick</abbr> × 4, <abbr title="default:bucket_empty">Bucket empty</abbr> × 1|
-|<abbr title="default:thorium_ingot">Thorium ingot</abbr> × 9|<abbr title="default:thorium">Thorium</abbr> × 1|
-|<abbr title="default:thorium">Thorium</abbr> × 1|<abbr title="default:thorium_ingot">Thorium ingot</abbr> × 9|
-|<abbr title="default:uranium_ingot">Uranium ingot</abbr> × 9|<abbr title="default:uranium">Uranium</abbr> × 1|
-|<abbr title="default:uranium">Uranium</abbr> × 1|<abbr title="default:uranium_ingot">Uranium ingot</abbr> × 9|
-|<abbr title="default:plutonium_ingot">Plutonium ingot</abbr> × 9|<abbr title="default:plutonium">Plutonium</abbr> × 1|
-|<abbr title="default:plutonium">Plutonium</abbr> × 1|<abbr title="default:plutonium_ingot">Plutonium ingot</abbr> × 9|
-|<abbr title="default:viridi_petasum_body">Viridi petasum body</abbr> × 3|<abbr title="default:silicon_dioxide">Silicon dioxide</abbr> × 1|
-|<abbr title="default:viridi_petasum_stem">Viridi petasum stem</abbr> × 5|<abbr title="default:silicon_dioxide">Silicon dioxide</abbr> × 1|
-|<abbr title="default:colossus_body">Colossus body</abbr> × 3|<abbr title="default:silicon_dioxide">Silicon dioxide</abbr> × 1|
-|<abbr title="default:colossus_stem">Colossus stem</abbr> × 5|<abbr title="default:silicon_dioxide">Silicon dioxide</abbr> × 1|
-|<abbr title="default:turris_body">Turris body</abbr> × 3|<abbr title="default:silicon_dioxide">Silicon dioxide</abbr> × 1|
-|<abbr title="default:turris_stem">Turris stem</abbr> × 5|<abbr title="default:silicon_dioxide">Silicon dioxide</abbr> × 1|
-|<abbr title="default:rete_body">Rete body</abbr> × 3|<abbr title="default:silicon_dioxide">Silicon dioxide</abbr> × 1|
-|<abbr title="default:rete_stem">Rete stem</abbr> × 5|<abbr title="default:silicon_dioxide">Silicon dioxide</abbr> × 1|
-|<abbr title="default:plutonium_dioxide">Plutonium dioxide</abbr> × 1|<abbr title="default:plutonium_dioxide_brick">Plutonium dioxide brick</abbr> × 2|
+| № | Input | Output |
+| - | ----- | ------ |
+|1|Mushroom mass × 1|Silicon dioxide × 1|
+|2|Aluminium ingot × 5|Bucket empty × 1|
+|3|Zinc ingot × 4|Bucket empty × 1|
+|4|Aluminium ingot × 3|Empty balloon × 1|
+|5|Aluminium ingot × 2|Aluminium brick mold × 1|
+|6|Copper ingot × 3|Copper hammer head × 1|
+|7|Aluminium ingot × 1|Aluminium case × 1|
+|8|Bucket empty × 1, Mercury × 1|Bucket mercury × 1|
+|9|Bucket lucidum × 1|Bucket empty × 1, Glow stick × 12|
+|10|Aluminium oxide × 4, Silicon dioxide × 4, Bucket water × 1|Brick × 4, Bucket empty × 1|
+|11|Thorium ingot × 9|Thorium × 1|
+|12|Thorium × 1|Thorium ingot × 9|
+|13|Uranium ingot × 9|Uranium × 1|
+|14|Uranium × 1|Uranium ingot × 9|
+|15|Plutonium ingot × 9|Plutonium × 1|
+|16|Plutonium × 1|Plutonium ingot × 9|
+|17|Viridi petasum body × 3|Silicon dioxide × 1|
+|18|Viridi petasum stem × 5|Silicon dioxide × 1|
+|19|Colossus body × 3|Silicon dioxide × 1|
+|20|Colossus stem × 5|Silicon dioxide × 1|
+|21|Turris body × 3|Silicon dioxide × 1|
+|22|Turris stem × 5|Silicon dioxide × 1|
+|23|Rete body × 3|Silicon dioxide × 1|
+|24|Rete stem × 5|Silicon dioxide × 1|
+|25|Plutonium dioxide × 1|Plutonium dioxide brick × 2|
 
 ## Refiner
-| Input | Output |
-| ----- | ------ |
-|<abbr title="default:copper_sulfate_pure">Copper sulfate pure</abbr> × 2, <abbr title="default:empty_balloon">Empty balloon</abbr> × 3|<abbr title="default:copper_oxide">Copper oxide</abbr> × 2, <abbr title="default:sulfur_dioxide_balloon">Sulfur dioxide balloon</abbr> × 2, <abbr title="default:oxygen_balloon">Oxygen balloon</abbr> × 1|
-|<abbr title="default:cuprous_oxide">Cuprous oxide</abbr> × 2, <abbr title="default:empty_balloon">Empty balloon</abbr> × 1|<abbr title="default:copper">Copper</abbr> × 4, <abbr title="default:oxygen_balloon">Oxygen balloon</abbr> × 1|
-|<abbr title="default:copper">Copper</abbr> × 1, <abbr title="default:copper_oxide">Copper oxide</abbr> × 1|<abbr title="default:cuprous_oxide">Cuprous oxide</abbr> × 1|
-|<abbr title="default:mercury_oxide">Mercury oxide</abbr> × 2, <abbr title="default:empty_balloon">Empty balloon</abbr> × 1, <abbr title="default:bucket_empty">Bucket empty</abbr> × 2|<abbr title="default:oxygen_balloon">Oxygen balloon</abbr> × 1, <abbr title="default:bucket_mercury">Bucket mercury</abbr> × 2|
-|<abbr title="default:cinnabar">Cinnabar</abbr> × 1, <abbr title="default:bucket_empty">Bucket empty</abbr> × 1|<abbr title="default:sulfur">Sulfur</abbr> × 1, <abbr title="default:bucket_mercury">Bucket mercury</abbr> × 1|
-|<abbr title="default:red_mercury_oxide">Red mercury oxide</abbr> × 2, <abbr title="default:empty_balloon">Empty balloon</abbr> × 1, <abbr title="default:bucket_empty">Bucket empty</abbr> × 2|<abbr title="default:oxygen_balloon">Oxygen balloon</abbr> × 1, <abbr title="default:bucket_mercury">Bucket mercury</abbr> × 2|
-|<abbr title="default:copper_sulfate">Copper sulfate</abbr> × 1, <abbr title="default:bucket_empty">Bucket empty</abbr> × 5|<abbr title="default:copper_sulfate_pure">Copper sulfate pure</abbr> × 1, <abbr title="default:bucket_water">Bucket water</abbr> × 5|
-|<abbr title="default:aluminium_ore">Aluminium ore</abbr> × 1|<abbr title="default:aluminium_ingot">Aluminium ingot</abbr> × 1, <abbr title="default:cinnabar">Cinnabar</abbr> × 1|
-|<abbr title="default:mercury_oxide">Mercury oxide</abbr> × 1, <abbr title="default:bucket_potassium_hydroxide">Bucket potassium hydroxide</abbr> × 1, <abbr title="default:zinc_ingot">Zinc ingot</abbr> × 1, <abbr title="default:aluminium_case">Aluminium case</abbr> × 1|<abbr title="default:battery">Battery</abbr> × 1, <abbr title="default:bucket_empty">Bucket empty</abbr> × 1|
-|<abbr title="default:red_mercury_oxide">Red mercury oxide</abbr> × 1, <abbr title="default:bucket_potassium_hydroxide">Bucket potassium hydroxide</abbr> × 1, <abbr title="default:zinc_ingot">Zinc ingot</abbr> × 1, <abbr title="default:aluminium_case">Aluminium case</abbr> × 1|<abbr title="default:battery">Battery</abbr> × 1, <abbr title="default:bucket_empty">Bucket empty</abbr> × 1|
-|<abbr title="default:silicon_dioxide">Silicon dioxide</abbr> × 9|<abbr title="default:fused_quartz">Fused quartz</abbr> × 1|
-|<abbr title="default:plutonium_trifluoride">Plutonium trifluoride</abbr> × 4, <abbr title="default:oxygen_balloon">Oxygen balloon</abbr> × 1|<abbr title="default:plutonium_tetrafluoride">Plutonium tetrafluoride</abbr> × 3, <abbr title="default:plutonium_dioxide">Plutonium dioxide</abbr> × 1, <abbr title="default:empty_balloon">Empty balloon</abbr> × 1|
-|<abbr title="default:lead_sulfate">Lead sulfate</abbr> × 1, <abbr title="default:bucket_empty">Bucket empty</abbr> × 1|<abbr title="default:lead_oxide">Lead oxide</abbr> × 1, <abbr title="default:bucket_sulfur_trioxide">Bucket sulfur trioxide</abbr> × 1|
-|<abbr title="default:lead_oxide">Lead oxide</abbr> × 1, <abbr title="default:hydrogen_balloon">Hydrogen balloon</abbr> × 1, <abbr title="default:bucket_empty">Bucket empty</abbr> × 1|<abbr title="default:lead">Lead</abbr> × 1, <abbr title="default:empty_balloon">Empty balloon</abbr> × 1, <abbr title="default:bucket_water">Bucket water</abbr> × 1|
-|<abbr title="default:bucket_potassium_permanganate">Bucket potassium permanganate</abbr> × 2, <abbr title="default:empty_balloon">Empty balloon</abbr> × 1|<abbr title="default:potassium_manganate">Potassium manganate</abbr> × 1, <abbr title="default:manganese_dioxide">Manganese dioxide</abbr> × 1, <abbr title="default:oxygen_balloon">Oxygen balloon</abbr> × 1, <abbr title="default:bucket_empty">Bucket empty</abbr> × 2|
-|<abbr title="default:manganese_dioxide">Manganese dioxide</abbr> × 1, <abbr title="default:bucket_empty">Bucket empty</abbr> × 1, <abbr title="default:hydrogen_balloon">Hydrogen balloon</abbr> × 1|<abbr title="default:manganese_oxide">Manganese oxide</abbr> × 1, <abbr title="default:bucket_water">Bucket water</abbr> × 1, <abbr title="default:empty_balloon">Empty balloon</abbr> × 1|
-|<abbr title="default:aluminium">Aluminium</abbr> × 4, <abbr title="default:oxygen_balloon">Oxygen balloon</abbr> × 1|<abbr title="default:aluminium_oxide">Aluminium oxide</abbr> × 2, <abbr title="default:empty_balloon">Empty balloon</abbr> × 1|
-|<abbr title="default:wolfram_ingot">Wolfram ingot</abbr> × 1|<abbr title="default:wolfram_filament">Wolfram filament</abbr> × 15|
-|<abbr title="default:silicon_dioxide">Silicon dioxide</abbr> × 1, <abbr title="default:hydrogen_balloon">Hydrogen balloon</abbr> × 2, <abbr title="default:bucket_empty">Bucket empty</abbr> × 2|<abbr title="default:silicon">Silicon</abbr> × 1, <abbr title="default:bucket_water">Bucket water</abbr> × 2, <abbr title="default:empty_balloon">Empty balloon</abbr> × 2|
-|<abbr title="default:silicon_dioxide">Silicon dioxide</abbr> × 1, <abbr title="default:magnesium">Magnesium</abbr> × 2|<abbr title="default:silicon">Silicon</abbr> × 1, <abbr title="default:magnesium_oxide">Magnesium oxide</abbr> × 2|
-|<abbr title="default:silicon_dioxide">Silicon dioxide</abbr> × 3, <abbr title="default:aluminium">Aluminium</abbr> × 4|<abbr title="default:silicon">Silicon</abbr> × 3, <abbr title="default:aluminium_oxide">Aluminium oxide</abbr> × 2|
-|<abbr title="default:thorium_iodide">Thorium iodide</abbr> × 1|<abbr title="default:thorium">Thorium</abbr> × 1, <abbr title="default:iodine">Iodine</abbr> × 2|
-|<abbr title="default:plutonium_tetrafluoride">Plutonium tetrafluoride</abbr> × 3|<abbr title="default:plutonium_trifluoride">Plutonium trifluoride</abbr> × 2, <abbr title="default:plutonium_hexafluoride">Plutonium hexafluoride</abbr> × 1|
-|<abbr title="default:plutonium_trifluoride">Plutonium trifluoride</abbr> × 2, <abbr title="default:calcium">Calcium</abbr> × 3|<abbr title="default:plutonium">Plutonium</abbr> × 2, <abbr title="default:calcium_fluoride">Calcium fluoride</abbr> × 3|
-|<abbr title="default:magnetite_cinnabar">Magnetite cinnabar</abbr> × 1|<abbr title="default:magnetite">Magnetite</abbr> × 1, <abbr title="default:cinnabar">Cinnabar</abbr> × 1|
-|<abbr title="default:magnetite_cobalt_blue">Magnetite cobalt blue</abbr> × 1|<abbr title="default:magnetite">Magnetite</abbr> × 1, <abbr title="default:cobalt_blue">Cobalt blue</abbr> × 1|
-|<abbr title="default:magnetite">Magnetite</abbr> × 1|<abbr title="default:magnetite_ingot">Magnetite ingot</abbr> × 9|
-|<abbr title="default:molybdenum_cinnabar">Molybdenum cinnabar</abbr> × 1|<abbr title="default:molybdenum_ingot">Molybdenum ingot</abbr> × 1, <abbr title="default:cinnabar">Cinnabar</abbr> × 1|
-|<abbr title="default:molybdenum_cobalt_blue">Molybdenum cobalt blue</abbr> × 1|<abbr title="default:molybdenum_ingot">Molybdenum ingot</abbr> × 1, <abbr title="default:cobalt_blue">Cobalt blue</abbr> × 1|
-|<abbr title="default:molybdenum_ingot">Molybdenum ingot</abbr> × 9|<abbr title="default:molybdenum">Molybdenum</abbr> × 1|
-|<abbr title="default:plutonium_trifluoride_cinnabar">Plutonium trifluoride cinnabar</abbr> × 1|<abbr title="default:plutonium_trifluoride">Plutonium trifluoride</abbr> × 1, <abbr title="default:cinnabar">Cinnabar</abbr> × 1|
-|<abbr title="default:plutonium_trifluoride_cobalt_blue">Plutonium trifluoride cobalt blue</abbr> × 1|<abbr title="default:plutonium_trifluoride">Plutonium trifluoride</abbr> × 1, <abbr title="default:cobalt_blue">Cobalt blue</abbr> × 1|
-|<abbr title="default:plutonium_trifluoride">Plutonium trifluoride</abbr> × 1|<abbr title="default:plutonium_trifluoride_ingot">Plutonium trifluoride ingot</abbr> × 9|
-|<abbr title="default:magnesium_cinnabar">Magnesium cinnabar</abbr> × 1|<abbr title="default:magnesium_ingot">Magnesium ingot</abbr> × 1, <abbr title="default:cinnabar">Cinnabar</abbr> × 1|
-|<abbr title="default:magnesium_cobalt_blue">Magnesium cobalt blue</abbr> × 1|<abbr title="default:magnesium_ingot">Magnesium ingot</abbr> × 1, <abbr title="default:cobalt_blue">Cobalt blue</abbr> × 1|
-|<abbr title="default:magnesium_ingot">Magnesium ingot</abbr> × 9|<abbr title="default:magnesium">Magnesium</abbr> × 1|
-|<abbr title="default:thorium_iodide_cinnabar">Thorium iodide cinnabar</abbr> × 1|<abbr title="default:thorium_iodide">Thorium iodide</abbr> × 1, <abbr title="default:cinnabar">Cinnabar</abbr> × 1|
-|<abbr title="default:thorium_iodide_cobalt_blue">Thorium iodide cobalt blue</abbr> × 1|<abbr title="default:thorium_iodide">Thorium iodide</abbr> × 1, <abbr title="default:cobalt_blue">Cobalt blue</abbr> × 1|
-|<abbr title="default:thorium_iodide">Thorium iodide</abbr> × 1|<abbr title="default:thorium_iodide_ingot">Thorium iodide ingot</abbr> × 9|
-|<abbr title="default:zinc_cinnabar">Zinc cinnabar</abbr> × 1|<abbr title="default:zinc_ingot">Zinc ingot</abbr> × 1, <abbr title="default:cinnabar">Cinnabar</abbr> × 1|
-|<abbr title="default:zinc_cobalt_blue">Zinc cobalt blue</abbr> × 1|<abbr title="default:zinc_ingot">Zinc ingot</abbr> × 1, <abbr title="default:cobalt_blue">Cobalt blue</abbr> × 1|
-|<abbr title="default:zinc_ingot">Zinc ingot</abbr> × 9|<abbr title="default:zinc">Zinc</abbr> × 1|
-|<abbr title="default:americium_trifluoride_cinnabar">Americium trifluoride cinnabar</abbr> × 1|<abbr title="default:americium_trifluoride">Americium trifluoride</abbr> × 1, <abbr title="default:cinnabar">Cinnabar</abbr> × 1|
-|<abbr title="default:americium_trifluoride_cobalt_blue">Americium trifluoride cobalt blue</abbr> × 1|<abbr title="default:americium_trifluoride">Americium trifluoride</abbr> × 1, <abbr title="default:cobalt_blue">Cobalt blue</abbr> × 1|
-|<abbr title="default:americium_trifluoride">Americium trifluoride</abbr> × 1|<abbr title="default:americium_trifluoride_ingot">Americium trifluoride ingot</abbr> × 9|
-|<abbr title="default:wolfram_cinnabar">Wolfram cinnabar</abbr> × 1|<abbr title="default:wolfram_ingot">Wolfram ingot</abbr> × 1, <abbr title="default:cinnabar">Cinnabar</abbr> × 1|
-|<abbr title="default:wolfram_cobalt_blue">Wolfram cobalt blue</abbr> × 1|<abbr title="default:wolfram_ingot">Wolfram ingot</abbr> × 1, <abbr title="default:cobalt_blue">Cobalt blue</abbr> × 1|
-|<abbr title="default:wolfram_ingot">Wolfram ingot</abbr> × 9|<abbr title="default:wolfram">Wolfram</abbr> × 1|
-|<abbr title="default:uranium_tetrachloride_cinnabar">Uranium tetrachloride cinnabar</abbr> × 1|<abbr title="default:uranium_tetrachloride">Uranium tetrachloride</abbr> × 1, <abbr title="default:cinnabar">Cinnabar</abbr> × 1|
-|<abbr title="default:uranium_tetrachloride_cobalt_blue">Uranium tetrachloride cobalt blue</abbr> × 1|<abbr title="default:uranium_tetrachloride">Uranium tetrachloride</abbr> × 1, <abbr title="default:cobalt_blue">Cobalt blue</abbr> × 1|
-|<abbr title="default:uranium_tetrachloride">Uranium tetrachloride</abbr> × 1|<abbr title="default:uranium_tetrachloride_ingot">Uranium tetrachloride ingot</abbr> × 9|
-|<abbr title="default:cuprous_oxide_cinnabar">Cuprous oxide cinnabar</abbr> × 1|<abbr title="default:cuprous_oxide">Cuprous oxide</abbr> × 1, <abbr title="default:cinnabar">Cinnabar</abbr> × 1|
-|<abbr title="default:cuprous_oxide_cobalt_blue">Cuprous oxide cobalt blue</abbr> × 1|<abbr title="default:cuprous_oxide">Cuprous oxide</abbr> × 1, <abbr title="default:cobalt_blue">Cobalt blue</abbr> × 1|
-|<abbr title="default:cuprous_oxide">Cuprous oxide</abbr> × 1|<abbr title="default:cuprous_oxide_ingot">Cuprous oxide ingot</abbr> × 9|
-|<abbr title="default:platinum_cinnabar">Platinum cinnabar</abbr> × 1|<abbr title="default:platinum_ingot">Platinum ingot</abbr> × 1, <abbr title="default:cinnabar">Cinnabar</abbr> × 1|
-|<abbr title="default:platinum_cobalt_blue">Platinum cobalt blue</abbr> × 1|<abbr title="default:platinum_ingot">Platinum ingot</abbr> × 1, <abbr title="default:cobalt_blue">Cobalt blue</abbr> × 1|
-|<abbr title="default:platinum_ingot">Platinum ingot</abbr> × 9|<abbr title="default:platinum">Platinum</abbr> × 1|
-|<abbr title="default:potassium_cinnabar">Potassium cinnabar</abbr> × 1|<abbr title="default:potassium_ingot">Potassium ingot</abbr> × 1, <abbr title="default:cinnabar">Cinnabar</abbr> × 1|
-|<abbr title="default:potassium_cobalt_blue">Potassium cobalt blue</abbr> × 1|<abbr title="default:potassium_ingot">Potassium ingot</abbr> × 1, <abbr title="default:cobalt_blue">Cobalt blue</abbr> × 1|
-|<abbr title="default:potassium_ingot">Potassium ingot</abbr> × 9|<abbr title="default:potassium">Potassium</abbr> × 1|
-|<abbr title="default:copper_cinnabar">Copper cinnabar</abbr> × 1|<abbr title="default:copper_ingot">Copper ingot</abbr> × 1, <abbr title="default:cinnabar">Cinnabar</abbr> × 1|
-|<abbr title="default:copper_cobalt_blue">Copper cobalt blue</abbr> × 1|<abbr title="default:copper_ingot">Copper ingot</abbr> × 1, <abbr title="default:cobalt_blue">Cobalt blue</abbr> × 1|
-|<abbr title="default:copper_ingot">Copper ingot</abbr> × 9|<abbr title="default:copper">Copper</abbr> × 1|
-|<abbr title="default:aluminium_cinnabar">Aluminium cinnabar</abbr> × 1|<abbr title="default:aluminium_ingot">Aluminium ingot</abbr> × 1, <abbr title="default:cinnabar">Cinnabar</abbr> × 1|
-|<abbr title="default:aluminium_cobalt_blue">Aluminium cobalt blue</abbr> × 1|<abbr title="default:aluminium_ingot">Aluminium ingot</abbr> × 1, <abbr title="default:cobalt_blue">Cobalt blue</abbr> × 1|
-|<abbr title="default:aluminium_ingot">Aluminium ingot</abbr> × 9|<abbr title="default:aluminium">Aluminium</abbr> × 1|
-|<abbr title="default:calcium_cinnabar">Calcium cinnabar</abbr> × 1|<abbr title="default:calcium_ingot">Calcium ingot</abbr> × 1, <abbr title="default:cinnabar">Cinnabar</abbr> × 1|
-|<abbr title="default:calcium_cobalt_blue">Calcium cobalt blue</abbr> × 1|<abbr title="default:calcium_ingot">Calcium ingot</abbr> × 1, <abbr title="default:cobalt_blue">Cobalt blue</abbr> × 1|
-|<abbr title="default:calcium_ingot">Calcium ingot</abbr> × 9|<abbr title="default:calcium">Calcium</abbr> × 1|
+| № | Input | Output |
+| - | ----- | ------ |
+|1|Copper sulfate pure × 2, Empty balloon × 3|Copper oxide × 2, Sulfur dioxide balloon × 2, Oxygen balloon × 1|
+|2|Cuprous oxide × 2, Empty balloon × 1|Copper × 4, Oxygen balloon × 1|
+|3|Copper × 1, Copper oxide × 1|Cuprous oxide × 1|
+|4|Mercury oxide × 2, Empty balloon × 1, Bucket empty × 2|Oxygen balloon × 1, Bucket mercury × 2|
+|5|Cinnabar × 1, Bucket empty × 1|Sulfur × 1, Bucket mercury × 1|
+|6|Red mercury oxide × 2, Empty balloon × 1, Bucket empty × 2|Oxygen balloon × 1, Bucket mercury × 2|
+|7|Copper sulfate × 1, Bucket empty × 5|Copper sulfate pure × 1, Bucket water × 5|
+|8|Aluminium ore × 1|Aluminium ingot × 1, Cinnabar × 1|
+|9|Mercury oxide × 1, Bucket potassium hydroxide × 1, Zinc ingot × 1, Aluminium case × 1|Battery × 1, Bucket empty × 1|
+|10|Red mercury oxide × 1, Bucket potassium hydroxide × 1, Zinc ingot × 1, Aluminium case × 1|Battery × 1, Bucket empty × 1|
+|11|Silicon dioxide × 9|Fused quartz × 1|
+|12|Plutonium trifluoride × 4, Oxygen balloon × 1|Plutonium tetrafluoride × 3, Plutonium dioxide × 1, Empty balloon × 1|
+|13|Lead sulfate × 1, Bucket empty × 1|Lead oxide × 1, Bucket sulfur trioxide × 1|
+|14|Lead oxide × 1, Hydrogen balloon × 1, Bucket empty × 1|Lead × 1, Empty balloon × 1, Bucket water × 1|
+|15|Bucket potassium permanganate × 2, Empty balloon × 1|Potassium manganate × 1, Manganese dioxide × 1, Oxygen balloon × 1, Bucket empty × 2|
+|16|Manganese dioxide × 1, Bucket empty × 1, Hydrogen balloon × 1|Manganese oxide × 1, Bucket water × 1, Empty balloon × 1|
+|17|Aluminium × 4, Oxygen balloon × 1|Aluminium oxide × 2, Empty balloon × 1|
+|18|Wolfram ingot × 1|Wolfram filament × 15|
+|19|Silicon dioxide × 1, Hydrogen balloon × 2, Bucket empty × 2|Silicon × 1, Bucket water × 2, Empty balloon × 2|
+|20|Silicon dioxide × 1, Magnesium × 2|Silicon × 1, Magnesium oxide × 2|
+|21|Silicon dioxide × 3, Aluminium × 4|Silicon × 3, Aluminium oxide × 2|
+|22|Thorium iodide × 1|Thorium × 1, Iodine × 2|
+|23|Plutonium tetrafluoride × 3|Plutonium trifluoride × 2, Plutonium hexafluoride × 1|
+|24|Plutonium trifluoride × 2, Calcium × 3|Plutonium × 2, Calcium fluoride × 3|
+|25|Platinum cinnabar × 1|Platinum ingot × 1, Cinnabar × 1|
+|26|Platinum cobalt blue × 1|Platinum ingot × 1, Cobalt blue × 1|
+|27|Platinum ingot × 9|Platinum × 1|
+|28|Cuprous oxide cinnabar × 1|Cuprous oxide × 1, Cinnabar × 1|
+|29|Cuprous oxide cobalt blue × 1|Cuprous oxide × 1, Cobalt blue × 1|
+|30|Cuprous oxide × 1|Cuprous oxide ingot × 9|
+|31|Thorium iodide cinnabar × 1|Thorium iodide × 1, Cinnabar × 1|
+|32|Thorium iodide cobalt blue × 1|Thorium iodide × 1, Cobalt blue × 1|
+|33|Thorium iodide × 1|Thorium iodide ingot × 9|
+|34|Aluminium cinnabar × 1|Aluminium ingot × 1, Cinnabar × 1|
+|35|Aluminium cobalt blue × 1|Aluminium ingot × 1, Cobalt blue × 1|
+|36|Aluminium ingot × 9|Aluminium × 1|
+|37|Zinc cinnabar × 1|Zinc ingot × 1, Cinnabar × 1|
+|38|Zinc cobalt blue × 1|Zinc ingot × 1, Cobalt blue × 1|
+|39|Zinc ingot × 9|Zinc × 1|
+|40|Uranium tetrachloride cinnabar × 1|Uranium tetrachloride × 1, Cinnabar × 1|
+|41|Uranium tetrachloride cobalt blue × 1|Uranium tetrachloride × 1, Cobalt blue × 1|
+|42|Uranium tetrachloride × 1|Uranium tetrachloride ingot × 9|
+|43|Wolfram cinnabar × 1|Wolfram ingot × 1, Cinnabar × 1|
+|44|Wolfram cobalt blue × 1|Wolfram ingot × 1, Cobalt blue × 1|
+|45|Wolfram ingot × 9|Wolfram × 1|
+|46|Plutonium trifluoride cinnabar × 1|Plutonium trifluoride × 1, Cinnabar × 1|
+|47|Plutonium trifluoride cobalt blue × 1|Plutonium trifluoride × 1, Cobalt blue × 1|
+|48|Plutonium trifluoride × 1|Plutonium trifluoride ingot × 9|
+|49|Molybdenum cinnabar × 1|Molybdenum ingot × 1, Cinnabar × 1|
+|50|Molybdenum cobalt blue × 1|Molybdenum ingot × 1, Cobalt blue × 1|
+|51|Molybdenum ingot × 9|Molybdenum × 1|
+|52|Potassium cinnabar × 1|Potassium ingot × 1, Cinnabar × 1|
+|53|Potassium cobalt blue × 1|Potassium ingot × 1, Cobalt blue × 1|
+|54|Potassium ingot × 9|Potassium × 1|
+|55|Copper cinnabar × 1|Copper ingot × 1, Cinnabar × 1|
+|56|Copper cobalt blue × 1|Copper ingot × 1, Cobalt blue × 1|
+|57|Copper ingot × 9|Copper × 1|
+|58|Magnetite cinnabar × 1|Magnetite × 1, Cinnabar × 1|
+|59|Magnetite cobalt blue × 1|Magnetite × 1, Cobalt blue × 1|
+|60|Magnetite × 1|Magnetite ingot × 9|
+|61|Magnesium cinnabar × 1|Magnesium ingot × 1, Cinnabar × 1|
+|62|Magnesium cobalt blue × 1|Magnesium ingot × 1, Cobalt blue × 1|
+|63|Magnesium ingot × 9|Magnesium × 1|
+|64|Americium trifluoride cinnabar × 1|Americium trifluoride × 1, Cinnabar × 1|
+|65|Americium trifluoride cobalt blue × 1|Americium trifluoride × 1, Cobalt blue × 1|
+|66|Americium trifluoride × 1|Americium trifluoride ingot × 9|
+|67|Calcium cinnabar × 1|Calcium ingot × 1, Cinnabar × 1|
+|68|Calcium cobalt blue × 1|Calcium ingot × 1, Cobalt blue × 1|
+|69|Calcium ingot × 9|Calcium × 1|
 

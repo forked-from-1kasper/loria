@@ -6,8 +6,7 @@ dofile("../resources/mods/default/inv_crafts.lua")
 dofile("../sources/mods/furnace/crafts.lua")
 
 function process_content_name(name)
-    local text = capitalization(name:gsub("^%a+:", ""))
-    return string.format("<abbr title=\"%s\">%s</abbr>", name, text)
+    return capitalization(name:gsub("^%a+:", ""))
 end
 
 function process_stack_list(stack_list)
@@ -26,9 +25,9 @@ function process_stack_list(stack_list)
     return table.concat(components, ", ")
 end
 
-function process_craft(craft)
+function process_craft(id, craft)
     return string.format(
-        "|%s|%s|",
+        "|%d|%s|%s|", id,
         process_stack_list(craft.input),
         process_stack_list(craft.output)
     )
@@ -36,8 +35,8 @@ end
 
 template =
     "## %s\n" ..
-    "| Input | Output |\n" ..
-    "| ----- | ------ |\n" ..
+    "| № | Input | Output |\n" ..
+    "| - | ----- | ------ |\n" ..
     "%s\n"
 
 function mk_table(name, values)
