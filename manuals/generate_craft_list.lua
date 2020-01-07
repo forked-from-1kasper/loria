@@ -2,7 +2,7 @@ vector = { new = function() end }
 
 dofile("../sources/mods/default/prelude.lua")
 dofile("../sources/mods/default/conf.lua")
-dofile("../resources/mods/default/inv_crafts.lua")
+dofile("../sources/mods/default/inv_crafts.lua")
 dofile("../sources/mods/furnace/crafts.lua")
 
 function process_content_name(name)
@@ -34,7 +34,7 @@ function process_craft(id, craft)
 end
 
 template =
-    "## %s\n" ..
+    "## %s\n\n" ..
     "| № | Input | Output |\n" ..
     "| - | ----- | ------ |\n" ..
     "%s\n"

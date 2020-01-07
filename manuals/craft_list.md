@@ -1,6 +1,7 @@
 # Craft list
 
 ## Inventory
+
 | № | Input | Output |
 | - | ----- | ------ |
 |1|Lead × 1, Copper sulfate × 1|Copper × 1, Lead sulfate × 1|
@@ -33,6 +34,7 @@
 |28|Rete stem × 1|Stick × 6|
 
 ## Furnace
+
 | № | Input | Output |
 | - | ----- | ------ |
 |1|Mushroom mass × 1|Silicon dioxide × 1|
@@ -61,6 +63,7 @@
 |24|Rete stem × 5|Silicon dioxide × 1|
 
 ## Refiner
+
 | № | Input | Output |
 | - | ----- | ------ |
 |1|Copper sulfate pure × 2, Empty balloon × 3|Copper oxide × 2, Sulfur dioxide balloon × 2, Oxygen balloon × 1|

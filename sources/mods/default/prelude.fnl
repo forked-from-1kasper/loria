@@ -22,7 +22,7 @@
   (each [_ x (pairs l)] (f x)))
 
 (defun iforeach [f l]
-  (each [_ x (ipairs l)] (f x)))
+  (each [id x (ipairs l)] (f id x)))
 
 (defun foreach2 [f l]
   (each [key value (pairs l)] (f key value)))
