@@ -80,20 +80,20 @@
             (drop-current pos) (table.insert queue pos)))))))
 
 (fn calculate-device [device info elapsed]
-  (let [meta     (minetest.get_meta info.pos)
-        U        (+ (∨ info.u 0) (∨ info.delta 0))
-        I        (∨ info.i 0)
-        name     (-> (minetest.get_node info.pos) (. :name))
-        consumer (. consumer name)]
+  (let [meta      (minetest.get_meta info.pos)
+        U         (+ (∨ info.u 0) (∨ info.delta 0))
+        I         (∨ info.i 0)
+        name      (-> (minetest.get_node info.pos) (. :name))
+        consumer′ (. consumer name)]
     (meta:set_float :I I) (meta:set_float :U U)
 
-    (when consumer
-      (let [actions (check-consumer meta consumer)]
+    (when consumer′
+      (let [actions (check-consumer meta consumer′)]
         (if actions.activate
-            (do (consumer.on_activate info.pos)
+            (do (consumer′.on_activate info.pos)
                 (meta:set_int :active 1))
             actions.deactivate
-            (do (consumer.on_deactivate info.pos)
+            (do (consumer′.on_deactivate info.pos)
                 (meta:set_int :active 0)))))
 
     (-?> (. on_circuit_tick name)
