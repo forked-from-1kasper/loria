@@ -14,7 +14,7 @@ wget `curl -s https://api.github.com/repos/forked-from-1kasper/loria/releases/la
 
 ## Requirements
 
-[ngspice shared library](http://ngspice.sourceforge.net/shared.html) (`ngspice.dll` or `libngspice.so` or `libngspice.0.dylib`) in `loria/mods/electricity`:
+[ngspice shared library](http://ngspice.sourceforge.net/shared.html) (`ngspice.dll` or `libngspice.so` or `libngspice.0.dylib`) in `games/`:
 
 * Windows pre-compiled library [is here](https://sourceforge.net/projects/ngspice/files/ng-spice-rework/30/ngspice-30_dll_64.zip/download).
 
