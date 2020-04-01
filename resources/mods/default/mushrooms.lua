@@ -47,7 +47,7 @@ rete = {
     max_height = 9
 }
 
-columnae = {
+naga = {
     min_height = 6,
     max_height = 20
 }
@@ -104,7 +104,7 @@ local function generate_viridi_petasum(x, y, z, g, data, area)
 
     if not (area:contains(x - radius, y, z - radius)) or
        not (area:contains(x + radius, y + height, z + radius)) then
-        return
+        return false
     end
 
     -- stem
@@ -114,6 +114,7 @@ local function generate_viridi_petasum(x, y, z, g, data, area)
 
     -- body
     generate_hat(x, y, z, height, radius, data, area, c_viridi_body)
+    return true
 end
 
 local function generate_rete(x, y, z, g, data, area)
@@ -122,7 +123,7 @@ local function generate_rete(x, y, z, g, data, area)
 
     if not (area:contains(x - radius - 1, y, z - radius - 1)) or
        not (area:contains(x + radius + 1, y + height, z + radius + 1)) then
-        return
+        return false
     end
 
     for k = 1, height do
@@ -140,28 +141,36 @@ local function generate_rete(x, y, z, g, data, area)
             data[area:index(x - radius - 1, y + height - math.abs(j) - 1, z + i)] = c_rete_body
         end
     end
+
+    return true
 end
 
-local function generate_columnae(x, y, z, g, data, area)
+local function generate_naga(x, y, z, g, data, area)
     while data[area:index(x, y, z)] ~= c_air do
         y = y - 1
         if not area:contains(x, y, z) then
-            return
+            return false
         end
     end
 
-    local height = g:next(columnae.min_height, columnae.max_height)
+    if data[area:index(x, y + 1, z)] ~= c_ammonium_manganese_pyrophosphate then
+        return false
+    end
+
+    local height = g:next(naga.min_height, naga.max_height)
     for k = 0, height do
         if not area:contains(x, y - k, z) then
-            return
+            return true
         end
 
         local i = area:index(x, y - k, z)
         if data[i] ~= c_air then
-            return
+            return true
         end
         data[i] = c_naga
     end
+
+    return true
 end
 
 local function generate_colossus(x, y, z, g, data, area)
@@ -170,7 +179,7 @@ local function generate_colossus(x, y, z, g, data, area)
 
     if not (area:contains(x - radius, y, z - radius)) or
        not (area:contains(x + radius, y + height, z + radius)) then
-       return
+       return false
     end
 
     for k = -height, height do
@@ -190,6 +199,7 @@ local function generate_colossus(x, y, z, g, data, area)
     generate_hat(x, y, z, height, radius,
         data, area, c_colossus_body
     )
+    return true
 end
 
 local function generate_altitudo(x, y, z, g, data, area)
@@ -198,7 +208,7 @@ local function generate_altitudo(x, y, z, g, data, area)
 
     if not (area:contains(x - radius, y, z - radius)) or
        not (area:contains(x + radius, y + height, z + radius)) then
-        return
+        return false
     end
 
     -- stem
@@ -217,6 +227,8 @@ local function generate_altitudo(x, y, z, g, data, area)
             data, area, c_altitudo_body
         )
     end
+
+    return true
 end
 
 local function generate_column(x, y, z, g, data, area)
@@ -225,7 +237,7 @@ local function generate_column(x, y, z, g, data, area)
           (data[area:index(x, y, z)] ~= c_potassium_permanganate_source) do
         y = y - 1
         if not area:contains(x, y, z) then
-            return
+            return false
         end
     end
 
@@ -242,11 +254,13 @@ local function generate_column(x, y, z, g, data, area)
         z = z + g:next(-1, 1)
 
         if not area:contains(x, y, z) then
-            return
+            return true
         end
 
         i = area:index(x, y, z)
     end
+
+    return true
 end
 
 local function generate_turris(x, y, z, g, data, area)
@@ -255,7 +269,7 @@ local function generate_turris(x, y, z, g, data, area)
 
     if not (area:contains(x - radius, y, z - radius)) or
        not (area:contains(x + radius, y + height, z + radius)) then
-        return
+        return false
     end
 
     for k = 1, height do
@@ -271,6 +285,8 @@ local function generate_turris(x, y, z, g, data, area)
             data[area:index(x - k, h, z + delta)] = c_turris_body
         end
     end
+
+    return true
 end
 
 local function generate_timor(x, y, z, g, data, area)
@@ -280,7 +296,7 @@ local function generate_timor(x, y, z, g, data, area)
 
     if not (area:contains(x - radius, y, z - radius)) or
        not (area:contains(x + radius, y + height, z + radius)) then
-        return
+        return false
     end
 
     for k = 1, height do
@@ -301,6 +317,8 @@ local function generate_timor(x, y, z, g, data, area)
             t = t + math.random() / 2 + 0.1
         end
     end
+
+    return true
 end
 
 mushrooms = {
@@ -312,8 +330,8 @@ mushrooms = {
         { func = generate_viridi_petasum, prob = 1 },
     },
     [c_ammonium_manganese_pyrophosphate] = {
-        { func = generate_columnae, prob = 1 },
-        { func = generate_column, prob = 1 },
+        { func = generate_column, prob = 0.5 },
+        { func = generate_naga, prob = 0.5 },
         { func = generate_turris, prob = 1 },
     },
     [c_sodium_peroxide] = {
@@ -333,53 +351,6 @@ function isthere(arr, x)
     end
 end
 
-local noise_depth = 4
-function noise(x, z, minp, maxp, area, data)
-    local y = maxp.y
-
-    while data[area:index(x, y, z)] == c_air do
-        y = y - 1
-        if y < minp.y then
-            return
-        end
-    end
-
-    if data[area:index(x, y, z)] ~= c_ammonium_manganese_pyrophosphate then
-        return
-    end
-
-    while data[area:index(x, y, z)] ~= c_air do
-        y = y - 1
-        if y < minp.y then
-            return
-        end
-    end
-
-    for delta = 0, math.random(0, noise_depth) do
-        data[area:index(x, y + delta, z)] = c_air
-    end
-
-    while data[area:index(x, y, z)] ~= c_potassium_permanganate_source and
-          data[area:index(x, y, z)] ~= c_potassium_permanganate_flowing do
-        y = y - 1
-        if y < minp.y then
-            return
-        end
-    end
-
-    while data[area:index(x, y, z)] == c_potassium_permanganate_source or
-          data[area:index(x, y, z)] == c_potassium_permanganate_flowing do
-        y = y - 1
-        if y < minp.y then
-            return
-        end
-    end
-
-    for delta = 0, math.random(0, noise_depth) do
-        data[area:index(x, y - delta, z)] = c_potassium_permanganate_source
-    end
-end
-
 minetest.register_on_generated(function(minp0, maxp0, seed)
     local height_min = -31000
     local height_max = 31000
@@ -393,12 +364,6 @@ minetest.register_on_generated(function(minp0, maxp0, seed)
 
     local area = VoxelArea:new({MinEdge = minp, MaxEdge = maxp})
     local data = vm:get_data()
-
-    for x = minp.x, maxp.x do
-        for z = minp.z, maxp.z do
-            noise(x, z, minp, maxp, area, data)
-        end
-    end
 
     local y_min = math.max(minp.y, height_min)
     local y_max = math.min(maxp.y, height_max)
@@ -435,9 +400,12 @@ minetest.register_on_generated(function(minp0, maxp0, seed)
                         break
                     end
 
-                    local mushroom = variants[g:next(1, #variants)]
-                    if math.random() <= mushroom.prob then
-                        mushroom.func(x, ground_y, z, g, data, area)
+                    for _, mushroom in ipairs(variants) do
+                        if math.random() <= mushroom.prob then
+                            if mushroom.func(x, ground_y, z, g, data, area) then
+                                break
+                            end
+                        end
                     end
                 end
             end

@@ -7,27 +7,48 @@ function destruct_column(name, pos)
     end
 end
 
+function destruct_hanging(name, pos)
+    pos.y = pos.y - 1
+    while minetest.get_node(pos).name == name do
+        minetest.set_node(pos, { name = "air" })
+        minetest.add_item(pos, { name = name })
+        pos.y = pos.y - 1
+    end
+end
+
 minetest.register_on_dignode(function(pos, oldnode, digger)
-    local above = vector.add(pos, vector.new(0, 1, 0))
-    local node_above_name = minetest.get_node(above).name
+    local node_above_name = minetest.get_node(above(pos)).name
+    local node_under_name = minetest.get_node(under(pos)).name
 
     if minetest.get_item_group(oldnode.name, "column") > 0 then
         destruct_column(oldnode.name, pos)
+    elseif minetest.get_item_group(oldnode.name, "hanging") > 0 then
+        destruct_hanging(oldnode.name, pos)
     elseif minetest.get_item_group(node_above_name, "column") > 0 then
         destruct_column(node_above_name, pos)
+    elseif minetest.get_item_group(node_under_name, "hanging") > 0 then
+        destruct_hanging(node_under_name, pos)
     end
 end)
 
+local function can_grow(placename, nodename)
+    local key, _ = nodename:match("^default:([^%d]+)_%d+$")
+    key = nodename:match("^default:([^%d]+)$") or key
+
+    local walkable = minetest.registered_nodes[placename].walkable
+    return walkable and not (key and grasses[key] and grasses[key].place_on ~= placename)
+end
+
 minetest.register_on_placenode(function(pos, newnode, placer, oldnode, itemstack, pointed_thing)
     if minetest.get_item_group(newnode.name, "column") > 0 then
-        local under = minetest.get_node(vector.add(pos, vector.new(0, -1, 0)))
-        local walkable = minetest.registered_nodes[under.name].walkable
-
-        local key, _ = newnode.name:match("^default:([^%d]+)_%d+$")
-        key = newnode.name:match("^default:([^%d]+)$") or key
-        local cant_grow = walkable and key and grasses[key] and grasses[key].place_on ~= under.name
-
-        if cant_grow or not (walkable or under.name == newnode.name) then
+        local under = minetest.get_node(under(pos))
+        if not (can_grow(under.name, newnode.name) or under.name == newnode.name) then
+            minetest.set_node(pos, { name = "air" })
+            minetest.add_item(pos, { name = newnode.name })
+        end
+    elseif minetest.get_item_group(newnode.name, "hanging") > 0 then
+        local above = minetest.get_node(above(pos))
+        if not (can_grow(above.name, newnode.name) or above.name == newnode.name) then
             minetest.set_node(pos, { name = "air" })
             minetest.add_item(pos, { name = newnode.name })
         end
@@ -200,7 +221,7 @@ minetest.register_node("default:naga", {
     paramtype = "light",
     walkable = false,
     light_source = 5,
-    groups = { snappy = 3, attached_node = 1 },
+    groups = { snappy = 3, hanging = 1 },
     sunlight_propagates = true,
 })
 

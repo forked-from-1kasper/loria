@@ -81,17 +81,15 @@
 
 (minetest.register_biome
   {:name "default:swamp_connector"
-   :node_stone "air"
-   :y_min -20
+   :node_stone "default:ammonium_manganese_pyrophosphate"
+   :node_top "default:potassium_permanganate_source"
+   :depth_top 7
+   :node_water "default:potassium_permanganate_source"
+   :node_riverbed "default:potassium_permanganate_source"
+   :node_river_water "default:potassium_permanganate_source"
+   :node_water_top "default:potassium_permanganate_source"
+   :y_min -31000
    :y_max -15
-   :heat_point 40
-   :humidity_point 50})
-
-(minetest.register_biome
-  {:name "default:swamp_bottom"
-   :node_stone "default:potassium_permanganate_source"
-   :y_min -25
-   :y_max -20
    :heat_point 40
    :humidity_point 50})
 
