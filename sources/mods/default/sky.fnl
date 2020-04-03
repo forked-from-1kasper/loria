@@ -3,11 +3,16 @@
 (local default-color {:r 140 :g 186 :b 250})
 (local night-color   {:r 0 :g 0 :b 16})
 
+(local change-distance (minetest.settings:get "sky_color_change_distance"))
+(local area-side (+ (* change-distance 2) 1))
+(local area-volume (^ area-side 3))
+
 (local biome-id minetest.get_biome_id)
 
 (local colors
   {(biome-id "default:redland")           {:r 255 :g 200 :b 150}
    (biome-id "default:purple_swamp")      {:r 190 :g 155 :b 255}
+   (biome-id "default:swamp_connector")   {:r 190 :g 155 :b 255}
    (biome-id "default:acidic_landscapes") {:r 255 :g 255 :b 100}
    (biome-id "default:reptile_house")     {:r 200 :g 255 :b 100}})
 
@@ -38,9 +43,23 @@
       (≥ timeofday sunset.finish)
       (brightness color 0)))
 
+(fn get-color-at-pos [pos]
+  (or (. colors (. (minetest.get_biome_data pos) :biome)) default-color))
+
+(fn calc-color [pos]
+  (var color {:r 0 :g 0 :b 0})
+  (for [x (- pos.x change-distance) (+ pos.x change-distance)]
+    (for [y (- pos.y change-distance) (+ pos.y change-distance)]
+      (for [z (- pos.z change-distance) (+ pos.z change-distance)]
+        (let [color′ (get-color-at-pos {:x x :y y :z z})]
+          (tset color :r (+ color.r color′.r))
+          (tset color :g (+ color.g color′.g))
+          (tset color :b (+ color.b color′.b))))))
+  (brightness color (/ 1 area-volume)))
+
 (def-globalstep [_]
   (let [timeofday (minetest.get_timeofday)]
     (each [_ player (ipairs (minetest.get_connected_players))]
       (let [pos (player:get_pos)
-            color (or (. colors (. (minetest.get_biome_data pos) :biome)) default-color)]
+            color (calc-color pos)]
         (player:set_sky (addition (get-sky-color color timeofday) night-color) "plain")))))
