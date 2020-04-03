@@ -25,6 +25,11 @@
         {:description (.. (capitalization name) " ingot")
          :inventory_image (.. "default_" name "_ingot.png")}))))
 
+(minetest.register_node "default:humus"
+  {:description "Humus"
+   :tiles ["default_humus.png"]
+   :groups {:cracky 3}})
+
 (minetest.register_node "default:plutonium_dioxide"
   {:description "Plutonium (IV) oxide (PuO2)"
    :tiles ["default_plutonium_dioxide.png"]

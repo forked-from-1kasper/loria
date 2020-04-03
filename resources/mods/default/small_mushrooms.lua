@@ -252,7 +252,7 @@ for name, params in pairs(small_mushrooms) do
             itemstack:set_count(itemstack:get_count() - 1)
             return itemstack
         end,
-        sunlight_propagates = true,
+        sunlight_propagates = true
     }
 
     for key, value in pairs(params.features or {}) do
@@ -299,12 +299,14 @@ for name, params in pairs(small_mushrooms) do
         minetest.register_decoration({
             deco_type = "simple",
             place_on = params.place_on,
-            sidelen = 16,
+            sidelen = params.sidelen or 16,
             fill_ratio = params.fill_ratio,
             biomes = params.biomes,
             decoration = "default:" .. name,
             height = 1,
             y_min = params.y_min or -20,
+            y_max = params.y_max,
+            noise_params = params.noise_params
         })
     end
 end
@@ -360,3 +362,23 @@ for name, params in pairs(terribilis_names) do
         }
     })
 end
+
+minetest.register_ore({
+    ore_type       = "blob",
+    ore            = "default:humus",
+    wherein        = "default:cobalt_blue",
+    clust_scarcity = 8 * 8 * 8,
+    clust_num_ores = 50,
+    clust_size     = 4,
+    y_min          = -10,
+    y_max          = 10,
+    noise_threshold = 0.0,
+    noise_params    = {
+        offset = 0.5,
+        scale = 0.2,
+        spread = { x = 3, y = 3, z = 3 },
+        seed = 666,
+        octaves = 1,
+        persist = 0.0
+    }
+})

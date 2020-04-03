@@ -4,6 +4,7 @@
   (or (∃ x ∈ ["default:pars"
               "default:truncus"
               "default:viriditas"
+              "default:avarum"
               "default:rami"
               "default:spears"
               "default:naga"

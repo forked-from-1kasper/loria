@@ -1,3 +1,5 @@
+local tau = 2 * math.pi
+
 local c_air = minetest.get_content_id("air")
 local c_copper_sulfate = minetest.get_content_id("default:copper_sulfate")
 
@@ -173,27 +175,25 @@ local function generate_naga(x, y, z, g, data, area)
     return true
 end
 
-local function generate_colossus(x, y, z, g, data, area)
+local function generate_colossus(x0, y, z0, g, data, area)
     local height = g:next(colossus.min_height, colossus.max_height)
     local radius = g:next(colossus.min_radius, colossus.max_radius)
 
-    if not (area:contains(x - radius, y, z - radius)) or
-       not (area:contains(x + radius, y + height, z + radius)) then
+    if not (area:contains(x0 - radius, y, z0 - radius)) or
+       not (area:contains(x0 + radius, y + height, z0 + radius)) then
        return false
     end
 
+    x, z = x0, z0
     for k = -height, height do
-        for delta_x = -1, 1 do
-            for delta_z = -1, 1 do
-                local x1, y1, z1 = x + delta_x, y + k, z + delta_z
-                if math.abs(delta_x * delta_z) ~= 1 and
-                   area:contains(x1, y1, z1) then
-                    data[area:index(x1, y1, z1)] = c_colossus_stem
-                end
-            end
-        end
         x = x + g:next(-1, 1)
         z = z + g:next(-1, 1)
+
+        data[area:index(x + 0, y + k, z + 0)] = c_colossus_stem
+        data[area:index(x + 1, y + k, z + 0)] = c_colossus_stem
+        data[area:index(x - 1, y + k, z + 0)] = c_colossus_stem
+        data[area:index(x + 0, y + k, z + 1)] = c_colossus_stem
+        data[area:index(x + 0, y + k, z - 1)] = c_colossus_stem
     end
 
     generate_hat(x, y, z, height, radius,

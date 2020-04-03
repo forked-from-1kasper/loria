@@ -63,13 +63,23 @@
    :node_top "default:copper_sulfate"
    :depth_top 2
    :node_stone "default:cobalt_blue"
-   :y_min -31000
+   :y_min -10
    :y_max 31000
    :heat_point 30
    :humidity_point 50
 
    :node_riverbed "default:lead_sulfate"
    :depth_riverbed 2})
+
+(minetest.register_biome
+  {:name "default:azure_bottom"
+   :node_top "default:cobalt_blue"
+   :depth_top 1
+   :node_stone "default:cobalt_blue"
+   :y_min -31000
+   :y_max -10
+   :heat_point 30
+   :humidity_point 50})
 
 (minetest.register_biome
   {:name "default:purple_swamp"
@@ -84,6 +94,7 @@
    :node_stone "default:ammonium_manganese_pyrophosphate"
    :node_top "default:potassium_permanganate_source"
    :depth_top 7
+   :node_cave_liquid "default:potassium_permanganate_source"
    :node_water "default:potassium_permanganate_source"
    :node_riverbed "default:potassium_permanganate_source"
    :node_river_water "default:potassium_permanganate_source"
