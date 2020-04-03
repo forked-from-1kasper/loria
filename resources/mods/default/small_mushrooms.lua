@@ -366,12 +366,12 @@ end
 minetest.register_ore({
     ore_type       = "blob",
     ore            = "default:humus",
-    wherein        = "default:cobalt_blue",
+    wherein        = "default:copper_sulfate",
     clust_scarcity = 8 * 8 * 8,
     clust_num_ores = 50,
     clust_size     = 4,
-    y_min          = -10,
-    y_max          = 10,
+    y_min          = -15,
+    y_max          = 31000,
     noise_threshold = 0.0,
     noise_params    = {
         offset = 0.5,
