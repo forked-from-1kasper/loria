@@ -118,7 +118,9 @@ odorantur_names = {
     "comantem",
     "aspero",
     "aequaliter",
-    "agrariae"
+    "agrariae",
+    "conicum",
+    "acribus"
 }
 
 for i, name in ipairs(odorantur_names) do
