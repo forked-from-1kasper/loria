@@ -3,7 +3,7 @@
 (local default-color {:r 140 :g 186 :b 250})
 (local night-color   {:r 0 :g 0 :b 16})
 
-(local change-distance (minetest.settings:get "sky_color_change_distance"))
+(local change-distance (or (minetest.settings:get "sky_color_change_distance") 4))
 (local area-side (+ (* change-distance 2) 1))
 (local area-volume (^ area-side 3))
 
