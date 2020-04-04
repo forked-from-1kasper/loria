@@ -99,7 +99,7 @@
       (when (= (. t.ordered-index i) state)
         (set key (. t.ordered-index (+ i 1))))))
 
-  (when key (values key (. t key)))
-  (tset t :ordered-index nil))
+  (if key (values key (. t key))
+          (tset t :ordered-index nil)))
 
 (defun opairs [t] (values onext t nil))

@@ -5,12 +5,13 @@
   {"default:oxygen_balloon" (* balloon_coeff 3)})
 
 (local fuel-list
-  {"default:cinnabar"           1
-   "default:potassium"          2
-   "default:potassium_cinnabar" 3
-   "default:potassium_azure"    4
-   "default:potassium_ingot"    5
-   "default:bucket_trisilane"   30})
+  {"default:cinnabar"              1
+   "default:potassium"             2
+   "default:potassium_cobalt_blue" 3
+   "default:potassium_cinnabar"    3
+   "default:potassium_azure"       4
+   "default:potassium_ingot"       5
+   "default:bucket_trisilane"      30})
 
 (fn furnace-ready? [pos]
   (let [meta (minetest.get_meta pos)
@@ -19,7 +20,7 @@
         fuel (: (first inv:get_list :fuel) :get_name)]
     (∧ (∈ gas gases-list) (∈ fuel fuel-list))))
 
-(fn update-gas [pos elapsed]
+(defun update_gas [pos elapsed]
   (let [meta  (minetest.get_meta pos)
         inv   (meta:get_inventory)
         gas   (first inv:get_list :gas)
@@ -57,22 +58,22 @@
             (do (meta:set_float :cycle 0) true)))
       (do (meta:set_float :cycle cycle) true))))
 
-(fn update-fuel [pos elapsed]
-  (let [meta (minetest.get_meta pos)
-        inv (meta:get_inventory)
-        fuel (first inv:get_list "fuel")
-        fuel-name (fuel:get_name)
-        burning-time (. fuel-list fuel-name)
-        handler (if (∈ fuel-name bucket.is_bucket)
-                    process-liquid-fuel
-                    process-solid-fuel)]
-    (handler pos meta inv fuel burning-time elapsed)))
+(defun update_fuel [fuel-list]
+  (fn [pos elapsed]
+    (let [meta (minetest.get_meta pos)
+          inv (meta:get_inventory)
+          fuel (first inv:get_list "fuel")
+          fuel-name (fuel:get_name)
+          burning-time (. fuel-list fuel-name)
+          handler (if (∈ fuel-name bucket.is_bucket)
+                      process-liquid-fuel process-solid-fuel)]
+      (handler pos meta inv fuel burning-time elapsed))))
 
 (register_furnace
   {:name "gas"
    :description "Gas furnace"
    :lists {:gas 1 :fuel 1}
-   :on_tick [update-fuel update-gas]
+   :on_tick [(update_fuel fuel-list) update_gas]
    :is_furnace_ready furnace-ready?
    :additional_formspec
      (fn [meta]
