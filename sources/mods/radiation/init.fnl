@@ -6,11 +6,12 @@
 (local radiation-vect (vector.new 16 16 16))
 (local radiation-effects-timeout 1)
 
-(fn null [] {:alpha 0 :beta 0 :gamma 0})
-
 (fn get-activity [name]
-  (let [cid (minetest.get_content_id name)]
-    (or (. activity (if (≠ cid 127) cid name)) (null))))
+  (if (and name (≠ name ""))
+    (or (. activity name)
+        (. activity (minetest.get_content_id name))
+        (null))
+    (null)))
 
 (fn hypot-sqr [pos₁ pos₂]
   (+ (^ (- pos₁.x pos₂.x) 2)

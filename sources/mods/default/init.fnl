@@ -47,6 +47,9 @@
        :alignment "right"
        :offset {:x 150 :y 0}}))
     (player:set_clouds {:density 0})
+    (player:set_sun {:texture "star.png" :scale 0.5 :sunrise_visible false})
+    (player:set_moon {:scale 7 :texture "gas_giant.png"})
+    (player:set_stars {:scale 0.5 :star_color "#ffffffff"})
 
     (player_api.set_model player "player.b3d")
     (player:set_local_animation

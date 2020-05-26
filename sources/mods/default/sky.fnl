@@ -61,5 +61,8 @@
   (let [timeofday (minetest.get_timeofday)]
     (each [_ player (ipairs (minetest.get_connected_players))]
       (let [pos (player:get_pos)
-            color (calc-color pos)]
-        (player:set_sky (addition (get-sky-color color timeofday) night-color) "plain")))))
+            color′ (calc-color pos)
+            color (addition (get-sky-color color′ timeofday) night-color)]
+        (player:set_sky
+          {:base_color color
+           :type "plain"})))))

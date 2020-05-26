@@ -7,8 +7,11 @@
 (define-type activity-table nope)
 (fn activity-table.update [self tbl]
   (each [name val (pairs tbl)]
-    (let [id (cid name)]
-      (tset self (if (≠ id 127) id name) val))))
+    (if (pcall (fn [] (tset self (cid name) val)))
+        (tset self name val))))
+
+;; Default radiation
+(defun null [] {:alpha 0 :beta 0 :gamma 0})
 
 ;; menge (set)
 (define-type menge nope)
@@ -23,6 +26,10 @@
 (global activity (activity-table))
 
 (on-mods-loaded
+  (var inh (null))
+  (each [name _ (pairs minetest.registered_items)]
+    (tset activity name inh))
+
   (activity:update
     {;; Thorium
      "default:thorium"           (α-β-γ 16 5 0)
