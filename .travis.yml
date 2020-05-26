@@ -7,6 +7,7 @@ before_install:
   - sudo apt-get install lua5.1
   - git clone https://github.com/bakpakin/Fennel
   - export PATH=$PATH:`pwd`/Fennel
+  - (cd Fennel && make)
 install:
   - make fennel
 before_deploy:
