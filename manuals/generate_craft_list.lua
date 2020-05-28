@@ -50,6 +50,13 @@ inventory = { }
 furnace = { }
 
 print("# Craft list\n")
+
+print("## Fuel\n\n| Name | Burning time |\n|-|-|")
+for name, time in opairs(fuel_list) do
+    print(string.format("|%s|%d|", process_content_name(name), time))
+end
+print("")
+
 print(mk_table("Inventory", inv_crafts))
 print(mk_table("Furnace", furnace_crafts))
 print(mk_table("Refiner", refiner_crafts))

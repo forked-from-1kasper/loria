@@ -126,7 +126,10 @@
              {:name "default:calcium"               :count 3}]
     :output [{:name "default:plutonium"             :count 2}
              {:name "default:calcium_fluoride"      :count 3}]
-    :time 6}])
+    :time 6}
+   {:input  [{:name "default:humus"           :count 2}]
+    :output [{:name "default:silicon_dioxide" :count 1}]
+    :time 10}])
 
 (global furnace_crafts
   [{:input [{:name "default:mushroom_mass"    :count 1}]
@@ -226,3 +229,12 @@
       {:input  [{:name name               :count 1}]
        :output [{:name (.. name "_brick") :count 2}]
        :time 3})))
+
+(global fuel_list
+  {"default:cinnabar"              1
+   "default:potassium"             2
+   "default:potassium_cobalt_blue" 3
+   "default:potassium_cinnabar"    3
+   "default:potassium_azure"       4
+   "default:potassium_ingot"       5
+   "default:bucket_trisilane"      20})

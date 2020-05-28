@@ -16,21 +16,12 @@
 (local gases-list
   {"default:oxygen_balloon" (* balloon_coeff 3)})
 
-(local fuel-list 
-  {"default:cinnabar"              1
-   "default:potassium"             2
-   "default:potassium_cobalt_blue" 3
-   "default:potassium_cinnabar"    3
-   "default:potassium_azure"       4
-   "default:potassium_ingot"       5
-   "default:bucket_trisilane"      10})
-
 (fn furnace-ready? [pos]
   (let [meta (minetest.get_meta pos)
         inv  (meta:get_inventory)
         gas  (-> (inv:get_list :gas)  (. 1) (: :get_name))
         fuel (-> (inv:get_list :fuel) (. 1) (: :get_name))]
-    (∧ (∈ gas gases-list) (∈ fuel fuel-list)
+    (∧ (∈ gas gases-list) (∈ fuel fuel_list)
        (= (meta:get_int :switch) 1))))
 
 (fn reset-sound [pos]
@@ -43,7 +34,7 @@
    :description "Refiner"
    :lists {:gas 1 :fuel 1}
    :on_tick
-     [(update_fuel fuel-list) update_gas
+     [(update_fuel fuel_list) update_gas
       (andthen reset-sound (const true))]
 
    :is_furnace_ready furnace-ready?
