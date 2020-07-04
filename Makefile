@@ -8,7 +8,7 @@ $(SRC:.fnl=.lua): %.lua: %.fnl
 	fennel --compile $< > $@
 
 tar:
-	(find resources -type f; find sources -type f -name *.lua) | \
+	(find resources -type f; find sources -type f -name "*.lua") | \
 	tar cfz $(ARCHIVE) -T - --transform='s,resources/\|sources/,,'
 clean:
 	rm -f $(SRC:.fnl=.lua)
