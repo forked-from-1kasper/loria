@@ -63,6 +63,6 @@
       (let [pos (player:get_pos)
             color′ (calc-color pos)
             color (addition (get-sky-color color′ timeofday) night-color)]
-        (player:set_sky
-          {:base_color color
-           :type "plain"})))))
+        (if default.enough-fresh?
+          (player:set_sky {:base_color color :type "plain"})
+          (player:set_sky color "plain"))))))
