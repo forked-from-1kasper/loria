@@ -1,7 +1,7 @@
 (require-macros :useful-macros)
 (require-macros :infix)
 
-(local transformer-resis 1)
+(local transformer-resis 0.0001)
 
 (local transformer-box
   {:type "fixed"
@@ -89,26 +89,31 @@
         inv (meta:get_inventory)
         prim-winding (inv:get_stack "primary" 1)
         sec-winding (inv:get_stack "secondary" 1)
-        N1 (prim-winding:get_count)
-        N2 (sec-winding:get_count)
+        N₁ (prim-winding:get_count)
+        N₂ (sec-winding:get_count)
         in-pin  (vector.new 1 0 0)
         out-pin (vector.new 0 0 1)
         prim₀ (vector.add pos in-pin)
         prim₁ (vector.add pos out-pin)
         sec₀ (vector.subtract pos in-pin)
-        sec₁ (vector.subtract pos out-pin)]
-    (when (and (≠ N1 0) (≠ N2 0)
+        sec₁ (vector.subtract pos out-pin)
+        A (hash_node_connect pos prim₀)
+        B (hash_node_connect pos prim₁)
+        C (hash_node_connect pos sec₀)
+        D (hash_node_connect pos sec₁)
+        T (.. id "-zero")]
+    (when (and (≠ N₁ 0) (≠ N₂ 0)
                (cable? (prim-winding:get_name))
                (cable? (sec-winding:get_name)))
-      [(join " " (.. "l" id "primary")
-                 (hash_node_connect pos prim₀)
-                 (hash_node_connect pos prim₁)
-                 (^ N1 2))
-       (join " " (.. "l" id "secondary")
-                 (hash_node_connect pos sec₀)
-                 (hash_node_connect pos sec₁)
-                 (^ N2 2))
-       (join " " (.. "k" id)
-                 (.. "l" id "primary")
-                 (.. "l" id "secondary")
-                 0.999999)]))))
+      (if (≠ N₁ N₂)
+        (let [L₁₂ (math.sqrt (* N₁ N₂))
+              L₁  (- N₁ L₁₂)
+              L₂  (- N₂ L₁₂)]
+          (values {} (define-circuit
+            :resistor (.. id "-prim")  A T (inductor L₁)
+            :resistor (.. id "-sec")   T C (inductor L₂)
+            :resistor (.. id "-T")     T B (inductor L₁₂)
+            :resistor (.. id "-resis") B D (real transformer-resis))))
+        (values {} (define-circuit
+          :resistor (.. id "-fst") A C (real transformer-resis)
+          :resistor (.. id "-snd") B D (real transformer-resis))))))))

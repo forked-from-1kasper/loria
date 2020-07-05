@@ -1,158 +1,132 @@
 (require-macros :useful-macros)
 
-(defun serialize_pos [pos]
-  (string.format "%f,%f,%f" pos.x pos.y pos.z))
+(define-type node-table
+  (λ [cls self]
+    (set (self.nodes
+          self.node-count
+          self.components)
+         (values {} 0 0))))
 
-(defun deserialize_pos [str]
-  (let [(x y z) (str:match "([^,]+),([^,]+),([^,]+)")]
-    (vector.new (tonumber x) (tonumber y) (tonumber z))))
+(fn node-table.add-to-nodes [self node-str]
+  (when (= (. self.nodes node-str) nil)
+    (tset self.nodes node-str self.node-count)
+    (set self.node-count (+ self.node-count 1)))
+  (. self.nodes node-str))
 
-(fn drop-current [pos]
-  (let [meta (minetest.get_meta pos)]
-    (meta:set_float :I 0)
-    (meta:set_float :U 0)))
+(fn map-nodes [circ]
+  (local tbl (node-table))
+  (tbl:add-to-nodes :gnd)
 
-(defun reset_circuits [current already-processed]
-  (each [_ vect (ipairs neighbors)]
-    (let [pos  (vector.add current vect)
-          name (-> (minetest.get_node pos) (. :name))]
-      (when (∧ (∨ (> (minetest.get_item_group name :conductor) 0)
-                  (> (minetest.get_item_group name :cable) 0))
-               (∉ (serialize_pos pos) already-processed))
-        (let [meta (minetest.get_meta pos)]
-          (meta:set_float :I 0) (meta:set_float :U 0)
-          (tset already-processed (serialize_pos pos) true)
+  (each [_ elem (ipairs circ)]
+    (set tbl.components (+ tbl.components 1))
+    (tset tbl elem.type (+ (or (. tbl elem.type) 0) 1))
+    (set elem.high (tbl:add-to-nodes elem.pos-node))
+    (set elem.low  (tbl:add-to-nodes elem.neg-node)))
 
-          (when (∈ name consumer)
-            (-> (minetest.get_node_timer pos) (: :start 0.5)))
-          (reset_circuits pos already-processed))))))
+  tbl)
 
-(fn measurement-delta [X]
-  (if (= X 0) 0 (+ X (/ (math.random) 2))))
+(fn init-matrix-by-func [self func]
+  (for [i 1 self.size.width]
+    (tset self i [])
+    (for [j 1 self.size.height]
+      (tset self i j (func i j)))))
 
-(defun check_current [meta consumer]
-  (let [I (math.abs (meta:get_float :I))
-        U (math.abs (meta:get_float :U))]
-    (∧ (≥ I consumer.current.I.min)
-       (≤ I consumer.current.I.max)
-       (≥ U consumer.current.U.min)
-       (≤ U consumer.current.U.max))))
+(define-type matrix
+  (λ [cls self n m]
+    (let [size (* n m)]
+      (set self.data (allocate "complex[?]" size))
+      (set self.size {:width m :height n}))))
 
-(fn check-consumer [meta consumer]
-  (let [active?     (= (meta:get_int :active) 1)
-        current-ok? (check_current meta consumer)]
-    {:activate   (∧ (not active?) current-ok? consumer.on_activate)
-     :deactivate (∧ active? (not current-ok?) consumer.on_deactivate)}))
+(fn matrix.idx [self i j]
+  (+ (* (- i 1) self.size.width) (- j 1)))
 
-(fn get-float-by-pos [key]
-  (fn [pos] (-> (minetest.get_meta pos) (: :get_float key))))
+(fn matrix.get [self i j]
+  (. self.data (matrix.idx self i (or j 1))))
 
-(local get-emf (get-float-by-pos :emf))
-(local get-resis (get-float-by-pos :resis))
+(fn matrix.set [self i j val]
+  (tset self.data (matrix.idx self i (or j 1)) val))
 
-(var idx 0)
-(fn get-name [] (incf idx) idx)
+(fn matrix.print [self]
+  (for [i 1 self.size.width]
+    (for [j 1 self.size.height]
+      (io.write (self:get i j) " "))
+    (io.write "\n")))
 
-(fn is-conductor [name]
-  (≠ (minetest.get_item_group name :conductor) 0))
+(fn calculate-resistor [A b elem g2-index]
+  (when (≠ elem.high 0)
+    (A:set elem.high elem.high
+      (+ (A:get elem.high elem.high)
+         (/ 1 elem.value))))
+  (when (≠ elem.low 0)
+    (A:set elem.low elem.low
+      (+ (A:get elem.low elem.low)
+         (/ 1 elem.value))))
+  (when (∧ (≠ elem.high 0) (≠ elem.low 0))
+    (A:set elem.high elem.low
+      (- (A:get elem.high elem.low)
+         (/ 1 elem.value)))
+    (A:set elem.low elem.high
+      (- (A:get elem.low elem.high)
+         (/ 1 elem.value)))))
 
-(fn is-source [name]
-  (≠ (minetest.get_item_group name :source) 0))
+(fn calculate-voltage [A b elem g2-index]
+  (when (≠ elem.high 0)
+    (A:set elem.high g2-index
+      (+ (A:get elem.high g2-index) 1))
+    (A:set g2-index elem.high
+      (+ (A:get g2-index elem.high) 1)))
 
-(defun find_circuits [pos descriptions processed-sources]
-  (var res []) (var queue [pos])
+  (when (≠ elem.low 0)
+    (A:set elem.low g2-index
+      (- (A:get elem.low g2-index) 1))
+    (A:set g2-index elem.low
+      (- (A:get g2-index elem.low) 1)))
 
-  (each [_ current (ipairs queue)]
-    (each [_ vect (ipairs neighbors)]
-      (let [pos (vector.add current vect)
-            name (-> (minetest.get_node pos) (. :name))
-            str (serialize_pos pos)]
-        (when (∧ (∉ str descriptions) (∉ str processed-sources)
-                 (∨ (is-conductor name) (is-source name)))
-          (let [(desc device-name) ((. model name) pos (get-name))]
-            (tset descriptions str desc)
-            (when device-name (initdevice device-name pos))
+  (b:set g2-index 1 elem.value)
+  (+ g2-index 1))
 
-            (when (is-source name) (tset processed-sources str true))
-            (when (∈ name consumer)
-              (-> (minetest.get_node_timer pos) (: :start 0.5)))
+(fn calculate-current [A b elem g2-index]
+  (when (≠ elem.high 0)
+    (b:set elem.high 1 (- (b:get elem.high 1) elem.value)))
+  (when (≠ elem.low 0)
+    (b:set elem.low 1 (+ (b:get elem.low 1) elem.value))))
 
-            (drop-current pos) (table.insert queue pos)))))))
+(local circuit-elems
+  {:resistor calculate-resistor
+   :voltage  calculate-voltage
+   :current  calculate-current})
 
-(fn calculate-device [device info elapsed]
-  (let [meta      (minetest.get_meta info.pos)
-        U         (+ (∨ info.u 0) (∨ info.delta 0))
-        I         (∨ info.i 0)
-        name      (-> (minetest.get_node info.pos) (. :name))
-        consumer′ (. consumer name)]
-    (meta:set_float :I I) (meta:set_float :U U)
+(fn solve-aux [tbl circ]
+  (let [g2-count (+ tbl.voltage (or tbl.inductor 0))
+        matrix-size (+ tbl.node-count g2-count -1)]
 
-    (when consumer′
-      (let [actions (check-consumer meta consumer′)]
-        (if actions.activate
-            (do (consumer′.on_activate info.pos)
-                (meta:set_int :active 1))
-            actions.deactivate
-            (do (consumer′.on_deactivate info.pos)
-                (meta:set_int :active 0)))))
+    (var A (matrix matrix-size matrix-size))
+    (var b (matrix matrix-size 1))
 
-    (-?> (. on_circuit_tick name)
-         (funcall meta elapsed))))
+    (var g2-index (- matrix-size g2-count -1))
+    ;; generate A and b
+    (each [id elem (ipairs circ)]
+      (let [func (. circuit-elems elem.type)]
+        (local maybe-g2-index (func A b elem g2-index))
+        (when (~= maybe-g2-index nil)
+          (set g2-index maybe-g2-index)
+          (set elem.current-index (- maybe-g2-index 1)))))
 
-(local maximum-period 60)
-(fn get-time []
-  "Returns gametime in seconds"
-  (* (minetest.get_timeofday) 60 60 24))
+    ;; Ax = b ⇒ x = A⁻¹ × b
+    (local solution (linsolve A b))
 
-(fn process-source [pos processed-sources elapsed]
-  (var descriptions []) (local str (serialize_pos pos))
-  (local func (. model (-> (minetest.get_node pos) (. :name))))
-  (when func
-    (let [(desc device-name) (func pos (get-name))]
-      (tset descriptions str desc)
-      (initdevice device-name pos)
+    (var res {:voltages {} :currents {}})
+    ;; make “node — voltage” table
+    (each [name pin (pairs tbl.nodes)]
+      (let [v (or (solution:get pin 1) (complex 0 0))]
+        (tset res.voltages name v)))
 
-      (drop-current pos)
-      (tset processed-sources str true)
+    ;; make “source — current” table
+    (each [id elem (ipairs circ)]
+      (when (~= elem.current-index nil)
+        (tset res.currents elem.name
+          (solution:get elem.current-index 1))))
 
-      (find_circuits pos descriptions processed-sources)
+    res))
 
-      (var circ [".title electricity"])
-      (foreach (partial append circ) descriptions)
-      (table.insert circ ".end")
-
-      (ngspice_circ circ)
-      (local t₀ (% (get-time) maximum-period))
-      (local t₁ (+ t₀ elapsed))
-      (local step (/ elapsed 10))
-      (ngspice_command (string.format "tran %fs %fs %fs" step t₁ t₀))
-
-      (each [device info (pairs ngparsed)]
-        (calculate-device device info elapsed))
-
-      (ngflush))))
-
-(fn globalstep [Δt]
-  (var processed-sources [])
-  (each [str t (pairs sources)]
-    (if (≥ Δt t)
-      (tset sources str nil)
-      (do (tset sources str (- t Δt))
-          (when (∉ str processed-sources)
-            (process-source (deserialize_pos str) processed-sources Δt)))))
-  (set idx 0))
-
-(global sources {})
-
-(minetest.register_abm
-  {:label "Enable electrcity sources"
-   :nodenames ["group:source"]
-   :interval 1
-   :chance 1
-   :action (fn [pos] (tset sources (serialize_pos pos) 1))})
-
-(local electricity-step 0.5) (var timer 0)
-(def-globalstep [Δt]
-  (set timer (+ timer Δt))
-  (when (≥ timer electricity-step)
-    (globalstep timer) (set timer 0)))
+(defun circsolve [circ] (solve-aux (map-nodes circ) circ))

@@ -48,6 +48,21 @@
              (setmetatable inst# cls#)
              inst#)})))
 
+(fn define-circuit [...]
+  (local k (length [...]))
+  (local j (/ k 5)) (var res { })
+
+  (assert (= (% k 5) 0) "wrong number of arguments")
+
+  (for [i 1 j] (let [n (* i 5)]
+    (tset res i
+      {:type     (. [...] (- n 4))
+       :name     (. [...] (- n 3))
+       :pos-node (. [...] (- n 2))
+       :neg-node (. [...] (- n 1))
+       :value    (. [...] (- n 0))})))
+  res)
+
 (fn incf [x] `(set ,x (+ ,x 1)))
 (fn decf [x] `(set ,x (- ,x 1)))
 
@@ -64,4 +79,4 @@
  ;; Other
  :local-require local-require :α-β-γ alpha-beta-gamma
  :define-type define-type :first first
- :incf incf :decf decf}
+ :define-circuit define-circuit :incf incf :decf decf}

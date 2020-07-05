@@ -44,8 +44,7 @@
       (let [count (- (fuel:get_count) 1)]
         (fuel:set_count count)
         (inv:set_stack "fuel" 1 fuel)
-        (if (= count 0)
-            false
+        (if (= count 0) false
             (do (meta:set_float :cycle 0) true)))
       (do (meta:set_float :cycle cycle) true))))
 

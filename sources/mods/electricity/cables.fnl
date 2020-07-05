@@ -48,9 +48,9 @@
         (var res [])
         (each [idx vect (ipairs neighbors)]
           (table.insert res
-            (join " " (.. "r" id "-" idx) center
-                      (hash_node_connect pos (vector.add pos vect))
-                      conf.resis)))
-        res))))
+            {:type :resistor :name (.. id "-" idx)
+             :value conf.resis :pos-node center
+             :neg-node (hash_node_connect pos (vector.add pos vect))}))
+        (values {} res)))))
 
 (foreach register-cable cables)

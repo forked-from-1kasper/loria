@@ -1,3 +1,4 @@
+(require-macros :useful-macros)
 (require-macros :infix)
 
 (local switch-box
@@ -23,7 +24,6 @@
    :on_destruct reset_current})
 
 (tset model "electricity:ground" (fn [pos id]
-  (let [dir (-> (minetest.get_node pos) (. :param2) minetest.facedir_to_dir)]
-    [(join " " (.. "r" id)
-               (->> (vector.subtract pos dir) (hash_node_connect pos))
-               "gnd" ground-connect-resis)])))
+  (let [dir   (-> (minetest.get_node pos) (. :param2) minetest.facedir_to_dir)
+        input (->> (vector.subtract pos dir) (hash_node_connect pos))]
+    (values {} (define-circuit :resistor id input :gnd ground-connect-resis)))))

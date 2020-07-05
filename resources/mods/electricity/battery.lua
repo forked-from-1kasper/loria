@@ -82,4 +82,4 @@ on_circuit_tick["electricity:battery_box"] = function(meta, elapsed)
 
     meta:set_float("emf", emf)
 end
-model["electricity:battery_box"] = dc_source
+model["electricity:battery_box"] = vsource

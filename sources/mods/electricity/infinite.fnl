@@ -12,13 +12,12 @@
    :on_construct (set_resis 0.1)
    :on_destruct reset_current})
 
-(local inf-emf 220)
+(local √2 (math.sqrt 2))
+(local inf-emf (* 220 √2))
+
 (tset model "electricity:infinite_electricity" (fn [pos id]
   (let [device-name (.. "v" id)]
-    (values
-      (two_pole device-name pos
-               (string.format "DC SIN(0 %f 10Hz)" inf-emf))
-      device-name))))
+    (twopole :voltage id pos (real inf-emf)))))
 
 (minetest.register_node "electricity:infinite_consumer"
   {:description "Infinite consumer"

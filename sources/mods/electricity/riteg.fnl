@@ -60,4 +60,4 @@
    :on_metadata_inventory_take update-riteg
    :on_destruct (andthen reset_current drop_everything)})
 
-(tset model "electricity:riteg" dc_source)
+(tset model "electricity:riteg" vsource)

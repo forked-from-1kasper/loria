@@ -56,6 +56,7 @@
 (tset model "electricity:multimeter" resistor)
 (tset on_circuit_tick "electricity:multimeter" update-infotext)
 
+(fn rad⇒deg [rad] (* 180 (/ rad math.pi)))
 (minetest.register_craftitem "electricity:multimeter_debug"
   {:inventory_image "electricity_multimeter.png"
    :description "Multimeter (debug tool)"
@@ -64,7 +65,9 @@
    :on_use (fn [itemstack user pointed_thing]
      (when (= pointed_thing.type :node)
        (let [meta (minetest.get_meta pointed_thing.under)
-             I (meta:get_float :I)
-             U (meta:get_float :U)]
+             I  (meta:get_float :I)
+             φᵢ (rad⇒deg (meta:get_float :φᵢ))
+             U  (meta:get_float :U)
+             φᵤ (rad⇒deg (meta:get_float :φᵤ))]
          (minetest.chat_send_player (user:get_player_name)
-           (string.format "I = %f, U = %f" I U)))))})
+           (string.format "I = %f A, φᵢ = %f°, U = %f V, φᵤ = %f°" I φᵢ U φᵤ)))))})

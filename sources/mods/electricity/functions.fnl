@@ -1,6 +1,7 @@
 (require-macros :useful-macros)
 
 (global on_circuit_tick {})
+
 (global quadripole {})
 (global consumer {})
 (global model {})
