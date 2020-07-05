@@ -80,12 +80,17 @@
 
             (drop-current pos) (table.insert queue pos)))))))
 
+(fn set-float [meta name value]
+  (if (≠ value value)
+      (meta:set_float name 0)
+      (meta:set_float name (∨ value 0))))
+
 (fn calculate-device [info elapsed]
   (let [meta      (minetest.get_meta info.pos)
         name      (-> (minetest.get_node info.pos) (. :name))
         consumer′ (. consumer name)]
-    (meta:set_float :I (∨ info.I 0)) (meta:set_float :φᵢ (∨ info.φᵢ 0))
-    (meta:set_float :U (∨ info.U 0)) (meta:set_float :φᵤ (∨ info.φᵤ 0))
+    (set-float meta :I info.I) (set-float meta :φᵢ info.φᵢ)
+    (set-float meta :U info.U) (set-float meta :φᵤ info.φᵤ)
 
     (when consumer′
       (let [actions (check-consumer meta consumer′)]
