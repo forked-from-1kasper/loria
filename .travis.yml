@@ -1,8 +1,6 @@
 language: generic
 os:
   - linux
-notifications:
-  email: true
 before_install:
   - sudo apt-get install lua5.1
   - git clone https://github.com/bakpakin/Fennel
