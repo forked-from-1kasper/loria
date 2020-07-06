@@ -110,9 +110,9 @@
               L₁  (- N₁ L₁₂)
               L₂  (- N₂ L₁₂)]
           (values {} (define-circuit
-            :resistor (.. id "-prim")  A T (inductor L₁)
-            :resistor (.. id "-sec")   T C (inductor L₂)
-            :resistor (.. id "-T")     T B (inductor L₁₂)
+            :resistor (.. id "-prim")  A T (inductance L₁)
+            :resistor (.. id "-sec")   T C (inductance L₂)
+            :resistor (.. id "-T")     T B (inductance L₁₂)
             :resistor (.. id "-resis") B D (real transformer-resis))))
         (values {} (define-circuit
           :resistor (.. id "-fst") A C (real transformer-resis)

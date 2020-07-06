@@ -57,5 +57,5 @@
 (local ω (angular-freq 50))
 
 (defun real [R] (complex R 0))
-(defun inductor  [L] (complex 0 (* ω L)))
-(defun capacitor [C] (complex 0 (/ (- 1) (* ω C))))
+(defun inductance  [L] (complex 0 (* ω L)))
+(defun capacitance [C] (complex 0 (/ (- 1) (* ω C))))
