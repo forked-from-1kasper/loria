@@ -67,10 +67,8 @@
   (+ g2-index 1))
 
 (fn calculate-current [A b elem g2-index]
-  (when (≠ elem.high 0)
-    (b:set elem.high 1 (- (b:get elem.high 1) elem.value)))
-  (when (≠ elem.low 0)
-    (b:set elem.low 1 (+ (b:get elem.low 1) elem.value))))
+  (when (≠ elem.high 0) (-= b elem.high 1 elem.value))
+  (when (≠ elem.low  0) (+= b elem.low  1 elem.value)))
 
 (local circuit-elems
   {:resistor calculate-resistor
