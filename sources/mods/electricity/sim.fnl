@@ -25,12 +25,6 @@
 
   tbl)
 
-(fn init-matrix-by-func [self func]
-  (for [i 1 self.size.width]
-    (tset self i [])
-    (for [j 1 self.size.height]
-      (tset self i j (func i j)))))
-
 (define-type matrix
   (λ [cls self n m]
     (let [size (* n m)]
@@ -53,34 +47,21 @@
     (io.write "\n")))
 
 (fn calculate-resistor [A b elem g2-index]
-  (when (≠ elem.high 0)
-    (A:set elem.high elem.high
-      (+ (A:get elem.high elem.high)
-         (/ 1 elem.value))))
-  (when (≠ elem.low 0)
-    (A:set elem.low elem.low
-      (+ (A:get elem.low elem.low)
-         (/ 1 elem.value))))
-  (when (∧ (≠ elem.high 0) (≠ elem.low 0))
-    (A:set elem.high elem.low
-      (- (A:get elem.high elem.low)
-         (/ 1 elem.value)))
-    (A:set elem.low elem.high
-      (- (A:get elem.low elem.high)
-         (/ 1 elem.value)))))
+  (let [G (/ 1 elem.value)]
+    (when (≠ elem.high 0) (+= A elem.high elem.high G))
+    (when (≠ elem.low 0)  (+= A elem.low elem.low G))
+    (when (∧ (≠ elem.high 0) (≠ elem.low 0))
+      (-= A elem.high elem.low  G)
+      (-= A elem.low  elem.high G))))
 
 (fn calculate-voltage [A b elem g2-index]
   (when (≠ elem.high 0)
-    (A:set elem.high g2-index
-      (+ (A:get elem.high g2-index) 1))
-    (A:set g2-index elem.high
-      (+ (A:get g2-index elem.high) 1)))
+    (+= A elem.high g2-index  1)
+    (+= A g2-index  elem.high 1))
 
   (when (≠ elem.low 0)
-    (A:set elem.low g2-index
-      (- (A:get elem.low g2-index) 1))
-    (A:set g2-index elem.low
-      (- (A:get g2-index elem.low) 1)))
+    (-= A elem.low g2-index 1)
+    (-= A g2-index elem.low 1))
 
   (b:set g2-index 1 elem.value)
   (+ g2-index 1))
@@ -108,7 +89,7 @@
     (each [id elem (ipairs circ)]
       (let [func (. circuit-elems elem.type)]
         (local maybe-g2-index (func A b elem g2-index))
-        (when (~= maybe-g2-index nil)
+        (when (≠ maybe-g2-index nil)
           (set g2-index maybe-g2-index)
           (set elem.current-index (- maybe-g2-index 1)))))
 
@@ -123,7 +104,7 @@
 
     ;; make “source — current” table
     (each [id elem (ipairs circ)]
-      (when (~= elem.current-index nil)
+      (when (≠ elem.current-index nil)
         (tset res.currents elem.name
           (solution:get elem.current-index 1))))
 

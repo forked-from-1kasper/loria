@@ -103,3 +103,6 @@
           (tset t :ordered-index nil)))
 
 (defun opairs [t] (values onext t nil))
+
+(defun plus  [x y] (+ x y))
+(defun minus [x y] (- x y))

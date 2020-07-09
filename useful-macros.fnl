@@ -66,6 +66,10 @@
 (fn incf [x] `(set ,x (+ ,x 1)))
 (fn decf [x] `(set ,x (- ,x 1)))
 
+(fn function-assignment [φ]
+  (fn [M i j val]
+    `(: ,M :set ,i ,j (,(sym φ) (: ,M :get ,i ,j) ,val))))
+
 {;; Unicode aliases and syntaxes
  "∈" table-contains "∉" table-not-contains
  "≠" (alias :not=) "∧" (alias :and) "∨" (alias :or)
@@ -76,6 +80,9 @@
  ;; Some useful macros for defining various functions
  :defun defun :on-mods-loaded on-mods-loaded
  :ffi-proc ffi-proc :def-globalstep def-globalstep
+ ;; Macros for matrices
+ "+=" (function-assignment "+")
+ "-=" (function-assignment "-")
  ;; Other
  :local-require local-require :α-β-γ alpha-beta-gamma
  :define-type define-type :first first
