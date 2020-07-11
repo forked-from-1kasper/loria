@@ -16,15 +16,12 @@
         device name input (.. "hole-" name) value
         :voltage (.. "v" name) (.. "hole-" name) output (complex 0 0)))))
 
-(fn consumer [ι]
-  (fn [pos id]
-    (let [meta (minetest.get_meta pos)]
-      (->> (ι (meta:get_float :resis))
-           (twopole :resistor id pos)))))
-
-(global resistor  (consumer real))
-(global capacitor (consumer capacitance))
-(global inductor  (consumer inductance))
+(defun consumer [pos id]
+  (let [meta (minetest.get_meta pos)
+        R  (real (∨ (meta:get_float :resis) 0))
+        X′ (∨ (meta:get_float :react) 0)
+        X  (if (≥ X′ 0) (inductance X′) (capacitance X′))]
+    (twopole :consumer id pos (+ R X))))
 
 (defun vsource [pos id]
   (let [meta (minetest.get_meta pos)
@@ -38,4 +35,4 @@
     (values {:pos input :neg output :current id}
       (define-circuit
         :voltage id input (.. "hole-" id) (real emf)
-        :resistor (.. "r" id) (.. "hole-" id) output (real resis)))))
+        :consumer (.. "r" id) (.. "hole-" id) output (real resis)))))

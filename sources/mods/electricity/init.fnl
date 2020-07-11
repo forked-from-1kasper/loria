@@ -16,6 +16,6 @@
   "complex" "matrix" "matrix-solve"
   "models" "functions" "sim" "globalstep"
   "ground" "switch" "battery"
-  "transformer" "infinite" "resistor"
+  "transformer" "infinite" "consumer"
   "riteg" "cables" "accumulator"
   "lamp" "multimeter")

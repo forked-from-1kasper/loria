@@ -48,7 +48,7 @@
         (var res [])
         (each [idx vect (ipairs neighbors)]
           (table.insert res
-            {:type :resistor :name (.. id "-" idx)
+            {:type :consumer :name (.. id "-" idx)
              :value conf.resis :pos-node center
              :neg-node (hash_node_connect pos (vector.add pos vect))}))
         (values {} res)))))

@@ -59,4 +59,4 @@
          (reset_current pos)
          (swap_node pos "electricity:switch_off"))
        nil)})
-(tset model "electricity:switch_on" resistor)
+(tset model "electricity:switch_on" consumer)

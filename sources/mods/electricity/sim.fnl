@@ -25,7 +25,7 @@
 
   tbl)
 
-(fn calculate-resistor [A b elem g2-index]
+(fn calculate-consumer [A b elem g2-index]
   (let [G (/ 1 elem.value)]
     (when (≠ elem.high 0) (+= A elem.high elem.high G))
     (when (≠ elem.low 0)  (+= A elem.low elem.low G))
@@ -50,7 +50,7 @@
   (when (≠ elem.low  0) (+= b elem.low  1 elem.value)))
 
 (local circuit-elems
-  {:resistor calculate-resistor
+  {:consumer calculate-consumer
    :voltage  calculate-voltage
    :current  calculate-current})
 

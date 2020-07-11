@@ -28,11 +28,11 @@
    :on_destruct reset_current
    :crafts furnace_crafts})
 
-(tset consumer "furnace:electric"
+(tset consumers "furnace:electric"
   {:on_activate (partial run_furnace conf)
    :on_deactivate (partial stop_furnace conf)
    :current optimal})
 
 (register_furnace conf)
-(tset model "furnace:electric" resistor)
-(tset model "furnace:electric_active" resistor)
+(tset model "furnace:electric" consumer)
+(tset model "furnace:electric_active" consumer)

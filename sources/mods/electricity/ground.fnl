@@ -26,4 +26,4 @@
 (tset model "electricity:ground" (fn [pos id]
   (let [dir   (-> (minetest.get_node pos) (. :param2) minetest.facedir_to_dir)
         input (->> (vector.subtract pos dir) (hash_node_connect pos))]
-    (values {} (define-circuit :resistor id input :gnd ground-connect-resis)))))
+    (values {} (define-circuit :consumer id input :gnd ground-connect-resis)))))

@@ -59,4 +59,4 @@
      (let [inv (: (minetest.get_meta pos) :get_inventory)]
        (if (= (: (inv:get_stacklistname index) :get_count) 1) 0 1)))})
 
-(tset model "electricity:charger_box" resistor)
+(tset model "electricity:charger_box" consumer)

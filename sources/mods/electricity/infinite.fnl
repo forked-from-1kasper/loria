@@ -32,7 +32,7 @@
   :groups {:crumbly 3 :conductor 1}
   :on_construct (set_resis 5)
   :on_destruct reset_current})
-(tset model "electricity:infinite_consumer" resistor)
+(tset model "electricity:infinite_consumer" consumer)
 
 (minetest.register_node "electricity:heavy_infinite_consumer"
   {:description "Infinite consumer"
@@ -47,4 +47,4 @@
    :groups {:crumbly 3 :conductor 1}
    :on_construct (set_resis 50)
    :on_destruct reset_current})
-(tset model "electricity:heavy_infinite_consumer" resistor)
+(tset model "electricity:heavy_infinite_consumer" consumer)

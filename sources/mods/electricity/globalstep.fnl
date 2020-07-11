@@ -24,7 +24,7 @@
           (meta:set_float :I 0) (meta:set_float :U 0)
           (tset already-processed (serialize_pos pos) true)
 
-          (when (∈ name consumer)
+          (when (∈ name consumers)
             (-> (minetest.get_node_timer pos) (: :start 0.5)))
           (reset_circuits pos already-processed))))))
 
@@ -75,7 +75,7 @@
             (tset connections  str connection)
 
             (when (is-source name) (tset processed-sources str true))
-            (when (∈ name consumer)
+            (when (∈ name consumers)
               (-> (minetest.get_node_timer pos) (: :start 0.5)))
 
             (drop-current pos) (table.insert queue pos)))))))
@@ -88,7 +88,7 @@
 (fn calculate-device [info elapsed]
   (let [meta      (minetest.get_meta info.pos)
         name      (-> (minetest.get_node info.pos) (. :name))
-        consumer′ (. consumer name)]
+        consumer′ (. consumers name)]
     (set-float meta :I info.I) (set-float meta :φᵢ info.φᵢ)
     (set-float meta :U info.U) (set-float meta :φᵤ info.φᵤ)
 

@@ -53,7 +53,7 @@
               (meta:set_float :resis))
          (update-infotext meta)))})
 
-(tset model "electricity:multimeter" resistor)
+(tset model "electricity:multimeter" consumer)
 (tset on_circuit_tick "electricity:multimeter" update-infotext)
 
 (fn rad⇒deg [rad] (* 180 (/ rad math.pi)))
