@@ -7,11 +7,10 @@
 (local radiation-effects-timeout 1)
 
 (fn get-activity [name]
-  (if (and name (≠ name ""))
-    (or (. activity name)
-        (. activity (minetest.get_content_id name))
-        (null))
-    (null)))
+  (or (if (∈ name minetest.registered_nodes)
+          (. activity (minetest.get_content_id name))
+          (. activity name))
+      (null)))
 
 (fn hypot-sqr [pos₁ pos₂]
   (+ (^ (- pos₁.x pos₂.x) 2)
