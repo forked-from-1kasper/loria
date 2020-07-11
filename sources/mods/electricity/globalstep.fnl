@@ -11,7 +11,8 @@
   (let [meta (minetest.get_meta pos)]
     (meta:set_float :I  0)
     (meta:set_float :φᵢ 0)
-    (meta:set_float :U  0)))
+    (meta:set_float :U  0)
+    (meta:set_float :φᵤ 0)))
 
 (defun reset_circuits [current already-processed]
   (each [_ vect (ipairs neighbors)]
@@ -33,17 +34,20 @@
 
 (defun check_current [meta consumer]
   (let [I (math.abs (meta:get_float :I))
-        U (math.abs (meta:get_float :U))]
-    (∧ (≥ I consumer.current.I.min)
-       (≤ I consumer.current.I.max)
-       (≥ U consumer.current.U.min)
-       (≤ U consumer.current.U.max))))
+        U (math.abs (meta:get_float :U))
+        φᵢ (meta:get_float :φᵢ)
+        φᵤ (meta:get_float :φᵤ)
+        φ (- φᵤ φᵢ)
+        P (* I U (math.cos φ))]
+    (≥ P consumer.Pₘᵢₙ)))
 
 (fn check-consumer [meta consumer]
   (let [active?     (= (meta:get_int :active) 1)
-        current-ok? (check_current meta consumer)]
+        current-ok? (check_current meta consumer)
+        I           (math.abs (meta:get_float :I))]
     {:activate   (∧ (not active?) current-ok? consumer.on_activate)
-     :deactivate (∧ active? (not current-ok?) consumer.on_deactivate)}))
+     :deactivate (∧ active? (not current-ok?) consumer.on_deactivate)
+     :burn       (> I consumer.Iₘₐₓ)}))
 
 (fn get-float-by-pos [key]
   (fn [pos] (-> (minetest.get_meta pos) (: :get_float key))))
@@ -99,7 +103,10 @@
                 (meta:set_int :active 1))
             actions.deactivate
             (do (consumer′.on_deactivate info.pos)
-                (meta:set_int :active 0)))))
+                (meta:set_int :active 0))
+            actions.burn
+            (do (drop-current info.pos)
+                (consumer′.burn info.pos)))))
 
     (-?> (. on_circuit_tick name)
          (funcall meta elapsed))))
