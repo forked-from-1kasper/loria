@@ -81,7 +81,7 @@
             (drop-current pos) (table.insert queue pos)))))))
 
 (fn set-float [meta name value]
-  (if (≠ value value)
+  (if (≠ value value) ; NaN
       (meta:set_float name 0)
       (meta:set_float name (∨ value 0))))
 

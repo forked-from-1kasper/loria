@@ -86,26 +86,38 @@ timor = {
     max_hat_count = 5,
 }
 
-local function generate_hat(x, y, z, height, radius, data, area, obj)
+local function generate_hat(x, y, z, radius, obj)
+    local minp0 = vector.new(x - radius, y, z - radius)
+    local maxp0 = vector.new(x + radius, y, z + radius)
+
+    local vm = minetest.get_voxel_manip()
+    local minp, maxp = vm:read_from_map(minp0, maxp0)
+
+    local area = VoxelArea:new({MinEdge = minp, MaxEdge = maxp})
+    local data = vm:get_data()
+
     local t = 0
     while t < 2 * math.pi do
         for k = 1, radius do
             local delta_x = math.floor(k * math.cos(t))
             local delta_z = math.floor(k * math.sin(t))
 
-            data[area:index(x + delta_x, y + height, z + delta_z)] = obj
+            data[area:index(x + delta_x, y, z + delta_z)] = obj
         end
 
         t = t + 0.4
     end
+
+    vm:set_data(data)
+    vm:write_to_map()
 end
 
-local function generate_viridi_petasum(x, y, z, g, data, area)
+local function generate_viridi_petasum(x, y, z, g, data, area, hats)
     local height = g:next(viridi_petasum.min_height, viridi_petasum.max_height)
     local radius = g:next(viridi_petasum.min_radius, math.floor(height / 2))
 
-    if not (area:contains(x - radius, y, z - radius)) or
-       not (area:contains(x + radius, y + height, z + radius)) then
+    if not (area:contains(x, y, z)) or
+       not (area:contains(x, y + height, z)) then
         return false
     end
 
@@ -115,7 +127,10 @@ local function generate_viridi_petasum(x, y, z, g, data, area)
     end
 
     -- body
-    generate_hat(x, y, z, height, radius, data, area, c_viridi_body)
+    table.insert(hats, {
+        pos = vector.new(x, y + height, z),
+        radius = radius, material = c_viridi_body
+    })
     return true
 end
 
@@ -175,7 +190,7 @@ local function generate_naga(x, y, z, g, data, area)
     return true
 end
 
-local function generate_colossus(x0, y, z0, g, data, area)
+local function generate_colossus(x0, y, z0, g, data, area, hats)
     local height = g:next(colossus.min_height, colossus.max_height)
     local radius = g:next(colossus.min_radius, colossus.max_radius)
 
@@ -189,43 +204,49 @@ local function generate_colossus(x0, y, z0, g, data, area)
         x = x + g:next(-1, 1)
         z = z + g:next(-1, 1)
 
-        data[area:index(x + 0, y + k, z + 0)] = c_colossus_stem
-        data[area:index(x + 1, y + k, z + 0)] = c_colossus_stem
-        data[area:index(x - 1, y + k, z + 0)] = c_colossus_stem
-        data[area:index(x + 0, y + k, z + 1)] = c_colossus_stem
-        data[area:index(x + 0, y + k, z - 1)] = c_colossus_stem
+        if area:contains(x, y + k, z) then
+            data[area:index(x + 0, y + k, z + 0)] = c_colossus_stem
+            data[area:index(x + 1, y + k, z + 0)] = c_colossus_stem
+            data[area:index(x - 1, y + k, z + 0)] = c_colossus_stem
+            data[area:index(x + 0, y + k, z + 1)] = c_colossus_stem
+            data[area:index(x + 0, y + k, z - 1)] = c_colossus_stem
+        end
     end
 
-    generate_hat(x, y, z, height, radius,
-        data, area, c_colossus_body
-    )
+    table.insert(hats, {
+        pos = vector.new(x, y + height, z),
+        radius = radius, material = c_colossus_body
+    })
     return true
 end
 
-local function generate_altitudo(x, y, z, g, data, area)
+local function generate_altitudo(x, y, z, g, data, area, hats)
     local height = g:next(altitudo.min_height, altitudo.max_height)
     local radius = g:next(altitudo.min_radius, altitudo.max_radius)
 
-    if not (area:contains(x - radius, y, z - radius)) or
-       not (area:contains(x + radius, y + height, z + radius)) then
+    if not (area:contains(x, y, z)) or
+       not (area:contains(x, y + height, z)) then
         return false
     end
 
     -- stem
     for k = -height, height do
-        data[area:index(x, y + k, z)] = c_altitudo_stem
+        if area:contains(x, y + k, z) then
+            data[area:index(x, y + k, z)] = c_altitudo_stem
+        end
     end
 
     -- body
-    generate_hat(x, y, z, height, radius, data, area, c_altitudo_body)
+    table.insert(hats, {
+        pos = vector.new(x, y + height, z),
+        radius = radius, material = c_altitudo_body
+    })
 
     if height >= altitudo.min_height + altitudo.second_hat then
-        generate_hat(
-            x, y, z,
-            height - altitudo.second_hat,
-            radius - altitudo.radius_delta,
-            data, area, c_altitudo_body
-        )
+        table.insert(hats, {
+            pos = vector.new(x, y + height - altitudo.second_hat, z),
+            radius = radius - altitudo.radius_delta, material = c_altitudo_body
+        })
     end
 
     return true
@@ -354,7 +375,7 @@ end
 minetest.register_on_generated(function(minp0, maxp0, seed)
     local height_min = -31000
     local height_max = 31000
-    
+
     local vm = minetest.get_voxel_manip()
     local minp, maxp = vm:read_from_map(minp0, maxp0)
 
@@ -373,6 +394,8 @@ minetest.register_on_generated(function(minp0, maxp0, seed)
     local divs = (maxp.x - minp.x) / divlen + 1
 
     local g = PseudoRandom(seed + 1)
+
+    local hats = {}
     for divx = 0, (divs - 1) do
         for divz = 0, (divs - 1) do
             local x0 = minp.x + math.floor((divx + 0) * divlen)
@@ -402,7 +425,7 @@ minetest.register_on_generated(function(minp0, maxp0, seed)
 
                     for _, mushroom in ipairs(variants) do
                         if math.random() <= mushroom.prob then
-                            if mushroom.func(x, ground_y, z, g, data, area) then
+                            if mushroom.func(x, ground_y, z, g, data, area, hats) then
                                 break
                             end
                         end
@@ -414,5 +437,12 @@ minetest.register_on_generated(function(minp0, maxp0, seed)
 
     vm:set_data(data)
     vm:write_to_map()
+
+    for _, conf in ipairs(hats) do
+        generate_hat(
+            conf.pos.x, conf.pos.y, conf.pos.z,
+            conf.radius, conf.material
+        )
+    end
     vm:update_map()
 end)
