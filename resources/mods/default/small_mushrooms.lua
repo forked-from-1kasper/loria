@@ -161,7 +161,9 @@ qui_lucem_names = {
     "genu",
     "hyacinthum",
     "lucidum",
-    "fluctuatur"
+    "fluctuatur",
+    "caeruleum",
+    "clara"
 }
 
 for i, name in ipairs(qui_lucem_names) do
