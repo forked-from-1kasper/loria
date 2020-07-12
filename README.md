@@ -1,6 +1,6 @@
 # Loria
 
-Minetest 5.2.0+, still WIP. [Craft list](manuals/craft_list.md).
+Minetest 5.3.0+, still WIP. [Craft list](manuals/craft_list.md).
 
 You can get the latest build via:
 

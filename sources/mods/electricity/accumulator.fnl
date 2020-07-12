@@ -57,6 +57,6 @@
 
    :allow_metadata_inventory_put (fn [pos listname index stack player]
      (let [inv (: (minetest.get_meta pos) :get_inventory)]
-       (if (= (: (inv:get_stacklistname index) :get_count) 1) 0 1)))})
+       (if (= (: (inv:get_stack listname index) :get_count) 1) 0 1)))})
 
 (tset model "electricity:charger_box" consumer)
