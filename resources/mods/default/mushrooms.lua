@@ -199,7 +199,7 @@ local function generate_colossus(x0, y, z0, g, data, area, hats)
        return false
     end
 
-    x, z = x0, z0
+    local x, z = x0, z0
     for k = -height, height do
         x = x + g:next(-1, 1)
         z = z + g:next(-1, 1)
