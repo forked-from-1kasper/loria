@@ -14,8 +14,8 @@
 (local start-items
   {"furnace:refiner_item"   1
    "default:oxygen_balloon" 1
-   "default:empty_balloon"  1
-   "default:bucket_empty"   2})
+   "default:empty_balloon"  1})
+(local on-start-buckets 2)
 
 (local max-height 31000)
 (local space-suit-strength 20)
@@ -91,7 +91,8 @@
     (inv:add_item "oxygen" {:name "default:oxygen_balloon"})
 
     (each [name count (pairs start-items)]
-      (inv:add_item "main" {:name name :count count}))))
+      (inv:add_item "main" {:name name :count count}))
+    (for [i 1 on-start-buckets] (inv:add_item "main" "default:bucket_empty"))))
 
 (minetest.register_on_newplayer (fn [player]
   (init-inv player)
