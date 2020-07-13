@@ -106,3 +106,9 @@
 
 (defun plus  [x y] (+ x y))
 (defun minus [x y] (- x y))
+
+(defun range [iₘₐₓ]
+  (var i 0) (var res [])
+  (while (< i iₘₐₓ)
+    (incf i) (table.insert res i))
+  res)

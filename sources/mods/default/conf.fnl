@@ -178,17 +178,26 @@
      :place_on "default:copper_sulfate"
      :biomes "default:azure"}})
 
-(global giant_mushrooms ["viridi_petasum" "colossus" "turris" "rete"])
+(global giant_mushrooms ["viridi_petasum" "colossus" "column"
+                         "turris" "rete" "timor"])
+
+;; Timor configuration
+(global timor {})
+(set timor.body-names ["light green" "blue" "red" "green" "purple"])
+(set timor.colours (length timor.body-names))
+
+(set timor.body-nodes (map (fn [idx] (.. "default:timor_body_" idx))
+                           (range timor.colours)))
 
 (global cables
   [{:name "copper"    :resis 0.0225}
-   {:name "aluminium" :resis 0.036}
-   {:name "wolfram"   :resis 0.055}
-   {:name "platinum"  :resis 0.098}
-   {:name "calcium"   :resis 0.046}
-   {:name "uranium"   :resis 0.295}
+   {:name "aluminium" :resis 0.036 }
+   {:name "wolfram"   :resis 0.055 }
+   {:name "platinum"  :resis 0.098 }
+   {:name "calcium"   :resis 0.046 }
+   {:name "uranium"   :resis 0.295 }
    {:name "thorium"   :resis 0.1862}
-   {:name "plutonium" :resis 150}])
+   {:name "plutonium" :resis 150   }])
 
 (global brickable
   {"default:cinnabar" {:crumbly true}

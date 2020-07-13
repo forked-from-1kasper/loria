@@ -57,17 +57,19 @@
 |39|Plutonium ingot × 1|Plutonium cable × 15|
 |40|Viridi petasum stem × 1|Stick × 6|
 |41|Colossus stem × 1|Stick × 6|
-|42|Turris stem × 1|Stick × 6|
-|43|Rete stem × 1|Stick × 6|
-|44|Avarum × 20|Avarum pressed × 1|
-|45|Cruento × 20|Cruento pressed × 1|
-|46|Lectica × 20|Lectica pressed × 1|
-|47|Rami × 20|Rami pressed × 1|
-|48|Spears × 20|Spears pressed × 1|
-|49|Truncus 1 × 20|Truncus 1 pressed × 1|
-|50|Truncus 2 × 20|Truncus 2 pressed × 1|
-|51|Truncus 3 × 20|Truncus 3 pressed × 1|
-|52|Veteris × 20|Veteris pressed × 1|
+|42|Column stem × 1|Stick × 6|
+|43|Turris stem × 1|Stick × 6|
+|44|Rete stem × 1|Stick × 6|
+|45|Timor stem × 1|Stick × 6|
+|46|Avarum × 20|Avarum pressed × 1|
+|47|Cruento × 20|Cruento pressed × 1|
+|48|Lectica × 20|Lectica pressed × 1|
+|49|Rami × 20|Rami pressed × 1|
+|50|Spears × 20|Spears pressed × 1|
+|51|Truncus 1 × 20|Truncus 1 pressed × 1|
+|52|Truncus 2 × 20|Truncus 2 pressed × 1|
+|53|Truncus 3 × 20|Truncus 3 pressed × 1|
+|54|Veteris × 20|Veteris pressed × 1|
 
 ## Furnace
 
@@ -93,11 +95,19 @@
 |18|Viridi petasum stem × 5|Silicon dioxide × 1|
 |19|Colossus body × 3|Silicon dioxide × 1|
 |20|Colossus stem × 5|Silicon dioxide × 1|
-|21|Turris body × 3|Silicon dioxide × 1|
-|22|Turris stem × 5|Silicon dioxide × 1|
-|23|Rete body × 3|Silicon dioxide × 1|
-|24|Rete stem × 5|Silicon dioxide × 1|
-|25|Plutonium dioxide × 1|Plutonium dioxide brick × 2|
+|21|Column body × 3|Silicon dioxide × 1|
+|22|Column stem × 5|Silicon dioxide × 1|
+|23|Turris body × 3|Silicon dioxide × 1|
+|24|Turris stem × 5|Silicon dioxide × 1|
+|25|Rete body × 3|Silicon dioxide × 1|
+|26|Rete stem × 5|Silicon dioxide × 1|
+|27|Timor body 1 × 3|Silicon dioxide × 1|
+|28|Timor body 2 × 3|Silicon dioxide × 1|
+|29|Timor body 3 × 3|Silicon dioxide × 1|
+|30|Timor body 4 × 3|Silicon dioxide × 1|
+|31|Timor body 5 × 3|Silicon dioxide × 1|
+|32|Timor stem × 5|Silicon dioxide × 1|
+|33|Plutonium dioxide × 1|Plutonium dioxide brick × 2|
 
 ## Refiner
 

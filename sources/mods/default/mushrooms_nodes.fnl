@@ -1,3 +1,5 @@
+(require-macros :useful-macros)
+
 (minetest.register_node "default:viridi_petasum_stem"
   {:description "Viridi petasum stem"
    :tiles ["default_viridi_petasum_stem.png"]
@@ -31,13 +33,26 @@
 
 (minetest.register_node "default:timor_stem"
   {:description "Timor stem"
-   :tiles ["default_timor_stem.png"]
+   :tiles
+     ["default_timor_stem_slice.png"
+      "default_timor_stem_slice.png"
+      "default_timor_stem.png"
+      "default_timor_stem.png"
+      "default_timor_stem.png"
+      "default_timor_stem.png"]
    :groups {:cracky 2}})
 
-(minetest.register_node "default:timor_body"
-  {:description "Timor body"
-   :tiles ["default_timor_body.png"]
-   :groups {:cracky 2}})
+(each [idx name (ipairs timor.body-names)]
+  (minetest.register_node (.. "default:timor_body_" idx)
+    {:description (string.format "Timor body (%s)" name)
+     :tiles [(string.format "default_timor_body_%d.png" idx)]
+     :groups {:cracky 2}}))
+(minetest.register_alias "default:timor_body" "default:timor_body_1")
+
+(local timor-cids (map minetest.get_content_id timor.body-nodes))
+(defun randtimor []
+  (let [idx (math.random 1 timor.colours)]
+    (. timor-cids idx)))
 
 (minetest.register_node "default:turris_stem"
   {:description "Turris stem"

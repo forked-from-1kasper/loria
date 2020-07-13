@@ -1,3 +1,5 @@
+(require-macros :useful-macros)
+
 (global refiner_crafts
   [{:input  [{:name "default:copper_sulfate_pure"    :count 2}
              {:name "default:empty_balloon"          :count 3}]
@@ -213,10 +215,17 @@
        :time 4})))
 
 (each [_ mushroom (ipairs giant_mushrooms)]
-  (table.insert furnace_crafts
-   {:input  [{:name (.. "default:" mushroom "_body") :count 3}]
-    :output [{:name "default:silicon_dioxide"        :count 1}]
-    :time 5})
+  (if (≠ mushroom "timor")
+    (table.insert furnace_crafts
+     {:input  [{:name (.. "default:" mushroom "_body") :count 3}]
+      :output [{:name "default:silicon_dioxide"        :count 1}]
+      :time 5})
+    ;; Exception
+    (each [_ name (ipairs timor.body-nodes)]
+      (table.insert furnace_crafts
+       {:input  [{:name name                      :count 3}]
+        :output [{:name "default:silicon_dioxide" :count 1}]
+        :time 5})))
 
   (table.insert furnace_crafts
    {:input  [{:name (.. "default:" mushroom "_stem") :count 5}]

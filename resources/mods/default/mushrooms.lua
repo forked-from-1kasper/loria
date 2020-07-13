@@ -36,39 +36,38 @@ local c_altitudo_body = minetest.get_content_id("default:altitudo_body")
 local c_nickel_nitrate = minetest.get_content_id("default:nickel_nitrate")
 
 local c_timor_stem = minetest.get_content_id("default:timor_stem")
-local c_timor_body = minetest.get_content_id("default:timor_body")
 
-viridi_petasum = {
+local viridi_petasum = {
     min_height = 7,
     max_height = 30,
     min_radius = 3
 }
 
-rete = {
+local rete = {
     min_height = 5,
     max_height = 9
 }
 
-naga = {
+local naga = {
     min_height = 6,
     max_height = 20
 }
 
-turris = {
+local turris = {
     min_height = 9,
     max_height = 15,
     min_radius = 3,
     max_radius = 5
 }
 
-colossus = {
+local colossus = {
     min_height = 30,
     max_height = 36,
     min_radius = 10,
     max_radius = 20
 }
 
-altitudo = {
+local altitudo = {
     min_height = 3,
     max_height = 6,
     min_radius = 5,
@@ -77,7 +76,7 @@ altitudo = {
     second_hat = 2,
 }
 
-timor = {
+local timor = {
     min_height = 7,
     max_height = 20,
     min_radius = 10,
@@ -324,6 +323,7 @@ local function generate_timor(x, y, z, g, data, area)
         data[area:index(x, y + k, z)] = c_timor_stem
     end
 
+    local material = randtimor()
     for level = height, height - hat_count * 2, -2 do
         local t = 0
         while t < 2 * math.pi do
@@ -332,7 +332,7 @@ local function generate_timor(x, y, z, g, data, area)
                 local delta_z = math.floor(k * math.sin(t))
 
                 local idx = area:index(x + delta_x, y + level, z + delta_z)
-                data[idx] = c_timor_body
+                data[idx] = material
             end
     
             t = t + math.random() / 2 + 0.1
