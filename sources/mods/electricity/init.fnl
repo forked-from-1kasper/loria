@@ -3,7 +3,9 @@
 (local ie (minetest.request_insecure_environment))
 (when (not ie)
   (error (.. "Electricity mod requires access to insecure functions in order "
-             "to work. Please add the electricity mod to your secure.trusted_mods.")))
+             "to work. Please add the electricity mod to your secure.trusted_mods.\n"
+             "Insecure functions provide native (fast) complex numbers and arrays, "
+             "which are necessary for MNA solver used in electricity mod.")))
 
 (local-require ffi)
 
