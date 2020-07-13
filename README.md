@@ -1,6 +1,6 @@
 # Loria
 
-<img alt="Made with secret alien technology" align="right"  src="pictures/Lisp.png">
+<img alt="Made with secret alien technology" align="left" src="pictures/Lisp.png">
 
 Minetest 5.3.0+, still WIP. [Craft list](manuals/craft_list.md).
 
@@ -11,8 +11,6 @@ wget `curl -s https://api.github.com/repos/forked-from-1kasper/loria/releases/la
 ```
 
 **Do not use v6 map generator.**
-
-<br>
 
 ![Ingame screenshot](pictures/screenshot.jpg)
 
