@@ -8,6 +8,8 @@
 |Cinnabar|1|
 |Potassium|2|
 |Potassium azure|4|
+|Potassium chromia|5|
+|Potassium chromium fluoride|5|
 |Potassium cinnabar|3|
 |Potassium cobalt blue|3|
 |Potassium ingot|5|

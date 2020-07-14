@@ -241,10 +241,13 @@
        :time 3})))
 
 (global fuel_list
-  {"loria:cinnabar"              1
-   "loria:potassium"             2
-   "loria:potassium_cobalt_blue" 3
-   "loria:potassium_cinnabar"    3
-   "loria:potassium_azure"       4
-   "loria:potassium_ingot"       5
-   "loria:bucket_trisilane"      20})
+  {"loria:cinnabar"                    1
+   "loria:potassium"                   2
+   "loria:potassium_cobalt_blue"       3
+   "loria:potassium_cinnabar"          3
+   "loria:potassium_cinnabar"          3
+   "loria:potassium_azure"             4
+   "loria:potassium_chromia"           5
+   "loria:potassium_chromium_fluoride" 5
+   "loria:potassium_ingot"             5
+   "loria:bucket_trisilane"            20})
