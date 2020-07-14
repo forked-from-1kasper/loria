@@ -1,44 +1,44 @@
 (each [i _ (ipairs pars_names)]
   (minetest.register_decoration
     {:deco_type "simple"
-     :place_on "default:copper_sulfate"
+     :place_on "loria:copper_sulfate"
      :sidelen 16
      :fill_ratio 0.1
-     :biomes "default:azure"
-     :decoration (.. "default:pars_" i)
+     :biomes "loria:azure"
+     :decoration (.. "loria:pars_" i)
      :height 1
      :y_min -20}))
 
 (each [i _ (ipairs odorantur_names)]
   (minetest.register_decoration
     {:deco_type "simple"
-     :place_on "default:sodium_peroxide"
+     :place_on "loria:sodium_peroxide"
      :sidelen 16
      :fill_ratio 0.1
-     :biomes "default:acidic_landscapes"
-     :decoration (.. "default:odorantur_" i)
+     :biomes "loria:acidic_landscapes"
+     :decoration (.. "loria:odorantur_" i)
      :height 1
      :y_min -20}))
 
 (each [i _ (ipairs qui_lucem_names)]
   (minetest.register_decoration
     {:deco_type "simple"
-     :place_on "default:nickel_nitrate"
+     :place_on "loria:nickel_nitrate"
      :sidelen 16
      :fill_ratio 0.05
-     :biomes "default:reptile_house"
-     :decoration (.. "default:qui_lucem_" i)
+     :biomes "loria:reptile_house"
+     :decoration (.. "loria:qui_lucem_" i)
      :height 1
      :y_min -20}))
 
 (each [i _ (ipairs petite_names)]
   (minetest.register_decoration
     {:deco_type "simple"
-     :place_on "default:ammonium_manganese_pyrophosphate"
+     :place_on "loria:ammonium_manganese_pyrophosphate"
      :sidelen 16
      :fill_ratio 0.05
-     :biomes "default:purple_swamp"
-     :decoration (.. "default:petite_" i)
+     :biomes "loria:purple_swamp"
+     :decoration (.. "loria:petite_" i)
      :height 1
      :y_min -20}))
 
@@ -50,7 +50,7 @@
        :sidelen (or params.sidelen 16)
        :fill_ratio (or params.fill_ratio 0.05)
        :biomes params.biomes
-       :decoration (.. "default:" name)
+       :decoration (.. "loria:" name)
        :height (or params.min_height 1)
        :height_max params.max_height
        :y_min (or params.y_min -20)})))
@@ -59,8 +59,8 @@
   (each [_ place (ipairs params.wherein)]
     (minetest.register_ore
       {:ore_type       "blob"
-       :ore            (.. "default:" name "_" place)
-       :wherein        (.. "default:" place)
+       :ore            (.. "loria:" name "_" place)
+       :wherein        (.. "loria:" place)
        :clust_scarcity (* 16 16 16)
        :clust_num_ores 5
        :clust_size     3
@@ -77,30 +77,30 @@
 
 (minetest.register_decoration
   {:deco_type "simple"
-   :place_on "default:lead_sulfate"
+   :place_on "loria:lead_sulfate"
    :sidelen 16
    :fill_ratio 0.01
-   :biomes "default:mercury_ocean"
-   :decoration "default:viriditas"
+   :biomes "loria:mercury_ocean"
+   :decoration "loria:viriditas"
    :height 1
    :y_min -20})
 
 (minetest.register_decoration
   {:deco_type "simple"
-   :place_on "default:sodium_peroxide"
+   :place_on "loria:sodium_peroxide"
    :sidelen 16
    :fill_ratio 0.1
-   :biomes "default:acidic_landscapes"
-   :decoration "default:imitationis"
+   :biomes "loria:acidic_landscapes"
+   :decoration "loria:imitationis"
    :height 1
    :y_min -20})
 
 (minetest.register_decoration
   {:deco_type "simple"
-   :place_on "default:sodium_peroxide"
+   :place_on "loria:sodium_peroxide"
    :sidelen 16
    :fill_ratio 0.1
-   :biomes "default:acidic_landscapes"
-   :decoration "default:nihil"
+   :biomes "loria:acidic_landscapes"
+   :decoration "loria:nihil"
    :height 1
    :y_min -20})

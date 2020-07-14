@@ -32,8 +32,8 @@ minetest.register_on_dignode(function(pos, oldnode, digger)
 end)
 
 local function can_grow(placename, nodename)
-    local key, _ = nodename:match("^default:([^%d]+)_%d+$")
-    key = nodename:match("^default:([^%d]+)$") or key
+    local key, _ = nodename:match("^loria:([^%d]+)_%d+$")
+    key = nodename:match("^loria:([^%d]+)$") or key
 
     local walkable = minetest.registered_nodes[placename].walkable
     return walkable and not (key and grasses[key] and grasses[key].place_on ~= placename)
@@ -56,12 +56,12 @@ minetest.register_on_placenode(function(pos, newnode, placer, oldnode, itemstack
 end)
 
 on_grasses(function(name, desc, _)
-    minetest.register_node("default:" .. name, {
+    minetest.register_node("loria:" .. name, {
         description = capitalization(desc),
         drawtype = "plantlike",
-        tiles = { "default_" .. name .. ".png" },
-        wield_image = "default_" .. name .. ".png",
-        inventory_image = "default_" .. name .. ".png",
+        tiles = { "loria_" .. name .. ".png" },
+        wield_image = "loria_" .. name .. ".png",
+        inventory_image = "loria_" .. name .. ".png",
         paramtype = "light",
         walkable = false,
         groups = { snappy = 3, column = 1 },
@@ -70,7 +70,7 @@ on_grasses(function(name, desc, _)
 
     minetest.register_abm{
         label = desc .. " growth",
-        nodenames = { "default:" .. name },
+        nodenames = { "loria:" .. name },
         interval = 15,
         chance = 500,
         action = function(pos)
@@ -101,12 +101,12 @@ pars_names = {
 }
 
 for i, name in ipairs(pars_names) do
-    minetest.register_node("default:pars_" .. i, {
+    minetest.register_node("loria:pars_" .. i, {
         description = "Pars " .. name,
         drawtype = "plantlike",
-        tiles = { "default_pars_" .. i .. ".png" },
-        wield_image = "default_pars_" .. i .. ".png",
-        inventory_image = "default_pars_" .. i .. ".png",
+        tiles = { "loria_pars_" .. i .. ".png" },
+        wield_image = "loria_pars_" .. i .. ".png",
+        inventory_image = "loria_pars_" .. i .. ".png",
         paramtype = "light",
         walkable = false,
         groups = { snappy = 3, attached_node = 1 },
@@ -124,12 +124,12 @@ odorantur_names = {
 }
 
 for i, name in ipairs(odorantur_names) do
-    minetest.register_node("default:odorantur_" .. i, {
+    minetest.register_node("loria:odorantur_" .. i, {
         description = "Odorantur " .. name,
         drawtype = "plantlike",
-        tiles = { "default_odorantur_" .. i .. ".png" },
-        wield_image = "default_odorantur_" .. i .. ".png",
-        inventory_image = "default_odorantur_" .. i .. ".png",
+        tiles = { "loria_odorantur_" .. i .. ".png" },
+        wield_image = "loria_odorantur_" .. i .. ".png",
+        inventory_image = "loria_odorantur_" .. i .. ".png",
         paramtype = "light",
         walkable = false,
         groups = { snappy = 3, attached_node = 1 },
@@ -143,12 +143,12 @@ petite_names = {
 }
 
 for i, name in ipairs(petite_names) do
-    minetest.register_node("default:petite_" .. i, {
+    minetest.register_node("loria:petite_" .. i, {
         description = "Petite " .. name,
         drawtype = "plantlike",
-        tiles = { "default_petite_" .. i .. ".png" },
-        wield_image = "default_petite_" .. i .. ".png",
-        inventory_image = "default_petite_" .. i .. ".png",
+        tiles = { "loria_petite_" .. i .. ".png" },
+        wield_image = "loria_petite_" .. i .. ".png",
+        inventory_image = "loria_petite_" .. i .. ".png",
         paramtype = "light",
         walkable = false,
         groups = { snappy = 3, attached_node = 1 },
@@ -167,12 +167,12 @@ qui_lucem_names = {
 }
 
 for i, name in ipairs(qui_lucem_names) do
-    minetest.register_node("default:qui_lucem_" .. i, {
+    minetest.register_node("loria:qui_lucem_" .. i, {
         description = "Qui lucem " .. name,
         drawtype = "plantlike",
-        tiles = { "default_qui_lucem_" .. i .. ".png" },
-        wield_image = "default_qui_lucem_" .. i .. ".png",
-        inventory_image = "default_qui_lucem_" .. i .. ".png",
+        tiles = { "loria_qui_lucem_" .. i .. ".png" },
+        wield_image = "loria_qui_lucem_" .. i .. ".png",
+        inventory_image = "loria_qui_lucem_" .. i .. ".png",
         paramtype = "light",
         walkable = false,
         groups = { snappy = 3, attached_node = 1 },
@@ -180,48 +180,48 @@ for i, name in ipairs(qui_lucem_names) do
     })
 end
 
-minetest.register_node("default:imitationis", {
+minetest.register_node("loria:imitationis", {
     description = "Imitationis",
     drawtype = "plantlike",
-    tiles = { "default_imitationis.png" },
-    wield_image = "default_imitationis.png",
-    inventory_image = "default_imitationis.png",
+    tiles = { "loria_imitationis.png" },
+    wield_image = "loria_imitationis.png",
+    inventory_image = "loria_imitationis.png",
     paramtype = "light",
     walkable = false,
     groups = { snappy = 3, attached_node = 1 },
     sunlight_propagates = true,
 })
 
-minetest.register_node("default:nihil", {
+minetest.register_node("loria:nihil", {
     description = "Nihil",
     drawtype = "plantlike",
-    tiles = { "default_nihil.png" },
-    wield_image = "default_nihil.png",
-    inventory_image = "default_nihil.png",
+    tiles = { "loria_nihil.png" },
+    wield_image = "loria_nihil.png",
+    inventory_image = "loria_nihil.png",
     paramtype = "light",
     walkable = false,
     groups = { snappy = 3, attached_node = 1 },
     sunlight_propagates = true,
 })
 
-minetest.register_node("default:viriditas", {
+minetest.register_node("loria:viriditas", {
     description = "Viriditas",
     drawtype = "plantlike",
-    tiles = { "default_viriditas.png" },
-    wield_image = "default_viriditas.png",
-    inventory_image = "default_viriditas.png",
+    tiles = { "loria_viriditas.png" },
+    wield_image = "loria_viriditas.png",
+    inventory_image = "loria_viriditas.png",
     paramtype = "light",
     walkable = false,
     groups = { snappy = 3, attached_node = 1 },
     sunlight_propagates = true,
 })
 
-minetest.register_node("default:naga", {
+minetest.register_node("loria:naga", {
     description = "Naga",
     drawtype = "plantlike",
-    tiles = { "default_naga.png" },
-    wield_image = "default_naga.png",
-    inventory_image = "default_naga.png",
+    tiles = { "loria_naga.png" },
+    wield_image = "loria_naga.png",
+    inventory_image = "loria_naga.png",
     paramtype = "light",
     walkable = false,
     light_source = 5,
@@ -230,9 +230,9 @@ minetest.register_node("default:naga", {
 })
 
 on_grasses(function(name, desc, _)
-    minetest.register_node("default:" .. name .. "_pressed", {
+    minetest.register_node("loria:" .. name .. "_pressed", {
         description = "Pressed " .. desc,
-        tiles = { "default_" .. name .. "_pressed.png" },
+        tiles = { "loria_" .. name .. "_pressed.png" },
         groups = { crumbly = 3 },
     })
 end)
@@ -241,9 +241,9 @@ for name, params in pairs(small_mushrooms) do
     local info = {
         description = capitalization(name),
         drawtype = "plantlike",
-        tiles = { "default_" .. name .. ".png" },
-        wield_image = "default_" .. name .. ".png",
-        inventory_image = "default_" .. name .. ".png",
+        tiles = { "loria_" .. name .. ".png" },
+        wield_image = "loria_" .. name .. ".png",
+        inventory_image = "loria_" .. name .. ".png",
         paramtype = "light",
         walkable = false,
         groups = { snappy = 3, attached_node = 1 },
@@ -261,10 +261,10 @@ for name, params in pairs(small_mushrooms) do
         info[key] = value
     end
 
-    minetest.register_node("default:" .. name, info)
+    minetest.register_node("loria:" .. name, info)
     minetest.register_abm({
         label = capitalization(name) .. " spread",
-        nodenames = { "default:" .. name },
+        nodenames = { "loria:" .. name },
         interval = 11,
         chance = 150,
         action = function(pos)
@@ -292,7 +292,7 @@ for name, params in pairs(small_mushrooms) do
                 minetest.set_node(pos, { name = "air" })
             elseif minetest.get_node_light(pos) <= optimal_light and
                    radiation >= optimal_radiation then
-                minetest.set_node(pos2, { name = "default:" .. name })
+                minetest.set_node(pos2, { name = "loria:" .. name })
             end
         end
     })
@@ -304,7 +304,7 @@ for name, params in pairs(small_mushrooms) do
             sidelen = params.sidelen or 16,
             fill_ratio = params.fill_ratio,
             biomes = params.biomes,
-            decoration = "default:" .. name,
+            decoration = "loria:" .. name,
             height = 1,
             y_min = params.y_min or -20,
             y_max = params.y_max,
@@ -314,15 +314,15 @@ for name, params in pairs(small_mushrooms) do
 end
 
 terribilis_names = {
-    chloric = { gas = "default:chlorine" },
-    fluoro = { gas = "default:fluorine" },
+    chloric = { gas = "loria:chlorine" },
+    fluoro = { gas = "loria:fluorine" },
 }
 
 for name, params in pairs(terribilis_names) do
-    minetest.register_node("default:terribilis_" .. name, {
+    minetest.register_node("loria:terribilis_" .. name, {
         description = "Terribilis " .. name,
         tiles = {
-            "default_cobalt_blue.png^default_terribilis_" .. name .. ".png"
+            "loria_cobalt_blue.png^loria_terribilis_" .. name .. ".png"
         },
         groups = { cracky = 2 },
 
@@ -338,7 +338,7 @@ for name, params in pairs(terribilis_names) do
         end,
 
         after_destruct = function(pos, oldnode)
-            minetest.set_node(pos, { name = "default:cobalt_blue" })
+            minetest.set_node(pos, { name = "loria:cobalt_blue" })
         end,
 
         drop = "",
@@ -346,8 +346,8 @@ for name, params in pairs(terribilis_names) do
 
     minetest.register_ore({
         ore_type       = "blob",
-        ore            = "default:terribilis_" .. name,
-        wherein        = "default:cobalt_blue",
+        ore            = "loria:terribilis_" .. name,
+        wherein        = "loria:cobalt_blue",
         clust_scarcity = 16 * 16 * 16,
         clust_num_ores = 50,
         clust_size     = 3,
@@ -367,8 +367,8 @@ end
 
 minetest.register_ore({
     ore_type       = "blob",
-    ore            = "default:humus",
-    wherein        = "default:copper_sulfate",
+    ore            = "loria:humus",
+    wherein        = "loria:copper_sulfate",
     clust_scarcity = 8 * 8 * 8,
     clust_num_ores = 50,
     clust_size     = 4,

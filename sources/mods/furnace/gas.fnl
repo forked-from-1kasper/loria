@@ -2,7 +2,7 @@
 (require-macros :infix)
 
 (local gases-list
-  {"default:oxygen_balloon" (* balloon_coeff 3)})
+  {"loria:oxygen_balloon" (* balloon_coeff 3)})
 
 (fn furnace-ready? [pos]
   (let [meta (minetest.get_meta pos)
@@ -18,7 +18,7 @@
         Δwear (. gases-list (gas:get_name))
         wear  (+ (gas:get_wear) Δwear)]
     (if (≥ wear 65535)
-      (do (inv:set_stack :gas 1 {:name "default:empty_balloon"})
+      (do (inv:set_stack :gas 1 {:name "loria:empty_balloon"})
           false)
       (do (gas:set_wear wear)
           (inv:set_stack :gas 1 gas)
@@ -30,7 +30,7 @@
     (if (≥ (+ wear Δwear) 65535)
       (do (add_or_drop
             inv "output"
-            {:name "default:bucket_empty"}
+            {:name "loria:bucket_empty"}
             (vector.add pos (vector.new 0 1 0)))
           (inv:set_list "fuel" [])
           false)

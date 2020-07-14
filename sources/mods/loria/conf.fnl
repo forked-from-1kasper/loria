@@ -4,18 +4,18 @@
     :damage 3
     :post_effect_color {:a 30 :r 255 :g 255 :b 255}
     :alpha 50
-    :texture "default_liquid.png"
-    :animated_texture "default_liquid_source_animated.png"
-    :animated_flowing_texture "default_liquid_flowing_animated.png"
+    :texture "loria_liquid.png"
+    :animated_texture "loria_liquid_source_animated.png"
+    :animated_flowing_texture "loria_liquid_flowing_animated.png"
     :bucket_image "bucket_potassium_hydroxide.png"
     :bucket_description "Potassium hydroxide (KOH)"}
    "trisilane"
    {:liquid_viscosity 1
     :post_effect_color {:a 70 :r 255 :g 255 :b 255}
     :alpha 70
-    :texture "default_liquid.png"
-    :animated_texture "default_liquid_source_animated.png"
-    :animated_flowing_texture "default_liquid_flowing_animated.png"
+    :texture "loria_liquid.png"
+    :animated_texture "loria_liquid_source_animated.png"
+    :animated_flowing_texture "loria_liquid_flowing_animated.png"
     :is_fuel true
     :bucket_image "bucket_trisilane.png"
     :bucket_description "Trisilane (Si3H8)"}
@@ -24,9 +24,9 @@
     :post_effect_color {:a 30 :r 255 :g 255 :b 255}
     :damage 10
     :alpha 30
-    :texture "default_liquid.png"
-    :animated_texture "default_liquid_source_animated.png"
-    :animated_flowing_texture "default_liquid_flowing_animated.png"
+    :texture "loria_liquid.png"
+    :animated_texture "loria_liquid_source_animated.png"
+    :animated_flowing_texture "loria_liquid_flowing_animated.png"
     :bucket_image "bucket_hydrochloric_acid.png"
     :bucket_description "Hydrochloric acid (HCl)"}
    "sulfur_trioxide"
@@ -34,18 +34,18 @@
     :post_effect_color {:a 30 :r 255 :g 255 :b 255}
     :alpha 100
     :damage 5
-    :texture "default_liquid.png"
-    :animated_texture "default_liquid_source_animated.png"
-    :animated_flowing_texture "default_liquid_flowing_animated.png"
+    :texture "loria_liquid.png"
+    :animated_texture "loria_liquid_source_animated.png"
+    :animated_flowing_texture "loria_liquid_flowing_animated.png"
     :bucket_image "bucket_sulfur_trioxide.png"
     :bucket_description "Sulfur trioxide (SO3)"}
    "water"
    {:liquid_viscosity 2
     :post_effect_color {:a 103 :r 30 :g 60 :b 90}
     :alpha 160
-    :texture "default_water.png"
-    :animated_texture "default_water_source_animated.png"
-    :animated_flowing_texture "default_water_flowing_animated.png"
+    :texture "loria_water.png"
+    :animated_texture "loria_water_source_animated.png"
+    :animated_flowing_texture "loria_water_flowing_animated.png"
     :bucket_image "bucket_water.png"
     :bucket_description "Water (H2O)"}
    "mercury"
@@ -53,9 +53,9 @@
     :liquid_viscosity 7
     :post_effect_color {:a 252 :r 150 :g 150 :b 150}
     :alpha 255
-    :texture "default_mercury.png"
-    :animated_texture "default_mercury_animated.png"
-    :animated_flowing_texture "default_mercury_animated.png"
+    :texture "loria_mercury.png"
+    :animated_texture "loria_mercury_animated.png"
+    :animated_flowing_texture "loria_mercury_animated.png"
     :bucket_image "bucket_mercury.png"
     :bucket_description "Mercury (Hg)"}
    "polluted_mercury"
@@ -63,18 +63,18 @@
     :liquid_viscosity 7
     :post_effect_color {:a 252 :r 150 :g 150 :b 150}
     :alpha 255
-    :texture "default_mercury.png"
-    :animated_texture "default_mercury_animated.png"
-    :animated_flowing_texture "default_mercury_animated.png"
+    :texture "loria_mercury.png"
+    :animated_texture "loria_mercury_animated.png"
+    :animated_flowing_texture "loria_mercury_animated.png"
     :bucket_image "bucket_mercury.png"
     :bucket_description "Polluted (U, Th) mercury"}
    "potassium_permanganate"
    {:liquid_viscosity 1
     :post_effect_color {:a 100 :r 160 :g 0 :b 130}
     :alpha 160
-    :texture "default_potassium_permanganate.png"
-    :animated_texture "default_potassium_permanganate_animated.png"
-    :animated_flowing_texture "default_potassium_permanganate_animated.png"
+    :texture "loria_potassium_permanganate.png"
+    :animated_texture "loria_potassium_permanganate_animated.png"
+    :animated_flowing_texture "loria_potassium_permanganate_animated.png"
     :bucket_image "bucket_potassium_permanganate.png"
     :bucket_description "Potassium permanganate (KMnO4)"}
    "lucidum"
@@ -82,9 +82,9 @@
     :post_effect_color {:a 150 :r 0 :g 128 :b 255}
     :alpha 150
     :light_source 13
-    :texture "default_liquid.png^[colorize:#0080ff"
-    :animated_texture "default_liquid_source_animated.png^[colorize:#0080ff"
-    :animated_flowing_texture "default_liquid_flowing_animated.png^[colorize:#0080ff"
+    :texture "loria_liquid.png^[colorize:#0080ff"
+    :animated_texture "loria_liquid_source_animated.png^[colorize:#0080ff"
+    :animated_flowing_texture "loria_liquid_flowing_animated.png^[colorize:#0080ff"
     :bucket_image "bucket_lucidum.png"
     :bucket_description "Lucidum"}})
 
@@ -150,33 +150,33 @@
 (global grasses
   {"rami"
     {:max_height 4
-     :place_on "default:ammonium_manganese_pyrophosphate"
-     :biomes "default:purple_swamp"}
+     :place_on "loria:ammonium_manganese_pyrophosphate"
+     :biomes "loria:purple_swamp"}
     "spears"
     {:max_height 4
-     :place_on "default:ammonium_manganese_pyrophosphate"
-     :biomes "default:purple_swamp"}
+     :place_on "loria:ammonium_manganese_pyrophosphate"
+     :biomes "loria:purple_swamp"}
     "avarum"
     {:max_height 4
-     :place_on "default:ammonium_manganese_pyrophosphate"
-     :biomes "default:purple_swamp"}
+     :place_on "loria:ammonium_manganese_pyrophosphate"
+     :biomes "loria:purple_swamp"}
     "cruento"
     {:max_height 6 :fill_ratio 0.001
-     :place_on "default:ammonium_manganese_pyrophosphate"
-     :biomes "default:purple_swamp"}
+     :place_on "loria:ammonium_manganese_pyrophosphate"
+     :biomes "loria:purple_swamp"}
     "veteris"
     {:max_height 8
-     :place_on "default:sodium_peroxide"
-     :biomes "default:acidic_landscapes"}
+     :place_on "loria:sodium_peroxide"
+     :biomes "loria:acidic_landscapes"}
     "lectica"
     {:max_height 5
-     :place_on "default:sodium_peroxide"
-     :biomes "default:acidic_landscapes"}
+     :place_on "loria:sodium_peroxide"
+     :biomes "loria:acidic_landscapes"}
     "truncus"
     {:variants ["hyacinthum" "viridi" "purpura"]
      :max_height 7
-     :place_on "default:copper_sulfate"
-     :biomes "default:azure"}})
+     :place_on "loria:copper_sulfate"
+     :biomes "loria:azure"}})
 
 (global giant_mushrooms ["viridi_petasum" "colossus" "column"
                          "turris" "rete" "timor"])
@@ -186,7 +186,7 @@
 (set timor.body-names ["light green" "blue" "red" "green" "purple"])
 (set timor.colours (length timor.body-names))
 
-(set timor.body-nodes (map (fn [idx] (.. "default:timor_body_" idx))
+(set timor.body-nodes (map (fn [idx] (.. "loria:timor_body_" idx))
                            (range timor.colours)))
 
 (global cables
@@ -200,24 +200,24 @@
    {:name "plutonium" :resis 150   }])
 
 (global brickable
-  {"default:cinnabar" {:crumbly true}
-   "default:plutonium_dioxide" {:crumbly false}
-   "default:uranium_tetrachloride" {:crumbly true}
-   "default:ammonium_manganese_pyrophosphate" {:crumbly true}
-   "default:mercury_oxide" {:crumbly true}
-   "default:red_mercury_oxide" {:crumbly true}
-   "default:lead_sulfate" {:crumbly true}})
+  {"loria:cinnabar" {:crumbly true}
+   "loria:plutonium_dioxide" {:crumbly false}
+   "loria:uranium_tetrachloride" {:crumbly true}
+   "loria:ammonium_manganese_pyrophosphate" {:crumbly true}
+   "loria:mercury_oxide" {:crumbly true}
+   "loria:red_mercury_oxide" {:crumbly true}
+   "loria:lead_sulfate" {:crumbly true}})
 
 (global small_mushrooms
   {"pusilli"
    {:damage 5
     :place_on
-      ["default:cinnabar"
-       "default:red_mercury_oxide"
-       "default:mercury_oxide"]
+      ["loria:cinnabar"
+       "loria:red_mercury_oxide"
+       "loria:mercury_oxide"]
     :optimal_light 11
     :fill_ratio 0.01
-    :biomes "default:redland"
+    :biomes "loria:redland"
     :optimal_radiation 5
     :max_radiation 10}
    "deus"
@@ -225,83 +225,83 @@
     :y_max 0
     :y_min -31000
     :features {:light_source 6}
-    :place_on "default:cobalt_blue"
+    :place_on "loria:cobalt_blue"
     :fill_ratio 0.1
-    :biomes "default:azure_bottom"}
+    :biomes "loria:azure_bottom"}
    "vult"
    {:damage 10
     :y_max 0
     :y_min -31000
     :features {:light_source 6}
-    :place_on "default:cobalt_blue"
+    :place_on "loria:cobalt_blue"
     :fill_ratio 0.1
-    :biomes "default:azure_bottom"}
+    :biomes "loria:azure_bottom"}
    "infernum"
    {:damage 14
     :y_max 0
     :y_min -31000
     :features {:light_source 8}
-    :place_on "default:cobalt_blue"
+    :place_on "loria:cobalt_blue"
     :fill_ratio 0.1
-    :biomes "default:azure_bottom"}
+    :biomes "loria:azure_bottom"}
    "rosea"
    {:damage 4
-    :place_on "default:copper_sulfate"
+    :place_on "loria:copper_sulfate"
     :fill_ratio 0.05
-    :biomes "default:azure"}
+    :biomes "loria:azure"}
    "purpura"
    {:features {:light_source 5}
-    :place_on "default:copper_sulfate"
+    :place_on "loria:copper_sulfate"
     :fill_ratio 0.05
-    :biomes "default:azure"}
+    :biomes "loria:azure"}
    "picea"
    {:damage 9
-    :place_on "default:copper_sulfate"
+    :place_on "loria:copper_sulfate"
     :fill_ratio 0.05
-    :biomes "default:azure"}
+    :biomes "loria:azure"}
    "caput"
    {:damage 15
     :place_on
-      ["default:cinnabar"
-        "default:red_mercury_oxide"
-        "default:mercury_oxide"]
+      ["loria:cinnabar"
+        "loria:red_mercury_oxide"
+        "loria:mercury_oxide"]
     :optimal_light 11
     :fill_ratio 0.01
-    :biomes "default:redland"
+    :biomes "loria:redland"
     :optimal_radiation 5
     :max_radiation 10}
    "periculum"
    {:features {:light_source 3}
     :damage 18
-    :place_on "default:ammonium_manganese_pyrophosphate"
+    :place_on "loria:ammonium_manganese_pyrophosphate"
     :fill_ratio 0.01
-    :biomes "default:purple_swamp"}
+    :biomes "loria:purple_swamp"}
    "vastatorem"
    {:features {:light_source 8}
-    :place_on "default:nickel_nitrate"
+    :place_on "loria:nickel_nitrate"
     :fill_ratio 0.005
-    :biomes "default:reptile_house"}
+    :biomes "loria:reptile_house"}
    "quercu"
    {:damage 7
     :place_on
-      ["default:cinnabar"
-        "default:red_mercury_oxide"
-        "default:mercury_oxide"]
+      ["loria:cinnabar"
+        "loria:red_mercury_oxide"
+        "loria:mercury_oxide"]
     :optimal_light 11
-    :biomes "default:redland"}
+    :biomes "loria:redland"}
    "grebe"
    {:damage 11
-    :place_on "default:ammonium_manganese_pyrophosphate"
+    :place_on "loria:ammonium_manganese_pyrophosphate"
     :fill_ratio 0.01
-    :biomes "default:purple_swamp"}
+    :biomes "loria:purple_swamp"}
    "secreta"
    {:damage 12
-    :place_on "default:ammonium_manganese_pyrophosphate"
+    :place_on "loria:ammonium_manganese_pyrophosphate"
     :fill_ratio 0.01
-    :biomes "default:purple_swamp"}
+    :biomes "loria:purple_swamp"}
    "pulchram" {:damage 3}
    "conc"
    {:damage 16
-    :place_on "default:sodium_peroxide"
+    :place_on "loria:sodium_peroxide"
     :fill_ratio 0.01
-    :biomes "default:acidic_landscapes"}})
+    :biomes "loria:acidic_landscapes"}})

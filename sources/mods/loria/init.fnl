@@ -1,20 +1,20 @@
 (require-macros :useful-macros)
 (require-macros :infix)
 
-(global default {})
-(dofile (.. (minetest.get_modpath :default) "/" "basic.lua"))
-(dofile (.. (minetest.get_modpath :default) "/" "prelude.lua"))
+(global loria {})
+(dofile (.. (minetest.get_modpath :loria) "/" "basic.lua"))
+(dofile (.. (minetest.get_modpath :loria) "/" "prelude.lua"))
 
-(import :default
+(import :loria
   "greet" "conf" "inv_crafts" "creative" "biomes"
   "ores" "mushrooms_nodes" "small_mushrooms" "mapgen"
   "liquids" "nodes" "gases_arch" "gases" "items" "craft"
-  "mushrooms" "hud" "sky" "player")
+  "mushrooms" "hud" "sky" "player" "compatibility")
 
 (local start-items
   {"furnace:refiner_item"   1
-   "default:oxygen_balloon" 1
-   "default:empty_balloon"  1})
+   "loria:oxygen_balloon" 1
+   "loria:empty_balloon"  1})
 (local on-start-buckets 2)
 
 (local max-height 31000)
@@ -49,9 +49,9 @@
 
     (player:set_clouds {:density 0})
 
-    (tset default "enough-fresh?"
+    (tset loria "enough-fresh?"
       (∧ player.set_sun player.set_moon player.set_stars))
-    (when default.enough-fresh?
+    (when loria.enough-fresh?
       (player:set_sun {:texture "star.png" :scale 0.5 :sunrise_visible false})
       (player:set_moon {:scale 7 :texture "gas_giant.png"})
       (player:set_stars {:scale 0.5 :star_color "#ffffffff"}))
@@ -87,12 +87,12 @@
     (inv:set_size "input" 9)
     (inv:set_size "output" 9)
 
-    (inv:add_item "main" {:name "default:drill" :count 1})
-    (inv:add_item "oxygen" {:name "default:oxygen_balloon"})
+    (inv:add_item "main" {:name "loria:drill" :count 1})
+    (inv:add_item "oxygen" {:name "loria:oxygen_balloon"})
 
     (each [name count (pairs start-items)]
       (inv:add_item "main" {:name name :count count}))
-    (for [i 1 on-start-buckets] (inv:add_item "main" "default:bucket_empty"))))
+    (for [i 1 on-start-buckets] (inv:add_item "main" "loria:bucket_empty"))))
 
 (minetest.register_on_newplayer (fn [player]
   (init-inv player)

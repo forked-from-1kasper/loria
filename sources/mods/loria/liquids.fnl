@@ -2,7 +2,7 @@
 
 (global bucket {:is_bucket {} :liquids {}})
 
-(minetest.register_craftitem "default:bucket_empty"
+(minetest.register_craftitem "loria:bucket_empty"
   {:inventory_image "bucket.png"
    :description "Empty bucket"
    :stack_max 1
@@ -18,9 +18,9 @@
              {:name liquiddef.itemname :wear (itemstack:get_wear)}))))})
 
 (each [name params (pairs liquids)]
-  (let [source   (.. "default:" name "_source")
-        flowing  (.. "default:" name "_flowing")
-        itemname (.. "default:bucket_" name)]
+  (let [source   (.. "loria:" name "_source")
+        flowing  (.. "loria:" name "_flowing")
+        itemname (.. "loria:bucket_" name)]
     (minetest.register_node source
       {:description (.. (capitalization name) " source")
        :drawtype "liquid"
@@ -119,4 +119,4 @@
                    (≠ n.name source)
                    (minetest.add_node pointed_thing.under {:name source})
                    (nope))
-               {:name "default:bucket_empty" :wear (itemstack:get_wear)})))})))
+               {:name "loria:bucket_empty" :wear (itemstack:get_wear)})))})))

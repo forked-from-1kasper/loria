@@ -1,10 +1,10 @@
 (minetest.register_node "electricity:infinite_electricity"
   {:description "Infinite electricity"
    :tiles
-     ["default_test.png"
-      "default_test.png"
-      "default_test.png"
-      "default_test.png"
+     ["loria_test.png"
+      "loria_test.png"
+      "loria_test.png"
+      "loria_test.png"
       "electricity_minus.png"
       "electricity_plus.png"]
    :paramtype2 "facedir"
@@ -22,10 +22,10 @@
 (minetest.register_node "electricity:infinite_consumer"
   {:description "Infinite consumer"
    :tiles
-     ["default_test.png^[colorize:#ff000050"
-      "default_test.png^[colorize:#ff000050"
-      "default_test.png^[colorize:#ff000050"
-      "default_test.png^[colorize:#ff000050"
+     ["loria_test.png^[colorize:#ff000050"
+      "loria_test.png^[colorize:#ff000050"
+      "loria_test.png^[colorize:#ff000050"
+      "loria_test.png^[colorize:#ff000050"
       "electricity_minus.png^[colorize:#ff000050"
       "electricity_plus.png^[colorize:#ff000050"]
   :paramtype2 "facedir"
@@ -37,10 +37,10 @@
 (minetest.register_node "electricity:heavy_infinite_consumer"
   {:description "Infinite consumer"
    :tiles
-     ["default_test.png^[colorize:#00ff0050"
-      "default_test.png^[colorize:#00ff0050"
-      "default_test.png^[colorize:#00ff0050"
-      "default_test.png^[colorize:#00ff0050"
+     ["loria_test.png^[colorize:#00ff0050"
+      "loria_test.png^[colorize:#00ff0050"
+      "loria_test.png^[colorize:#00ff0050"
+      "loria_test.png^[colorize:#00ff0050"
       "electricity_minus.png^[colorize:#00ff0050"
       "electricity_plus.png^[colorize:#00ff0050"]
    :paramtype2 "facedir"

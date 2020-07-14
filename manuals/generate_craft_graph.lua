@@ -1,9 +1,9 @@
 -- lua5.3 generate_craft_graph.lua | dot.exe -Tsvg -o pictures/crafts.svg
 vector = { new = function() end }
 
-dofile("../sources/mods/default/prelude.lua")
-dofile("../sources/mods/default/conf.lua")
-dofile("../sources/mods/default/inv_crafts.lua")
+dofile("../sources/mods/loria/prelude.lua")
+dofile("../sources/mods/loria/conf.lua")
+dofile("../sources/mods/loria/inv_crafts.lua")
 dofile("../sources/mods/furnace/crafts.lua")
 
 graph = {}

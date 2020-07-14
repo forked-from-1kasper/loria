@@ -9,11 +9,11 @@
        (/  1 2)  (infix -1 / 2 + 3 / 16) (/  1 2)]]})
 
 (local fuel 
-  {"default:plutonium_dioxide" 3
-   "default:plutonium_tetrafluoride" 0.4
-   "default:plutonium_trifluoride" 0.3
-   "default:uranium" 0.5
-   "default:uranium_tetrachloride" 0.1})
+  {"loria:plutonium_dioxide" 3
+   "loria:plutonium_tetrafluoride" 0.4
+   "loria:plutonium_trifluoride" 0.3
+   "loria:uranium" 0.5
+   "loria:uranium_tetrachloride" 0.1})
 
 (local riteg-formspec
   (.. "size[8,6.5]"

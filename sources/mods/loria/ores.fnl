@@ -1,68 +1,68 @@
 (each [name params (pairs ores)]
   (let [light-source (or params.light_source 0)]
     (each [_ place (ipairs params.wherein)]
-      (minetest.register_node (.. "default:" name "_" place)
+      (minetest.register_node (.. "loria:" name "_" place)
         {:description (.. (capitalization name) " (in " place ")")
-         :tiles [(.. "default_" place ".png^default_" name "_ore.png")]
+         :tiles [(.. "loria_" place ".png^loria_" name "_ore.png")]
          :groups {:cracky 2}
          :light_source (math.floor (/ light-source 2))}))
 
     ; backward compatibility
     (when (contains params.wherein "cobalt_blue")
       (minetest.register_alias
-        (.."default:" name "_azure")
-        (.."default:" name "_cobalt_blue")))
+        (.."loria:" name "_azure")
+        (.."loria:" name "_cobalt_blue")))
 
-    (minetest.register_node (.. "default:" name)
+    (minetest.register_node (.. "loria:" name)
       {:description (.. (capitalization name) " (" params.formula ")")
-       :tiles [(.. "default_" name ".png")]
+       :tiles [(.. "loria_" name ".png")]
        :groups {:cracky 1}
-       :drop (.. "default:" name)
+       :drop (.. "loria:" name)
        :light_source light-source})
 
     (when params.has_ingot
-      (minetest.register_craftitem (.. "default:" name "_ingot")
+      (minetest.register_craftitem (.. "loria:" name "_ingot")
         {:description (.. (capitalization name) " ingot")
-         :inventory_image (.. "default_" name "_ingot.png")}))))
+         :inventory_image (.. "loria_" name "_ingot.png")}))))
 
-(minetest.register_node "default:humus"
+(minetest.register_node "loria:humus"
   {:description "Humus"
-   :tiles ["default_humus.png"]
+   :tiles ["loria_humus.png"]
    :groups {:cracky 3}})
 
-(minetest.register_node "default:plutonium_dioxide"
+(minetest.register_node "loria:plutonium_dioxide"
   {:description "Plutonium (IV) oxide (PuO2)"
-   :tiles ["default_plutonium_dioxide.png"]
+   :tiles ["loria_plutonium_dioxide.png"]
    :groups {:cracky 2}})
 
-(minetest.register_node "default:plutonium_tetrafluoride"
+(minetest.register_node "loria:plutonium_tetrafluoride"
   {:description "Plutonium (IV) tetrafluoride (PuF4)"
-   :tiles ["default_plutonium_tetrafluoride.png"]
+   :tiles ["loria_plutonium_tetrafluoride.png"]
    :groups {:cracky 2}})
 
-(minetest.register_node "default:plutonium_hexafluoride"
+(minetest.register_node "loria:plutonium_hexafluoride"
   {:description "Plutonium (VI) hexafluoride (PuF6)"
-   :tiles ["default_plutonium_hexafluoride.png"]
+   :tiles ["loria_plutonium_hexafluoride.png"]
    :groups {:cracky 2}})
 
 (global liquid_ores
-  {"trisilane" {:liquid "default:trisilane_source"}
+  {"trisilane" {:liquid "loria:trisilane_source"}
    "hydrochloric_acid"
-     {:liquid "default:hydrochloric_acid_source"
+     {:liquid "loria:hydrochloric_acid_source"
       :y_min -150 :y_max 50}})
 
 (each [name params (pairs liquid_ores)]
-  (minetest.register_node (.. "default:" name "_cinnabar")
+  (minetest.register_node (.. "loria:" name "_cinnabar")
     {:description (.. (capitalization name) " (in cinnabar)")
-     :tiles [(.. "default_cinnabar.png^default_" name "_ore.png")]
+     :tiles [(.. "loria_cinnabar.png^loria_" name "_ore.png")]
      :groups {:cracky 1}
      :drop {}
      :after_destruct (fn [pos oldnode]
        (minetest.set_node pos {:name params.liquid}))})
 
-  (minetest.register_node (.. "default:" name "_cobalt_blue")
+  (minetest.register_node (.. "loria:" name "_cobalt_blue")
     {:description (.. (capitalization name) " (in cobalt blue)")
-     :tiles [(.. "default_cobalt_blue.png^default_" name "_ore.png")]
+     :tiles [(.. "loria_cobalt_blue.png^loria_" name "_ore.png")]
      :groups {:cracky 1}
      :drop {}
      :after_destruct (λ [pos oldnode]
@@ -70,8 +70,8 @@
 
   (minetest.register_ore
     {:ore_type       "scatter"
-     :ore            (.. "default:" name "_cinnabar")
-     :wherein        "default:cinnabar"
+     :ore            (.. "loria:" name "_cinnabar")
+     :wherein        "loria:cinnabar"
      :clust_scarcity (* 8 8 8)
      :clust_num_ores 8
      :clust_size     3
@@ -80,8 +80,8 @@
 
   (minetest.register_ore
     {:ore_type       "scatter"
-     :ore            (.. "default:" name "_cobalt_blue")
-     :wherein        "default:cobalt_blue"
+     :ore            (.. "loria:" name "_cobalt_blue")
+     :wherein        "loria:cobalt_blue"
      :clust_scarcity (* 8 8 8)
      :clust_num_ores 8
      :clust_size     3
@@ -90,8 +90,8 @@
 
 (minetest.register_ore
   {:ore_type       "scatter"
-   :ore            "default:sulfur"
-   :wherein        "default:chromium_fluoride"
+   :ore            "loria:sulfur"
+   :wherein        "loria:chromium_fluoride"
    :clust_scarcity (* 8 8 8)
    :clust_num_ores 8
    :clust_size     7

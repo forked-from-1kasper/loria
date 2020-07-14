@@ -1,41 +1,41 @@
 local tau = 2 * math.pi
 
 local c_air = minetest.get_content_id("air")
-local c_copper_sulfate = minetest.get_content_id("default:copper_sulfate")
+local c_copper_sulfate = minetest.get_content_id("loria:copper_sulfate")
 
-local c_viridi_stem = minetest.get_content_id("default:viridi_petasum_stem")
-local c_viridi_body = minetest.get_content_id("default:viridi_petasum_body")
-local c_vastatorem = minetest.get_content_id("default:vastatorem")
+local c_viridi_stem = minetest.get_content_id("loria:viridi_petasum_stem")
+local c_viridi_body = minetest.get_content_id("loria:viridi_petasum_body")
+local c_vastatorem = minetest.get_content_id("loria:vastatorem")
 
-local c_rete_stem = minetest.get_content_id("default:rete_stem")
-local c_rete_body = minetest.get_content_id("default:rete_body")
+local c_rete_stem = minetest.get_content_id("loria:rete_stem")
+local c_rete_body = minetest.get_content_id("loria:rete_body")
 
 local c_ammonium_manganese_pyrophosphate =
-    minetest.get_content_id("default:ammonium_manganese_pyrophosphate")
-local c_naga = minetest.get_content_id("default:naga")
+    minetest.get_content_id("loria:ammonium_manganese_pyrophosphate")
+local c_naga = minetest.get_content_id("loria:naga")
 
 local c_potassium_permanganate_source =
-    minetest.get_content_id("default:potassium_permanganate_source")
+    minetest.get_content_id("loria:potassium_permanganate_source")
 
 local c_potassium_permanganate_flowing =
-    minetest.get_content_id("default:potassium_permanganate_flowing")
+    minetest.get_content_id("loria:potassium_permanganate_flowing")
 
-local c_turris_stem = minetest.get_content_id("default:turris_stem")
-local c_turris_body = minetest.get_content_id("default:turris_body")
+local c_turris_stem = minetest.get_content_id("loria:turris_stem")
+local c_turris_body = minetest.get_content_id("loria:turris_body")
 
-local c_red_mercury_oxide = minetest.get_content_id("default:red_mercury_oxide")
+local c_red_mercury_oxide = minetest.get_content_id("loria:red_mercury_oxide")
 
-local c_colossus_stem = minetest.get_content_id("default:colossus_stem")
-local c_colossus_body = minetest.get_content_id("default:colossus_body")
+local c_colossus_stem = minetest.get_content_id("loria:colossus_stem")
+local c_colossus_body = minetest.get_content_id("loria:colossus_body")
 
-local c_sodium_peroxide = minetest.get_content_id("default:sodium_peroxide")
+local c_sodium_peroxide = minetest.get_content_id("loria:sodium_peroxide")
 
-local c_altitudo_stem = minetest.get_content_id("default:altitudo_stem")
-local c_altitudo_body = minetest.get_content_id("default:altitudo_body")
+local c_altitudo_stem = minetest.get_content_id("loria:altitudo_stem")
+local c_altitudo_body = minetest.get_content_id("loria:altitudo_body")
 
-local c_nickel_nitrate = minetest.get_content_id("default:nickel_nitrate")
+local c_nickel_nitrate = minetest.get_content_id("loria:nickel_nitrate")
 
-local c_timor_stem = minetest.get_content_id("default:timor_stem")
+local c_timor_stem = minetest.get_content_id("loria:timor_stem")
 
 local viridi_petasum = {
     min_height = 7,

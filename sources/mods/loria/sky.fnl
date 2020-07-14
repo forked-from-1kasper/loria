@@ -10,11 +10,11 @@
 (local biome-id minetest.get_biome_id)
 
 (local colors
-  {(biome-id "default:redland")           {:r 255 :g 200 :b 150}
-   (biome-id "default:purple_swamp")      {:r 190 :g 155 :b 255}
-   (biome-id "default:swamp_connector")   {:r 190 :g 155 :b 255}
-   (biome-id "default:acidic_landscapes") {:r 255 :g 255 :b 100}
-   (biome-id "default:reptile_house")     {:r 200 :g 255 :b 100}})
+  {(biome-id "loria:redland")           {:r 255 :g 200 :b 150}
+   (biome-id "loria:purple_swamp")      {:r 190 :g 155 :b 255}
+   (biome-id "loria:swamp_connector")   {:r 190 :g 155 :b 255}
+   (biome-id "loria:acidic_landscapes") {:r 255 :g 255 :b 100}
+   (biome-id "loria:reptile_house")     {:r 200 :g 255 :b 100}})
 
 (local sunrise {:start (/ 4500  24000) :finish (/ 5751  24000)})
 (local sunset  {:start (/ 18600 24000) :finish (/ 19502 24000)})
@@ -63,6 +63,6 @@
       (let [pos (player:get_pos)
             color′ (calc-color pos)
             color (addition (get-sky-color color′ timeofday) night-color)]
-        (if default.enough-fresh?
+        (if loria.enough-fresh?
           (player:set_sky {:base_color color :type "plain"})
           (player:set_sky color "plain"))))))

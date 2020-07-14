@@ -48,9 +48,9 @@
 (local gas-levels 255)
 (defun register_gas [gas]
   (tset heavy? gas.name gas.heavy)
-  (minetest.register_node (.. "default:" gas.name)
+  (minetest.register_node (.. "loria:" gas.name)
     {:description gas.name
-     :tiles [(.. "default_gas.png^[opacity:" (or gas.alpha 128))]
+     :tiles [(.. "loria_gas.png^[opacity:" (or gas.alpha 128))]
      :drawtype (if gas.transparent "airlike" "glasslike")
      :paramtype "light"
      :paramtype2 "color"
@@ -67,14 +67,14 @@
      :groups {:not_in_creative_inventory 1 :gas 1}})
 
     (minetest.register_abm
-      {:nodenames [(.. "default:" gas.name)]
+      {:nodenames [(.. "loria:" gas.name)]
        :interval 1
        :chance 2
        :action (partial process-gas gas)})
 
     (when (not gas.no_balloon)
-      (minetest.register_tool (.. "default:" gas.name "_balloon")
-        {:inventory_image (.. "default_empty_balloon.png^[combine:16x16:0,0=" gas.icon)
+      (minetest.register_tool (.. "loria:" gas.name "_balloon")
+        {:inventory_image (.. "loria_empty_balloon.png^[combine:16x16:0,0=" gas.icon)
          :description (.. (capitalization gas.name) " balloon")
          :stack_max 1
          :on_use (fn [itemstack user pointed-thing]
@@ -82,9 +82,9 @@
               (let [wear  (- 65535 (itemstack:get_wear))
                     value (math.ceil (* wear (/ 128 65535)))]
                 (minetest.add_node pointed-thing.above
-                  {:name (.. "default:" gas.name)
+                  {:name (.. "loria:" gas.name)
                    :param2 (+ 127 value)})
-                {:name "default:empty_balloon"})))})))
+                {:name "loria:empty_balloon"})))})))
 
 (local attack-radius 30)
 (local attack-step 10)
@@ -100,7 +100,7 @@
              (for [z (- pos.z attack-radius) (+ pos.z attack-radius) attack-step]
                (minetest.set_node
                  {:x x :y pos.y :z z}
-                 {:name (.. "default:" gas) :param2 gas-levels})))
+                 {:name (.. "loria:" gas) :param2 gas-levels})))
            (minetest.chat_send_player name "Done")))))})
 
 (local fill-radius 10)
@@ -129,16 +129,16 @@
 
 (minetest.register_abm
   {:label "Chlorine source"
-   :nodenames ["default:test"]
+   :nodenames ["loria:test"]
    :interval 1 :chance 1
    :action (fn [pos]
      (let [pos′ (vector.add pos (vector.new 0 1 0))]
        (when (= (. (minetest.get_node pos′) :name) "air")
-         (minetest.set_node pos′ {:name "default:chlorine" :param2 gas-levels}))))})
+         (minetest.set_node pos′ {:name "loria:chlorine" :param2 gas-levels}))))})
 
 (minetest.register_abm
   {:label "Oxygen source"
-   :nodenames ["default:infinite_oxygen"]
+   :nodenames ["loria:infinite_oxygen"]
    :interval 1 :chance 1
    :action (fn [pos]
      (let [vects [(vector.new 0  1  0)
@@ -149,4 +149,4 @@
        (each [_ vect (ipairs vects)]
          (let [v (vector.add pos vect)]
            (when (= (. (minetest.get_node v) :name) "air")
-             (minetest.set_node v {:name "default:oxygen" :param2 gas-levels}))))))})
+             (minetest.set_node v {:name "loria:oxygen" :param2 gas-levels}))))))})

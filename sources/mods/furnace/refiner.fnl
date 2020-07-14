@@ -14,7 +14,7 @@
    :groups {:not_in_creative_inventory 1}})
 
 (local gases-list
-  {"default:oxygen_balloon" (* balloon_coeff 3)})
+  {"loria:oxygen_balloon" (* balloon_coeff 3)})
 
 (fn furnace-ready? [pos]
   (let [meta (minetest.get_meta pos)

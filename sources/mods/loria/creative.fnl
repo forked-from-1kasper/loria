@@ -83,6 +83,9 @@
       (foreach (lambda [priv] (tset privs priv (or creative? nil))) creative-privs)
       (minetest.set_player_privs name privs)))))
 
+(fn is-valid-balloon? [name]
+  (= name "loria:oxygen_balloon"))
+
 (minetest.register_allow_player_inventory_action
   (fn [player action inventory inventory_info]
     (if (= action "move")
@@ -94,14 +97,14 @@
                   (inv:set_stack "creative_inv" inventory_info.from_index stack)
                   inventory_info.count)
               (= inventory_info.to_list "oxygen")
-              (if (= (stack:get_name) "default:oxygen_balloon")
+              (if (is-valid-balloon? (stack:get_name))
                   (stack:get_count) 0)
               (or (= inventory_info.to_list "output")
                   (= inventory_info.to_list "creative_inv")) 0
               (stack:get_count)))
         (= action "put")
         (if (= inventory_info.listname "oxygen")
-            (if (= (inventory_info.stack:get_name) "default:oxygen_balloon")
+            (if (is-valid-balloon? (inventory_info.stack:get_name))
                 (inventory_info.stack:get_count) 0)
             (or (= inventory_info.listname "output")
                 (= inventory_info.listname "creative_inv")) 0

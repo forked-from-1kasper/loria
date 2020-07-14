@@ -16,18 +16,18 @@ minetest.register_item(":", {
     }
 })
 
-minetest.register_craftitem("default:broken_drill", {
+minetest.register_craftitem("loria:broken_drill", {
     description = "Broken drill",
-    inventory_image = "default_broken_drill.png",
+    inventory_image = "loria_broken_drill.png",
 })
 
-minetest.register_tool("default:drill", {
+minetest.register_tool("loria:drill", {
     description = "Drill",
     stack_max = 1,
     liquids_pointable = false,
     range = 5.0,
-    inventory_image = "default_drill.png",
-    wield_image = "default_drill.png",
+    inventory_image = "loria_drill.png",
+    wield_image = "loria_drill.png",
     tool_capabilities = {
         full_punch_interval = 1.0,
         max_drop_level = 1,
@@ -52,7 +52,7 @@ minetest.register_tool("default:drill", {
     },
     after_use = function(itemstack, user, node, digparams)
         if itemstack:get_wear() + digparams.wear >= 65535 then
-            return { name = "default:broken_drill", count = 1 }
+            return { name = "loria:broken_drill", count = 1 }
         else
             itemstack:add_wear(digparams.wear)
             return itemstack
@@ -60,13 +60,13 @@ minetest.register_tool("default:drill", {
     end
 })
 
-minetest.register_craftitem("default:super_drill", {
+minetest.register_craftitem("loria:super_drill", {
     description = "Super drill",
     stack_max = 1,
     liquids_pointable = false,
     range = 5.0,
-    inventory_image = "default_super_drill.png",
-    wield_image = "default_super_drill.png",
+    inventory_image = "loria_super_drill.png",
+    wield_image = "loria_super_drill.png",
     tool_capabilities = {
         full_punch_interval = 1.0,
         max_drop_level = 1,
@@ -85,8 +85,8 @@ minetest.register_craftitem("default:super_drill", {
     }
 })
 
-minetest.register_tool("default:copper_hammer", {
-    inventory_image = "default_copper_hammer.png",
+minetest.register_tool("loria:copper_hammer", {
+    inventory_image = "loria_copper_hammer.png",
     description = "Copper hammer",
     stack_max = 1,
     liquids_pointable = false,
@@ -119,7 +119,7 @@ minetest.register_tool("default:copper_hammer", {
         end
 
         if itemstack:get_wear() + digparams.wear >= 65535 then
-            return { name = "default:stick", count = 1 }
+            return { name = "loria:stick", count = 1 }
         else
             itemstack:add_wear(digparams.wear)
             return itemstack
@@ -127,8 +127,8 @@ minetest.register_tool("default:copper_hammer", {
     end
 })
 
-minetest.register_tool("default:copper_hammer_head", {
-    inventory_image = "default_copper_hammer_head.png",
+minetest.register_tool("loria:copper_hammer_head", {
+    inventory_image = "loria_copper_hammer_head.png",
     description = "Copper hammer head",
     stack_max = 1,
     liquids_pointable = false,
@@ -159,18 +159,18 @@ minetest.register_tool("default:copper_hammer_head", {
     end
 })
 
-minetest.register_tool("default:nail_file", {
-    inventory_image = "default_nail_file.png",
+minetest.register_tool("loria:nail_file", {
+    inventory_image = "loria_nail_file.png",
     description = "Nail file",
     stack_max = 1,
     on_use = function(itemstack, user, pointed_thing)
-        itemstack:set_name("default:broken_nail_file")
+        itemstack:set_name("loria:broken_nail_file")
         return itemstack
     end
 })
 
-minetest.register_tool("default:broken_nail_file", {
-    inventory_image = "default_broken_nail_file.png",
+minetest.register_tool("loria:broken_nail_file", {
+    inventory_image = "loria_broken_nail_file.png",
     description = "Broken nail file",
     stack_max = 1,
     range = 0,
@@ -183,55 +183,55 @@ minetest.register_tool("default:broken_nail_file", {
     },
 })
 
-minetest.register_tool("default:battery", {
-    inventory_image = "default_battery.png",
+minetest.register_tool("loria:battery", {
+    inventory_image = "loria_battery.png",
     description = "Battery",
     groups = { item_source = 5 },
 })
 
-minetest.register_craftitem("default:stick", {
-    inventory_image = "default_stick.png",
+minetest.register_craftitem("loria:stick", {
+    inventory_image = "loria_stick.png",
     description = "Stick",
     stack_max = 120,
 })
 
-minetest.register_craftitem("default:aluminium_brick_mold", {
-    inventory_image = "default_aluminium_brick_mold.png",
+minetest.register_craftitem("loria:aluminium_brick_mold", {
+    inventory_image = "loria_aluminium_brick_mold.png",
     description = "Aluminium brick mold",
     stack_max = 9,
 })
 
-minetest.register_craftitem("default:aluminium_case", {
-    inventory_image = "default_aluminium_case.png",
+minetest.register_craftitem("loria:aluminium_case", {
+    inventory_image = "loria_aluminium_case.png",
     description = "Aluminium case",
     stack_max = 16,
 })
 
-minetest.register_craftitem("default:wolfram_filament", {
-    inventory_image = "default_wolfram_filament.png",
+minetest.register_craftitem("loria:wolfram_filament", {
+    inventory_image = "loria_wolfram_filament.png",
     description = "Wolfram filament",
     stack_max = 30,
 })
 
-minetest.register_craftitem("default:empty_balloon", {
-    inventory_image = "default_empty_balloon.png",
+minetest.register_craftitem("loria:empty_balloon", {
+    inventory_image = "loria_empty_balloon.png",
     description = "Empty balloon",
     stack_max = 1
 })
 
-minetest.register_craftitem("default:thorium_ingot", {
+minetest.register_craftitem("loria:thorium_ingot", {
     description = "Thorium ingot",
-    inventory_image = "default_thorium_ingot.png",
+    inventory_image = "loria_thorium_ingot.png",
 })
 
-minetest.register_craftitem("default:uranium_ingot", {
+minetest.register_craftitem("loria:uranium_ingot", {
     description = "Uranium ingot",
-    inventory_image = "default_uranium_ingot.png",
+    inventory_image = "loria_uranium_ingot.png",
 })
 
-minetest.register_craftitem("default:plutonium_ingot", {
+minetest.register_craftitem("loria:plutonium_ingot", {
     description = "Plutonium ingot",
-    inventory_image = "default_plutonium_ingot.png",
+    inventory_image = "loria_plutonium_ingot.png",
 })
 
 function get_gas(pos)
@@ -262,7 +262,7 @@ minetest.register_globalstep(function(dtime)
             local inv = player:get_inventory()
             local oxygen_stack = inv:get_list("oxygen")[1]
 
-            if inv:contains_item("oxygen", { name = "default:oxygen_balloon" }) then
+            if inv:contains_item("oxygen", { name = "loria:oxygen_balloon" }) then
                 local delta
                 if meta:get_int("space_suit") > 0 then
                     delta = balloon_coeff
@@ -276,7 +276,7 @@ minetest.register_globalstep(function(dtime)
                 oxygen_stack:set_wear(wear + delta)
 
                 if wear + delta >= 65535 then
-                    inv:set_stack("oxygen", 1, { name = "default:empty_balloon" })
+                    inv:set_stack("oxygen", 1, { name = "loria:empty_balloon" })
                 else
                     inv:set_stack("oxygen", 1, oxygen_stack)
                 end
