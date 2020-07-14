@@ -139,49 +139,59 @@
 |24|Plutonium trifluoride × 2, Calcium × 3|Plutonium × 2, Calcium fluoride × 3|
 |25|Humus × 2|Silicon dioxide × 1|
 |26|Sodium peroxide × 2, Empty balloon × 1|Sodium oxide × 2, Oxygen balloon × 1|
-|27|Aluminium cinnabar × 1|Aluminium ingot × 1, Cinnabar × 1|
-|28|Aluminium cobalt blue × 1|Aluminium ingot × 1, Cobalt blue × 1|
-|29|Aluminium ingot × 9|Aluminium × 1|
-|30|Americium trifluoride cinnabar × 1|Americium trifluoride × 1, Cinnabar × 1|
+|27|Aluminium cobalt blue × 1|Aluminium ingot × 1, Cobalt blue × 1|
+|28|Aluminium cinnabar × 1|Aluminium ingot × 1, Cinnabar × 1|
+|29|Aluminium chromia × 1|Aluminium ingot × 1, Chromia × 1|
+|30|Aluminium ingot × 9|Aluminium × 1|
 |31|Americium trifluoride cobalt blue × 1|Americium trifluoride × 1, Cobalt blue × 1|
-|32|Americium trifluoride × 1|Americium trifluoride ingot × 9|
-|33|Calcium cinnabar × 1|Calcium ingot × 1, Cinnabar × 1|
-|34|Calcium cobalt blue × 1|Calcium ingot × 1, Cobalt blue × 1|
-|35|Calcium ingot × 9|Calcium × 1|
-|36|Copper cinnabar × 1|Copper ingot × 1, Cinnabar × 1|
+|32|Americium trifluoride cinnabar × 1|Americium trifluoride × 1, Cinnabar × 1|
+|33|Americium trifluoride chromium fluoride × 1|Americium trifluoride × 1, Chromium fluoride × 1|
+|34|Americium trifluoride × 1|Americium trifluoride ingot × 9|
+|35|Calcium chromium fluoride × 1|Calcium ingot × 1, Chromium fluoride × 1|
+|36|Calcium ingot × 9|Calcium × 1|
 |37|Copper cobalt blue × 1|Copper ingot × 1, Cobalt blue × 1|
-|38|Copper ingot × 9|Copper × 1|
-|39|Cuprous oxide cinnabar × 1|Cuprous oxide × 1, Cinnabar × 1|
+|38|Copper cinnabar × 1|Copper ingot × 1, Cinnabar × 1|
+|39|Copper ingot × 9|Copper × 1|
 |40|Cuprous oxide cobalt blue × 1|Cuprous oxide × 1, Cobalt blue × 1|
-|41|Cuprous oxide × 1|Cuprous oxide ingot × 9|
-|42|Magnesium cinnabar × 1|Magnesium ingot × 1, Cinnabar × 1|
+|41|Cuprous oxide chromia × 1|Cuprous oxide × 1, Chromia × 1|
+|42|Cuprous oxide × 1|Cuprous oxide ingot × 9|
 |43|Magnesium cobalt blue × 1|Magnesium ingot × 1, Cobalt blue × 1|
-|44|Magnesium ingot × 9|Magnesium × 1|
-|45|Magnetite cinnabar × 1|Magnetite × 1, Cinnabar × 1|
-|46|Magnetite cobalt blue × 1|Magnetite × 1, Cobalt blue × 1|
-|47|Magnetite × 1|Magnetite ingot × 9|
-|48|Molybdenum cinnabar × 1|Molybdenum ingot × 1, Cinnabar × 1|
-|49|Molybdenum cobalt blue × 1|Molybdenum ingot × 1, Cobalt blue × 1|
-|50|Molybdenum ingot × 9|Molybdenum × 1|
-|51|Platinum cinnabar × 1|Platinum ingot × 1, Cinnabar × 1|
-|52|Platinum cobalt blue × 1|Platinum ingot × 1, Cobalt blue × 1|
-|53|Platinum ingot × 9|Platinum × 1|
-|54|Plutonium trifluoride cinnabar × 1|Plutonium trifluoride × 1, Cinnabar × 1|
-|55|Plutonium trifluoride cobalt blue × 1|Plutonium trifluoride × 1, Cobalt blue × 1|
-|56|Plutonium trifluoride × 1|Plutonium trifluoride ingot × 9|
-|57|Potassium cinnabar × 1|Potassium ingot × 1, Cinnabar × 1|
-|58|Potassium cobalt blue × 1|Potassium ingot × 1, Cobalt blue × 1|
-|59|Potassium ingot × 9|Potassium × 1|
-|60|Thorium iodide cinnabar × 1|Thorium iodide × 1, Cinnabar × 1|
-|61|Thorium iodide cobalt blue × 1|Thorium iodide × 1, Cobalt blue × 1|
-|62|Thorium iodide × 1|Thorium iodide ingot × 9|
-|63|Uranium tetrachloride cinnabar × 1|Uranium tetrachloride × 1, Cinnabar × 1|
-|64|Uranium tetrachloride cobalt blue × 1|Uranium tetrachloride × 1, Cobalt blue × 1|
-|65|Uranium tetrachloride × 1|Uranium tetrachloride ingot × 9|
-|66|Wolfram cinnabar × 1|Wolfram ingot × 1, Cinnabar × 1|
-|67|Wolfram cobalt blue × 1|Wolfram ingot × 1, Cobalt blue × 1|
-|68|Wolfram ingot × 9|Wolfram × 1|
-|69|Zinc cinnabar × 1|Zinc ingot × 1, Cinnabar × 1|
-|70|Zinc cobalt blue × 1|Zinc ingot × 1, Cobalt blue × 1|
-|71|Zinc ingot × 9|Zinc × 1|
+|44|Magnesium cinnabar × 1|Magnesium ingot × 1, Cinnabar × 1|
+|45|Magnesium chromia × 1|Magnesium ingot × 1, Chromia × 1|
+|46|Magnesium ingot × 9|Magnesium × 1|
+|47|Magnetite cobalt blue × 1|Magnetite × 1, Cobalt blue × 1|
+|48|Magnetite cinnabar × 1|Magnetite × 1, Cinnabar × 1|
+|49|Magnetite chromium fluoride × 1|Magnetite × 1, Chromium fluoride × 1|
+|50|Magnetite × 1|Magnetite ingot × 9|
+|51|Molybdenum cobalt blue × 1|Molybdenum ingot × 1, Cobalt blue × 1|
+|52|Molybdenum cinnabar × 1|Molybdenum ingot × 1, Cinnabar × 1|
+|53|Molybdenum ingot × 9|Molybdenum × 1|
+|54|Platinum cobalt blue × 1|Platinum ingot × 1, Cobalt blue × 1|
+|55|Platinum cinnabar × 1|Platinum ingot × 1, Cinnabar × 1|
+|56|Platinum ingot × 9|Platinum × 1|
+|57|Plutonium trifluoride cobalt blue × 1|Plutonium trifluoride × 1, Cobalt blue × 1|
+|58|Plutonium trifluoride cinnabar × 1|Plutonium trifluoride × 1, Cinnabar × 1|
+|59|Plutonium trifluoride chromium fluoride × 1|Plutonium trifluoride × 1, Chromium fluoride × 1|
+|60|Plutonium trifluoride × 1|Plutonium trifluoride ingot × 9|
+|61|Potassium cobalt blue × 1|Potassium ingot × 1, Cobalt blue × 1|
+|62|Potassium cinnabar × 1|Potassium ingot × 1, Cinnabar × 1|
+|63|Potassium chromia × 1|Potassium ingot × 1, Chromia × 1|
+|64|Potassium chromium fluoride × 1|Potassium ingot × 1, Chromium fluoride × 1|
+|65|Potassium ingot × 9|Potassium × 1|
+|66|Thorium iodide cobalt blue × 1|Thorium iodide × 1, Cobalt blue × 1|
+|67|Thorium iodide cinnabar × 1|Thorium iodide × 1, Cinnabar × 1|
+|68|Thorium iodide chromium fluoride × 1|Thorium iodide × 1, Chromium fluoride × 1|
+|69|Thorium iodide chromia × 1|Thorium iodide × 1, Chromia × 1|
+|70|Thorium iodide × 1|Thorium iodide ingot × 9|
+|71|Uranium tetrachloride cobalt blue × 1|Uranium tetrachloride × 1, Cobalt blue × 1|
+|72|Uranium tetrachloride cinnabar × 1|Uranium tetrachloride × 1, Cinnabar × 1|
+|73|Uranium tetrachloride chromium fluoride × 1|Uranium tetrachloride × 1, Chromium fluoride × 1|
+|74|Uranium tetrachloride chromia × 1|Uranium tetrachloride × 1, Chromia × 1|
+|75|Uranium tetrachloride × 1|Uranium tetrachloride ingot × 9|
+|76|Wolfram cobalt blue × 1|Wolfram ingot × 1, Cobalt blue × 1|
+|77|Wolfram cinnabar × 1|Wolfram ingot × 1, Cinnabar × 1|
+|78|Wolfram ingot × 9|Wolfram × 1|
+|79|Zinc cobalt blue × 1|Zinc ingot × 1, Cobalt blue × 1|
+|80|Zinc cinnabar × 1|Zinc ingot × 1, Cinnabar × 1|
+|81|Zinc ingot × 9|Zinc × 1|
 

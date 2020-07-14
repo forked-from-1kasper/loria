@@ -199,15 +199,11 @@
       {:name (.. "loria:" name "_ingot") :count 1}
       {:name (.. "loria:" name)          :count 1}))
 
-  (table.insert refiner_crafts
-   {:input  [{:name (.. "loria:" name "_cinnabar") :count 1}]
-    :output [ingot-or-node {:name "loria:cinnabar" :count 1}]
-    :time 3})
-
-  (table.insert refiner_crafts
-   {:input  [{:name (.. "loria:" name "_cobalt_blue") :count 1}]
-    :output [ingot-or-node {:name "loria:cobalt_blue" :count 1}]
-    :time 3})
+  (each [_ place (ipairs params.wherein)]
+    (table.insert refiner_crafts
+      {:input [{:name (.. "loria:" name "_" place) :count 1}]
+       :output [ingot-or-node {:name (.. "loria:" place) :count 1}]
+       :time 3}))
 
   (if params.has_ingot
     (table.insert refiner_crafts
