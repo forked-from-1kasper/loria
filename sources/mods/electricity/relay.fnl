@@ -23,10 +23,10 @@
    :groups {:crumbly 3 :conductor 1}})
 
 (local relay-resistance 0.01)
-(local Uₘᵢₙ 0.5)
+(local Uₘᵢₙ 1)
 
 (fn get-sec-resis [U]
-  (real (if (≥ U Uₘᵢₙ) relay-resistance (math.pow 10 50))))
+  (real (if (≥ (math.abs U) Uₘᵢₙ) relay-resistance (math.pow 10 50))))
 
 (tset model "electricity:relay" (fn [pos id]
   (let [meta (minetest.get_meta pos)
