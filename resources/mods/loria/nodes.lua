@@ -1,14 +1,12 @@
 minetest.register_node("loria:test", {
     description = "For tests only",
     tiles = { "loria_test.png" },
-    drop = 'loria:test',
     groups = { crumbly = 3 }
 })
 
 minetest.register_node("loria:infinite_oxygen", {
     description = "Infinite oxygen",
     tiles = { "loria_test.png^[colorize:#0000ff50" },
-    drop = 'loria:infinite_oxygen',
     groups = { crumbly = 3 }
 })
 
@@ -34,182 +32,162 @@ minetest.register_node("loria:potassium_manganate", {
     description = "Potassium manganate (K2MnO4)",
     tiles = { "loria_potassium_manganate.png" },
     groups = { crumbly = 3 },
-    drop = 'loria:potassium_manganate'
 })
 
 minetest.register_node("loria:aluminium_oxide", {
     description = "Aluminium (III) oxide (Al2O3)",
     tiles = { "loria_aluminium_oxide.png" },
-    groups = { crumbly = 3 },
-    drop = 'loria:aluminium_oxide'
+    groups = { crumbly = 3 }
 })
 
 minetest.register_node("loria:manganese_dioxide", {
     description = "Manganese dioxide (MnO2)",
     tiles = { "loria_manganese_dioxide.png" },
-    groups = { crumbly = 3 },
-    drop = 'loria:manganese_dioxide'
+    groups = { crumbly = 3 }
 })
 
 minetest.register_node("loria:manganese_oxide", {
     description = "Manganese oxide (MnO)",
     tiles = { "loria_manganese_oxide.png" },
-    groups = { crumbly = 3 },
-    drop = 'loria:manganese_oxide'
+    groups = { crumbly = 3 }
 })
 
 minetest.register_node("loria:ammonium_manganese_pyrophosphate", {
     description = "Ammonium manganese (III) pyrophosphate",
     tiles = { "loria_ammonium_manganese_pyrophosphate.png" },
-    groups = { crumbly = 2 },
-    drop = 'loria:ammonium_manganese_pyrophosphate'
+    groups = { crumbly = 2 }
 })
 
 minetest.register_node("loria:cinnabar", {
     description = "Cinnabar (HgS)",
     tiles = { "loria_cinnabar.png" },
-    groups = { cracky = 2 },
-    drop = 'loria:cinnabar'
+    groups = { cracky = 2 }
 })
 
 minetest.register_node("loria:copper_oxide", {
     description = "Copper (II) oxide (CuO)",
     tiles = { "loria_copper_oxide.png" },
-    groups = { crumbly = 2 },
-    drop = 'loria:copper_oxide'
+    groups = { crumbly = 2 }
 })
 
 minetest.register_node("loria:copper_sulfate_pure", {
     description = "Copper (II) sulfate (CuSO4)",
     tiles = { "loria_copper_sulfate_pure.png" },
-    groups = { crumbly = 2 },
-    drop = 'loria:copper_sulfate_pure'
+    groups = { crumbly = 2 }
 })
 
 minetest.register_node("loria:copper_sulfate", {
     description = "Copper (II) sulfate pentahydrate (CuSO4 * 5H2O)",
     tiles = { "loria_copper_sulfate.png" },
-    groups = { crumbly = 2 },
-    drop = 'loria:copper_sulfate'
+    groups = { crumbly = 2 }
 })
 
 minetest.register_node("loria:mercury", {
     description = "Mercury (Hg)",
     tiles = { "loria_mercury.png" },
-    groups = { cracky = 2 },
-    drop = 'loria:mercury'
+    groups = { cracky = 2 }
 })
 
 minetest.register_node("loria:uranium", {
     description = "Uranium (U)",
     tiles = { "loria_uranium.png" },
-    groups = { cracky = 1 },
-    drop = 'loria:uranium'
+    groups = { cracky = 1 }
 })
 
 minetest.register_node("loria:lead", {
     description = "Lead (Pb)",
     tiles = { "loria_lead.png" },
-    groups = { cracky = 1 },
-    drop = 'loria:lead'
+    groups = { cracky = 1 }
 })
 
 minetest.register_node("loria:brick", {
     description = "Brick",
     tiles = { "loria_brick.png" },
-    groups = { cracky = 2 },
-    drop = 'loria:brick'
+    groups = { cracky = 2 }
 })
 
 minetest.register_node("loria:lead_case", {
     description = "Lead case",
     tiles = { "loria_lead_case.png" },
-    groups = { cracky = 2 },
-    drop = 'loria:lead_case'
+    groups = { cracky = 2 }
 })
 
 minetest.register_node("loria:mercury_chloride", {
     description = "Mercury (II) chloride (HgCl2)",
     tiles = { "loria_mercury_chloride.png" },
-    groups = { crumbly = 3 },
-    drop = 'loria:mercury_chloride'
+    groups = { crumbly = 3 }
 })
 
 minetest.register_node("loria:zinc_chloride", {
     description = "Zinc chloride (ZnCl2)",
     tiles = { "loria_zinc_chloride.png" },
-    groups = { crumbly = 3 },
-    drop = 'loria:zinc_chloride'
+    groups = { crumbly = 3 }
 })
 
 minetest.register_node("loria:aluminium_chloride", {
     description = "Aluminium chloride (AlCl3)",
     tiles = { "loria_aluminium_chloride.png" },
-    groups = { crumbly = 3 },
-    drop = 'loria:aluminium_chloride'
+    groups = { crumbly = 3 }
 })
 
 minetest.register_node("loria:potassium_chloride", {
     description = "Potassium chloride (KCl)",
     tiles = { "loria_potassium_chloride.png" },
-    groups = { crumbly = 3 },
-    drop = 'loria:potassium_chloride'
+    groups = { crumbly = 3 }
 })
 
 minetest.register_node("loria:mercury_fluoride", {
     description = "Mercury (II) fluoride (HgF2)",
     tiles = { "loria_mercury_fluoride.png" },
-    groups = { crumbly = 2 },
-    drop = 'loria:mercury_fluoride'
+    groups = { crumbly = 2 }
 })
 
 minetest.register_node("loria:lead_sulfate", {
     description = "Lead (II) sulfate (PbSO4)",
     tiles = { "loria_lead_sulfate.png" },
-    groups = { crumbly = 1 },
-    drop = 'loria:lead_sulfate'
+    groups = { crumbly = 1 }
 })
 
 minetest.register_node("loria:sodium_peroxide", {
     description = "Sodium peroxide (Na2O2)",
     tiles = { "loria_sodium_peroxide.png" },
-    groups = { crumbly = 2 },
-    drop = 'loria:sodium_peroxide'
+    groups = { crumbly = 2 }
+})
+
+minetest.register_node("loria:sodium_oxide", {
+    description = "Sodium oxide (Na2O)",
+    tiles = { "loria_sodium_oxide.png" },
+    groups = { crumbly = 2 }
 })
 
 minetest.register_node("loria:cobalt_sulfate", {
     description = "Cobalt sulfate (CoSO4)",
     tiles = { "loria_cobalt_sulfate.png" },
-    groups = { crumbly = 2 },
-    drop = 'loria:cobalt_sulfate'
+    groups = { crumbly = 2 }
 })
 
 minetest.register_node("loria:chromia", {
     description = "Chromium (III) oxide (Cr2O3)",
     tiles = { "loria_chromia.png" },
-    groups = { crumbly = 1 },
-    drop = 'loria:chromia'
+    groups = { crumbly = 1 }
 })
 
 minetest.register_node("loria:chromium_trioxide", {
     description = "Chromium trioxide (CrO3)",
     tiles = { "loria_chromium_trioxide.png" },
-    groups = { cracky = 2 },
-    drop = 'loria:chromium_trioxide'
+    groups = { cracky = 2 }
 })
 
 minetest.register_node("loria:nickel_nitrate", {
     description = "Nickel (II) nitrate (Ni(NO3)2)",
     tiles = { "loria_nickel_nitrate.png" },
-    groups = { crumbly = 1 },
-    drop = 'loria:nickel_nitrate'
+    groups = { crumbly = 1 }
 })
 
 minetest.register_node("loria:chromium_fluoride", {
     description = "Chromium (III) fluoride (CrF3)",
     tiles = { "loria_chromium_fluoride.png" },
-    groups = { cracky = 2 },
-    drop = 'loria:chromium_fluoride'
+    groups = { cracky = 2 }
 })
 
 minetest.register_node("loria:chromium_fluoride_capital", {

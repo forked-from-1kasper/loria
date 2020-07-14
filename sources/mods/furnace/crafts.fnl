@@ -131,10 +131,15 @@
     :time 6}
    {:input  [{:name "loria:humus"           :count 2}]
     :output [{:name "loria:silicon_dioxide" :count 1}]
-    :time 10}])
+    :time 10}
+   {:input  [{:name "loria:sodium_peroxide" :count 2}
+             {:name "loria:empty_balloon"   :count 1}]
+    :output [{:name "loria:sodium_oxide"    :count 2}
+             {:name "loria:oxygen_balloon"  :count 1}]
+    :time 5}])
 
 (global furnace_crafts
-  [{:input [{:name "loria:mushroom_mass"    :count 1}]
+  [{:input  [{:name "loria:mushroom_mass"    :count 1}]
     :output [{:name "loria:silicon_dioxide" :count 1}]
     :time 7}
    {:input  [{:name "loria:aluminium_ingot" :count 5}]
