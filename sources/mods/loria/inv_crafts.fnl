@@ -14,10 +14,28 @@
              {:name "loria:copper_sulfate"             :count 1}]
     :output [{:name "loria:copper"                     :count 1}
              {:name "loria:lead_sulfate"               :count 1}]}
-   {:input  [{:name "loria:purpura"                    :count 15}
+   {:input  [{:name "loria:naga"                       :count 25}
              {:name "loria:bucket_empty"               :count 1}]
     :output [{:name "loria:bucket_lucidum"             :count 1}]}
-   {:input  [{:name "loria:naga"                       :count 20}
+   {:input  [{:name "loria:purpura"                    :count 30}
+             {:name "loria:bucket_empty"               :count 1}]
+    :output [{:name "loria:bucket_lucidum"             :count 1}]}
+   {:input  [{:name "loria:vastatorem"                 :count 20}
+             {:name "loria:bucket_empty"               :count 1}]
+    :output [{:name "loria:bucket_lucidum"             :count 1}]}
+   {:input  [{:name "loria:deus"                       :count 40}
+             {:name "loria:bucket_empty"               :count 1}]
+    :output [{:name "loria:bucket_lucidum"             :count 1}]}
+   {:input  [{:name "loria:vult"                       :count 40}
+             {:name "loria:bucket_empty"               :count 1}]
+    :output [{:name "loria:bucket_lucidum"             :count 1}]}
+   {:input  [{:name "loria:infernum"                   :count 40}
+             {:name "loria:bucket_empty"               :count 1}]
+    :output [{:name "loria:bucket_lucidum"             :count 1}]}
+   {:input  [{:name "loria:periculum"                  :count 25}
+             {:name "loria:bucket_empty"               :count 1}]
+    :output [{:name "loria:bucket_lucidum"             :count 1}]}
+   {:input  [{:name "loria:viridi_petasum_body"        :count 40}
              {:name "loria:bucket_empty"               :count 1}]
     :output [{:name "loria:bucket_lucidum"             :count 1}]}
    {:input  [{:name "loria:potassium_ingot"            :count 2}

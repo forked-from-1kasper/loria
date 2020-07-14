@@ -47,7 +47,7 @@
     {:description (string.format "Timor body (%s)" name)
      :tiles [(string.format "loria_timor_body_%d.png" idx)]
      :groups {:cracky 2}}))
-(minetest.register_alias "loria:timor_body_1" "loria:timor_body")
+(minetest.register_alias "loria:timor_body" "loria:timor_body_1")
 
 (local timor-cids (map minetest.get_content_id timor.body-nodes))
 (defun randtimor []

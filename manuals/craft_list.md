@@ -19,59 +19,65 @@
 | № | Input | Output |
 | - | ----- | ------ |
 |1|Lead × 1, Copper sulfate × 1|Copper × 1, Lead sulfate × 1|
-|2|Purpura × 15, Bucket empty × 1|Bucket lucidum × 1|
-|3|Naga × 20, Bucket empty × 1|Bucket lucidum × 1|
-|4|Potassium ingot × 2, Bucket water × 2, Empty balloon × 1|Bucket potassium hydroxide × 2, Hydrogen balloon × 2|
-|5|Broken drill × 1, Battery × 1|Drill × 1|
-|6|Aluminium cable × 10, Lead case × 1|Battery box × 1|
-|7|Uranium tetrachloride × 1, Potassium ingot × 1|Uranium × 1, Potassium chloride × 4|
-|8|Lead × 4|Lead case × 1|
-|9|Lead × 3|Gas × 1|
-|10|Lead case × 1, Lead × 1|Lead box × 1|
-|11|Silicon × 3|Silicon box × 1|
-|12|Stick × 1, Copper hammer head × 1|Copper hammer × 1|
-|13|Zinc ingot × 1, Bucket hydrochloric acid × 2, Empty balloon × 1|Zinc chloride × 1, Bucket empty × 2, Hydrogen balloon × 1|
-|14|Aluminium ingot × 1, Bucket hydrochloric acid × 3, Empty balloon × 1|Aluminium chloride × 1, Bucket empty × 3, Hydrogen balloon × 1|
-|15|Potassium ingot × 2, Bucket hydrochloric acid × 2, Empty balloon × 1|Potassium chloride × 2, Bucket empty × 2, Hydrogen balloon × 1|
-|16|Lead case × 1, Wolfram filament × 1, Fused quartz × 1, Aluminium cable × 1|Lamp off × 1|
-|17|Caput × 20|Mushroom mass × 1|
-|18|Conc × 20|Mushroom mass × 1|
-|19|Deus × 20|Mushroom mass × 1|
-|20|Grebe × 20|Mushroom mass × 1|
-|21|Infernum × 20|Mushroom mass × 1|
-|22|Periculum × 20|Mushroom mass × 1|
-|23|Picea × 20|Mushroom mass × 1|
-|24|Pulchram × 20|Mushroom mass × 1|
-|25|Purpura × 20|Mushroom mass × 1|
-|26|Pusilli × 20|Mushroom mass × 1|
-|27|Quercu × 20|Mushroom mass × 1|
-|28|Rosea × 20|Mushroom mass × 1|
-|29|Secreta × 20|Mushroom mass × 1|
-|30|Vastatorem × 20|Mushroom mass × 1|
-|31|Vult × 20|Mushroom mass × 1|
-|32|Copper ingot × 1|Copper cable × 15|
-|33|Aluminium ingot × 1|Aluminium cable × 15|
-|34|Wolfram ingot × 1|Wolfram cable × 15|
-|35|Platinum ingot × 1|Platinum cable × 15|
-|36|Calcium ingot × 1|Calcium cable × 15|
-|37|Uranium ingot × 1|Uranium cable × 15|
-|38|Thorium ingot × 1|Thorium cable × 15|
-|39|Plutonium ingot × 1|Plutonium cable × 15|
-|40|Viridi petasum stem × 1|Stick × 6|
-|41|Colossus stem × 1|Stick × 6|
-|42|Column stem × 1|Stick × 6|
-|43|Turris stem × 1|Stick × 6|
-|44|Rete stem × 1|Stick × 6|
-|45|Timor stem × 1|Stick × 6|
-|46|Avarum × 20|Avarum pressed × 1|
-|47|Cruento × 20|Cruento pressed × 1|
-|48|Lectica × 20|Lectica pressed × 1|
-|49|Rami × 20|Rami pressed × 1|
-|50|Spears × 20|Spears pressed × 1|
-|51|Truncus 1 × 20|Truncus 1 pressed × 1|
-|52|Truncus 2 × 20|Truncus 2 pressed × 1|
-|53|Truncus 3 × 20|Truncus 3 pressed × 1|
-|54|Veteris × 20|Veteris pressed × 1|
+|2|Naga × 25, Bucket empty × 1|Bucket lucidum × 1|
+|3|Purpura × 30, Bucket empty × 1|Bucket lucidum × 1|
+|4|Vastatorem × 20, Bucket empty × 1|Bucket lucidum × 1|
+|5|Deus × 40, Bucket empty × 1|Bucket lucidum × 1|
+|6|Vult × 40, Bucket empty × 1|Bucket lucidum × 1|
+|7|Infernum × 40, Bucket empty × 1|Bucket lucidum × 1|
+|8|Periculum × 25, Bucket empty × 1|Bucket lucidum × 1|
+|9|Viridi petasum body × 40, Bucket empty × 1|Bucket lucidum × 1|
+|10|Potassium ingot × 2, Bucket water × 2, Empty balloon × 1|Bucket potassium hydroxide × 2, Hydrogen balloon × 2|
+|11|Broken drill × 1, Battery × 1|Drill × 1|
+|12|Aluminium cable × 10, Lead case × 1|Battery box × 1|
+|13|Uranium tetrachloride × 1, Potassium ingot × 1|Uranium × 1, Potassium chloride × 4|
+|14|Lead × 4|Lead case × 1|
+|15|Lead × 3|Gas × 1|
+|16|Lead case × 1, Lead × 1|Lead box × 1|
+|17|Silicon × 3|Silicon box × 1|
+|18|Stick × 1, Copper hammer head × 1|Copper hammer × 1|
+|19|Zinc ingot × 1, Bucket hydrochloric acid × 2, Empty balloon × 1|Zinc chloride × 1, Bucket empty × 2, Hydrogen balloon × 1|
+|20|Aluminium ingot × 1, Bucket hydrochloric acid × 3, Empty balloon × 1|Aluminium chloride × 1, Bucket empty × 3, Hydrogen balloon × 1|
+|21|Potassium ingot × 2, Bucket hydrochloric acid × 2, Empty balloon × 1|Potassium chloride × 2, Bucket empty × 2, Hydrogen balloon × 1|
+|22|Lead case × 1, Wolfram filament × 1, Fused quartz × 1, Aluminium cable × 1|Lamp off × 1|
+|23|Caput × 20|Mushroom mass × 1|
+|24|Conc × 20|Mushroom mass × 1|
+|25|Deus × 20|Mushroom mass × 1|
+|26|Grebe × 20|Mushroom mass × 1|
+|27|Infernum × 20|Mushroom mass × 1|
+|28|Periculum × 20|Mushroom mass × 1|
+|29|Picea × 20|Mushroom mass × 1|
+|30|Pulchram × 20|Mushroom mass × 1|
+|31|Purpura × 20|Mushroom mass × 1|
+|32|Pusilli × 20|Mushroom mass × 1|
+|33|Quercu × 20|Mushroom mass × 1|
+|34|Rosea × 20|Mushroom mass × 1|
+|35|Secreta × 20|Mushroom mass × 1|
+|36|Vastatorem × 20|Mushroom mass × 1|
+|37|Vult × 20|Mushroom mass × 1|
+|38|Copper ingot × 1|Copper cable × 15|
+|39|Aluminium ingot × 1|Aluminium cable × 15|
+|40|Wolfram ingot × 1|Wolfram cable × 15|
+|41|Platinum ingot × 1|Platinum cable × 15|
+|42|Calcium ingot × 1|Calcium cable × 15|
+|43|Uranium ingot × 1|Uranium cable × 15|
+|44|Thorium ingot × 1|Thorium cable × 15|
+|45|Plutonium ingot × 1|Plutonium cable × 15|
+|46|Viridi petasum stem × 1|Stick × 6|
+|47|Colossus stem × 1|Stick × 6|
+|48|Column stem × 1|Stick × 6|
+|49|Turris stem × 1|Stick × 6|
+|50|Rete stem × 1|Stick × 6|
+|51|Timor stem × 1|Stick × 6|
+|52|Avarum × 20|Avarum pressed × 1|
+|53|Cruento × 20|Cruento pressed × 1|
+|54|Lectica × 20|Lectica pressed × 1|
+|55|Rami × 20|Rami pressed × 1|
+|56|Spears × 20|Spears pressed × 1|
+|57|Truncus 1 × 20|Truncus 1 pressed × 1|
+|58|Truncus 2 × 20|Truncus 2 pressed × 1|
+|59|Truncus 3 × 20|Truncus 3 pressed × 1|
+|60|Veteris × 20|Veteris pressed × 1|
 
 ## Furnace
 
