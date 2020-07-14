@@ -23,7 +23,7 @@
 |3|Purpura × 30, Bucket empty × 1|Bucket lucidum × 1|
 |4|Vastatorem × 20, Bucket empty × 1|Bucket lucidum × 1|
 |5|Deus × 40, Bucket empty × 1|Bucket lucidum × 1|
-|6|Vult × 40, Bucket empty × 1|Bucket lucidum × 1|
+|6|Vult × 50, Bucket empty × 1|Bucket lucidum × 1|
 |7|Infernum × 40, Bucket empty × 1|Bucket lucidum × 1|
 |8|Periculum × 25, Bucket empty × 1|Bucket lucidum × 1|
 |9|Viridi petasum body × 40, Bucket empty × 1|Bucket lucidum × 1|

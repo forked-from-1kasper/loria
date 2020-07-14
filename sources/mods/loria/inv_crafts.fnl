@@ -26,7 +26,7 @@
    {:input  [{:name "loria:deus"                       :count 40}
              {:name "loria:bucket_empty"               :count 1}]
     :output [{:name "loria:bucket_lucidum"             :count 1}]}
-   {:input  [{:name "loria:vult"                       :count 40}
+   {:input  [{:name "loria:vult"                       :count 50}
              {:name "loria:bucket_empty"               :count 1}]
     :output [{:name "loria:bucket_lucidum"             :count 1}]}
    {:input  [{:name "loria:infernum"                   :count 40}
