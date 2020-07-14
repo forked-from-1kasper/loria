@@ -20,4 +20,4 @@
   "ground" "switch" "battery"
   "transformer" "infinite" "consumer"
   "riteg" "cables" "accumulator"
-  "lamp" "multimeter")
+  "lamp" "multimeter" "relay")

@@ -1,4 +1,5 @@
 (require-macros :useful-macros)
+(global ground "gnd")
 
 (define-type node-table
   (λ [cls self]
@@ -15,7 +16,7 @@
 
 (fn map-nodes [circ]
   (local tbl (node-table))
-  (tbl:add-to-nodes :gnd)
+  (tbl:add-to-nodes ground)
 
   (each [_ elem (ipairs circ)]
     (set tbl.components (+ tbl.components 1))
@@ -76,8 +77,9 @@
     (var res {:voltages {} :currents {}})
     ;; make “node — voltage” table
     (each [name pin (pairs tbl.nodes)]
-      (let [v (or (solution:get pin 1) (complex 0 0))]
+      (let [v (or (solution:get pin 1) (real 0))]
         (tset res.voltages name v)))
+    (tset res.voltages ground (real 0))
 
     ;; make “source — current” table
     (each [id elem (ipairs circ)]
