@@ -5,8 +5,13 @@ dofile("../sources/mods/loria/conf.lua")
 dofile("../sources/mods/loria/inv_crafts.lua")
 dofile("../sources/mods/furnace/crafts.lua")
 
+local special_names = {
+    ["furnace:gas"] = "Gas powered furnace",
+    ["furnace:electric"] = "Electric furnace"
+}
+
 function process_content_name(name)
-    return capitalization(name:gsub("^%a+:", ""))
+    return special_names[name] or capitalization(name:gsub("^%a+:", ""))
 end
 
 function process_stack_list(stack_list)

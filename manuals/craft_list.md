@@ -32,7 +32,7 @@
 |12|Aluminium cable × 10, Lead case × 1|Battery box × 1|
 |13|Uranium tetrachloride × 1, Potassium ingot × 1|Uranium × 1, Potassium chloride × 4|
 |14|Lead × 4|Lead case × 1|
-|15|Lead × 3|Gas × 1|
+|15|Lead × 3|Gas powered furnace × 1|
 |16|Lead case × 1, Lead × 1|Lead box × 1|
 |17|Silicon × 3|Silicon box × 1|
 |18|Stick × 1, Copper hammer head × 1|Copper hammer × 1|
