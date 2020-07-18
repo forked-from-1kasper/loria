@@ -205,7 +205,7 @@
        :output [ingot-or-node {:name (.. "loria:" place) :count 1}]
        :time 3}))
 
-  (if params.has_ingot
+  (when params.has_ingot
     (table.insert refiner_crafts
       {:input  [{:name (.. "loria:" name "_ingot") :count 9}]
        :output [{:name (.. "loria:" name)          :count 1}]
