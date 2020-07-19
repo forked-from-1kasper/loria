@@ -41,7 +41,7 @@
    :on_destruct reset_current
    :on_timer (reset_consumer "electricity:lamp_on")})
 
-(local Pₘᵢₙ 0.7)
+(local Pₘᵢₙ 0.3)
 (local Iₘₐₓ 1)
 
 (fn get-sparks-amount []

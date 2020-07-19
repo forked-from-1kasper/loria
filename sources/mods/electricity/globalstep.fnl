@@ -38,7 +38,7 @@
         φᵢ (meta:get_float :φᵢ)
         φᵤ (meta:get_float :φᵤ)
         φ (- φᵤ φᵢ)
-        P (* I U (math.cos φ))]
+        P (* 0.5 I U (math.cos φ))]
     (≥ P consumer.Pₘᵢₙ)))
 
 (fn check-consumer [meta consumer]

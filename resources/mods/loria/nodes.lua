@@ -178,6 +178,18 @@ minetest.register_node("loria:chromium_trioxide", {
     groups = { cracky = 2 }
 })
 
+minetest.register_node("loria:chromic_chloride", {
+    description = "Chromium (III) chloride (CrCl3)",
+    tiles = { "loria_chromic_chloride.png" },
+    groups = { cracky = 2 }
+})
+
+minetest.register_node("loria:chromium", {
+    description = "Chromium (Cr)",
+    tiles = { "loria_chromium.png" },
+    groups = { cracky = 1 }
+})
+
 minetest.register_node("loria:nickel_nitrate", {
     description = "Nickel (II) nitrate (Ni(NO3)2)",
     tiles = { "loria_nickel_nitrate.png" },

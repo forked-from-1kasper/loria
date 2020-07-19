@@ -24,14 +24,10 @@
         (string.format "%s^[colorize:%sf0" conf.tiles.side conf.color)
         (string.format "%s^[colorize:%sf0" conf.tiles.connector conf.color)
         (string.format "%s^[colorize:%sf0" conf.tiles.connector conf.color)]
-     :paramtype "light"
-     :paramtype2 "facedir"
+     :paramtype "light" :paramtype2 "facedir"
 
-     :groups {:crumbly 3 :conductor 1}
-
-     :drawtype "nodebox"
-     :node_box conf.box
-     :selection_box conf.box
+     :groups {:crumbly 3 :conductor 1} :drawtype "nodebox"
+     :node_box conf.box :selection_box conf.box
 
      :on_construct (set_resis conf.R conf.X)
      :on_destruct reset_current})
@@ -67,3 +63,27 @@
        :tiles {:top-bottom "electricity_capacitor.png"
                :side       "electricity_capacitor_side.png"
                :connector  "electricity_capacitor_connect_side.png"}})))
+
+(local heavy-inductance 1)
+(local heavy-inductor-box
+  (let [α (infix -1 / 2 + 2 / 16)
+        β (infix  1 / 2 - 2 / 16)]
+    {:type "fixed"
+     :fixed [[(/ -1 2) (/ -1 2) (/ -1 2) (/ 1 2) α       (/ 1 2)]
+             [(/ -1 2) β        (/ -1 2) (/ 1 2) (/ 1 2) (/ 1 2)]
+             [α        α        α        β       β       β]]}))
+
+(minetest.register_node "electricity:heavy_inductor"
+  {:description "Heavy inductor (1 H)"
+   :tiles ["electricity_heavy_inductor_top_bottom.png"
+           "electricity_heavy_inductor_top_bottom.png"
+           "electricity_heavy_inductor.png"
+           "electricity_heavy_inductor.png"
+           "electricity_heavy_inductor_connect_side.png"
+           "electricity_heavy_inductor_connect_side.png"]
+   :paramtype "light" :paramtype2 "facedir"
+   :groups {:crumbly 3 :conductor 1} :drawtype "nodebox"
+   :node_box heavy-inductor-box :selection_box heavy-inductor-box
+
+   :on_construct (set_resis 0 1) :on_destruct reset_current})
+(tset model "electricity:heavy_inductor" consumer)

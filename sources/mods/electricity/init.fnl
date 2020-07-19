@@ -15,7 +15,7 @@
 (global allocate ffi.new)
 
 (import :electricity
-  "complex" "matrix" "matrix-solve"
+  "complex" "matrix" "matrix-solve" "craftitems"
   "models" "functions" "sim" "globalstep"
   "ground" "switch" "battery"
   "transformer" "infinite" "consumer"

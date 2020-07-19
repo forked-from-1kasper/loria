@@ -86,8 +86,13 @@
    {:input  [{:name "loria:lead_case"                  :count 1}
              {:name "loria:wolfram_filament"           :count 1}
              {:name "loria:fused_quartz"               :count 1}
-             {:name "electricity:aluminium_cable"        :count 1}]
-    :output [{:name "electricity:lamp_off"               :count 1}]}])
+             {:name "electricity:aluminium_cable"      :count 1}]
+    :output [{:name "electricity:lamp_off"             :count 1}]}
+   {:input  [{:name "loria:chromia"                    :count 1}
+             {:name "loria:bucket_hydrochloric_acid"   :count 6}]
+    :output [{:name "loria:chromic_chloride"           :count 2}
+             {:name "loria:bucket_water"               :count 3}
+             {:name "loria:bucket_empty"               :count 3}]}])
 
 (each [name params (opairs small_mushrooms)]
   (table.insert inv_crafts

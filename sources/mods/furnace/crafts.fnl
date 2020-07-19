@@ -136,7 +136,23 @@
              {:name "loria:empty_balloon"   :count 1}]
     :output [{:name "loria:sodium_oxide"    :count 2}
              {:name "loria:oxygen_balloon"  :count 1}]
-    :time 5}])
+    :time 5}
+   {:input  [{:name "loria:chormium_trioxide" :count 4}
+             {:name "loria:empty_balloon"     :count 3}]
+    :output [{:name "loria:chromia"           :count 2}
+             {:name "loria:oxygen_balloon"    :count 3}]
+    :time 3}
+   {:input  [{:name "loria:chromia"         :count 1}
+             {:name "loria:aluminium"       :count 2}]
+    :output [{:name "loria:aluminium_oxide" :count 1}
+             {:name "loria:chromium"        :count 2}]
+    :time 5}
+   {:input  [{:name "loria:silicon"          :count 3}]
+    :output [{:name "electricity:transistor" :count 5}]
+    :time 20}
+   {:input  [{:name "loria:silicon"     :count 1}]
+    :output [{:name "electricity:diode" :count 5}]
+    :time 10}])
 
 (global furnace_crafts
   [{:input  [{:name "loria:mushroom_mass"    :count 1}]
@@ -225,7 +241,7 @@
     (each [_ name (ipairs timor.body-nodes)]
       (table.insert furnace_crafts
        {:input  [{:name name                      :count 3}]
-        :output [{:name "loria:silicon_dioxide" :count 1}]
+        :output [{:name "loria:silicon_dioxide"   :count 1}]
         :time 5})))
 
   (table.insert furnace_crafts
