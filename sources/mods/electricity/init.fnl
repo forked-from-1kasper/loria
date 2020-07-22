@@ -17,7 +17,6 @@
 (import :electricity
   "complex" "matrix" "matrix-solve" "craftitems"
   "models" "functions" "sim" "globalstep"
-  "ground" "switch" "battery"
-  "transformer" "infinite" "consumer"
-  "riteg" "cables" "accumulator"
-  "lamp" "multimeter" "relay")
+  "ground" "switch" "battery" "transformer" "infinite"
+  "consumer" "photoresistor" "riteg" "cables"
+  "accumulator" "lamp" "multimeter" "relay")

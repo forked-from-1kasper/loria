@@ -18,5 +18,5 @@
 (fn matrix.print [self]
   (for [i 1 self.size.width]
     (for [j 1 self.size.height]
-      (io.write (self:get i j) " "))
+      (io.write (tostring (self:get i j)) " "))
     (io.write "\n")))

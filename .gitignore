@@ -4,3 +4,5 @@ loria/*
 sources/**/*.lua
 *.dll
 *.tgz
+*.zip
+TODO.txt
