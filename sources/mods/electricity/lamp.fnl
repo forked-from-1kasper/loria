@@ -38,7 +38,8 @@
       {:description (.. (capitalization conf.name) " (active)")
        :tiles conf.tiles :groups {:cracky 3 :conductor 1}
        :light_source conf.light-source :paramtype2 "facedir"
-       :on_destruct reset_current :on_timer (reset_consumer active-name)})
+       :drop disabled-name :on_destruct reset_current
+       :on_timer (reset_consumer active-name)})
     
     (tset consumers disabled-name
       {:on_activate (fn [pos] (swap_node pos active-name))
