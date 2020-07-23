@@ -28,10 +28,8 @@
 
      :groups {:crumbly 3 :conductor 1} :drawtype "nodebox"
      :node_box conf.box :selection_box conf.box
-
-     :on_construct (set_resis conf.R conf.X)
      :on_destruct reset_current})
-  (tset model name consumer))
+  (tset model name (consumer conf.R conf.X)))
 
 (local color-code
   {-2 {:color "#cccccc" :desc "0.01"}
@@ -85,5 +83,5 @@
    :groups {:crumbly 3 :conductor 1} :drawtype "nodebox"
    :node_box heavy-inductor-box :selection_box heavy-inductor-box
 
-   :on_construct (set_resis 0 1) :on_destruct reset_current})
-(tset model "electricity:heavy_inductor" consumer)
+   :on_destruct reset_current})
+(tset model "electricity:heavy_inductor" (consumer 0 1))

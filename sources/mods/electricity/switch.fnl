@@ -1,5 +1,6 @@
 (require-macros :infix)
 
+(local switch-resis 0.05)
 (local switch-box
   {:type "fixed"
    :fixed [(/ -1 2) (/ -1 2)                (/ -1 2)
@@ -27,7 +28,6 @@
    :on_rightclick
      (fn [pos node clicker itemstack pointed-thing]
        (let [meta (minetest.get_meta pos)]
-         (meta:set_float :resis 0.05)
          (swap_node pos "electricity:switch_on"))
        nil)})
 
@@ -59,4 +59,4 @@
          (reset_current pos)
          (swap_node pos "electricity:switch_off"))
        nil)})
-(tset model "electricity:switch_on" consumer)
+(tset model "electricity:switch_on" (consumer switch-resis))

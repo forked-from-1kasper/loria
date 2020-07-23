@@ -22,12 +22,16 @@
         device name input (.. "hole-" name) value
         :voltage (.. "v" name) (.. "hole-" name) output (complex 0 0)))))
 
-(defun consumer [pos id]
-  (let [meta (minetest.get_meta pos)
-        R  (real (∨ (meta:get_float :resis) 0))
-        X′ (∨ (meta:get_float :react) 0)
-        X  (if (≥ X′ 0) (inductance X′) (capacitance X′))]
-    (twopole :consumer id pos (+ R X))))
+(fn get-Z [R′ X′]
+  (let [R (∨ R′ 0) X (∨ X′ 0)]
+    (+ (real R) (if (≥ X 0) (inductance X) (capacitance X)))))
+
+(fn get-resis-from-meta [pos]
+  (let [meta (minetest.get_meta pos)]
+    (get-Z (meta:get_float :resis) (meta:get_float :react))))
+
+(defun vconsumer [pos id] (twopole :consumer id pos (get-resis-from-meta pos)))
+(defun consumer [R X] (fn [pos id] (twopole :consumer id pos (get-Z R X))))
 
 (defun vsource [pos id]
   (let [meta (minetest.get_meta pos)

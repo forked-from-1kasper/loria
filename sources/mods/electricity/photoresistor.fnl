@@ -6,8 +6,8 @@
 
 (fn log [b x] (/ (math.log x) (math.log b)))
 
-(local Rₘᵢₙ 1)
-(local Rₘₐₓ 1000)
+(local Rₘᵢₙ     0.01)
+(local Rₘₐₓ (^ 10 6))
 
 (local γ (log 16 (/ Rₘᵢₙ Rₘₐₓ)))
 (local R Rₘₐₓ)

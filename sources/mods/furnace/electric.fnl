@@ -33,9 +33,9 @@
 (tset consumers "furnace:electric"
   {:on_activate (partial run_furnace conf)
    :on_deactivate (partial stop_furnace conf)
-   :Pₘᵢₙ 50 :Iₘₐₓ 10
+   :Pₘᵢₙ 1000 :Iₘₐₓ 10
    :burn (fn [pos] (swap_node pos "furnace:electric_broken"))})
 
 (register_furnace conf)
-(tset model "furnace:electric" consumer)
-(tset model "furnace:electric_active" consumer)
+(tset model "furnace:electric" (consumer 50 10))
+(tset model "furnace:electric_active" (consumer 50 10))

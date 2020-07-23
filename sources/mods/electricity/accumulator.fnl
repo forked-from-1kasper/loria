@@ -32,7 +32,6 @@
            inv (meta:get_inventory)]
        (inv:set_size :place 1)
        (meta:set_string :formspec charger-formspec)
-       (meta:set_float :resis charger-box-resis)
        (-> (minetest.get_node_timer pos) (: :start 0.5))))
 
    :on_destruct (andthen reset_current drop_everything)
@@ -59,4 +58,4 @@
      (let [inv (: (minetest.get_meta pos) :get_inventory)]
        (if (= (: (inv:get_stack listname index) :get_count) 1) 0 1)))})
 
-(tset model "electricity:charger_box" consumer)
+(tset model "electricity:charger_box" (consumer charger-box-resis))

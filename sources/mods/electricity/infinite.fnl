@@ -30,12 +30,11 @@
       "electricity_plus.png^[colorize:#ff000050"]
   :paramtype2 "facedir"
   :groups {:crumbly 3 :conductor 1}
-  :on_construct (set_resis 5)
   :on_destruct reset_current})
-(tset model "electricity:infinite_consumer" consumer)
+(tset model "electricity:infinite_consumer" (consumer 5))
 
 (minetest.register_node "electricity:heavy_infinite_consumer"
-  {:description "Infinite consumer"
+  {:description "Heavy infinite consumer"
    :tiles
      ["loria_test.png^[colorize:#00ff0050"
       "loria_test.png^[colorize:#00ff0050"
@@ -45,6 +44,5 @@
       "electricity_plus.png^[colorize:#00ff0050"]
    :paramtype2 "facedir"
    :groups {:crumbly 3 :conductor 1}
-   :on_construct (set_resis 50)
    :on_destruct reset_current})
-(tset model "electricity:heavy_infinite_consumer" consumer)
+(tset model "electricity:heavy_infinite_consumer" (consumer (^ 10 10)))
