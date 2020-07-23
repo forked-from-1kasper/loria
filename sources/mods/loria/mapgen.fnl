@@ -1,3 +1,5 @@
+(require-macros :useful-macros)
+
 (each [i _ (ipairs pars_names)]
   (minetest.register_decoration
     {:deco_type "simple"
@@ -55,25 +57,27 @@
        :height_max params.max_height
        :y_min (or params.y_min -20)})))
 
+(local noise-params-default
+  {:offset 0.5
+   :scale 0.2
+   :spread {:x 3 :y 3 :z 3}
+   :seed 17676
+   :octaves 1
+   :persist 0.0})
+
 (each [name params (pairs ores)]
   (each [_ place (ipairs params.wherein)]
     (minetest.register_ore
-      {:ore_type       "blob"
-       :ore            (.. "loria:" name "_" place)
-       :wherein        (.. "loria:" place)
-       :clust_scarcity (* 16 16 16)
-       :clust_num_ores 5
-       :clust_size     3
-       :y_min          (or params.y_min -60)
-       :y_max          (or params.y_max 60)
-       :noise_threshold 0.0
-       :noise_params
-         {:offset 0.5
-          :scale 0.2
-          :spread {:x 3 :y 3 :z 3}
-          :seed 17676
-          :octaves 1
-          :persist 0.0}})))
+      {:ore_type        (∨ params.ore-type "blob")
+       :ore             (.. "loria:" name "_" place)
+       :wherein         (.. "loria:" place)
+       :clust_scarcity  (∨ params.clust-scarcity (* 16 16 16))
+       :clust_num_ores  (∨ params.clust-num-ores 5)
+       :clust_size      (∨ params.clust-size 3)
+       :y_min           (∨ params.y_min -60)
+       :y_max           (∨ params.y_max 60)
+       :noise_threshold (∨ params.noise-threshold 0.0)
+       :noise_params    (∨ params.noise noise-params-default)})))
 
 (minetest.register_decoration
   {:deco_type "simple"
