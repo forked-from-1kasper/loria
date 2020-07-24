@@ -221,10 +221,6 @@
     :output [{:name "loria:copper_hammer_head" :count 1}]
     :time 3}])
 
-(global high_temperature_furnace_crafts [])
-(append high_temperature_furnace_crafts furnace_crafts)
-(append high_temperature_furnace_crafts high_temperature_crafts)
-
 (each [name params (opairs ores)]
   (local ingot-or-node
     (if params.has_ingot
@@ -267,10 +263,12 @@
 
 (each [name params (opairs brickable)]
   (when (not params.crumbly)
-    (table.insert furnace_crafts
-      {:input  [{:name name               :count 1}]
-       :output [{:name (.. name "_brick") :count 2}]
-       :time 3})))
+    (let [target-list (if params.refractory high_temperature_crafts
+                                            furnace_crafts)]
+      (table.insert target-list
+        {:input  [{:name name               :count 1}]
+         :output [{:name (.. name "_brick") :count 2}]
+         :time 3}))))
 
 (global fuel_list
   {"loria:cinnabar"                    1
@@ -283,3 +281,7 @@
    "loria:potassium_chromium_fluoride" 5
    "loria:potassium_ingot"             5
    "loria:bucket_trisilane"            20})
+
+(global high_temperature_furnace_crafts [])
+(append high_temperature_furnace_crafts furnace_crafts)
+(append high_temperature_furnace_crafts high_temperature_crafts)

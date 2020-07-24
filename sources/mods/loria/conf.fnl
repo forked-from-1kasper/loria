@@ -200,14 +200,14 @@
    {:name "plutonium" :resis 150   }])
 
 (global brickable
-  {"loria:cinnabar"                         {:crumbly true }
-   "loria:plutonium_dioxide"                {:crumbly false}
-   "loria:thorium_dioxide"                  {:crumbly true }
-   "loria:uranium_tetrachloride"            {:crumbly true }
-   "loria:ammonium_manganese_pyrophosphate" {:crumbly true }
-   "loria:mercury_oxide"                    {:crumbly true }
-   "loria:red_mercury_oxide"                {:crumbly true }
-   "loria:lead_sulfate"                     {:crumbly true }})
+  {"loria:cinnabar"                         {:crumbly true   }
+   "loria:plutonium_dioxide"                {:refractory true}
+   "loria:thorium_dioxide"                  {:crumbly true   }
+   "loria:uranium_tetrachloride"            {:crumbly true   }
+   "loria:ammonium_manganese_pyrophosphate" {:crumbly true   }
+   "loria:mercury_oxide"                    {:crumbly true   }
+   "loria:red_mercury_oxide"                {:crumbly true   }
+   "loria:lead_sulfate"                     {:crumbly true   }})
 
 (global small_mushrooms
   {"pusilli"

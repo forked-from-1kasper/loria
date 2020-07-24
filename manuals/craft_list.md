@@ -112,7 +112,6 @@
 |25|Timor body 4 × 3|Silicon dioxide × 1|
 |26|Timor body 5 × 3|Silicon dioxide × 1|
 |27|Timor stem × 5|Silicon dioxide × 1|
-|28|Plutonium dioxide × 1|Plutonium dioxide brick × 2|
 
 ## Furnace (high temperature)
 
@@ -123,6 +122,7 @@
 |3|Thorium ingot × 9|Thorium × 1|
 |4|Thorium × 1|Thorium ingot × 9|
 |5|Copper ingot × 3|Copper hammer head × 1|
+|6|Plutonium dioxide × 1|Plutonium dioxide brick × 2|
 
 ## Refiner
 
