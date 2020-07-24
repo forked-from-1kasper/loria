@@ -152,10 +152,19 @@
     :time 20}
    {:input  [{:name "loria:silicon"     :count 1}]
     :output [{:name "electricity:diode" :count 5}]
-    :time 10}])
+    :time 10}
+   {:input  [{:name "loria:lead"          :count 1}
+             {:name "loria:selenium"      :count 1}]
+    :output [{:name "loria:lead_selenide" :count 1}]
+    :time 5}
+   {:input  [{:name "loria:thorium"         :count 1}
+             {:name "loria:oxygen_balloon"  :count 1}]
+    :output [{:name "loria:thorium_dioxide" :count 1}
+             {:name "loria:empty_balloon"   :count 1}]
+    :time 6}])
 
 (global furnace_crafts
-  [{:input  [{:name "loria:mushroom_mass"    :count 1}]
+  [{:input  [{:name "loria:mushroom_mass"   :count 1}]
     :output [{:name "loria:silicon_dioxide" :count 1}]
     :time 7}
    {:input  [{:name "loria:aluminium_ingot" :count 5}]
@@ -169,9 +178,6 @@
     :time 3}
    {:input  [{:name "loria:aluminium_ingot"      :count 2}]
     :output [{:name "loria:aluminium_brick_mold" :count 1}]
-    :time 3}
-   {:input  [{:name "loria:copper_ingot"       :count 3}]
-    :output [{:name "loria:copper_hammer_head" :count 1}]
     :time 3}
    {:input  [{:name "loria:aluminium_ingot" :count 1}]
     :output [{:name "loria:aluminium_case"  :count 1}]
@@ -190,24 +196,34 @@
     :output [{:name "loria:brick"           :count 4}
              {:name "loria:bucket_empty"    :count 1}]
     :time 2}
-   {:input  [{:name "loria:thorium_ingot" :count 9}]
-    :output [{:name "loria:thorium"       :count 1}]
-    :time 4}
-   {:input  [{:name "loria:thorium"       :count 1}]
-    :output [{:name "loria:thorium_ingot" :count 9}]
-    :time 4}
-   {:input  [{:name "loria:uranium_ingot" :count 9}]
-    :output [{:name "loria:uranium"       :count 1}]
-    :time 4}
-   {:input  [{:name "loria:uranium"       :count 1}]
-    :output [{:name "loria:uranium_ingot" :count 9}]
-    :time 4}
    {:input  [{:name "loria:plutonium_ingot" :count 9}]
     :output [{:name "loria:plutonium"       :count 1}]
     :time 4}
    {:input  [{:name "loria:plutonium"       :count 1}]
     :output [{:name "loria:plutonium_ingot" :count 9}]
     :time 4}])
+
+;; >1000 ℃
+(global high_temperature_crafts
+  [{:input  [{:name "loria:uranium"       :count 1}]
+    :output [{:name "loria:uranium_ingot" :count 9}]
+    :time 4}
+   {:input  [{:name "loria:uranium_ingot" :count 9}]
+    :output [{:name "loria:uranium"       :count 1}]
+    :time 4}
+   {:input  [{:name "loria:thorium_ingot" :count 9}]
+    :output [{:name "loria:thorium"       :count 1}]
+    :time 4}
+   {:input  [{:name "loria:thorium"       :count 1}]
+    :output [{:name "loria:thorium_ingot" :count 9}]
+    :time 4}
+   {:input  [{:name "loria:copper_ingot"       :count 3}]
+    :output [{:name "loria:copper_hammer_head" :count 1}]
+    :time 3}])
+
+(global high_temperature_furnace_crafts [])
+(append high_temperature_furnace_crafts furnace_crafts)
+(append high_temperature_furnace_crafts high_temperature_crafts)
 
 (each [name params (opairs ores)]
   (local ingot-or-node

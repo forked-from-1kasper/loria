@@ -6,7 +6,8 @@ dofile("../sources/mods/loria/inv_crafts.lua")
 dofile("../sources/mods/furnace/crafts.lua")
 
 local special_names = {
-    ["furnace:gas"] = "Gas powered furnace",
+    ["furnace:gas"] = "Gas powered furnace (PbSe)",
+    ["furnace:thorium"] = "Gas powered furnace (ThO₂)",
     ["furnace:electric"] = "Electric furnace"
 }
 
@@ -64,4 +65,5 @@ print("")
 
 print(mk_table("Inventory", inv_crafts))
 print(mk_table("Furnace", furnace_crafts))
+print(mk_table("Furnace (high temperature)", high_temperature_crafts))
 print(mk_table("Refiner", refiner_crafts))

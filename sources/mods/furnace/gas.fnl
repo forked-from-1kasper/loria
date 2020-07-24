@@ -59,34 +59,36 @@
                       process-liquid-fuel process-solid-fuel)]
       (handler pos meta inv fuel burning-time elapsed))))
 
-(register_furnace
-  {:name "gas"
-   :description "Gas furnace"
-   :lists {:gas 1 :fuel 1}
-   :on_tick [(update_fuel fuel_list) update_gas]
-   :is_furnace_ready furnace-ready?
-   :additional_formspec
-     (fn [meta]
-       (.. "label[0,1.5;Gas]"
-           "list[context;gas;0,2;1,1;]"
-           "label[2,1.5;Fuel]"
-           "list[context;fuel;2,2;1,1;]"))
-   :textures
-     {:inactive
-        ["furnace_side.png" "furnace_side.png"
-         "furnace_side.png" "furnace_side.png"
-         "furnace_side.png" "furnace_gas_front.png"]
-      :active
-        ["furnace_side.png" "furnace_side.png"
-         "furnace_side.png" "furnace_side.png"
-         "furnace_side.png"
-         {:image "furnace_gas_front_active.png"
-          :backface_culling false
-          :animation
-            {:type     "vertical_frames"
-             :aspect_w 16
-             :aspect_h 16
-             :length   1.5}}]}
-   :groups {:cracky 2} :light_source 10
-   :after_stop (fn [pos] (-> (minetest.get_meta pos) (: :set_float :cycle 0)))
-   :crafts furnace_crafts})
+(fn gas-furnace-formspec [meta]
+  (.. "label[0,1.5;Gas]"
+      "list[context;gas;0,2;1,1;]"
+      "label[2,1.5;Fuel]"
+      "list[context;fuel;2,2;1,1;]"))
+
+(fn register-gas-furnace [name desc crafts]
+  (let [furnace-side         (.. "furnace_" name "_side.png")
+        furnace-front        (.. "furnace_" name "_front.png")
+        furnace-front-active (.. "furnace_" name "_front_active.png")]
+    (register_furnace
+      {:name name :description desc
+       :lists {:gas 1 :fuel 1}
+       :on_tick [(update_fuel fuel_list) update_gas]
+       :is_furnace_ready furnace-ready?
+       :additional_formspec gas-furnace-formspec
+       :textures
+         {:inactive
+            [furnace-side furnace-side furnace-side
+             furnace-side furnace-side furnace-front]
+          :active
+            [furnace-side furnace-side furnace-side
+             furnace-side furnace-side
+             {:image furnace-front-active
+              :backface_culling false
+              :animation {:type "vertical_frames"
+                          :aspect_w 16 :aspect_h 16 :length 1.5}}]}
+       :groups {:cracky 2} :light_source 10
+       :after_stop (fn [pos] (-> (minetest.get_meta pos) (: :set_float :cycle 0)))
+       :crafts crafts})))
+
+(register-gas-furnace "gas"     "Gas furnace (PbSe)" furnace_crafts)
+(register-gas-furnace "thorium" "Gas furnace (ThO2)" high_temperature_furnace_crafts)

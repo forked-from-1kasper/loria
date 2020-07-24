@@ -95,5 +95,19 @@
    :clust_scarcity (* 8 8 8)
    :clust_num_ores 8
    :clust_size     7
-   :y_min          -200
-   :y_max           120})
+   :y_min         -200
+   :y_max          120})
+
+(local selenium-spawn-places
+  ["loria:chromium_fluoride" "loria:chromia"
+   "loria:cobalt_blue" "loria:cinnabar"])
+(each [_ wherein (ipairs selenium-spawn-places)]
+  (minetest.register_ore
+    {:ore_type       "scatter"
+     :ore            "loria:selenium"
+     :wherein        wherein
+     :clust_scarcity (* 8 8 8)
+     :clust_num_ores 6
+     :clust_size     8
+     :y_min         -500
+     :y_max          0}))

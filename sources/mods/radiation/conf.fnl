@@ -32,10 +32,14 @@
 
   (activity:update
     {;; Thorium
-     "loria:thorium"             (α-β-γ 16 5 0)
-     "loria:thorium_ingot"       (α-β-γ 8  3 0)
-     "electricity:thorium_cable" (α-β-γ 6  2 0)
-     "loria:thorium_iodide"      (α-β-γ 12 4 0)
+     "loria:thorium"               (α-β-γ 16 5   0)
+     "loria:thorium_ingot"         (α-β-γ 8  3   0)
+     "electricity:thorium_cable"   (α-β-γ 6  2   0)
+     "loria:thorium_iodide"        (α-β-γ 12 4   0)
+     "loria:thorium_dioxide"       (α-β-γ 14 4.5 0)
+     "loria:thorium_dioxide_brick" (α-β-γ 10 3   0)
+     "furnace:thorium"             (α-β-γ 13 4   0)
+     "furnace:thorium_active"      (α-β-γ 13 4   0)
      ;; Uranium
      "loria:uranium"                     (α-β-γ 5 3   0)
      "loria:uranium_ingot"               (α-β-γ 3 1   0)

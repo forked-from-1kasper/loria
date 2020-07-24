@@ -1,3 +1,5 @@
+(require-macros :infix)
+
 (fn get-sparks-amount []
   (math.random 4 10))
 
@@ -40,7 +42,7 @@
        :light_source conf.light-source :paramtype2 "facedir"
        :drop disabled-name :on_destruct reset_current
        :on_timer (reset_consumer active-name)})
-    
+
     (tset consumers disabled-name
       {:on_activate (fn [pos] (swap_node pos active-name))
        :Pₘᵢₙ conf.Pₘᵢₙ :Iₘₐₓ conf.Iₘₐₓ :burn burn})
@@ -64,3 +66,9 @@
                   "electricity_lamp_broken_connect_side.png"]
    :light-source 14
    :Pₘᵢₙ 50 :Iₘₐₓ 5})
+
+;(local led-lamp-box
+;  {:type "fixed"
+;   :fixed [[(/ -1 2) (/ -1 2) (/ -1 2) (/ 1 2) (infix -1 / 2 + 2 / 16) (/ 1 2)]
+;           []
+;           []]})

@@ -46,17 +46,17 @@
    {:input  [{:name "loria:broken_drill"               :count 1}
              {:name "loria:battery"                    :count 1}]
     :output [{:name "loria:drill"                      :count 1}]}
-   {:input  [{:name "electricity:aluminium_cable"        :count 10}
+   {:input  [{:name "electricity:aluminium_cable"      :count 10}
              {:name "loria:lead_case"                  :count 1}]
-    :output [{:name "electricity:battery_box"            :count 1}]}
+    :output [{:name "electricity:battery_box"          :count 1}]}
    {:input  [{:name "loria:uranium_tetrachloride"      :count 1}
              {:name "loria:potassium_ingot"            :count 1}]
     :output [{:name "loria:uranium"                    :count 1}
              {:name "loria:potassium_chloride"         :count 4}]}
    {:input  [{:name "loria:lead"                       :count 4}]
     :output [{:name "loria:lead_case"                  :count 1}]}
-   {:input  [{:name "loria:lead"                       :count 3}]
-    :output [{:name "furnace:gas"                        :count 1}]}
+   {:input  [{:name "loria:lead_selenide"              :count 3}]
+    :output [{:name "furnace:gas"                      :count 1}]}
    {:input  [{:name "loria:lead_case"                  :count 1}
              {:name "loria:lead"                       :count 1}]
     :output [{:name "loria:lead_box"                   :count 1}]}

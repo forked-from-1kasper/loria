@@ -148,6 +148,18 @@ minetest.register_node("loria:lead_sulfate", {
     groups = { crumbly = 1 }
 })
 
+minetest.register_node("loria:lead_selenide", {
+    description = "Lead (II) selenide (PbSe)",
+    tiles = { "loria_lead_selenide.png" },
+    groups = { cracky = 1 }
+})
+
+minetest.register_node("loria:selenium", {
+    description = "Selenium (Se)",
+    tiles = { "loria_selenium.png" },
+    groups = { crumbly = 1 }
+})
+
 minetest.register_node("loria:sodium_peroxide", {
     description = "Sodium peroxide (Na2O2)",
     tiles = { "loria_sodium_peroxide.png" },
@@ -330,8 +342,7 @@ minetest.register_node("loria:mercury_oxide", {
 minetest.register_node("loria:red_mercury_oxide", {
     description = "Mercury (II) oxide (HgO, red)",
     tiles = { "loria_red_mercury_oxide.png" },
-    groups = { crumbly = 2 },
-    drop = 'loria:red_mercury_oxide'
+    groups = { crumbly = 2 }
 })
 
 minetest.register_node("loria:sulfur", {
@@ -350,6 +361,12 @@ minetest.register_node("loria:thorium", {
     description = "Thorium (Th)",
     tiles = { "loria_thorium.png" },
     groups = { cracky = 1 },
+})
+
+minetest.register_node("loria:thorium_dioxide", {
+    description = "Thorium dioxide (ThO2)",
+    tiles = { "loria_thorium_dioxide.png" },
+    groups = { cracky = 2 },
 })
 
 minetest.register_node("loria:plutonium", {

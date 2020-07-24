@@ -1,9 +1,13 @@
 #! /usr/bin/env bash
 
 if [[ -z "$*" ]]; then
-	FILES=`find . -name "*.png" -print0`
+	FILES=$(find . -name "*.png")
 else
 	FILES="$*"
 fi
 
-echo $FILES | while read -d $'\0' file; do convert "$file" -strip "$file"; done 
+for file in $FILES
+do
+	echo "Strip $file"
+	convert "$file" -strip "$file"
+done
