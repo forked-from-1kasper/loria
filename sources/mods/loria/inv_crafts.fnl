@@ -57,6 +57,8 @@
     :output [{:name "loria:lead_case"                  :count 1}]}
    {:input  [{:name "loria:lead_selenide"              :count 3}]
     :output [{:name "furnace:gas"                      :count 1}]}
+   {:input  [{:name "loria:thorium_dioxide"            :count 3}]
+    :output [{:name "furnace:thorium"                  :count 1}]}
    {:input  [{:name "loria:lead_case"                  :count 1}
              {:name "loria:lead"                       :count 1}]
     :output [{:name "loria:lead_box"                   :count 1}]}
