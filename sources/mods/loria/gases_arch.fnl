@@ -132,7 +132,7 @@
    :nodenames ["loria:test"]
    :interval 1 :chance 1
    :action (fn [pos]
-     (let [pos′ (vector.add pos (vector.new 0 1 0))]
+     (let [pos′ (above pos)]
        (when (= (. (minetest.get_node pos′) :name) "air")
          (minetest.set_node pos′ {:name "loria:chlorine" :param2 gas-levels}))))})
 

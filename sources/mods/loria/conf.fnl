@@ -190,24 +190,24 @@
                            (range timor.colours)))
 
 (global cables
-  [{:name "copper"    :resis 0.0225}
-   {:name "aluminium" :resis 0.036 }
-   {:name "wolfram"   :resis 0.055 }
-   {:name "platinum"  :resis 0.098 }
-   {:name "calcium"   :resis 0.046 }
-   {:name "uranium"   :resis 0.295 }
-   {:name "thorium"   :resis 0.1862}
-   {:name "plutonium" :resis 150   }])
+  [{:name "copper"    :resis   0.0225}
+   {:name "aluminium" :resis   0.0360}
+   {:name "wolfram"   :resis   0.0550}
+   {:name "platinum"  :resis   0.0980}
+   {:name "calcium"   :resis   0.0460}
+   {:name "uranium"   :resis   0.2950}
+   {:name "thorium"   :resis   0.1862}
+   {:name "plutonium" :resis 150.0000}])
 
 (global brickable
-  {"loria:cinnabar"                         {:crumbly true   }
+  {"loria:cinnabar"                         {:crumbly    true}
    "loria:plutonium_dioxide"                {:refractory true}
-   "loria:thorium_dioxide"                  {:crumbly true   }
-   "loria:uranium_tetrachloride"            {:crumbly true   }
-   "loria:ammonium_manganese_pyrophosphate" {:crumbly true   }
-   "loria:mercury_oxide"                    {:crumbly true   }
-   "loria:red_mercury_oxide"                {:crumbly true   }
-   "loria:lead_sulfate"                     {:crumbly true   }})
+   "loria:thorium_dioxide"                  {:crumbly    true}
+   "loria:uranium_tetrachloride"            {:crumbly    true}
+   "loria:ammonium_manganese_pyrophosphate" {:crumbly    true}
+   "loria:mercury_oxide"                    {:crumbly    true}
+   "loria:red_mercury_oxide"                {:crumbly    true}
+   "loria:lead_sulfate"                     {:crumbly    true}})
 
 (global small_mushrooms
   {"pusilli"
@@ -306,3 +306,29 @@
     :place_on "loria:sodium_peroxide"
     :fill_ratio 0.01
     :biomes "loria:acidic_landscapes"}})
+
+(global pickaxes
+  {"aluminium"  {:groupcaps {:cracky  {:times [5.0 3.0 2.0] :uses 20}
+                             :crumbly {:times [7.0 5.0 4.0] :uses 30}}}
+   "calcium"    {:groupcaps {:cracky  {:times [6.0 4.0 3.0] :uses 15}
+                             :crumbly {:times [8.0 6.0 5.0] :uses 40}}}
+   "copper"     {:groupcaps {:cracky  {:times [6.0 4.0 3.0] :uses 20}
+                             :crumbly {:times [8.0 6.0 5.0] :uses 40}}}
+   "magnesium"  {:groupcaps {:cracky  {:times [4.0 3.0 1.0] :uses 25}
+                             :crumbly {:times [6.0 5.0 3.0] :uses 50}}}
+   "molybdenum" {:groupcaps {:cracky  {:times [2.0 1.0 0.5] :uses 100}
+                             :crumbly {:times [4.0 3.0 1.5] :uses 200}}}
+   "platinum"   {:groupcaps {:cracky  {:times [2.5 2.0 1.0] :uses 70}
+                             :crumbly {:times [5.5 4.0 3.0] :uses 140}}}
+   "plutonium"  {:groupcaps {:cracky  {:times [1.5 0.7 0.4] :uses 270}
+                             :crumbly {:times [2.5 1.5 0.7] :uses 350}}}
+   "potassium"  {:groupcaps {:cracky  {:times [7.0 6.0 5.0] :uses 4}
+                             :crumbly {:times [9.9 8.5 5.5] :uses 5}}}
+   "thorium"    {:groupcaps {:cracky  {:times [6.0 4.0 2.0] :uses 40}
+                             :crumbly {:times [7.0 5.0 3.0] :uses 100}}}
+   "uranium"    {:groupcaps {:cracky  {:times [1.5 0.7 0.4] :uses 250}
+                             :crumbly {:times [2.5 1.7 1.0] :uses 290}}}
+   "wolfram"    {:groupcaps {:cracky  {:times [1.0 0.5 0.3] :uses 300}
+                             :crumbly {:times [2.0 1.0 0.5] :uses 400}}}
+   "zinc"       {:groupcaps {:cracky  {:times [5.0 4.0 3.0] :uses 25}
+                             :crumbly {:times [7.0 6.0 5.0] :uses 50}}}})

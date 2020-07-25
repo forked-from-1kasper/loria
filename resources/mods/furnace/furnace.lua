@@ -69,10 +69,7 @@ function furnace_on_timer(conf)
             end
 
             for _, result in ipairs(recipe.output) do
-                add_or_drop(
-                    inv, "output", result,
-                    vector.add(pos, vector.new(0, 1, 0))
-                )
+                add_or_drop(inv, "output", result, above(pos))
             end
         end
 

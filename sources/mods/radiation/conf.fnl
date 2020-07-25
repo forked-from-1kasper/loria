@@ -7,8 +7,8 @@
 (define-type activity-table nope)
 (fn activity-table.update [self tbl]
   (each [name val (pairs tbl)]
-    (if (pcall (fn [] (tset self (cid name) val)))
-        (tset self name val))))
+    (when (¬ pcall (fn [] (tset self (cid name) val)))
+      (tset self name val))))
 
 ;; Default radiation
 (defun null [] {:alpha 0 :beta 0 :gamma 0})
@@ -66,7 +66,11 @@
      "loria:periculum"   (α-β-γ 0 0 0.5)
      "loria:imitationis" (α-β-γ 0 0 0.05)
      "loria:nihil"       (α-β-γ 0 0 0.01)
-     "loria:lectica"     (α-β-γ 0 0 0.07)})
+     "loria:lectica"     (α-β-γ 0 0 0.07)
+     ;; Pickaxes
+     "loria:uranium_pickaxe"   (α-β-γ 3 2 0)
+     "loria:thorium_pickaxe"   (α-β-γ 5 2 0)
+     "loria:plutonium_pickaxe" (α-β-γ 8 0 0)})
 
   (each [name params (pairs ores)]
     (when (∈ :radioactive params)

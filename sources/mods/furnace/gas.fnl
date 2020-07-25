@@ -28,10 +28,8 @@
   (let [wear (fuel:get_wear)
         Δwear (infix (elapsed / burning-time) * 65535)]
     (if (≥ (+ wear Δwear) 65535)
-      (do (add_or_drop
-            inv "output"
-            {:name "loria:bucket_empty"}
-            (vector.add pos (vector.new 0 1 0)))
+      (do (add_or_drop inv "output"
+            {:name "loria:bucket_empty"} (above pos))
           (inv:set_list "fuel" [])
           false)
       (do (fuel:add_wear Δwear) (inv:set_stack "fuel" 1 fuel)

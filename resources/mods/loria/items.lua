@@ -64,7 +64,7 @@ minetest.register_craftitem("loria:super_drill", {
     description = "Super drill",
     stack_max = 1,
     liquids_pointable = false,
-    range = 5.0,
+    range = 10.0,
     inventory_image = "loria_super_drill.png",
     wield_image = "loria_super_drill.png",
     tool_capabilities = {
@@ -113,7 +113,7 @@ minetest.register_tool("loria:copper_hammer", {
             local inv = user:get_inventory()
             add_or_drop(
                 inv, "main", { name = node.name .. "_brick", count = 1 },
-                vector.add(user:get_pos(), vector.new(0, 1, 0))
+                above(user:get_pos())
             )
             inv:remove_item("main", { name = node.name, count = 1 })
         end
@@ -287,7 +287,7 @@ minetest.register_globalstep(function(dtime)
             end
 
             local pos = player:get_pos()
-            if get_gas(vector.add(vector.new(0, 1, 0), pos)) ~= "oxygen" and
+            if get_gas(above(pos)) ~= "oxygen" and
                get_gas(pos) ~= "oxygen" and oxygen <= 0 then
                 player:set_hp(player:get_hp() - 1)
             end

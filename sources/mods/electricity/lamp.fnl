@@ -1,7 +1,7 @@
 (require-macros :infix)
 
 (fn get-sparks-amount []
-  (math.random 4 10))
+  (math.random 5 15))
 
 (fn spawn-sparks [pos]
   (minetest.add_particlespawner
@@ -10,8 +10,8 @@
      :minpos pos :maxpos pos
      :minvel {:x -5 :y -5 :z -5}
      :maxvel {:x  5 :y  5 :z  5}
-     :minacc {:x -2 :y -2 :z -2}
-     :maxacc {:x -1 :y -1 :z -1}
+     :minacc {:x  0 :y -2 :z  0}
+     :maxacc {:x  0 :y -1 :z  0}
      :minexptime 0.5 :maxexptime 3
      :minsize 0.1 :maxsize 0.3
      :collisiondetection true :glow 14

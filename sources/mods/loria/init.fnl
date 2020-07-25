@@ -9,7 +9,7 @@
   "greet" "conf" "inv_crafts" "creative" "biomes"
   "ores" "mushrooms_nodes" "small_mushrooms" "mapgen"
   "liquids" "nodes" "gases_arch" "gases" "items" "craft"
-  "mushrooms" "hud" "sky" "player" "compatibility")
+  "mushrooms" "hud" "sky" "player" "compatibility" "pickaxe")
 
 (local start-items
   {"furnace:refiner_item"   1
