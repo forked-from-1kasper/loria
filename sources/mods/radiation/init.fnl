@@ -6,6 +6,9 @@
 (local radiation-vect (vector.new 16 16 16))
 (local radiation-effects-timeout 1)
 
+(local lethal-dose 1500) ; CU/h
+(local maximum-dose 5)   ; CU
+
 (fn get-activity [name]
   (or (if (∈ name minetest.registered_nodes)
           (. activity (minetest.get_content_id name))
@@ -109,7 +112,39 @@
                                     (player:get_inventory)))))
   radiation)
 
-(local maximum-dose 5)
+(fn reset-tint [player] (tint player transparent))
+(local effect-list
+  {"blindness"
+    {:prob      0.05
+     :min-dose  0.9
+     :priority  ["semiblindness"]
+     :action (fn [player] (tint player {:r 0 :g 0 :b 0 :a 255}))
+     :revert reset-tint}
+   "semiblindness"
+    {:prob      0.1
+     :min-dose  0.85
+     :conflicts ["blindness"]
+     :action (fn [player] (tint player {:r 0 :g 0 :b 0 :a 240}))
+     :revert reset-tint}})
+
+(fn applied? [meta name]
+  (> (meta:get_int name) 0))
+
+(fn drop-effect [player meta]
+  (fn [name] (let [effect (. effect-list name)
+                   revert (. effect :revert)]
+              (meta:set_int name 0) (revert player))))
+
+(minetest.register_on_respawnplayer (fn [player]
+  (foreach2 (drop-effect player (player:get_meta)) effect-list)))
+
+(minetest.register_on_joinplayer (fn [player]
+  (let [meta (player:get_meta)]
+    (each [name effect (pairs effect-list)]
+      (when (applied? meta name)
+        ;; https://github.com/minetest/minetest/issues/9024
+        ;; https://github.com/minetest/minetest/issues/2862
+        (effect.action player))))))
 
 (fn radiation-effects [player radiation]
   (local meta (player:get_meta))
@@ -120,16 +155,39 @@
   (meta:set_float :received_dose dose)
   (local dose-damage-limit (meta:get_float :dose_damage_limit))
 
+  ;; Damage after receiving a critical dose *for a long time*
   (when (> dose dose-damage-limit)
     (let [inv (player:get_inventory)
           drug-stack (. (inv:get_list :antiradiation) 1)
           drug-value (. antiradiation_drugs (drug-stack:get_name))]
       (if (∧ drug-value (≤ dose maximum-dose))
-        (do
-          (meta:set_float :dose_damage_limit (+ dose-damage-limit drug-value))
-          (drug-stack:set_count (- (drug-stack:get_count) 1))
-          (inv:set_stack :antiradiation 1 drug-stack))
-        (player:set_hp (- (player:get_hp) (math.floor dose)))))))
+        (do (meta:set_float :dose_damage_limit (+ dose-damage-limit drug-value))
+            (drug-stack:set_count (- (drug-stack:get_count) 1))
+            (inv:set_stack :antiradiation 1 drug-stack))
+        (player:set_hp (- (player:get_hp) (math.floor dose))))))
+
+  ;; Other effects
+  (let [meta (player:get_meta)]
+    (each [effect-name effect (pairs effect-list)]
+      (when (∧ (≥ dose effect.min-dose)
+               (≤ (math.random) effect.prob))
+        (let [conflicts (∨ effect.conflicts [])
+              priority  (∨ effect.priority [])]
+          (when (∧ (∀ x ∈ conflicts (¬ applied? meta x))
+                   (¬ applied? meta effect-name))
+            (foreach (drop-effect player meta) priority)
+            (meta:set_int effect-name 1) (effect.action player)))))))
+
+(local special-inventory ["creative_inv" "oxygen"])
+
+(fn drop-inventory [player]
+  (let [inv (player:get_inventory)
+        pos (player:get_pos)]
+    (each [listname lst (pairs (inv:get_lists))]
+      (when (¬ contains special-inventory listname)
+        (each [_ stack (ipairs lst)]
+          (minetest.add_item pos stack))
+        (inv:set_list listname [])))))
 
 (var radiation-timer 0)
 (def-globalstep [Δt]
@@ -142,7 +200,16 @@
             radiation′ (infix (radiation₀ + radiation) / 2)]
         (meta:set_float :radiation radiation′)
         (when (> radiation-timer radiation-effects-timeout)
+          ;; Lethal dose (immediate death)
+          (when (> radiation lethal-dose)
+            (drop-inventory player) (player:set_hp 0))
+          ;; Other effects
           (radiation-effects player radiation))))
 
     (when (> radiation-timer radiation-effects-timeout)
       (set radiation-timer 0))))
+
+(minetest.register_node "radiation:danger"
+  {:description "Radiation source"
+   :tiles ["radiation_danger.png"]
+   :groups {:cracky 1}})

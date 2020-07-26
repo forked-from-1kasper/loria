@@ -6,7 +6,7 @@
 (dofile (.. (minetest.get_modpath :loria) "/" "prelude.lua"))
 
 (import :loria
-  "greet" "conf" "inv_crafts" "creative" "biomes"
+  "greet" "conf" "inv_crafts" "creative" "tint" "biomes"
   "ores" "mushrooms_nodes" "small_mushrooms" "mapgen"
   "liquids" "nodes" "gases_arch" "gases" "items" "craft"
   "mushrooms" "hud" "sky" "player" "compatibility" "pickaxe")
@@ -24,12 +24,12 @@
   {:animation_speed 30
    :textures ["player.png"]
    :animations
-     {:stand     {:x 0   :y 79}
+     {:stand     {:x   0 :y  79}
       :lay       {:x 162 :y 166}
       :walk      {:x 168 :y 187}
       :mine      {:x 189 :y 198}
       :walk_mine {:x 200 :y 219}
-      :sit       {:x 81  :y 160}}
+      :sit       {:x  81 :y 160}}
    :collisionbox [-0.3 0.0 -0.3 0.3 1.7 0.3]
    :stepheight 0.6
    :eye_height 1.47})
@@ -134,3 +134,12 @@
             (let [entity (obj:get_luaentity)]
               (when (∧ entity (= entity.name "__builtin:item"))
                     (obj:remove))))))))})
+
+(minetest.register_privilege "kill"
+  {:description "Allow to use “/kill” command"})
+(minetest.register_chatcommand "kill"
+  {:params "[name]" :description "Kills player" :privs {"kill" true}
+   :func (fn [name₁ name₂]
+     (let [name (if (≠ name₁ "") name₁ name₂)
+           player (minetest.get_player_by_name name)]
+       (when player (player:set_hp 0))))})

@@ -70,7 +70,9 @@
      ;; Pickaxes
      "loria:uranium_pickaxe"   (α-β-γ 3 2 0)
      "loria:thorium_pickaxe"   (α-β-γ 5 2 0)
-     "loria:plutonium_pickaxe" (α-β-γ 8 0 0)})
+     "loria:plutonium_pickaxe" (α-β-γ 8 0 0)
+     ;; Other
+     "radiation:danger" (α-β-γ 300 150 50)})
 
   (each [name params (pairs ores)]
     (when (∈ :radioactive params)
