@@ -22,7 +22,6 @@
 
 (player_api.register_model "player.b3d"
   {:animation_speed 30
-   :textures ["player.png"]
    :animations
      {:stand     {:x   0 :y  79}
       :lay       {:x 162 :y 166}

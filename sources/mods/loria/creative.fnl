@@ -69,7 +69,7 @@
 
 (local creative-privs ["fly" "fast" "give" "noclip" "settime" "teleport"])
 
-(minetest.register_on_joinplayer (fn [player]
+(on-joinplayer [player]
   (let [meta (player:get_meta)
         inv (player:get_inventory)
         name (player:get_player_name)]
@@ -79,9 +79,10 @@
 
     (player:set_inventory_formspec (player-formspec))
 
-    (let [privs (minetest.get_player_privs name)]
-      (foreach (lambda [priv] (tset privs priv (or creative? nil))) creative-privs)
-      (minetest.set_player_privs name privs)))))
+    (let [privs    (minetest.get_player_privs name)
+          granted? (∨ creative? nil)]
+      (foreach (fn [priv] (tset privs priv granted?)) creative-privs)
+      (minetest.set_player_privs name privs))))
 
 (fn is-valid-balloon? [name]
   (= name "loria:oxygen_balloon"))

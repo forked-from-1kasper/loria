@@ -7,8 +7,8 @@
 (fn local-require [name]
   `(local ,name (ie.require ,(tostring name))))
 
-(fn def-globalstep [args ...]
-  `(minetest.register_globalstep (fn ,args ,(unpack [...]))))
+(fn minetest-register [func]
+  (fn [args ...] `(,(sym func) (fn ,args ,(unpack [...])))))
 
 (fn on-mods-loaded [...]
   `(minetest.register_on_mods_loaded (fn [] ,(unpack [...]))))
@@ -78,8 +78,10 @@
  "∀" (quantifier :all  "universal")
  "¬" (prefix :not) "−" (prefix "-")
  ;; Some useful macros for defining various functions
- :defun defun :on-mods-loaded on-mods-loaded
- :ffi-proc ffi-proc :def-globalstep def-globalstep
+ :defun defun :on-mods-loaded on-mods-loaded :ffi-proc ffi-proc
+ :def-globalstep (minetest-register "minetest.register_globalstep")
+ :on-leaveplayer (minetest-register "minetest.register_on_leaveplayer")
+ :on-joinplayer  (minetest-register "minetest.register_on_joinplayer")
  ;; Macros for matrices
  "+=" (function-assignment "+")
  "-=" (function-assignment "-")
