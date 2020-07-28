@@ -18,5 +18,5 @@
   "complex" "matrix" "matrix-solve" "craftitems"
   "models" "functions" "sim" "globalstep"
   "ground" "switch" "battery" "transformer" "infinite"
-  "consumer" "photoresistor" "riteg" "cables"
+  "consumer" "photoresistor" "riteg" "wires"
   "accumulator" "lamp" "multimeter" "relay")

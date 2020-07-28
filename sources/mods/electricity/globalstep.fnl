@@ -19,7 +19,7 @@
     (let [pos  (vector.add current vect)
           name (-> (minetest.get_node pos) (. :name))]
       (when (∧ (∨ (> (minetest.get_item_group name :conductor) 0)
-                  (> (minetest.get_item_group name :cable) 0))
+                  (> (minetest.get_item_group name :wire) 0))
                (∉ (serialize_pos pos) already-processed))
         (let [meta (minetest.get_meta pos)]
           (meta:set_float :I 0) (meta:set_float :U 0)

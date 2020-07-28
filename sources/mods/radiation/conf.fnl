@@ -34,7 +34,7 @@
     {;; Thorium
      "loria:thorium"               (α-β-γ 16 5   0)
      "loria:thorium_ingot"         (α-β-γ 8  3   0)
-     "electricity:thorium_cable"   (α-β-γ 6  2   0)
+     "electricity:thorium_wire"    (α-β-γ 6  2   0)
      "loria:thorium_iodide"        (α-β-γ 12 4   0)
      "loria:thorium_dioxide"       (α-β-γ 14 4.5 0)
      "loria:thorium_dioxide_brick" (α-β-γ 10 3   0)
@@ -43,13 +43,13 @@
      ;; Uranium
      "loria:uranium"                     (α-β-γ 5 3   0)
      "loria:uranium_ingot"               (α-β-γ 3 1   0)
-     "electricity:uranium_cable"         (α-β-γ 2 0.6 0)
+     "electricity:uranium_wire"          (α-β-γ 2 0.6 0)
      "loria:uranium_tetrachloride"       (α-β-γ 3 1   0)
      "loria:uranium_tetrachloride_brick" (α-β-γ 2 1   0)
      ;; Plutonium
      "loria:plutonium"               (α-β-γ 20 0 0)
      "loria:plutonium_ingot"         (α-β-γ 5  0 0)
-     "electricity:plutonium_cable"   (α-β-γ 7  0 0)
+     "electricity:plutonium_wire"    (α-β-γ 7  0 0)
      "loria:plutonium_trifluoride"   (α-β-γ 20 0 0)
      "loria:plutonium_tetrafluoride" (α-β-γ 16 0 0)
      "loria:plutonium_dioxide"       (α-β-γ 40 0 0)

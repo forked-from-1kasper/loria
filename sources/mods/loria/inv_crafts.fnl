@@ -46,7 +46,7 @@
    {:input  [{:name "loria:broken_drill"               :count 1}
              {:name "loria:battery"                    :count 1}]
     :output [{:name "loria:drill"                      :count 1}]}
-   {:input  [{:name "electricity:aluminium_cable"      :count 10}
+   {:input  [{:name "electricity:aluminium_wire"       :count 10}
              {:name "loria:lead_case"                  :count 1}]
     :output [{:name "electricity:battery_box"          :count 1}]}
    {:input  [{:name "loria:uranium_tetrachloride"      :count 1}
@@ -88,8 +88,10 @@
    {:input  [{:name "loria:lead_case"                  :count 1}
              {:name "loria:wolfram_filament"           :count 1}
              {:name "loria:fused_quartz"               :count 1}
-             {:name "electricity:aluminium_cable"      :count 1}]
+             {:name "electricity:aluminium_wire"       :count 1}]
     :output [{:name "electricity:lamp_off"             :count 1}]}
+   {:input  [{:name "electricity:lamp_broken"          :count 1}]
+    :output [{:name "loria:lead"                       :count 1}]}
    {:input  [{:name "loria:chromia"                    :count 1}
              {:name "loria:bucket_hydrochloric_acid"   :count 6}]
     :output [{:name "loria:chromic_chloride"           :count 2}
@@ -101,10 +103,10 @@
     {:input  [{:name (.. "loria:" name)    :count 20}]
      :output [{:name "loria:mushroom_mass" :count 1}]}))
 
-(each [_ conf (ipairs cables)]
+(each [_ conf (ipairs wires)]
   (table.insert inv_crafts
-    {:input  [{:name (.. "loria:" conf.name "_ingot")     :count 1}]
-     :output [{:name (.. "electricity:" conf.name "_cable") :count 15}]}))
+    {:input  [{:name (.. "loria:" conf.name "_ingot")      :count 1}]
+     :output [{:name (.. "electricity:" conf.name "_wire") :count 15}]}))
 
 (each [_ mushroom (ipairs giant_mushrooms)]
   (table.insert inv_crafts

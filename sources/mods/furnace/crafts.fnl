@@ -161,7 +161,11 @@
              {:name "loria:oxygen_balloon"  :count 1}]
     :output [{:name "loria:thorium_dioxide" :count 1}
              {:name "loria:empty_balloon"   :count 1}]
-    :time 6}])
+    :time 6}
+   {:input  [{:name "loria:magnetite"     :count 2}]
+    :output [{:name "loria:ferrous_oxide" :count 1}
+             {:name "loria:ferric_oxide"  :count 1}]
+    :time 3}])
 
 (global furnace_crafts
   [{:input  [{:name "loria:mushroom_mass"   :count 1}]

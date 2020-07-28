@@ -189,7 +189,7 @@
 (set timor.body-nodes (map (fn [idx] (.. "loria:timor_body_" idx))
                            (range timor.colours)))
 
-(global cables
+(global wires
   [{:name "copper"    :resis   0.0225}
    {:name "aluminium" :resis   0.0360}
    {:name "wolfram"   :resis   0.0550}

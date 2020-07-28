@@ -49,6 +49,8 @@
           "list[current_player;main;0,2;8,1;]"
           "list[current_player;main;0,3.5;8,3;8]"))))
 
+(fn wire? [name] (≠ (minetest.get_item_group name "wire") 0))
+
 (minetest.register_node "electricity:transformer"
   {:description "Transformer"
    :tiles
@@ -70,19 +72,15 @@
     :on_destruct (andthen reset_current drop_everything)
 
     :allow_metadata_inventory_put (fn [pos listname index stack player]
-        (if (> (minetest.get_item_group (stack:get_name) "cable") 0)
-            (stack:get_count) 0))
+        (if (wire? (stack:get_name)) (stack:get_count) 0))
 
     :allow_metadata_inventory_move (fn [pos from-list from-index to-list to-index count player]
       (let [meta  (minetest.get_meta pos)
             inv   (meta:get_inventory)
             stack (inv:get_stack from-list from-index)]
         (if (∨ (= to-list "primary") (= to-list "secondary"))
-            (if (> (minetest.get_item_group (stack:get_name) "cable") 0)
-                (stack:get_count) 0)
+            (if (wire? (stack:get_name)) (stack:get_count) 0)
             (stack:get_count))))})
-
-(fn cable? [name] (≠ (minetest.get_item_group name "cable") 0))
 
 (tset model "electricity:transformer" (fn [pos id]
   (let [meta (minetest.get_meta pos)
@@ -94,8 +92,8 @@
         conn (twoport pos)
         T (.. id "-zero")]
     (when (and (≠ N₁ 0) (≠ N₂ 0)
-               (cable? (prim-winding:get_name))
-               (cable? (sec-winding:get_name)))
+               (wire? (prim-winding:get_name))
+               (wire? (sec-winding:get_name)))
       (if (≠ N₁ N₂)
         (let [L₁₂ (math.sqrt (* N₁ N₂))
               L₁  (- N₁ L₁₂)

@@ -381,6 +381,18 @@ minetest.register_node("loria:mushroom_mass", {
     groups = { crumbly = 3 },
 })
 
+minetest.register_node("loria:ferrous_oxide", {
+    description = "Iron (II) oxide (FeO)",
+    tiles = { "loria_ferrous_oxide.png" },
+    groups = { crumbly = 3 }
+})
+
+minetest.register_node("loria:ferric_oxide", {
+    description = "Iron (III) oxide (Fe2O3)",
+    tiles = { "loria_ferric_oxide.png" },
+    groups = { crumbly = 3 }
+})
+
 minetest.register_node("loria:blowed_out_glow_stick", {
     description = "Blowed out glow stick",
     drawtype = "torchlike",

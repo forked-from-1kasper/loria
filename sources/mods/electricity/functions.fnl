@@ -6,8 +6,6 @@
 (global consumers {})
 (global model {})
 
-(global cable_tick 0.1)
-
 (defun set_resis [R′ X′]
   (let [R (∨ R′ 0) X (∨ X′ 0)]
     (fn [pos] (let [meta (minetest.get_meta pos)]
