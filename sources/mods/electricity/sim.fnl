@@ -3,13 +3,12 @@
 
 (define-type node-table
   (λ [cls self]
-    (set (self.nodes
-          self.node-count
-          self.components)
-         (values {} 0 0))))
+    (set self.nodes {})
+    (set (self.node-count self.components)
+         (values 0 0))))
 
 (fn node-table.add-to-nodes [self node-str]
-  (when (= (. self.nodes node-str) nil)
+  (when (∉ node-str self.nodes)
     (tset self.nodes node-str self.node-count)
     (set self.node-count (+ self.node-count 1)))
   (. self.nodes node-str))
@@ -20,7 +19,8 @@
 
   (each [_ elem (ipairs circ)]
     (set tbl.components (+ tbl.components 1))
-    (tset tbl elem.type (+ (or (. tbl elem.type) 0) 1))
+    ;; Sets tbl.voltage, tbl.current etc
+    (tset tbl elem.type (+ (∨ (. tbl elem.type) 0) 1))
     (set elem.high (tbl:add-to-nodes elem.pos-node))
     (set elem.low  (tbl:add-to-nodes elem.neg-node)))
 
@@ -29,7 +29,7 @@
 (fn calculate-consumer [A b elem g2-index]
   (let [G (/ 1 elem.value)]
     (when (≠ elem.high 0) (+= A elem.high elem.high G))
-    (when (≠ elem.low 0)  (+= A elem.low elem.low G))
+    (when (≠ elem.low  0) (+= A elem.low  elem.low  G))
     (when (∧ (≠ elem.high 0) (≠ elem.low 0))
       (-= A elem.high elem.low  G)
       (-= A elem.low  elem.high G))))
@@ -56,9 +56,8 @@
    :current  calculate-current})
 
 (fn solve-aux [tbl circ]
-  (let [g2-count (+ tbl.voltage (or tbl.inductor 0))
+  (let [g2-count    (+ tbl.voltage (∨ tbl.inductor 0))
         matrix-size (+ tbl.node-count g2-count -1)]
-
     (var A (matrix matrix-size matrix-size))
     (var b (matrix matrix-size 1))
 

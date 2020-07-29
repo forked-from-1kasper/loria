@@ -51,13 +51,13 @@
     (tset loria "enough-fresh?"
       (∧ player.set_sun player.set_moon player.set_stars))
     (when loria.enough-fresh?
-      (player:set_sun {:texture "star.png" :scale 0.5 :sunrise_visible false})
-      (player:set_moon {:scale 7 :texture "gas_giant.png"})
+      (player:set_sun   {:texture "star.png" :scale 0.5 :sunrise_visible false})
+      (player:set_moon  {:scale 7 :texture "gas_giant.png"})
       (player:set_stars {:scale 0.5 :star_color "#ffffffff"}))
 
     (player_api.set_model player "player.b3d")
     (player:set_local_animation
-      {:x 0   :y 79}
+      {:x   0 :y  79}
       {:x 168 :y 187}
       {:x 189 :y 198}
       {:x 200 :y 219}
