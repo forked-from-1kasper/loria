@@ -35,7 +35,7 @@
 
 (define-type node-table
   (λ [cls self]
-    (set self.nodes         {})
+    (set self.nodes         {ground 0})
     (set self.node-count    0)
     (set self.components    0)
 
@@ -44,13 +44,12 @@
 
 (fn node-table.add-to-nodes [self node-str]
   (when (∉ node-str self.nodes)
-    (tset self.nodes node-str self.node-count)
-    (incf self.node-count))
+    (incf self.node-count)
+    (tset self.nodes node-str self.node-count))
   (. self.nodes node-str))
 
 (fn map-nodes [circ]
   (local tbl (node-table))
-  (tbl:add-to-nodes ground)
 
   (each [_ elem (ipairs circ)]
     (incf tbl.components)
@@ -67,11 +66,11 @@
   (each [model-name model (pairs circuit-models)]
     (set+ g2-count (* (. tbl model-name) model.voltage-index)))
 
-  (let [matrix-size (+ tbl.node-count g2-count -1)]
+  (let [matrix-size (+ tbl.node-count g2-count)]
     (var A (matrix matrix-size matrix-size))
     (var b (matrix matrix-size 1))
 
-    (var g2-index (- matrix-size g2-count -1))
+    (var g2-index (+ tbl.node-count 1))
 
     ;; generate A and b
     (each [_ elem (ipairs circ)]
