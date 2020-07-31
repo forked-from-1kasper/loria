@@ -29,7 +29,7 @@
 |9|Viridi petasum body × 40, Bucket empty × 1|Bucket lucidum × 1|
 |10|Potassium ingot × 2, Bucket water × 2, Empty balloon × 1|Bucket potassium hydroxide × 2, Hydrogen balloon × 2|
 |11|Broken drill × 1, Battery × 1|Drill × 1|
-|12|Aluminium cable × 10, Lead case × 1|Battery box × 1|
+|12|Aluminium wire × 10, Lead case × 1|Battery box × 1|
 |13|Uranium tetrachloride × 1, Potassium ingot × 1|Uranium × 1, Potassium chloride × 4|
 |14|Lead × 4|Lead case × 1|
 |15|Lead selenide × 3|Gas powered furnace (PbSe) × 1|
@@ -40,46 +40,47 @@
 |20|Zinc ingot × 1, Bucket hydrochloric acid × 2, Empty balloon × 1|Zinc chloride × 1, Bucket empty × 2, Hydrogen balloon × 1|
 |21|Aluminium ingot × 1, Bucket hydrochloric acid × 3, Empty balloon × 1|Aluminium chloride × 1, Bucket empty × 3, Hydrogen balloon × 1|
 |22|Potassium ingot × 2, Bucket hydrochloric acid × 2, Empty balloon × 1|Potassium chloride × 2, Bucket empty × 2, Hydrogen balloon × 1|
-|23|Lead case × 1, Wolfram filament × 1, Fused quartz × 1, Aluminium cable × 1|Lamp off × 1|
-|24|Chromia × 1, Bucket hydrochloric acid × 6|Chromic chloride × 2, Bucket water × 3, Bucket empty × 3|
-|25|Caput × 20|Mushroom mass × 1|
-|26|Conc × 20|Mushroom mass × 1|
-|27|Deus × 20|Mushroom mass × 1|
-|28|Grebe × 20|Mushroom mass × 1|
-|29|Infernum × 20|Mushroom mass × 1|
-|30|Periculum × 20|Mushroom mass × 1|
-|31|Picea × 20|Mushroom mass × 1|
-|32|Pulchram × 20|Mushroom mass × 1|
-|33|Purpura × 20|Mushroom mass × 1|
-|34|Pusilli × 20|Mushroom mass × 1|
-|35|Quercu × 20|Mushroom mass × 1|
-|36|Rosea × 20|Mushroom mass × 1|
-|37|Secreta × 20|Mushroom mass × 1|
-|38|Vastatorem × 20|Mushroom mass × 1|
-|39|Vult × 20|Mushroom mass × 1|
-|40|Copper ingot × 1|Copper cable × 15|
-|41|Aluminium ingot × 1|Aluminium cable × 15|
-|42|Wolfram ingot × 1|Wolfram cable × 15|
-|43|Platinum ingot × 1|Platinum cable × 15|
-|44|Calcium ingot × 1|Calcium cable × 15|
-|45|Uranium ingot × 1|Uranium cable × 15|
-|46|Thorium ingot × 1|Thorium cable × 15|
-|47|Plutonium ingot × 1|Plutonium cable × 15|
-|48|Viridi petasum stem × 1|Stick × 6|
-|49|Colossus stem × 1|Stick × 6|
-|50|Column stem × 1|Stick × 6|
-|51|Turris stem × 1|Stick × 6|
-|52|Rete stem × 1|Stick × 6|
-|53|Timor stem × 1|Stick × 6|
-|54|Avarum × 20|Avarum pressed × 1|
-|55|Cruento × 20|Cruento pressed × 1|
-|56|Lectica × 20|Lectica pressed × 1|
-|57|Rami × 20|Rami pressed × 1|
-|58|Spears × 20|Spears pressed × 1|
-|59|Truncus 1 × 20|Truncus 1 pressed × 1|
-|60|Truncus 2 × 20|Truncus 2 pressed × 1|
-|61|Truncus 3 × 20|Truncus 3 pressed × 1|
-|62|Veteris × 20|Veteris pressed × 1|
+|23|Lead case × 1, Wolfram filament × 1, Fused quartz × 1, Aluminium wire × 1|Lamp off × 1|
+|24|Lamp broken × 1|Lead × 1|
+|25|Chromia × 1, Bucket hydrochloric acid × 6|Chromic chloride × 2, Bucket water × 3, Bucket empty × 3|
+|26|Caput × 20|Mushroom mass × 1|
+|27|Conc × 20|Mushroom mass × 1|
+|28|Deus × 20|Mushroom mass × 1|
+|29|Grebe × 20|Mushroom mass × 1|
+|30|Infernum × 20|Mushroom mass × 1|
+|31|Periculum × 20|Mushroom mass × 1|
+|32|Picea × 20|Mushroom mass × 1|
+|33|Pulchram × 20|Mushroom mass × 1|
+|34|Purpura × 20|Mushroom mass × 1|
+|35|Pusilli × 20|Mushroom mass × 1|
+|36|Quercu × 20|Mushroom mass × 1|
+|37|Rosea × 20|Mushroom mass × 1|
+|38|Secreta × 20|Mushroom mass × 1|
+|39|Vastatorem × 20|Mushroom mass × 1|
+|40|Vult × 20|Mushroom mass × 1|
+|41|Copper ingot × 1|Copper wire × 15|
+|42|Aluminium ingot × 1|Aluminium wire × 15|
+|43|Wolfram ingot × 1|Wolfram wire × 15|
+|44|Platinum ingot × 1|Platinum wire × 15|
+|45|Calcium ingot × 1|Calcium wire × 15|
+|46|Uranium ingot × 1|Uranium wire × 15|
+|47|Thorium ingot × 1|Thorium wire × 15|
+|48|Plutonium ingot × 1|Plutonium wire × 15|
+|49|Viridi petasum stem × 1|Stick × 6|
+|50|Colossus stem × 1|Stick × 6|
+|51|Column stem × 1|Stick × 6|
+|52|Turris stem × 1|Stick × 6|
+|53|Rete stem × 1|Stick × 6|
+|54|Timor stem × 1|Stick × 6|
+|55|Avarum × 20|Avarum pressed × 1|
+|56|Cruento × 20|Cruento pressed × 1|
+|57|Lectica × 20|Lectica pressed × 1|
+|58|Rami × 20|Rami pressed × 1|
+|59|Spears × 20|Spears pressed × 1|
+|60|Truncus 1 × 20|Truncus 1 pressed × 1|
+|61|Truncus 2 × 20|Truncus 2 pressed × 1|
+|62|Truncus 3 × 20|Truncus 3 pressed × 1|
+|63|Veteris × 20|Veteris pressed × 1|
 
 ## Furnace
 
@@ -160,62 +161,63 @@
 |30|Silicon × 1|Diode × 5|
 |31|Lead × 1, Selenium × 1|Lead selenide × 1|
 |32|Thorium × 1, Oxygen balloon × 1|Thorium dioxide × 1, Empty balloon × 1|
-|33|Aluminium cobalt blue × 1|Aluminium ingot × 1, Cobalt blue × 1|
-|34|Aluminium cinnabar × 1|Aluminium ingot × 1, Cinnabar × 1|
-|35|Aluminium chromia × 1|Aluminium ingot × 1, Chromia × 1|
-|36|Aluminium ingot × 9|Aluminium × 1|
-|37|Aluminium × 1|Aluminium ingot × 9|
-|38|Americium trifluoride cobalt blue × 1|Americium trifluoride × 1, Cobalt blue × 1|
-|39|Americium trifluoride cinnabar × 1|Americium trifluoride × 1, Cinnabar × 1|
-|40|Americium trifluoride chromium fluoride × 1|Americium trifluoride × 1, Chromium fluoride × 1|
-|41|Calcium chromium fluoride × 1|Calcium ingot × 1, Chromium fluoride × 1|
-|42|Calcium ingot × 9|Calcium × 1|
-|43|Calcium × 1|Calcium ingot × 9|
-|44|Copper cobalt blue × 1|Copper ingot × 1, Cobalt blue × 1|
-|45|Copper cinnabar × 1|Copper ingot × 1, Cinnabar × 1|
-|46|Copper ingot × 9|Copper × 1|
-|47|Copper × 1|Copper ingot × 9|
-|48|Cuprous oxide cobalt blue × 1|Cuprous oxide × 1, Cobalt blue × 1|
-|49|Cuprous oxide chromia × 1|Cuprous oxide × 1, Chromia × 1|
-|50|Magnesium cobalt blue × 1|Magnesium ingot × 1, Cobalt blue × 1|
-|51|Magnesium cinnabar × 1|Magnesium ingot × 1, Cinnabar × 1|
-|52|Magnesium chromia × 1|Magnesium ingot × 1, Chromia × 1|
-|53|Magnesium ingot × 9|Magnesium × 1|
-|54|Magnesium × 1|Magnesium ingot × 9|
-|55|Magnetite cobalt blue × 1|Magnetite × 1, Cobalt blue × 1|
-|56|Magnetite cinnabar × 1|Magnetite × 1, Cinnabar × 1|
-|57|Magnetite chromium fluoride × 1|Magnetite × 1, Chromium fluoride × 1|
-|58|Molybdenum cobalt blue × 1|Molybdenum ingot × 1, Cobalt blue × 1|
-|59|Molybdenum cinnabar × 1|Molybdenum ingot × 1, Cinnabar × 1|
-|60|Molybdenum ingot × 9|Molybdenum × 1|
-|61|Molybdenum × 1|Molybdenum ingot × 9|
-|62|Platinum cobalt blue × 1|Platinum ingot × 1, Cobalt blue × 1|
-|63|Platinum cinnabar × 1|Platinum ingot × 1, Cinnabar × 1|
-|64|Platinum ingot × 9|Platinum × 1|
-|65|Platinum × 1|Platinum ingot × 9|
-|66|Plutonium trifluoride cobalt blue × 1|Plutonium trifluoride × 1, Cobalt blue × 1|
-|67|Plutonium trifluoride cinnabar × 1|Plutonium trifluoride × 1, Cinnabar × 1|
-|68|Plutonium trifluoride chromium fluoride × 1|Plutonium trifluoride × 1, Chromium fluoride × 1|
-|69|Potassium cobalt blue × 1|Potassium ingot × 1, Cobalt blue × 1|
-|70|Potassium cinnabar × 1|Potassium ingot × 1, Cinnabar × 1|
-|71|Potassium chromia × 1|Potassium ingot × 1, Chromia × 1|
-|72|Potassium chromium fluoride × 1|Potassium ingot × 1, Chromium fluoride × 1|
-|73|Potassium ingot × 9|Potassium × 1|
-|74|Potassium × 1|Potassium ingot × 9|
-|75|Thorium iodide cobalt blue × 1|Thorium iodide × 1, Cobalt blue × 1|
-|76|Thorium iodide cinnabar × 1|Thorium iodide × 1, Cinnabar × 1|
-|77|Thorium iodide chromium fluoride × 1|Thorium iodide × 1, Chromium fluoride × 1|
-|78|Thorium iodide chromia × 1|Thorium iodide × 1, Chromia × 1|
-|79|Uranium tetrachloride cobalt blue × 1|Uranium tetrachloride × 1, Cobalt blue × 1|
-|80|Uranium tetrachloride cinnabar × 1|Uranium tetrachloride × 1, Cinnabar × 1|
-|81|Uranium tetrachloride chromium fluoride × 1|Uranium tetrachloride × 1, Chromium fluoride × 1|
-|82|Uranium tetrachloride chromia × 1|Uranium tetrachloride × 1, Chromia × 1|
-|83|Wolfram cobalt blue × 1|Wolfram ingot × 1, Cobalt blue × 1|
-|84|Wolfram cinnabar × 1|Wolfram ingot × 1, Cinnabar × 1|
-|85|Wolfram ingot × 9|Wolfram × 1|
-|86|Wolfram × 1|Wolfram ingot × 9|
-|87|Zinc cobalt blue × 1|Zinc ingot × 1, Cobalt blue × 1|
-|88|Zinc cinnabar × 1|Zinc ingot × 1, Cinnabar × 1|
-|89|Zinc ingot × 9|Zinc × 1|
-|90|Zinc × 1|Zinc ingot × 9|
+|33|Magnetite × 2|Ferrous oxide × 1, Ferric oxide × 1|
+|34|Aluminium cobalt blue × 1|Aluminium ingot × 1, Cobalt blue × 1|
+|35|Aluminium cinnabar × 1|Aluminium ingot × 1, Cinnabar × 1|
+|36|Aluminium chromia × 1|Aluminium ingot × 1, Chromia × 1|
+|37|Aluminium ingot × 9|Aluminium × 1|
+|38|Aluminium × 1|Aluminium ingot × 9|
+|39|Americium trifluoride cobalt blue × 1|Americium trifluoride × 1, Cobalt blue × 1|
+|40|Americium trifluoride cinnabar × 1|Americium trifluoride × 1, Cinnabar × 1|
+|41|Americium trifluoride chromium fluoride × 1|Americium trifluoride × 1, Chromium fluoride × 1|
+|42|Calcium chromium fluoride × 1|Calcium ingot × 1, Chromium fluoride × 1|
+|43|Calcium ingot × 9|Calcium × 1|
+|44|Calcium × 1|Calcium ingot × 9|
+|45|Copper cobalt blue × 1|Copper ingot × 1, Cobalt blue × 1|
+|46|Copper cinnabar × 1|Copper ingot × 1, Cinnabar × 1|
+|47|Copper ingot × 9|Copper × 1|
+|48|Copper × 1|Copper ingot × 9|
+|49|Cuprous oxide cobalt blue × 1|Cuprous oxide × 1, Cobalt blue × 1|
+|50|Cuprous oxide chromia × 1|Cuprous oxide × 1, Chromia × 1|
+|51|Magnesium cobalt blue × 1|Magnesium ingot × 1, Cobalt blue × 1|
+|52|Magnesium cinnabar × 1|Magnesium ingot × 1, Cinnabar × 1|
+|53|Magnesium chromia × 1|Magnesium ingot × 1, Chromia × 1|
+|54|Magnesium ingot × 9|Magnesium × 1|
+|55|Magnesium × 1|Magnesium ingot × 9|
+|56|Magnetite cobalt blue × 1|Magnetite × 1, Cobalt blue × 1|
+|57|Magnetite cinnabar × 1|Magnetite × 1, Cinnabar × 1|
+|58|Magnetite chromium fluoride × 1|Magnetite × 1, Chromium fluoride × 1|
+|59|Molybdenum cobalt blue × 1|Molybdenum ingot × 1, Cobalt blue × 1|
+|60|Molybdenum cinnabar × 1|Molybdenum ingot × 1, Cinnabar × 1|
+|61|Molybdenum ingot × 9|Molybdenum × 1|
+|62|Molybdenum × 1|Molybdenum ingot × 9|
+|63|Platinum cobalt blue × 1|Platinum ingot × 1, Cobalt blue × 1|
+|64|Platinum cinnabar × 1|Platinum ingot × 1, Cinnabar × 1|
+|65|Platinum ingot × 9|Platinum × 1|
+|66|Platinum × 1|Platinum ingot × 9|
+|67|Plutonium trifluoride cobalt blue × 1|Plutonium trifluoride × 1, Cobalt blue × 1|
+|68|Plutonium trifluoride cinnabar × 1|Plutonium trifluoride × 1, Cinnabar × 1|
+|69|Plutonium trifluoride chromium fluoride × 1|Plutonium trifluoride × 1, Chromium fluoride × 1|
+|70|Potassium cobalt blue × 1|Potassium ingot × 1, Cobalt blue × 1|
+|71|Potassium cinnabar × 1|Potassium ingot × 1, Cinnabar × 1|
+|72|Potassium chromia × 1|Potassium ingot × 1, Chromia × 1|
+|73|Potassium chromium fluoride × 1|Potassium ingot × 1, Chromium fluoride × 1|
+|74|Potassium ingot × 9|Potassium × 1|
+|75|Potassium × 1|Potassium ingot × 9|
+|76|Thorium iodide cobalt blue × 1|Thorium iodide × 1, Cobalt blue × 1|
+|77|Thorium iodide cinnabar × 1|Thorium iodide × 1, Cinnabar × 1|
+|78|Thorium iodide chromium fluoride × 1|Thorium iodide × 1, Chromium fluoride × 1|
+|79|Thorium iodide chromia × 1|Thorium iodide × 1, Chromia × 1|
+|80|Uranium tetrachloride cobalt blue × 1|Uranium tetrachloride × 1, Cobalt blue × 1|
+|81|Uranium tetrachloride cinnabar × 1|Uranium tetrachloride × 1, Cinnabar × 1|
+|82|Uranium tetrachloride chromium fluoride × 1|Uranium tetrachloride × 1, Chromium fluoride × 1|
+|83|Uranium tetrachloride chromia × 1|Uranium tetrachloride × 1, Chromia × 1|
+|84|Wolfram cobalt blue × 1|Wolfram ingot × 1, Cobalt blue × 1|
+|85|Wolfram cinnabar × 1|Wolfram ingot × 1, Cinnabar × 1|
+|86|Wolfram ingot × 9|Wolfram × 1|
+|87|Wolfram × 1|Wolfram ingot × 9|
+|88|Zinc cobalt blue × 1|Zinc ingot × 1, Cobalt blue × 1|
+|89|Zinc cinnabar × 1|Zinc ingot × 1, Cinnabar × 1|
+|90|Zinc ingot × 9|Zinc × 1|
+|91|Zinc × 1|Zinc ingot × 9|
 
