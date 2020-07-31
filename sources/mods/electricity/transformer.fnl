@@ -94,15 +94,7 @@
     (when (and (≠ N₁ 0) (≠ N₂ 0)
                (wire? (prim-winding:get_name))
                (wire? (sec-winding:get_name)))
-      (if (≠ N₁ N₂)
-        (let [L₁₂ (math.sqrt (* N₁ N₂))
-              L₁  (- N₁ L₁₂)
-              L₂  (- N₂ L₁₂)]
-          (values {} (define-circuit
-            :consumer (.. id "-prim")  conn.prim₁ T          (inductance L₁)
-            :consumer (.. id "-sec")   T          conn.sec₁  (inductance L₂)
-            :consumer (.. id "-T")     T          conn.prim₂ (inductance L₁₂)
-            :consumer (.. id "-resis") conn.prim₂ conn.sec₂  (real transformer-resis))))
-        (values {} (define-circuit
-          :consumer (.. id "-fst") conn.prim₁ conn.sec₁ (real transformer-resis)
-          :consumer (.. id "-snd") conn.prim₂ conn.sec₂ (real transformer-resis))))))))
+      (values {}
+        [{:type "transformer" :name id :value (/ N₂ N₁)
+          :prim-pos conn.prim₁ :prim-neg conn.prim₂
+          :sec-pos  conn.sec₁  :sec-neg  conn.sec₂}])))))

@@ -25,18 +25,16 @@
   (when (≠ elem.neg 0) (+= b elem.neg 1 elem.value)))
 
 (fn calculate-transformer [A b elem g2-index]
-  (let [I₁ g2-index I₂ (+ g2-index 1) T elem.value]
-    (+= A I₁ elem.prim-pos T)
-    (-= A I₁ elem.prim-neg T)
-    (-= A I₁ elem.sec-pos  1)
-    (+= A I₁ elem.sec-neg  1)
+  (let [T elem.value]
+    (+= A g2-index elem.prim-pos T)
+    (-= A g2-index elem.prim-neg T)
+    (-= A g2-index elem.sec-pos  1)
+    (+= A g2-index elem.sec-neg  1)
 
-    (+= A elem.prim-pos I₁ 1)
-    (-= A elem.prim-neg I₁ 1)
-    (+= A elem.sec-pos  I₂ 1)
-    (-= A elem.sec-neg  I₂ 1)
-
-    (+= A I₂ I₁ 1) (+= A I₂ I₂ T)))
+    (-= A elem.prim-pos g2-index T)
+    (+= A elem.prim-neg g2-index T)
+    (+= A elem.sec-pos  g2-index 1)
+    (-= A elem.sec-neg  g2-index 1)))
 
 (local one-port ["pos" "neg"])
 (local circuit-models
@@ -48,7 +46,7 @@
                  :ports   one-port              :voltage-index  1}
    :transformer {:handler calculate-transformer :needs-current? false
                  :ports ["prim-pos" "prim-neg" "sec-pos" "sec-neg"]
-                 :voltage-index 2}})
+                 :voltage-index 1}})
 
 (define-type node-table
   (λ [cls self]
