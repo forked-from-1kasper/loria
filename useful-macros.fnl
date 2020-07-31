@@ -56,15 +56,19 @@
 
   (for [i 1 j] (let [n (* i 5)]
     (tset res i
-      {:type     (. [...] (- n 4))
-       :name     (. [...] (- n 3))
-       :pos-node (. [...] (- n 2))
-       :neg-node (. [...] (- n 1))
-       :value    (. [...] (- n 0))})))
+      {:type  (. [...] (- n 4))
+       :name  (. [...] (- n 3))
+       :pos   (. [...] (- n 2))
+       :neg   (. [...] (- n 1))
+       :value (. [...] (- n 0))})))
   res)
 
-(fn incf [x] `(set ,x (+ ,x 1)))
-(fn decf [x] `(set ,x (- ,x 1)))
+(fn unary-macro [φ]
+  (fn [res idx]
+    (if idx `(tset ,res ,idx (,(sym φ) (. ,res ,idx) 1))
+            `(set ,res (,(sym φ) ,res 1)))))
+
+(fn set-op [φ] (fn [x val] `(set ,x (,(sym φ) ,x ,val))))
 
 (fn function-assignment [φ]
   (fn [M i j val]
@@ -88,4 +92,6 @@
  ;; Other
  :local-require local-require :α-β-γ alpha-beta-gamma
  :define-type define-type :first first
- :define-circuit define-circuit :incf incf :decf decf}
+ :define-circuit define-circuit
+ :incf (unary-macro "+") :set+ (set-op "+")
+ :decf (unary-macro "-") :set- (set-op "-")}

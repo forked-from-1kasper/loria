@@ -54,9 +54,8 @@
       (var res [])
       (each [idx vect (ipairs neighbors)]
         (table.insert res
-          {:type :consumer :name (.. id "-" idx)
-           :value conf.resis :pos-node center
-           :neg-node (hash_node_connect pos (vector.add pos vect))}))
+          {:type :consumer :name (.. id "-" idx) :value conf.resis
+           :pos center :neg (hash_node_connect pos (vector.add pos vect))}))
       (values {} res))))
 
 (fn wire-overlap-model [conf]
