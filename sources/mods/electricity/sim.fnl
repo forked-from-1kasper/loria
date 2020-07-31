@@ -24,14 +24,31 @@
   (when (≠ elem.pos 0) (-= b elem.pos 1 elem.value))
   (when (≠ elem.neg 0) (+= b elem.neg 1 elem.value)))
 
+(fn calculate-transformer [A b elem g2-index]
+  (let [I₁ g2-index I₂ (+ g2-index 1) T elem.value]
+    (+= A I₁ elem.prim-pos T)
+    (-= A I₁ elem.prim-neg T)
+    (-= A I₁ elem.sec-pos  1)
+    (+= A I₁ elem.sec-neg  1)
+
+    (+= A elem.prim-pos I₁ 1)
+    (-= A elem.prim-neg I₁ 1)
+    (+= A elem.sec-pos  I₂ 1)
+    (-= A elem.sec-neg  I₂ 1)
+
+    (+= A I₂ I₁ 1) (+= A I₂ I₂ T)))
+
 (local one-port ["pos" "neg"])
 (local circuit-models
-  {:consumer    {:handler calculate-consumer :needs-current? false
-                 :ports one-port             :voltage-index  0}
-   :current     {:handler calculate-current  :needs-current? false
-                 :ports one-port             :voltage-index  0}
-   :voltage     {:handler calculate-voltage  :needs-current? true
-                 :ports   one-port           :voltage-index  1}})
+  {:consumer    {:handler calculate-consumer    :needs-current? false
+                 :ports one-port                :voltage-index  0}
+   :current     {:handler calculate-current     :needs-current? false
+                 :ports one-port                :voltage-index  0}
+   :voltage     {:handler calculate-voltage     :needs-current? true
+                 :ports   one-port              :voltage-index  1}
+   :transformer {:handler calculate-transformer :needs-current? false
+                 :ports ["prim-pos" "prim-neg" "sec-pos" "sec-neg"]
+                 :voltage-index 2}})
 
 (define-type node-table
   (λ [cls self]

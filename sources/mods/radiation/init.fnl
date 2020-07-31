@@ -209,7 +209,27 @@
     (when (> radiation-timer radiation-effects-timeout)
       (set radiation-timer 0))))
 
+(fn get-danger-texture [color]
+  (string.format "radiation_danger.png^[multiply:%s"
+    (minetest.rgba color.r color.g color.b)))
+
+(local danger-texture "radiation_danger.png")
 (minetest.register_node "radiation:danger"
   {:description "Radiation source"
-   :tiles ["radiation_danger.png"]
+   :tiles [(get-danger-texture {:r 255 :g 0 :b 0})]
    :groups {:cracky 1}})
+
+(let [texture (get-danger-texture {:r 232 :g 191 :b 40})]
+  (minetest.register_node "radiation:sign"
+    {:description "Radiation hazard warning sign"
+     :drawtype "nodebox" :tiles [texture]
+     :groups {:dig_immediate 3} :walkable false
+     :paramtype "light" :paramtype2 "wallmounted"
+     :sunlight_propagates true :is_ground_content false
+     :inventory_image texture :wield_image texture
+     ;; From MTG
+     :node_box
+       {:type "wallmounted"
+        :wall_top    [-0.5000  0.4375 -0.5000  0.5000  0.5000 0.5000]
+        :wall_bottom [-0.5000 -0.5000 -0.5000  0.5000 -0.4375 0.5000]
+        :wall_side   [-0.5000 -0.5000 -0.5000 -0.4375  0.5000 0.5000]}}))

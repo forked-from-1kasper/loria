@@ -12,9 +12,10 @@
   "mushrooms" "hud" "sky" "player" "compatibility" "pickaxe")
 
 (local start-items
-  {"furnace:refiner_item"   1
+  {"furnace:refiner_item" 1
    "loria:oxygen_balloon" 1
-   "loria:empty_balloon"  1})
+   "loria:empty_balloon"  1
+   "radiation:sign"       15})
 (local on-start-buckets 2)
 
 (local max-height 31000)

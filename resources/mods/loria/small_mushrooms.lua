@@ -283,8 +283,8 @@ for name, params in pairs(small_mushrooms) do
 
             local optimal_light = params.optimal_light or 7
 
-            local optimal_radiation = params.optimal_radiation or 0.1
-            local max_radiation = params.max_radiation or 2.00
+            local optimal_radiation = params.optimal_radiation or 3.0
+            local max_radiation = params.max_radiation or 5.0
 
             local radiation = total(calculate_radiation(minetest.get_voxel_manip(), pos))
 
