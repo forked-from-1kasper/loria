@@ -9,6 +9,14 @@
 (local lethal-dose 1500) ; CU/h
 (local maximum-dose 5)   ; CU
 
+(local height-coeff (/ 5 10000))
+
+(fn cosmic-rays [height]
+  (var res (null))
+  (when (> height 0)
+    (set res.X-ray (* height-coeff height)))
+  res)
+
 (fn get-activity [name]
   (or (if (∈ name minetest.registered_nodes)
           (. activity (minetest.get_content_id name))
@@ -20,45 +28,44 @@
      (^ (- pos₁.y pos₂.y) 2)
      (^ (- pos₁.z pos₂.z) 2)))
 
-(fn alpha [A source pos]
-  (infix A * (math.exp (− hypot-sqr source pos))))
-
-(fn beta [A source pos]
-  (let [dist² (hypot-sqr source pos)]
-    (if (≠ dist² 0) (infix A * (math.exp (− math.sqrt dist²)) / dist²) A)))
-
-(fn gamma [A source pos]
-  (let [dist² (hypot-sqr source pos)]
-    (if (≠ dist² 0) (/ A dist²) A)))
-
 (fn radiation-summary [A source pos]
-  {:alpha (alpha A.alpha source pos)
-   :beta  (beta  A.beta  source pos)
-   :gamma (gamma A.gamma source pos)})
+  (let [dist² (hypot-sqr source pos)]
+    (var res {})
+    (each [kind handler (pairs ionizing)]
+      (tset res kind (handler (. A kind) dist²)))
+    res))
 
 (fn add [A₁ A₂]
-  {:alpha (+ A₁.alpha A₂.alpha)
-   :beta  (+ A₁.beta  A₂.beta)
-   :gamma (+ A₁.gamma A₂.gamma)})
+  (var res {})
+  (each [kind _ (pairs ionizing)]
+    (tset res kind (+ (. A₁ kind) (. A₂ kind))))
+  res)
 
 (fn mult [k A]
-  {:alpha  (* k A.alpha)
-   :beta   (* k A.beta)
-   :gamma  (* k A.gamma)})
+  (var res {})
+  (each [kind _ (pairs ionizing)]
+    (tset res kind (* (. A kind) k)))
+  res)
 
 (defun total [A]
-  (+ A.alpha A.beta A.gamma))
+  (var res 0)
+  (each [kind _ (pairs ionizing)]
+    (set+ res (. A kind)))
+  res)
 
 (fn calculate-inventory-radiation [inv]
-  (var radiation {:alpha 0 :beta 0 :gamma 0})
+  (var radiation (null))
   (each [listname lst (pairs (inv:get_lists))]
     (when (≠ listname "creative_inv")
       (each [_ stack (ipairs lst)]
         (let [A (get-activity (stack:get_name))
               stack-count (stack:get_count)]
           ;; no alpha here
-          (tset radiation :beta  (+ radiation.beta  (* A.beta  stack-count)))
-          (tset radiation :gamma (+ radiation.gamma (* A.gamma stack-count)))))))
+          (each [kind _ (pairs ionizing)]
+            (when (≠ kind "alpha")
+              (tset radiation kind
+                (+ (. radiation kind)
+                   (* (. A kind) stack-count)))))))))
   radiation)
 
 (defun calculate_radiation [vm pos]
@@ -83,6 +90,7 @@
         (set radiation (add radiation
           (radiation-summary A pos
             (vector.add source (vector.new 0 (/ -1 2) 0))))))))
+  (set radiation (add (cosmic-rays pos.y) radiation))
   radiation)
 
 (fn calculate-player-radiation [player vm]

@@ -1,6 +1,7 @@
 (require-macros :useful-macros)
 (require-macros :infix)
 
+(local node-coeff 100)
 (local wire {})
 
 (set wire.top
@@ -48,22 +49,22 @@
        [(/  1 16) (/ -1 2) (/  3 16)
         (/ -1 16) 0        (/  4 16)]]})
 
-(fn wire-model [conf]
+(fn wire-model [resis]
   (fn [pos id]
     (let [center (hash_node_pos pos)]
       (var res [])
       (each [idx vect (ipairs neighbors)]
         (table.insert res
-          {:type :consumer :name (.. id "-" idx) :value conf.resis
+          {:type :consumer :name (.. id "-" idx) :value resis
            :pos center :neg (hash_node_connect pos (vector.add pos vect))}))
       (values {} res))))
 
-(fn wire-overlap-model [conf]
+(fn wire-overlap-model [resis]
   (fn [pos id]
     (let [conn (twoport pos)]
       (values {} (define-circuit
-        :consumer (.. id "-fst") conn.prim₁ conn.sec₁ conf.resis
-        :consumer (.. id "-snd") conn.prim₂ conn.sec₂ conf.resis)))))
+        :consumer (.. id "-fst") conn.prim₁ conn.sec₁ resis
+        :consumer (.. id "-snd") conn.prim₂ conn.sec₂ resis)))))
 
 (local insulator-textures
   ["electricity_insulator.png"      "electricity_insulator.png"
@@ -116,9 +117,10 @@
   (minetest.register_alias (.. "electricity:" conf.name "_cable_overlap")
                            (.. "electricity:" conf.name "_wire_overlap"))
 
-  (tset model (.. "electricity:" conf.name "_wire") (wire-model conf))
-  (tset model (.. "electricity:" conf.name "_insulated_wire") (wire-model conf))
+  (tset model (.. "electricity:" conf.name "_wire") (wire-model conf.resis))
+  (tset model (.. "electricity:" conf.name "_insulated_wire") (wire-model conf.resis))
   (tset model (.. "electricity:" conf.name "_wire_overlap")
-              (wire-overlap-model conf)))
+              (wire-overlap-model conf.resis))
+  (tset model (.. "loria:" conf.name) (wire-model (* conf.resis node-coeff))))
 
 (foreach register-wire wires)

@@ -78,12 +78,12 @@
 (minetest.register_node "loria:uranium"
   {:description "Uranium (U)"
    :tiles       ["loria_uranium.png"]
-   :groups      {:cracky 1}})
+   :groups      {:cracky 1 :conductor 1}})
 
 (minetest.register_node "loria:lead"
   {:description "Lead (Pb)"
    :tiles       ["loria_lead.png"]
-   :groups      {:cracky 1}})
+   :groups      {:cracky 1 :conductor 1}})
 
 (minetest.register_node "loria:brick"
   {:description "Brick"
@@ -288,7 +288,7 @@
 (minetest.register_node "loria:thorium"
   {:description "Thorium (Th)"
    :tiles       ["loria_thorium.png"]
-   :groups      {:cracky 1}})
+   :groups      {:cracky 1 :conductor 1}})
 
 (minetest.register_node "loria:thorium_dioxide"
   {:description "Thorium dioxide (ThO2)"
@@ -298,7 +298,7 @@
 (minetest.register_node "loria:plutonium"
   {:description "Plutonium (Pu)"
    :tiles       ["loria_plutonium.png"]
-   :groups      {:cracky 1}})
+   :groups      {:cracky 1 :conductor 1}})
 
 (minetest.register_node "loria:mushroom_mass"
   {:description "Mushroom mass"

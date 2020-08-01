@@ -1,4 +1,5 @@
 (require-macros :useful-macros)
+(require-macros :infix)
 
 (local cid minetest.get_content_id)
 
@@ -10,8 +11,22 @@
     (when (¬ pcall (fn [] (tset self (cid name) val)))
       (tset self name val))))
 
+;; Handlers
+(fn alpha [A dist²] (let [r (- dist²)] (infix A * (math.exp r))))
+
+(fn beta [A dist²] (if (≠ dist² 0)
+  (infix A * (math.exp (− math.sqrt dist²)) / dist²) A))
+
+(fn rays [A dist²] (if (≠ dist² 0) (/ A dist²) A))
+
+(global ionizing {:alpha alpha :beta beta :gamma rays :X-ray rays})
+
 ;; Default radiation
-(defun null [] {:alpha 0 :beta 0 :gamma 0})
+(defun null []
+  (var res {})
+  (each [kind _ (pairs ionizing)]
+    (tset res kind 0))
+  res)
 
 ;; menge (set)
 (define-type menge nope)

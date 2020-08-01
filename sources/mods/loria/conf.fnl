@@ -90,7 +90,7 @@
 
 (global ores {
     "aluminium"
-    {:formula "Al" :has_ingot true
+    {:formula "Al" :has_ingot true :conductor 1
      :wherein ["cobalt_blue" "cinnabar" "chromia"]}
     "potassium"
     {:formula "K" :has_ingot true
@@ -99,14 +99,14 @@
     {:formula "Zn" :has_ingot true
      :wherein ["cobalt_blue" "cinnabar"]}
     "calcium"
-    {:formula "Ca" :has_ingot true
+    {:formula "Ca" :has_ingot true :conductor 1
      :y_max -700 :y_min -1200
      :wherein ["chromium_fluoride"]}
     "copper"
-    {:formula "Cu" :has_ingot true
+    {:formula "Cu" :has_ingot true :conductor 1
      :wherein ["cobalt_blue" "cinnabar"]}
     "wolfram"
-    {:formula "W" :has_ingot true
+    {:formula "W" :has_ingot true :conductor 1
      :y_max -300 :y_min -1500
      :wherein ["cobalt_blue" "cinnabar"]}
     "magnesium"
@@ -122,7 +122,7 @@
      :wherein ["cobalt_blue" "chromia"]
      :y_min -70 :y_max 0}
     "platinum"
-    {:formula "Pt" :has_ingot true
+    {:formula "Pt" :has_ingot true :conductor 1
      :wherein ["cobalt_blue" "cinnabar"]
      :y_min -300 :y_max -150}
     "uranium_tetrachloride" ; 234
@@ -193,6 +193,7 @@
   [{:name "copper"    :resis   0.0225}
    {:name "aluminium" :resis   0.0360}
    {:name "wolfram"   :resis   0.0550}
+   {:name "lead"      :resis   0.2210}
    {:name "platinum"  :resis   0.0980}
    {:name "calcium"   :resis   0.0460}
    {:name "uranium"   :resis   0.2950}

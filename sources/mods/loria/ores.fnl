@@ -1,3 +1,5 @@
+(require-macros :useful-macros)
+
 (each [name params (pairs ores)]
   (let [light-source (or params.light_source 0)]
     (each [_ place (ipairs params.wherein)]
@@ -16,7 +18,7 @@
     (minetest.register_node (.. "loria:" name)
       {:description (.. (capitalization name) " (" params.formula ")")
        :tiles [(.. "loria_" name ".png")]
-       :groups {:cracky 1}
+       :groups {:cracky 1 :conductor params.conductor}
        :drop (.. "loria:" name)
        :light_source light-source})
 
