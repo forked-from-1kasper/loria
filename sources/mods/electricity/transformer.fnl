@@ -89,8 +89,7 @@
         sec-winding (inv:get_stack "secondary" 1)
         N₁ (prim-winding:get_count)
         N₂ (sec-winding:get_count)
-        conn (twoport pos)
-        T (.. id "-zero")]
+        conn (twoport pos)]
     (when (and (≠ N₁ 0) (≠ N₂ 0)
                (wire? (prim-winding:get_name))
                (wire? (sec-winding:get_name)))

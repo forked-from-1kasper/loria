@@ -1,5 +1,7 @@
 (require-macros :useful-macros)
 
+(global break (math.pow 10 50))
+
 (defun hash_node_pos [pos]
   (string.format "%d#%d#%d" pos.x pos.y pos.z))
 

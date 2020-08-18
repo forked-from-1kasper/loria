@@ -96,7 +96,7 @@
         (each [_ place (ipairs params.wherein)]
           (tset activity (cid (.. "loria:" name "_" place)) A))))))
 
-(global antiradiation_drugs 
+(global antiradiation_drugs
   {"loria:manganese_oxide" 0.5})
 
 (global has_inventory (menge))

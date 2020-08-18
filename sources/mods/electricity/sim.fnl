@@ -26,15 +26,29 @@
 
 (fn calculate-transformer [A b elem g2-index]
   (let [T elem.value]
-    (+= A g2-index elem.prim-pos T)
-    (-= A g2-index elem.prim-neg T)
-    (-= A g2-index elem.sec-pos  1)
-    (+= A g2-index elem.sec-neg  1)
+    (when (≠ elem.prim-pos 0)
+      (+= A g2-index elem.prim-pos T)
+      (-= A elem.prim-pos g2-index T))
+    (when (≠ elem.prim-neg 0)
+      (-= A g2-index elem.prim-neg T)
+      (+= A elem.prim-neg g2-index T))
+    (when (≠ elem.sec-pos 0)
+      (-= A g2-index elem.sec-pos 1)
+      (+= A elem.sec-pos g2-index 1))
+    (when (≠ elem.sec-neg 0)
+      (+= A g2-index elem.sec-neg 1)
+      (-= A elem.sec-neg g2-index 1))))
 
-    (-= A elem.prim-pos g2-index T)
-    (+= A elem.prim-neg g2-index T)
-    (+= A elem.sec-pos  g2-index 1)
-    (-= A elem.sec-neg  g2-index 1)))
+(fn calculate-VCVS [A b elem g2-index]
+  (let [G elem.value]
+    (when (≠ elem.prim-pos 0) (+= A g2-index elem.prim-pos G))
+    (when (≠ elem.prim-neg 0) (-= A g2-index elem.prim-neg G))
+    (when (≠ elem.sec-pos 0)
+      (-= A g2-index elem.sec-pos 1)
+      (-= A elem.sec-pos g2-index 1))
+    (when (≠ elem.sec-neg 0)
+      (-= A g2-index elem.sec-neg 1)
+      (-= A elem.sec-neg g2-index 1))))
 
 (local one-port ["pos" "neg"])
 (local circuit-models
@@ -45,6 +59,9 @@
    :voltage     {:handler calculate-voltage     :needs-current? true
                  :ports   one-port              :voltage-index  1}
    :transformer {:handler calculate-transformer :needs-current? false
+                 :ports ["prim-pos" "prim-neg" "sec-pos" "sec-neg"]
+                 :voltage-index 1}
+   :VCVS        {:handler calculate-VCVS :needs-current? false
                  :ports ["prim-pos" "prim-neg" "sec-pos" "sec-neg"]
                  :voltage-index 1}})
 

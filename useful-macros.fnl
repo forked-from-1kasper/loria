@@ -84,8 +84,8 @@
  ;; Some useful macros for defining various functions
  :defun defun :on-mods-loaded on-mods-loaded :ffi-proc ffi-proc
  :def-globalstep (minetest-register "minetest.register_globalstep")
- :on-leaveplayer (minetest-register "minetest.register_on_leaveplayer")
  :on-joinplayer  (minetest-register "minetest.register_on_joinplayer")
+ :on-leaveplayer (minetest-register "minetest.register_on_leaveplayer")
  ;; Macros for matrices
  "+=" (function-assignment "+")
  "-=" (function-assignment "-")

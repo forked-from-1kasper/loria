@@ -110,7 +110,7 @@
    :privs []
    :func (fn [name nodename]
      (let [player (minetest.get_player_by_name name)]
-       (when (and nodename player)
+       (when (∧ nodename player (∈ nodename minetest.registered_nodes))
          (let [pos (player:get_pos)]
            (for [x (- pos.x fill-radius) (+ pos.x fill-radius)]
              (for [z (- pos.z fill-radius) (+ pos.z fill-radius)]

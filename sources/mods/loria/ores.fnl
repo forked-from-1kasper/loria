@@ -9,7 +9,7 @@
          :groups {:cracky 2}
          :light_source (math.floor (/ light-source 2))}))
 
-    ; backward compatibility
+    ;; backward compatibility
     (when (contains params.wherein "cobalt_blue")
       (minetest.register_alias
         (.."loria:" name "_azure")
