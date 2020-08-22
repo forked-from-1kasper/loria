@@ -4,8 +4,8 @@
 (local relay-box
   {:type "fixed"
    :fixed
-     [[(/ -1 2) (/ -1 2)                (/ -1 2)
-       (/  1 2) (infix -1 / 2 + 2 / 16) (/  1 2)]
+     [[(/ -1  2) (/ -1 2)                (/ -1  2)
+       (/  1  2) (infix -1 / 2 + 2 / 16) (/  1  2)]
       [(/ -5 16) (infix -1 / 2 + 2 / 16) (/ -6 16)
        (/  5 16) (/ 1 2)                 (/  6 16)]]})
 
@@ -24,12 +24,12 @@
 (local relay-resis 0.01)
 (local Uₘᵢₙ 1)
 
-(fn get-sec-resis [U]
-  (real (if (≥ (math.abs U) Uₘᵢₙ) relay-resis break)))
+(fn get-sec-resis [U′]
+  (let [U (math.abs U′)]
+    (real (if (≥ U Uₘᵢₙ) relay-resis break))))
 
 (tset model "electricity:relay" (fn [pos id]
-  (let [meta (minetest.get_meta pos)
-        U (meta:get_float :U)
+  (let [meta (minetest.get_meta pos) U (meta:get_float :U)
         (input output control) (dirtwopole pos)]
     (values {:pos control :neg ground}
       (define-circuit
