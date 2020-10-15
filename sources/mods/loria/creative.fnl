@@ -3,6 +3,52 @@
 
 (local creative? (minetest.settings:get_bool "creative_mode"))
 
+(var craft-list-formspec "")
+
+(local special-names
+  {"furnace:gas"      "Gas powered furnace (lead)"
+   "furnace:thorium"  "Gas powered furnace (thorium)"
+   "furnace:electric" "Electric furnace"})
+
+(fn process-content-name [name]
+  (∨ (. special-names name) (capitalization (name:gsub "^%a+:" ""))))
+
+(fn process-stack-list [stack-list]
+  (map (fn [stack]
+    (string.format "%s,%d" (process-content-name stack.name)
+                           (∨ stack.count 1)))
+    stack-list))
+
+(fn process-craft [id craft]
+  (let [in  (process-stack-list craft.input)
+        out (process-stack-list craft.output)
+        N   (math.max (length in) (length out))]
+    (var res (string.format "%d,Input,N,Output,N" id))
+    (for [idx 1 N]
+      (let [in′  (∨ (. in  idx) ",")
+            out′ (∨ (. out idx) ",")]
+        (set res (table.concat [res "-" in′ out′] ","))))
+    res))
+
+(on-mods-loaded
+  (fn craft-list-append [s]
+    (set craft-list-formspec (.. craft-list-formspec s)))
+
+  (fn append-table [name tbl]
+    (craft-list-append (string.format ",%s,,,," name))
+    (craft-list-append (table.concat (imap process-craft tbl) ",")))
+
+  (fn sep [] (craft-list-append ","))
+
+  (craft-list-append "size[10,10]button[4,9;2,1;go_to_survival;Survival]")
+  (craft-list-append "tablecolumns[text;text;text;text;text]")
+  (craft-list-append "table[0.5,0.5;9,8.5;craft_list;")
+  (append-table "Inventory"            inv_crafts) (sep)
+  (append-table "Furnace"              furnace_crafts) (sep)
+  (append-table "Furnace (high temp.)" high_temperature_crafts) (sep)
+  (append-table "Refiner"              refiner_crafts)
+  (craft-list-append ";1]"))
+
 (fn player-formspec []
   (let [str (.. "size[9,10.5]"
                 "label[0,0.5;Oxygen]"
@@ -16,7 +62,8 @@
                 "label[6,0.5;Output]"
                 "list[context;output;6,1;3,3;]"
                 "list[context;main;0.5,6;8,1;]"
-                "list[context;main;0.5,7.5;8,3;8]")]
+                "list[context;main;0.5,7.5;8,3;8]"
+                "button[0.5,4.5;2,1;go_to_recipes;Recipes]")]
     (if creative? (.. str "button[3.5,4.5;2,1;go_to_creative;Creative]") str)))
 
 (local (creative-formspec-width creative-formspec-height)
@@ -53,6 +100,8 @@
           (creative-formspec (meta:get_int "creative_shift")))
         fields.go_to_survival
         (player:set_inventory_formspec (player-formspec))
+        fields.go_to_recipes
+        (player:set_inventory_formspec craft-list-formspec)
         fields.creative_down
         (do (let [shift  (meta:get_int "creative_shift")
                   shift′ (+ shift 8)

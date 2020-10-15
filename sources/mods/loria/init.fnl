@@ -15,6 +15,7 @@
   {"furnace:refiner_item" 1
    "loria:oxygen_balloon" 1
    "loria:empty_balloon"  1
+   "loria:silicon_box"    1
    "radiation:sign"       15})
 (local on-start-buckets 2)
 
