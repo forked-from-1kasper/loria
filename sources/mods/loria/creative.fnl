@@ -40,7 +40,7 @@
 
   (fn sep [] (craft-list-append ","))
 
-  (craft-list-append "size[10,10]button[4,9;2,1;go_to_survival;Survival]")
+  (craft-list-append "size[10,10]button[4,9;2,1;go_to_survival;Back]")
   (craft-list-append "tablecolumns[text;text;text;text;text]")
   (craft-list-append "table[0.5,0.5;9,8.5;craft_list;")
   (append-table "Inventory"            inv_crafts) (sep)
