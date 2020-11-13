@@ -79,7 +79,7 @@
     (when (not params.groups.not_in_creative_inventory)
       (table.insert creative-inv name)))
   (let [pages (math.floor (/ (length creative-inv) creative-formspec-width))]
-  (set shift-max (infix (pages - creative-formspec-height + 1) * creative-formspec-width))))
+  (set shift-max (infix 1 + (pages - creative-formspec-height + 1) * creative-formspec-width))))
 
 (fn creative-formspec [shift]
   (.. "size[9,10.5]"
