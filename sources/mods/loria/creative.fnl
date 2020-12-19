@@ -116,7 +116,12 @@
               (player:set_inventory_formspec (creative-formspec shift″)))))
     (inv:set_list "creative_inv" creative-inv))))
 
-(local creative-privs ["fly" "fast" "give" "noclip" "settime" "teleport"])
+(minetest.register_privilege "creative"
+  {:description "Creative game mode"
+   :give_to_singleplayer false
+   :give_to_admin false})
+
+(local creative-privs ["fly" "fast" "give" "noclip" "settime" "teleport" "creative"])
 
 (on-joinplayer [player]
   (let [meta (player:get_meta)
