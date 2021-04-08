@@ -1,0 +1,31 @@
+name: Loria
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  Build:
+    runs-on: ubuntu-20.04
+    steps:
+      - name: Checkout
+        uses: actions/checkout@v2
+
+      - name: Install Lua and other packages
+        run:
+          - sudo apt-get install lua5.1
+          - git clone https://github.com/bakpakin/Fennel
+          - export PATH=$PATH:`pwd`/Fennel
+          - (cd Fennel && make)
+
+      - name: Build code
+        run: make
+
+      - name: Build .tgz archive
+        run: make tar
+
+      - name: Upload .tgz archive
+        uses: actions/upload-artifact@v2
+        with:
+          name: Loria
+          path: loria.tgz
