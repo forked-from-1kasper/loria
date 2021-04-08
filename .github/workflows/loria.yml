@@ -21,10 +21,13 @@ jobs:
         run: PATH=$PATH:`pwd`/Fennel make
 
       - name: Build .tgz archive
-        run: make tar
+        run: |
+          make tar
+          mkdir loria
+          tar xzf loria.tgz -C loria
 
-      - name: Upload .tgz archive
+      - name: Upload files
         uses: actions/upload-artifact@v2
         with:
           name: Loria
-          path: loria.tgz
+          path: loria/
