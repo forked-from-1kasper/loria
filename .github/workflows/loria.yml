@@ -15,11 +15,10 @@ jobs:
         run: |
           sudo apt-get install lua5.1
           git clone https://github.com/bakpakin/Fennel
-          export PATH=$PATH:`pwd`/Fennel
           (cd Fennel && make)
 
       - name: Build code
-        run: make
+        run: PATH=$PATH:`pwd`/Fennel make
 
       - name: Build .tgz archive
         run: make tar
