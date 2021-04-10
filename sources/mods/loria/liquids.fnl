@@ -2,6 +2,9 @@
 
 (global bucket {:is_bucket {} :liquids {}})
 
+(fn opacity [texture opacity]
+  (.. texture "^[opacity:" opacity))
+
 (minetest.register_craftitem "loria:bucket_empty"
   {:inventory_image "bucket.png"
    :description "Empty bucket"
@@ -20,26 +23,28 @@
 (each [name params (pairs liquids)]
   (let [source   (.. "loria:" name "_source")
         flowing  (.. "loria:" name "_flowing")
-        itemname (.. "loria:bucket_" name)]
+        itemname (.. "loria:bucket_" name)
+        texture₁ (opacity params.animated_texture params.alpha)
+        texture₂ (opacity params.animated_flowing_texture params.alpha)]
     (minetest.register_node source
       {:description (.. (capitalization name) " source")
        :drawtype "liquid"
        :tiles
-         [{:name params.animated_texture
+         [{:name texture₁
            :backface_culling false
            :animation
              {:type "vertical_frames"
               :aspect_w 16
               :aspect_h 16
               :length 2.0}}
-          {:name params.animated_texture
+          {:name texture₁
            :backface_culling true
            :animation
              {:type "vertical_frames"
               :aspect_w 16
               :aspect_h 16
               :length 2.0}}]
-       :alpha params.alpha
+       :use_texture_alpha "blend"
        :paramtype "light"
        :walkable false
        :pointable false
@@ -63,21 +68,21 @@
        :drawtype "flowingliquid"
        :tiles [params.texture]
        :special_tiles
-         [{:name params.animated_flowing_texture
+         [{:name texture₂
            :backface_culling false
            :animation
              {:type "vertical_frames"
               :aspect_w 16
               :aspect_h 16
               :length 0.8}}
-          {:name params.animated_flowing_texture
+          {:name texture₂
            :backface_culling true
            :animation
              {:type "vertical_frames"
               :aspect_w 16
               :aspect_h 16
               :length 0.8}}]
-       :alpha params.alpha
+       :use_texture_alpha "blend"
        :paramtype "light"
        :paramtype2 "flowingliquid"
        :walkable false

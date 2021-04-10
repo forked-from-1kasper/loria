@@ -57,7 +57,7 @@
      :palette gas.palette
      :damage_per_second gas.damage
      :sunlight_propagates true
-     :use_texture_alpha true
+     :use_texture_alpha "blend"
      :walkable false
      :post_effect_color gas.post_effect_color
      :drop []

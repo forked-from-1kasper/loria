@@ -25,6 +25,7 @@
    :paramtype "light" :paramtype2 "facedir"
    :groups {:crumbly 3 :conductor 1} :drawtype "nodebox"
    :node_box photoresistor-box :selection_box photoresistor-box
+   :use_texture_alpha "blend"
 
    :on_construct (set_resis 1 0) :on_destruct reset_current})
 

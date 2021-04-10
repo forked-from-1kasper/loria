@@ -25,6 +25,7 @@
         (string.format "%s^[colorize:%sf0" conf.tiles.connector conf.color)
         (string.format "%s^[colorize:%sf0" conf.tiles.connector conf.color)]
      :paramtype "light" :paramtype2 "facedir"
+     :use_texture_alpha conf.use-texture-alpha
 
      :groups {:crumbly 3 :conductor 1} :drawtype "nodebox"
      :node_box conf.box :selection_box conf.box
@@ -49,7 +50,7 @@
     (register-consumer
       {:elem-name "resistor" :R (math.pow 10 exp-power)
        :desc (string.format "%s Ohm" conf.desc) :color conf.color
-       :box resistor-box :idx idx
+       :box resistor-box :idx idx :use-texture-alpha "blend"
        :tiles {:top-bottom "electricity_resistor.png"
                :side       "electricity_resistor_side.png"
                :connector  "electricity_resistor_connect_side.png"}})
@@ -57,7 +58,7 @@
     (register-consumer
       {:elem-name "capacitor" :X (math.pow 10 (- exp-power 9))
        :desc (string.format "%s nF" conf.desc) :color conf.color
-       :box capacitor-box :idx idx
+       :box capacitor-box :idx idx :use-texture-alpha "blend"
        :tiles {:top-bottom "electricity_capacitor.png"
                :side       "electricity_capacitor_side.png"
                :connector  "electricity_capacitor_connect_side.png"}})))
@@ -82,6 +83,7 @@
    :paramtype "light" :paramtype2 "facedir"
    :groups {:crumbly 3 :conductor 1} :drawtype "nodebox"
    :node_box heavy-inductor-box :selection_box heavy-inductor-box
+   :use_texture_alpha "blend"
 
    :on_destruct reset_current})
 (tset model "electricity:heavy_inductor" (consumer 0 1))

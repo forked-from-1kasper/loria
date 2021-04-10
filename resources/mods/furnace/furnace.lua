@@ -128,6 +128,8 @@ function register_furnace(conf)
         collision_box = conf.collision_box,
         selection_box = conf.selection_box,
 
+        use_texture_alpha = conf.use_texture_alpha,
+
         allow_metadata_inventory_put = function(pos, listname, index, stack, player)
             if listname == "output" then
                 return 0
@@ -164,6 +166,8 @@ function register_furnace(conf)
         mesh = conf.mesh,
         collision_box = conf.collision_box,
         selection_box = conf.selection_box,
+
+        use_texture_alpha = conf.use_texture_alpha,
 
         allow_metadata_inventory_put = function(pos, listname, index, stack, player)
             if listname == "output" then

@@ -19,7 +19,8 @@
            "electricity_relay_connect_side.png"]
    :paramtype "light" :paramtype2 "facedir" :drawtype "nodebox"
    :node_box relay-box :selection_box relay-box
-   :groups {:crumbly 3 :conductor 1}})
+   :groups {:crumbly 3 :conductor 1}
+   :use_texture_alpha "blend"})
 
 (local relay-resis 0.01)
 (local Uₘᵢₙ 1)

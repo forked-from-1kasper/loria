@@ -18,7 +18,7 @@
            "electricity_amplifier_minus.png"]
    :paramtype "light" :paramtype2 "facedir" :drawtype "nodebox"
    :node_box amplifier-box :selection_box amplifier-box
-   :groups {:crumbly 3 :conductor 1}})
+   :use_texture_alpha "blend" :groups {:crumbly 3 :conductor 1}})
 
 (tset model "electricity:amplifier" (fn [pos id]
   (let [meta (minetest.get_meta pos) U (meta:get_float :U)

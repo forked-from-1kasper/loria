@@ -21,7 +21,8 @@
    :drawtype "nodebox"
    :paramtype "light"   :paramtype2 "facedir"
    :node_box switch-box :selection_box switch-box
-   :on_destruct reset_current})
+   :on_destruct reset_current
+   :use_texture_alpha "blend"})
 
 (tset model "electricity:ground" (fn [pos id]
   (let [dir   (-> (minetest.get_node pos) (. :param2) minetest.facedir_to_dir)

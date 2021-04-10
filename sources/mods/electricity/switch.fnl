@@ -14,6 +14,7 @@
            "electricity_switch_side.png"
            "electricity_switch_side.png"
            "electricity_switch_side.png"]
+   :use_texture_alpha "blend"
 
    :drop "electricity:switch_off"
    :groups {:crumbly 3 :disabled_electric_tool 1}
@@ -39,6 +40,7 @@
            "electricity_switch_side.png"
            "electricity_switch_connect_side.png"
            "electricity_switch_connect_side.png"]
+   :use_texture_alpha "blend"
 
    :drop "electricity:switch_off"
    :groups {:crumbly 3 :conductor 1 :not_in_creative_inventory 1}

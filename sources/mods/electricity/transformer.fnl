@@ -61,6 +61,7 @@
       "electricity_transformer_front_primary.png"
       "electricity_transformer_front_secondary.png"]
    :groups {:crumbly 3 :conductor 1}
+   :use_texture_alpha "blend"
 
    :paramtype "light"        :drawtype "nodebox"
    :node_box transformer-box :selection_box transformer-box

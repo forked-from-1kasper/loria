@@ -36,6 +36,7 @@
    :on_tick
      [(update_fuel fuel_list) update_gas
       (andthen reset-sound (const true))]
+   :use_texture_alpha "blend"
 
    :is_furnace_ready furnace-ready?
    :additional_formspec
@@ -110,6 +111,7 @@
       "furnace_rolled_refiner.png"     "furnace_rolled_refiner.png"
       "furnace_rolled_refiner.png"     "furnace_rolled_refiner.png"]
    :groups {:cracky 2}
+   :use_texture_alpha "blend"
 
    :paramtype "light"
    :drawtype "nodebox"

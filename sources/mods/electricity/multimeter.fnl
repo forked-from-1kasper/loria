@@ -43,7 +43,7 @@
      (comp update-infotext minetest.get_meta))
    :on_destruct reset_current
 
-   :drawtype "nodebox"
+   :drawtype "nodebox" :use_texture_alpha "blend"
    :node_box multimeter-box :selection_box multimeter-box
 
    :on_rightclick (fn [pos node clicker itemstack pointed_thing]

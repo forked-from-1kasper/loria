@@ -38,8 +38,8 @@
       "electricity_riteg_side.png"
       "electricity_riteg_connect_side.png"
       "electricity_riteg_connect_side.png"]
+   :paramtype2 "facedir" :use_texture_alpha "blend"
    :groups {:crumbly 3 :source 1}
-   :paramtype2 "facedir"
 
    :on_construct
      (fn [pos]

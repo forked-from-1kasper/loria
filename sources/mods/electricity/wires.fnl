@@ -86,7 +86,7 @@
     {:drawtype "nodebox" :is_ground_content false
      :sunlight_propagates true :paramtype "light"
      :groups {:crumbly 3 :dig_immediate 3 :conductor 1 :wire 1}
-     :selection_box wire-box :node_box wire-box
+     :selection_box wire-box :node_box wire-box :use_texture_alpha "blend"
      :connects_to
        ["group:source"
         "group:conductor"
@@ -109,7 +109,7 @@
 
   (minetest.register_node (.. "electricity:" conf.name "_wire_overlap")
     {:description (.. (capitalization conf.name) " wire (overlap)")
-     :drawtype "nodebox" :tiles tiles
+     :drawtype "nodebox" :tiles tiles :use_texture_alpha "blend"
      :is_ground_content false :sunlight_propagates true :paramtype "light"
      :groups {:crumbly 3 :dig_immediate 3 :conductor 1 :wire 1}
      :selection_box wire-overlap-box :node_box wire-overlap-box
