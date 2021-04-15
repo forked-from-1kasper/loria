@@ -18,7 +18,18 @@
 (local player-sneak    {})
 
 (local textures-count 7)
-(fn get-nth-texture [n] (.. "space_suit_" (tostring n) ".png"))
+
+(fn get-texture-conf [n]
+  {:head "head.png" :body "body.png"
+   :mark (.. "mark_" (tostring n) ".png")
+   :hand {:left "left_hand.png" :right "right_hand.png"}
+   :leg  {:left "left_leg.png"  :right "right_leg.png"}})
+
+(fn get-nth-texture [n]
+  (let [conf (get-texture-conf n)]
+    (table.concat [conf.head conf.body conf.hand.left conf.hand.right
+                   conf.leg.left conf.leg.right conf.mark] "^")))
+
 (fn mod-count [n] (+ (% n textures-count) 1))
 
 (fn get-texture [name]
