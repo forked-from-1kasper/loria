@@ -8,7 +8,7 @@
 (import :loria
   "greet" "conf" "inv_crafts" "creative" "tint" "biomes" "ores" "mushrooms_nodes"
   "small_mushrooms" "mapgen" "liquids" "nodes" "gases_arch" "gases" "items"
-  "craft" "mushrooms" "hud" "sky" "player" "compatibility" "pickaxe" "radio")
+  "craft" "mushrooms" "hud" "sky" "player" "compatibility" "pickaxe" "radio" "mold")
 
 (local start-items
   {"furnace:refiner_item" 1
