@@ -9,3 +9,28 @@
               :aspect_w 16
               :aspect_h 16
               :length 2.0}}]})
+
+(local neighbors
+  [(vector.new  1  0  0)
+   (vector.new -1  0  0)
+   (vector.new  0  1  0)
+   (vector.new  0 -1  0)
+   (vector.new  0  0  1)
+   (vector.new  0  0 -1)])
+
+(fn mold-grow [pos direction]
+  (let [node (minetest.get_node pos)]
+    (each [_ Δpos (ipairs neighbors)]
+      (let [dist (vector.distance pos direction)
+            pos′ (vector.add pos Δpos)
+            node′ (minetest.get_node pos′)
+            dist′ (vector.distance pos′ direction)]
+        (when (∧ (< dist′ dist) (= node′.name "air"))
+          (minetest.set_node pos′ {:name node.name}))))))
+
+(minetest.register_abm
+  {:label "mold growing"
+   :nodenames ["loria:fingunt_pessima"]
+   :interval 5 :chance 20 :action
+     (fn [pos] (each [_ player (ipairs (minetest.get_connected_players))]
+       (mold-grow pos (player:get_pos))))})
