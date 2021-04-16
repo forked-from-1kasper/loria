@@ -1,7 +1,7 @@
 (require-macros :useful-macros)
 
 (fn organic? [name]
-  (or (∃ x ∈ ["loria:pars"
+  (∨ (∃ x ∈ ["loria:pars"
               "loria:truncus"
               "loria:viriditas"
               "loria:avarum"
@@ -10,11 +10,12 @@
               "loria:naga"
               "loria:petite"]
          (starts_with name x))
-      (ends_with name "_body")
-      (∈ (name:sub (+ (length "loria:") 1)) small_mushrooms)))
+     (ends_with name "_body")
+     (∈ (name:sub (+ (length "loria:") 1)) small_mushrooms)))
 
 (fn heavy-organic? [name]
-  (ends_with name "_stem"))
+  (∨ (= name "loria:fingunt_pessima")
+     (ends_with name "_stem")))
 
 (fn fuel? [name]
   (∃ x ∈ ["loria:potassium" "loria:trisilane"]
