@@ -31,3 +31,15 @@ jobs:
         with:
           name: Loria
           path: loria/
+
+      - name: Check if Git tag exists
+        run: echo "::set-env name=HEAD_TAG::$(git tag --points-at HEAD)"
+
+      - name: Make release if Git tag exists
+        uses: "marvinpinto/action-automatic-releases@latest"
+        with:
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          repo_token: "${{ secrets.GITHUB_TOKEN }}"
+          prerelease: false
+          files: loria.tgz
+        if: env.HEAD_TAG != ''
