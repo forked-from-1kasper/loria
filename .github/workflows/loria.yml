@@ -33,7 +33,9 @@ jobs:
           path: loria/
 
       - name: Check if Git tag exists
-        run: echo "::set-env name=HEAD_TAG::$(git tag --points-at HEAD)"
+        run: |
+          export ACTIONS_ALLOW_UNSECURE_COMMANDS=true
+          echo "::set-env name=HEAD_TAG::$(git tag --points-at HEAD)"
 
       - name: Make release if Git tag exists
         uses: "marvinpinto/action-automatic-releases@latest"
