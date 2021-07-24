@@ -1,3 +1,4 @@
+#FENNEL = # May be set here
 ARCHIVE = loria.tgz
 ROOT = loria
 
@@ -8,9 +9,9 @@ fennel: $(SRC:.fnl=.lua)
 	# Fennel done
 
 $(SRC:.fnl=.lua): %.lua: %.fnl
-	fennel --compile $< > $@
+	$(FENNEL) --compile $< > $@
 
-tar:
+tar: fennel
 	(find resources -type f; find sources -type f -name "*.lua"; echo $(DOCS)) | \
 	tar cfz $(ARCHIVE) -T - --transform='s,resources/\|sources/,,'
 

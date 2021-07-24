@@ -1,18 +1,27 @@
 (require-macros :useful-macros)
 
-(local ie (minetest.request_insecure_environment))
-(when (not ie)
-  (error (.. "Electricity mod requires access to insecure functions in order "
-             "to work. Please add the electricity mod to your secure.trusted_mods.\n"
-             "Insecure functions provide native (fast) complex numbers and arrays, "
-             "which are necessary for MNA solver used in electricity mod.")))
+(global fallback (or (minetest.settings:get_bool "electricity_fallback") false))
 
-(local-require ffi)
+(when (not fallback)
+  (local ie (minetest.request_insecure_environment))
+  (when (not ie)
+    (error (.. "Electricity mod requires access to insecure functions in order "
+               "to work. Please add the electricity mod to your secure.trusted_mods.\n"
+               "Insecure functions provide native (fast) complex numbers and arrays, "
+               "which are necessary for MNA solver used in electricity mod.\n"
+               "If you don’t trust to Loria’s developers or don’t want to use electricity, "
+               "you can enable fallback mode for electricity, "
+               "in which Loria do not use these untrusted features, "
+               "but this can SIGNIFICANTLY reduce performance if map has electronics.\n"
+               "This can be done by inserting “electricity_fallback = false” to your minetest.conf "
+               "or in Minetest settings.")))
 
-(defun metatype [τ mt] (ffi.metatype (ffi.typeof τ) mt))
+  (local-require ffi)
 
-(global isctype ffi.istype)
-(global allocate ffi.new)
+  (defun metatype [τ mt] (ffi.metatype (ffi.typeof τ) mt))
+
+  (global isctype ffi.istype)
+  (global allocate ffi.new))
 
 (import :electricity
   "complex" "matrix" "matrix-solve" "craftitems"

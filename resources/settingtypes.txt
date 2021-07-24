@@ -1,2 +1,2 @@
 sky_color_change_distance (Size of area for sky colour change detection) int 4 1
-openblas (Path to OpenBLAS library) filepath
+electricity_fallback (Fallback mode for electricity) bool false

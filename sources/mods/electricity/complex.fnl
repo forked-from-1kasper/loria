@@ -1,13 +1,20 @@
 (require-macros :useful-macros)
+(global complex {})
 
 (fn number? [x] (= (type x) :number))
+(fn complex? [z]
+  (if fallback (= (getmetatable z) complex)
+      (isctype complex.τ z)))
 
-(global complex {})
-(setmetatable complex {:__call (fn [cls x y] (complex.τ x y))})
+(if (not fallback) (tset complex "τ" (metatype :complex complex)))
+(setmetatable complex {:__call (fn [cls x y]
+  (if fallback (do (local z {0 x 1 y "re" x "im" y})
+                   (setmetatable z complex) z)
+    (complex.τ x y)))})
 
 (fn complex.both [z]
   (if (number? z) (values z 0)
-      (isctype complex.τ z) (values (. z 0) (. z 1))
+      (complex? z) (values (. z 0) (. z 1))
       (error "expected number/complex")))
 
 (fn complex.__add [z₁ z₂]
@@ -41,8 +48,6 @@
          φ   (complex.arg z)]
     (complex (* |z|ⁿ (math.cos (* n φ)))
              (* |z|ⁿ (math.sin (* n φ))))))
-
-(tset complex "τ" (metatype :complex complex))
 
 (fn complex.inv [z] (/ 1 z))
 (fn complex.conj [z] (complex z.re (- z.im)))

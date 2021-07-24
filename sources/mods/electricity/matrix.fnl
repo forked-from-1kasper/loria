@@ -3,7 +3,11 @@
 (define-type matrix
   (λ [cls self n m]
     (let [size (* n m)]
-      (set self.data (allocate "complex[?]" size))
+      (if fallback
+        (do (set self.data [])
+            (for [idx 0 (- size 1)]
+              (tset self.data idx (complex 0 0))))
+        (set self.data (allocate "complex[?]" size)))
       (set self.size {:width m :height n}))))
 
 (fn matrix.idx [self i j]
