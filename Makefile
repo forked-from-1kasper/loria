@@ -1,9 +1,10 @@
 #FENNEL = # May be set here
-ARCHIVE = loria.tgz
+ARCHIVE = loria
 ROOT = loria
 
 SRC := $(shell find sources -type f -name '*.fnl')
 DOCS := "COPYING\nAUTHORS\nLICENSE.TXT"
+WORKINGDIR := $(shell pwd)
 
 fennel: $(SRC:.fnl=.lua)
 	# Fennel done
@@ -13,12 +14,15 @@ $(SRC:.fnl=.lua): %.lua: %.fnl
 
 tar: fennel
 	(find resources -type f; find sources -type f -name "*.lua"; echo $(DOCS)) | \
-	tar cfz $(ARCHIVE) -T - --transform='s,resources/\|sources/,,'
+	tar cfz $(ARCHIVE).tgz -T - --transform='s,resources/\|sources/,,'
 
 root: tar
 	mkdir -p $(ROOT)
-	tar xzf $(ARCHIVE) -C $(ROOT)
+	tar xzf $(ARCHIVE).tgz -C $(ROOT)
+
+zip: root
+	(cd $(ROOT); zip -r "$(WORKINGDIR)/$(ARCHIVE).zip" *)
 
 clean:
 	rm -f $(SRC:.fnl=.lua)
-	rm -f $(ARCHIVE)
+	rm -f $(ARCHIVE).*
