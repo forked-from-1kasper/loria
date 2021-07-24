@@ -1,4 +1,6 @@
 ARCHIVE = loria.tgz
+ROOT = loria
+
 SRC := $(shell find sources -type f -name '*.fnl')
 DOCS := "COPYING\nAUTHORS\nLICENSE.TXT"
 
@@ -11,6 +13,11 @@ $(SRC:.fnl=.lua): %.lua: %.fnl
 tar:
 	(find resources -type f; find sources -type f -name "*.lua"; echo $(DOCS)) | \
 	tar cfz $(ARCHIVE) -T - --transform='s,resources/\|sources/,,'
+
+root: tar
+	mkdir -p $(ROOT)
+	tar xzf $(ARCHIVE) -C $(ROOT)
+
 clean:
 	rm -f $(SRC:.fnl=.lua)
 	rm -f $(ARCHIVE)
