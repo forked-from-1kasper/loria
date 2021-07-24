@@ -43,4 +43,4 @@ jobs:
           repo_token: "${{ secrets.GITHUB_TOKEN }}"
           prerelease: false
           files: loria.tgz
-        if: env.HEAD_TAG != ''
+        if: ${{ env.HEAD_TAG != '' }}
