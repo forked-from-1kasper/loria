@@ -25,4 +25,5 @@ zip: root
 
 clean:
 	rm -f $(SRC:.fnl=.lua)
+	rm -rf $(ROOT)/*
 	rm -f $(ARCHIVE).*
