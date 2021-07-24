@@ -37,6 +37,9 @@ jobs:
         env:
           ACTIONS_ALLOW_UNSECURE_COMMANDS: true
 
+      - name: Check Git tag name
+        run: echo "$HEAD_TAG"
+
       - name: Make release if Git tag exists
         uses: "marvinpinto/action-automatic-releases@latest"
         with:
