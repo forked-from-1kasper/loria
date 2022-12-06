@@ -14,7 +14,9 @@
                "in which Loria do not use these untrusted features, "
                "but this can SIGNIFICANTLY reduce performance if map has electronics.\n"
                "This can be done by inserting “electricity_fallback = false” to your minetest.conf "
-               "or in Minetest settings.")))
+               "or in Minetest settings.\n\n"
+               "BE CAREFUL: Loria exports `ffi.new` and `ffi.metatype` to global namespace, "
+               "so they can be unsafely used by other mods.")))
 
   (local-require ffi)
 
