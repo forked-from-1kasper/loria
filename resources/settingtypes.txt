@@ -1,2 +1,3 @@
 sky_color_change_distance (Size of area for sky colour change detection) int 4 1
 electricity_fallback (Fallback mode for electricity) bool false
+start_items (Items given on first spawn) string furnace:refiner_item 1,loria:oxygen_balloon 1,loria:empty_balloon 1,loria:bucket_empty 2,loria:silicon_box 1,radiation:sign 15

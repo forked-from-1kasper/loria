@@ -10,13 +10,17 @@
   "small_mushrooms" "mapgen" "liquids" "nodes" "gases_arch" "gases" "items"
   "craft" "mushrooms" "hud" "sky" "player" "compatibility" "pickaxe" "radio" "mold")
 
-(local start-items
-  {"furnace:refiner_item" 1
-   "loria:oxygen_balloon" 1
-   "loria:empty_balloon"  1
-   "loria:silicon_box"    1
-   "radiation:sign"       15})
-(local on-start-buckets 2)
+;; Minetest devs sometimes do *very* strange things
+;; https://github.com/minetest/minetest/issues/6711
+(local start-items-default
+  (.. "furnace:refiner_item 1,loria:oxygen_balloon 1,"
+      "loria:empty_balloon 1,loria:bucket_empty 2,"
+      "loria:silicon_box 1,radiation:sign 15"))
+(local start-items {})
+
+(let [words (or (minetest.settings:get "start_items") start-items-default)]
+  (each [word (string.gmatch words "([^,]+)")]
+    (table.insert start-items (ItemStack word))))
 
 (local max-height 31000)
 (local space-suit-strength 20)
@@ -90,9 +94,9 @@
     (inv:add_item "main" {:name "loria:drill" :count 1})
     (inv:add_item "oxygen" {:name "loria:oxygen_balloon"})
 
-    (each [name count (pairs start-items)]
-      (inv:add_item "main" {:name name :count count}))
-    (for [i 1 on-start-buckets] (inv:add_item "main" "loria:bucket_empty"))))
+    (let [pos (player:get_pos)]
+      (each [index stack (ipairs start-items)]
+        (add_or_drop inv "main" stack pos)))))
 
 (minetest.register_on_newplayer (fn [player]
   (init-inv player)
