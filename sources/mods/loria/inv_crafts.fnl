@@ -42,7 +42,7 @@
              {:name "loria:bucket_water"               :count 2}
              {:name "loria:empty_balloon"              :count 1}]
     :output [{:name "loria:bucket_potassium_hydroxide" :count 2}
-             {:name "loria:hydrogen_balloon"           :count 2}]}
+             {:name "loria:hydrogen_balloon"           :count 1}]}
    {:input  [{:name "loria:broken_drill"               :count 1}
              {:name "loria:battery"                    :count 1}]
     :output [{:name "loria:drill"                      :count 1}]}

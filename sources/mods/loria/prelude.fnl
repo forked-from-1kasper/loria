@@ -47,9 +47,18 @@
     (minetest.swap_node pos node)))
 
 (defun add_or_drop [inv listname stack pos]
-  (if (inv:room_for_item listname stack)
-      (inv:add_item listname stack)
-      (minetest.add_item pos stack)))
+  (fn add-or-drop [stack]
+    (if (inv:room_for_item listname stack)
+        (inv:add_item listname stack)
+        (minetest.add_item pos stack)))
+
+  (let [stack′ (ItemStack stack)
+        max    (stack′:get_stack_max)
+        amount (stack′:get_count)
+        rem    (% amount max)
+        excess (math.floor (/ amount max))]
+    (stack′:set_count max) (for [i 1 excess] (add-or-drop stack′))
+    (stack′:set_count rem) (add-or-drop stack′)))
 
 (defun append [dest source]
   (each [_ x (ipairs source)]

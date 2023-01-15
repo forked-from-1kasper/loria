@@ -27,7 +27,7 @@
 |7|Infernum × 40, Bucket empty × 1|Bucket lucidum × 1|
 |8|Periculum × 25, Bucket empty × 1|Bucket lucidum × 1|
 |9|Viridi petasum body × 40, Bucket empty × 1|Bucket lucidum × 1|
-|10|Potassium ingot × 2, Bucket water × 2, Empty balloon × 1|Bucket potassium hydroxide × 2, Hydrogen balloon × 2|
+|10|Potassium ingot × 2, Bucket water × 2, Empty balloon × 1|Bucket potassium hydroxide × 2, Hydrogen balloon × 1|
 |11|Broken drill × 1, Battery × 1|Drill × 1|
 |12|Aluminium wire × 10, Lead case × 1|Battery box × 1|
 |13|Uranium tetrachloride × 1, Potassium ingot × 1|Uranium × 1, Potassium chloride × 4|
@@ -61,26 +61,27 @@
 |41|Copper ingot × 1|Copper wire × 15|
 |42|Aluminium ingot × 1|Aluminium wire × 15|
 |43|Wolfram ingot × 1|Wolfram wire × 15|
-|44|Platinum ingot × 1|Platinum wire × 15|
-|45|Calcium ingot × 1|Calcium wire × 15|
-|46|Uranium ingot × 1|Uranium wire × 15|
-|47|Thorium ingot × 1|Thorium wire × 15|
-|48|Plutonium ingot × 1|Plutonium wire × 15|
-|49|Viridi petasum stem × 1|Stick × 6|
-|50|Colossus stem × 1|Stick × 6|
-|51|Column stem × 1|Stick × 6|
-|52|Turris stem × 1|Stick × 6|
-|53|Rete stem × 1|Stick × 6|
-|54|Timor stem × 1|Stick × 6|
-|55|Avarum × 20|Avarum pressed × 1|
-|56|Cruento × 20|Cruento pressed × 1|
-|57|Lectica × 20|Lectica pressed × 1|
-|58|Rami × 20|Rami pressed × 1|
-|59|Spears × 20|Spears pressed × 1|
-|60|Truncus 1 × 20|Truncus 1 pressed × 1|
-|61|Truncus 2 × 20|Truncus 2 pressed × 1|
-|62|Truncus 3 × 20|Truncus 3 pressed × 1|
-|63|Veteris × 20|Veteris pressed × 1|
+|44|Lead ingot × 1|Lead wire × 15|
+|45|Platinum ingot × 1|Platinum wire × 15|
+|46|Calcium ingot × 1|Calcium wire × 15|
+|47|Uranium ingot × 1|Uranium wire × 15|
+|48|Thorium ingot × 1|Thorium wire × 15|
+|49|Plutonium ingot × 1|Plutonium wire × 15|
+|50|Viridi petasum stem × 1|Stick × 6|
+|51|Colossus stem × 1|Stick × 6|
+|52|Column stem × 1|Stick × 6|
+|53|Turris stem × 1|Stick × 6|
+|54|Rete stem × 1|Stick × 6|
+|55|Timor stem × 1|Stick × 6|
+|56|Avarum × 20|Avarum pressed × 1|
+|57|Cruento × 20|Cruento pressed × 1|
+|58|Lectica × 20|Lectica pressed × 1|
+|59|Rami × 20|Rami pressed × 1|
+|60|Spears × 20|Spears pressed × 1|
+|61|Truncus 1 × 20|Truncus 1 pressed × 1|
+|62|Truncus 2 × 20|Truncus 2 pressed × 1|
+|63|Truncus 3 × 20|Truncus 3 pressed × 1|
+|64|Veteris × 20|Veteris pressed × 1|
 
 ## Furnace
 
