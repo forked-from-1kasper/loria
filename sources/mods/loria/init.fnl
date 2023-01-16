@@ -141,6 +141,7 @@
 
 (minetest.register_privilege "kill"
   {:description "Allow to use “/kill” command"})
+
 (minetest.register_chatcommand "kill"
   {:params "[name]" :description "Kills player" :privs {"kill" true}
    :func (fn [name₁ name₂]
