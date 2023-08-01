@@ -6,7 +6,7 @@
 (local radiation-vect (vector.new 16 16 16))
 (local radiation-effects-timeout 1)
 
-(local maximum-dose 5)   ; CU
+(local maximum-dose 20)   ; CU
 
 (local height-coeff (/ 5 10000))
 
@@ -176,7 +176,13 @@
      :min-dose  8
      :conflicts ["blindness"]
      :action (fn [player] (tint player {:r 0 :g 0 :b 0 :a 240}))
-     :revert reset-tint}})
+     :revert reset-tint}
+   "weakness"
+    {:prob      0.1
+     :min-dose  3
+     :conflicts []
+     :action (fn [player] (player:set_physics_override {"speed" 0.3}))
+     :revert (fn [player] (player:set_physics_override {"speed" 1}))}})
 
 (fn applied? [meta name]
   (> (meta:get_int name) 0))
@@ -215,7 +221,7 @@
         (do (meta:set_float :dose_damage_limit (+ dose-damage-limit drug-value))
             (drug-stack:set_count (- (drug-stack:get_count) 1))
             (inv:set_stack :antiradiation 1 drug-stack))
-        (player:set_hp (- (player:get_hp) (math.floor dose))))))
+        (player:set_hp (- (player:get_hp) (math.floor (/ dose 4)))))))
 
   ;; Other effects
   (let [meta (player:get_meta)]
