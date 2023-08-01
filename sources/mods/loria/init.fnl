@@ -104,14 +104,14 @@
     (meta:set_int "oxygen" 0)
     (meta:set_float "radiation" 0)
     (meta:set_float "received_dose" 0)
-    (meta:set_float "dose_damage_limit" 1)
+    (meta:set_float "dose_damage_limit" 4) ; 4 Gy whole-body
     (meta:set_int "space_suit" space-suit-strength))))
 
 (minetest.register_on_respawnplayer (fn [player]
   (let [meta (player:get_meta)]
     (player:set_hp 20)
     (meta:set_float "received_dose" 0)
-    (meta:set_float "dose_damage_limit" 1)
+    (meta:set_float "dose_damage_limit" 4) ; 4 Gy whole-body
     (meta:set_int "space_suit" space-suit-strength))))
 
 (def-globalstep [_]
