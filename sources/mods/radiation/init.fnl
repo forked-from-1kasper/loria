@@ -6,7 +6,7 @@
 (local radiation-vect (vector.new 16 16 16))
 (local radiation-effects-timeout 1)
 
-(local maximum-dose 20)   ; CU
+(local maximum-dose 20)   ; Gy
 
 (local height-coeff (/ 5 10000))
 
@@ -212,28 +212,33 @@
   (meta:set_float :received_dose dose)
   (local dose-damage-limit (meta:get_float :dose_damage_limit))
 
+  ;; Consume anti-radiation drug
+  (let [inv (player:get_inventory)
+        drug-stack (. (inv:get_list :antiradiation) 1)
+        drug-value (. antiradiation_drugs (drug-stack:get_name))]
+    (when (∧ drug-value (≤ drug-value dose))
+      (do (meta:set_float :received_dose (- dose drug-value))
+        (drug-stack:set_count (- (drug-stack:get_count) 1))
+        (inv:set_stack :antiradiation 1 drug-stack))))
+
   ;; Damage after receiving a critical dose *for a long time*
   (when (> dose dose-damage-limit)
-    (let [inv (player:get_inventory)
-          drug-stack (. (inv:get_list :antiradiation) 1)
-          drug-value (. antiradiation_drugs (drug-stack:get_name))]
-      (if (∧ drug-value (≤ dose maximum-dose))
-        (do (meta:set_float :dose_damage_limit (+ dose-damage-limit drug-value))
-            (drug-stack:set_count (- (drug-stack:get_count) 1))
-            (inv:set_stack :antiradiation 1 drug-stack))
-        (player:set_hp (- (player:get_hp) (math.floor (/ dose 4)))))))
+    (player:set_hp (- (player:get_hp) (math.floor (/ dose 4)))))
 
   ;; Other effects
   (let [meta (player:get_meta)]
     (each [effect-name effect (pairs effect-list)]
-      (when (∧ (≥ dose effect.min-dose)
-               (≤ (math.random) effect.prob))
-        (let [conflicts (∨ effect.conflicts [])
-              priority  (∨ effect.priority [])]
-          (when (∧ (∀ x ∈ conflicts (¬ applied? meta x))
-                   (¬ applied? meta effect-name))
-            (foreach (drop-effect player meta) priority)
-            (meta:set_int effect-name 1) (effect.action player)))))))
+      (if (≥ dose effect.min-dose)
+        (when (≤ (math.random) effect.prob)
+          (let [conflicts (∨ effect.conflicts [])
+                priority  (∨ effect.priority [])]
+            (when (∧ (∀ x ∈ conflicts (¬ applied? meta x))
+                     (¬ applied? meta effect-name))
+              (foreach (drop-effect player meta) priority)
+              (meta:set_int effect-name 1) (effect.action player))))
+        (when (≤ (math.random) (/ effect.prob 10))
+          (meta:set_int effect-name 0) (effect.revert player)
+)))))
 
 (local special-inventory ["creative_inv" "oxygen"])
 
