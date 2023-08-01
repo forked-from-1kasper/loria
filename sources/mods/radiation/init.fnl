@@ -84,8 +84,8 @@
             (if (= kind "beta")
               (tset radiation kind
                 (+ (. radiation kind)
-                   (/ (* (. A kind) stack-count) 1000)))
-              (when (= kind "beta")
+                   (/ (* (. A kind) stack-count) 10)))
+              (when (= kind "gamma")
                 (tset radiation kind
                   (+ (. radiation kind)
                      (/ (* (. A kind) stack-count) 50))))
@@ -155,9 +155,9 @@
     (tset radiation :alpha
       (+ radiation.alpha
         (*
-          (* (. (get-activity (wielded:get_name)) :alpha)
+          (/ (. (get-activity (wielded:get_name)) :alpha)
             (wielded:get_count))
-          500)
+          10)
       ))
     (set radiation (add radiation (calculate-inventory-radiation
                                     (player:get_inventory)))))

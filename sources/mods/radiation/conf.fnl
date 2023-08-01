@@ -95,7 +95,7 @@
      "loria:plutonium_dioxide"       (α-β-γ 0.0 675e+18 0.0)
      "loria:plutonium_dioxide_brick" (α-β-γ 0.0 635e+18 0.0)
      ;; Americium
-     "loria:americium_trifluoride" (α-β-γ 960e+15 0.0 0.0)
+     "loria:americium_trifluoride" (α-β-γ 960e+15 0.0 960e+15)
      ;; Polluted mercury
      "loria:bucket_polluted_mercury"  (α-β-γ 1e+9 20e+12 25e+12)
      "loria:polluted_mercury_source"  (α-β-γ 2e+9 30e+12 50e+12)
