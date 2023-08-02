@@ -31,17 +31,13 @@
 (fn radiation-summary [A source pos area data]
   (let [dist² (hypot-sqr source pos)]
     (var attenuation 0)
-
-    (if (> dist² 0.5)
-      (each [thing (Raycast source pos false true) &until (> attenuation max-attenuation)]
-        (when (∧ (= thing.type "node"))
-          (let [cid (. data (area:indexp thing.under))
-                att (or (. node_attenuation cid) 1.2e-3)]
-            (set+ attenuation (* (if (> (hypot-sqr source thing.under) 0.5)
-                att (/ att 10000))
-            0.5)))))
-      (set attenuation 0.01))
-
+    (each [thing (Raycast source pos false true) &until (> attenuation max-attenuation)]
+      (when (∧ (= thing.type "node"))
+        (let [cid (. data (area:indexp thing.under))
+              att (or (. node_attenuation cid) 1.2e-3)]
+          (set+ attenuation (* (if (> (hypot-sqr source thing.under) 0.5)
+              att (/ att 1000))
+          0.5)))))
     (var res {})
     (each [kind handler (pairs ionizing)]
       (tset res kind (handler (. A kind) dist² attenuation)))
