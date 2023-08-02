@@ -18,6 +18,8 @@ wget `curl -s https://api.github.com/repos/forked-from-1kasper/loria/releases/la
 
 * [Žigmund Bratišek](https://github.com/Borschemancer)
 
+* [Aritz Erkiaga](https://github.com/aerkiaga)
+
 * [Siegmentation Fault](https://github.com/forked-from-1kasper)
 
 ## License
