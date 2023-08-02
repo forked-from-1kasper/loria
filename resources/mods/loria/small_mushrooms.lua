@@ -286,7 +286,11 @@ for name, params in pairs(small_mushrooms) do
             local optimal_radiation = params.optimal_radiation or 3.0
             local max_radiation = params.max_radiation or 5.0
 
-            local radiation = total(calculate_radiation(minetest.get_voxel_manip(), pos))
+            local vm   = minetest.get_voxel_manip()
+            local area = getVoxelArea(vm, pos)
+            local data = vm:get_data()
+
+            local radiation = total(calculate_radiation(area, data, pos))
 
             if radiation > max_radiation then
                 minetest.set_node(pos, { name = "air" })

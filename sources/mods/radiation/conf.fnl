@@ -12,11 +12,10 @@
       (tset self name val))))
 
 ;; Handlers
+
 (fn alpha [A dist² att] (/ (if (≠ dist² 0) (/ A dist²) A) (math.exp (* att 7e+3))))
-
-(fn beta [A dist² att] (/ (if (≠ dist² 0) (/ A dist²) A) (math.exp (* att 700))))
-
-(fn rays [A dist² att] (/ (if (≠ dist² 0) (/ A dist²) A) (math.exp (* att 180))))
+(fn beta  [A dist² att] (/ (if (≠ dist² 0) (/ A dist²) A) (math.exp (* att 700))))
+(fn rays  [A dist² att] (/ (if (≠ dist² 0) (/ A dist²) A) (math.exp (* att 180))))
 
 (global ionizing {:alpha alpha :beta beta :gamma rays :X-ray rays})
 
@@ -38,23 +37,23 @@
 
 ;; Attenuation relative to water/live tissue
 (global node_attenuation
-  {"loria:ammonium_manganese_pyrophosphate"  3.00
-   "loria:chromia"                           5.22
-   "loria:chromium_fluoride"                 3.80
-   "loria:cinnabar"                          8.10
-   "loria:cobalt_blue"                       3.65
-   "loria:copper_sulfate_pure"               3.60
-   "loria:copper_sulfate"                    2.29
-   "loria:copper_sulfate"                    2.29
-   "loria:lead_sulfate"                      6.29
-   "loria:mercury"                          13.50
-   "loria:mercury_oxide"                    11.14
-   "loria:nickel_nitrate"                    2.05
-   "loria:polluted_mercury_source"          13.50
-   "loria:polluted_mercury_flowing"          7.80
-   "loria:red_mercury_oxide"                11.14
-   "loria:sodium_peroxide"                   2.80
-   "loria:sulfur"                            2.00})
+  {(cid "loria:ammonium_manganese_pyrophosphate") 03.00
+   (cid "loria:chromia")                          05.22
+   (cid "loria:chromium_fluoride")                03.80
+   (cid "loria:cinnabar")                         08.10
+   (cid "loria:cobalt_blue")                      03.65
+   (cid "loria:copper_sulfate_pure")              03.60
+   (cid "loria:copper_sulfate")                   02.29
+   (cid "loria:copper_sulfate")                   02.29
+   (cid "loria:lead_sulfate")                     06.29
+   (cid "loria:mercury")                          13.50
+   (cid "loria:mercury_oxide")                    11.14
+   (cid "loria:nickel_nitrate")                   02.05
+   (cid "loria:polluted_mercury_source")          13.50
+   (cid "loria:polluted_mercury_flowing")         07.80
+   (cid "loria:red_mercury_oxide")                11.14
+   (cid "loria:sodium_peroxide")                  02.80
+   (cid "loria:sulfur")                           02.00})
 
 ;;; Then set up configuration tables
 (global activity (activity-table))
@@ -118,7 +117,8 @@
         (each [_ place (ipairs params.wherein)]
           (tset activity (cid (.. "loria:" name "_" place)) A))))
     (each [_ place (ipairs params.wherein)]
-        (tset node_attenuation (cid (.. "loria:" name "_" place)) (cid (.. "loria:" place))))))
+      (tset node_attenuation (cid (.. "loria:" name "_" place))
+        (. node_attenuation (cid (.. "loria:" place)))))))
 
 (global antiradiation_drugs
   {"loria:manganese_oxide" 0.5})

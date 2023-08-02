@@ -3,8 +3,8 @@
 
 (import :radiation "conf")
 
-(local radiation-vect (vector.new 16 16 16))
-(local radiation-effects-timeout 1)
+(local radiation-vect (vector.new 10 10 10))
+(local radiation-effects-timeout 0.1)
 
 (local maximum-dose 20) ; Gy
 
@@ -27,14 +27,15 @@
      (^ (- pos₁.y pos₂.y) 2)
      (^ (- pos₁.z pos₂.z) 2)))
 
-(fn radiation-summary [A source pos vm]
+(fn radiation-summary [A source pos area data]
   (let [dist² (hypot-sqr source pos)]
     (var attenuation 0)
+
     (if (> dist² 0.5)
       (each [thing (Raycast source pos false true)]
-        (when (= thing.type "node")
-          (let [node (vm:get_node_at thing.under)
-                att  (or (. node_attenuation node.name) 1.2e-3)]
+        (when (∧ (= thing.type "node"))
+          (let [cid (. data (area:indexp thing.under))
+                att (or (. node_attenuation cid) 1.2e-3)]
             (set+ attenuation (* att 0.5)))))
       (set attenuation 0.01))
 
@@ -84,36 +85,40 @@
                       (if (= kind "beta") 10 50))))))))))
   radiation)
 
-(defun calculate_radiation [vm pos]
-  (var radiation (null))
-
+(defun getVoxelArea [vm pos]
   (local (minp maxp)
     (vm:read_from_map
       (vector.subtract pos radiation-vect)
-      (vector.add pos radiation-vect)))
+      (vector.add      pos radiation-vect)))
 
-  (local area (VoxelArea:new {:MinEdge minp :MaxEdge maxp}))
-  (local data (vm:get_data))
+  (VoxelArea:new {:MinEdge minp :MaxEdge maxp}))
+
+(defun calculate_radiation [area data pos]
+  (var radiation (null))
 
   (for [i 1 (length data)]
     (local cid (. data i)) (local A (. activity cid))
     (when A (let [source (area:position i)]
-      (set radiation (add radiation (radiation-summary A source pos vm)))
-      (set radiation (add radiation (radiation-summary A source (vector.add pos (vector.new 0 1 0)) vm)))))
+      (set radiation (add radiation (radiation-summary A source pos area data)))
+      (set radiation (add radiation (radiation-summary A source (vector.add pos (vector.new 0 1 0)) area data)))))
     (when (∈ cid has_inventory)
       (let [source (area:position i)
             inv (-> (minetest.get_meta source) (: :get_inventory))
             A (calculate-inventory-radiation inv)]
-        (set radiation (add radiation (radiation-summary A source pos vm)))
-        (set radiation (add radiation (radiation-summary A source (vector.add pos (vector.new 0 1 0)) vm))))))
+        (set radiation (add radiation (radiation-summary A source pos area data)))
+        (set radiation (add radiation (radiation-summary A source (vector.add pos (vector.new 0 1 0)) area data))))))
   (set radiation (add (cosmic-rays pos.y) radiation))
   radiation)
 
-(fn calculate-player-radiation [player vm]
+(fn calculate-player-radiation [vm player]
   (local pos (player:get_pos))
   (local objs (->> (vector.length radiation-vect)
                    (minetest.get_objects_inside_radius pos)))
-  (var radiation (calculate_radiation vm pos))
+
+  (local area (getVoxelArea vm pos))
+  (local data (vm:get_data))
+
+  (var radiation (calculate_radiation area data pos))
 
   (each [_ obj (pairs objs)]
     (let [name (player:get_player_name)
@@ -124,18 +129,16 @@
           ;; TODO: remove code duplication
           (set radiation (add radiation
             (mult (stack:get_count)
-                  (radiation-summary A (obj:get_pos) pos vm))))
+                  (radiation-summary A (obj:get_pos) pos area data))))
           (set radiation (add radiation
             (mult (stack:get_count)
-                  (radiation-summary A (obj:get_pos) (vector.add pos (vector.new 0 1 0)) vm))))))))
+                  (radiation-summary A (obj:get_pos) (vector.add pos (vector.new 0 1 0)) area data))))))))
 
   ;; wielded item alpha
   (let [wielded (player:get_wielded_item)]
     (tset radiation :alpha
-      (+ radiation.alpha
-        (/ (* (. (get-activity (wielded:get_name)) :alpha) (wielded:get_count)) 10)))
-    (set radiation (add radiation (calculate-inventory-radiation
-                                    (player:get_inventory)))))
+      (+ radiation.alpha (/ (* (. (get-activity (wielded:get_name)) :alpha) (wielded:get_count)) 10)))
+    (set radiation (add radiation (calculate-inventory-radiation (player:get_inventory)))))
   radiation)
 
 (fn reset-tint [player] (tint player transparent))
@@ -232,7 +235,7 @@
     (each [_ player (ipairs (minetest.get_connected_players))]
       (let [meta (player:get_meta)
             radiation₀ (meta:get_float :radiation)
-            radiation  (total (calculate-player-radiation player vm))
+            radiation  (total (calculate-player-radiation vm player))
             ;; Quick and dirty conversion from Bq to Gy/h (activity to dose/time)
             ;; Good enough approximation for for X-rays, should be reasonable for others
             radiation-Gyh (math.min (* radiation 7e-17 3600) 1000)
