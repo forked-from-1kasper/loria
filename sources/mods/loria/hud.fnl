@@ -22,8 +22,8 @@
 
 (fn radiation [player]
   (let [meta (player:get_meta)]
-    (.. (string.format "Radiation: %.3f CU/h" (meta:get_float "radiation")) "\n"
-        (string.format "Received dose: %.3f mCU" (* (meta:get_float "received_dose") 1000)))))
+    (.. (string.format "Radiation: %.3f Gy/h" (meta:get_float "radiation")) "\n"
+        (string.format "Received dose: %.3f cGy" (* (meta:get_float "received_dose") 100)))))
 
 (fn copyright [player]
   (join "\n" ""

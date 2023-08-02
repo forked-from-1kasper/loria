@@ -6,8 +6,7 @@
 (local radiation-vect (vector.new 16 16 16))
 (local radiation-effects-timeout 1)
 
-(local lethal-dose 1500) ; CU/h
-(local maximum-dose 5)   ; CU
+(local maximum-dose 20)   ; Gy
 
 (local height-coeff (/ 5 10000))
 
@@ -28,11 +27,22 @@
      (^ (- pos₁.y pos₂.y) 2)
      (^ (- pos₁.z pos₂.z) 2)))
 
-(fn radiation-summary [A source pos]
+(fn radiation-summary [A source pos vm]
   (let [dist² (hypot-sqr source pos)]
+    (var attenuation 0)
+    (if (> dist² 0.5)
+    (each [thing (Raycast source pos false true)]
+      (when (= thing.type "node")
+        (let [node (vm:get_node_at thing.under)]
+        (var node_att (or (. node_attenuation node.name) 1.2e-3))
+          (set+ attenuation (* node_att 0.5))
+        )
+      )
+    )
+    (set attenuation 0.01))
     (var res {})
     (each [kind handler (pairs ionizing)]
-      (tset res kind (handler (. A kind) dist²)))
+      (tset res kind (handler (. A kind) dist² attenuation)))
     res))
 
 (fn add [A₁ A₂]
@@ -47,10 +57,19 @@
     (tset res kind (* (. A kind) k)))
   res)
 
+; Give equivalent radiation dose relative to gamma
+(global ionizing_power
+  {
+   "X-ray" 1
+   "alpha" 10e+3
+   "beta" 100
+   "gamma" 1
+  }
+)
 (defun total [A]
   (var res 0)
   (each [kind _ (pairs ionizing)]
-    (set+ res (. A kind)))
+    (set+ res (* (. A kind) (. ionizing_power kind))))
   res)
 
 (fn calculate-inventory-radiation [inv]
@@ -62,10 +81,16 @@
               stack-count (stack:get_count)]
           ;; no alpha here
           (each [kind _ (pairs ionizing)]
-            (when (≠ kind "alpha")
+            (if (= kind "beta")
               (tset radiation kind
                 (+ (. radiation kind)
-                   (* (. A kind) stack-count)))))))))
+                   (/ (* (. A kind) stack-count) 10)))
+              (when (= kind "gamma")
+                (tset radiation kind
+                  (+ (. radiation kind)
+                     (/ (* (. A kind) stack-count) 50))))
+            )
+          )))))
   radiation)
 
 (defun calculate_radiation [vm pos]
@@ -81,15 +106,25 @@
 
   (for [i 1 (length data)]
     (local cid (. data i)) (local A (. activity cid))
-    (when A (let [source (vector.add (area:position i) (vector.new 0 (/ -1 2) 0))]
-      (set radiation (add radiation (radiation-summary A pos source)))))
+    (when A (let [source (area:position i)]
+      (set radiation (add radiation (radiation-summary A source pos vm)))
+      (set radiation (add radiation (radiation-summary A source (vector.add pos (vector.new 0 1 0)) vm)))
+    ))
     (when (∈ cid has_inventory)
       (let [source (area:position i)
             inv (-> (minetest.get_meta source) (: :get_inventory))
             A (calculate-inventory-radiation inv)]
         (set radiation (add radiation
-          (radiation-summary A pos
-            (vector.add source (vector.new 0 (/ -1 2) 0))))))))
+          (radiation-summary A
+            source
+            pos vm
+          )))
+        (set radiation (add radiation
+          (radiation-summary A
+            source
+            (vector.add pos (vector.new 0 1 0)) vm
+          )))
+      )))
   (set radiation (add (cosmic-rays pos.y) radiation))
   radiation)
 
@@ -108,14 +143,22 @@
           (set radiation (add
             radiation
             (mult (stack:get_count)
-                  (radiation-summary A pos (obj:get_pos)))))))))
+                  (radiation-summary A (obj:get_pos) pos vm))))
+          (set radiation (add
+            radiation
+            (mult (stack:get_count)
+                  (radiation-summary A (obj:get_pos) (vector.add pos (vector.new 0 1 0)) vm))))
+        ))))
 
   ;; wielded item alpha
   (let [wielded (player:get_wielded_item)]
     (tset radiation :alpha
       (+ radiation.alpha
-        (* (. (get-activity (wielded:get_name)) :alpha)
-           (wielded:get_count))))
+        (*
+          (/ (. (get-activity (wielded:get_name)) :alpha)
+            (wielded:get_count))
+          10)
+      ))
     (set radiation (add radiation (calculate-inventory-radiation
                                     (player:get_inventory)))))
   radiation)
@@ -124,16 +167,22 @@
 (local effect-list
   {"blindness"
     {:prob      0.05
-     :min-dose  0.9
+     :min-dose  15
      :priority  ["semiblindness"]
      :action (fn [player] (tint player {:r 0 :g 0 :b 0 :a 255}))
      :revert reset-tint}
    "semiblindness"
     {:prob      0.1
-     :min-dose  0.85
+     :min-dose  8
      :conflicts ["blindness"]
      :action (fn [player] (tint player {:r 0 :g 0 :b 0 :a 240}))
-     :revert reset-tint}})
+     :revert reset-tint}
+   "weakness"
+    {:prob      0.1
+     :min-dose  3
+     :conflicts []
+     :action (fn [player] (player:set_physics_override {"speed" 0.3}))
+     :revert (fn [player] (player:set_physics_override {"speed" 1}))}})
 
 (fn applied? [meta name]
   (> (meta:get_int name) 0))
@@ -163,28 +212,33 @@
   (meta:set_float :received_dose dose)
   (local dose-damage-limit (meta:get_float :dose_damage_limit))
 
+  ;; Consume anti-radiation drug
+  (let [inv (player:get_inventory)
+        drug-stack (. (inv:get_list :antiradiation) 1)
+        drug-value (. antiradiation_drugs (drug-stack:get_name))]
+    (when (∧ drug-value (≤ drug-value dose))
+      (do (meta:set_float :received_dose (- dose drug-value))
+        (drug-stack:set_count (- (drug-stack:get_count) 1))
+        (inv:set_stack :antiradiation 1 drug-stack))))
+
   ;; Damage after receiving a critical dose *for a long time*
   (when (> dose dose-damage-limit)
-    (let [inv (player:get_inventory)
-          drug-stack (. (inv:get_list :antiradiation) 1)
-          drug-value (. antiradiation_drugs (drug-stack:get_name))]
-      (if (∧ drug-value (≤ dose maximum-dose))
-        (do (meta:set_float :dose_damage_limit (+ dose-damage-limit drug-value))
-            (drug-stack:set_count (- (drug-stack:get_count) 1))
-            (inv:set_stack :antiradiation 1 drug-stack))
-        (player:set_hp (- (player:get_hp) (math.floor dose))))))
+    (player:set_hp (- (player:get_hp) (math.floor (/ dose 4)))))
 
   ;; Other effects
   (let [meta (player:get_meta)]
     (each [effect-name effect (pairs effect-list)]
-      (when (∧ (≥ dose effect.min-dose)
-               (≤ (math.random) effect.prob))
-        (let [conflicts (∨ effect.conflicts [])
-              priority  (∨ effect.priority [])]
-          (when (∧ (∀ x ∈ conflicts (¬ applied? meta x))
-                   (¬ applied? meta effect-name))
-            (foreach (drop-effect player meta) priority)
-            (meta:set_int effect-name 1) (effect.action player)))))))
+      (if (≥ dose effect.min-dose)
+        (when (≤ (math.random) effect.prob)
+          (let [conflicts (∨ effect.conflicts [])
+                priority  (∨ effect.priority [])]
+            (when (∧ (∀ x ∈ conflicts (¬ applied? meta x))
+                     (¬ applied? meta effect-name))
+              (foreach (drop-effect player meta) priority)
+              (meta:set_int effect-name 1) (effect.action player))))
+        (when (≤ (math.random) (/ effect.prob 10))
+          (meta:set_int effect-name 0) (effect.revert player)
+)))))
 
 (local special-inventory ["creative_inv" "oxygen"])
 
@@ -205,14 +259,14 @@
       (let [meta (player:get_meta)
             radiation₀ (meta:get_float :radiation)
             radiation  (total (calculate-player-radiation player vm))
-            radiation′ (infix (radiation₀ + radiation) / 2)]
+            ;; Quick and dirty conversion from Bq to Gy/h (activity to dose/time)
+            ;; Good enough approximation for for X-rays, should be reasonable for others
+            radiation_Gyh (math.min (* radiation 7e-17 3600) 1000)
+            radiation′ (infix (radiation₀ + radiation_Gyh) / 2)]
         (meta:set_float :radiation radiation′)
         (when (> radiation-timer radiation-effects-timeout)
-          ;; Lethal dose (immediate death)
-          (when (> radiation lethal-dose)
-            (drop-inventory player) (player:set_hp 0))
           ;; Other effects
-          (radiation-effects player radiation))))
+          (radiation-effects player radiation_Gyh))))
 
     (when (> radiation-timer radiation-effects-timeout)
       (set radiation-timer 0))))
