@@ -36,7 +36,7 @@
         (let [cid (. data (area:indexp thing.under))
               att (or (. node_attenuation cid) 1.2e-3)]
           (set+ attenuation (* (if (> (hypot-sqr source thing.under) 0.5)
-              att (/ att 1000))
+              att (/ att 10000))
           0.5)))))
     (var res {})
     (each [kind handler (pairs ionizing)]
