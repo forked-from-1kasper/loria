@@ -8,7 +8,7 @@
 
 (local maximum-dose 20) ; Gy
 
-(local height-coeff (/ 2e+15 10000))
+(local height-coeff (/ 0.2e+15 10000))
 
 (fn cosmic-rays [height]
   (var res (null))
