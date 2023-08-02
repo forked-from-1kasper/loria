@@ -93,9 +93,9 @@
      ;; Americium
      "loria:americium_trifluoride"       (α-β-γ 960e+15 0.0     960e+15)
      ;; Polluted mercury
-     "loria:bucket_polluted_mercury"     (α-β-γ 1e+9    20e+12  25e+12)
-     "loria:polluted_mercury_source"     (α-β-γ 2e+9    30e+12  50e+12)
-     "loria:polluted_mercury_flowing"    (α-β-γ 2e+9    30e+12  50e+12)
+     "loria:bucket_polluted_mercury"     (α-β-γ 1e+9    20e+9  12e+9)
+     "loria:polluted_mercury_source"     (α-β-γ 2e+9    30e+9  25e+9)
+     "loria:polluted_mercury_flowing"    (α-β-γ 2e+9    30e+9  25e+9)
      ;; Technic
      "furnace:refiner_active"            (α-β-γ 0.0     0.0     15e+12)
      ;; Organic
