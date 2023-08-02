@@ -4,7 +4,7 @@
 (import :radiation "conf")
 
 (local radiation-vect (vector.new 10 10 10))
-(local radiation-effects-timeout 0.1)
+(local radiation-effects-timeout 1.0)
 
 (local maximum-dose 20) ; Gy
 
