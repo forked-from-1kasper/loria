@@ -68,7 +68,7 @@
   ;; Compounds are scaled by the relative molar mass of radioactive element
   (activity:update
     {;; Thorium
-     "loria:thorium"                     (α-β-γ 13e+9   0.0     0.0)
+     "loria:thorium"                     (α-β-γ 48e+9   0.0     0.0)
      "loria:thorium_ingot"               (α-β-γ 4.76e+9 0.0     0.0)
      "electricity:thorium_wire"          (α-β-γ 480e+6  0.0     0.0)
      "loria:thorium_iodide"              (α-β-γ 1.46e+9 0.0     0.0)
