@@ -1,6 +1,6 @@
-#FENNEL = # May be set here
-ARCHIVE = loria
-ROOT = loria
+FENNEL  ?= fennel
+ARCHIVE  = loria
+ROOT     = loria
 
 SRC := $(shell find sources -type f -name '*.fnl')
 DOCS := "COPYING\nAUTHORS\nLICENSE.TXT"
