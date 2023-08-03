@@ -94,7 +94,8 @@
      :wherein ["cobalt_blue" "cinnabar" "chromia"]}
     "potassium"
     {:formula "K" :has_ingot true
-     :wherein ["cobalt_blue" "cinnabar" "chromia" "chromium_fluoride"]}
+     :wherein ["cobalt_blue" "cinnabar" "chromia" "chromium_fluoride"]
+     :ratio 0.5 :radioactive true}
     "zinc"
     {:formula "Zn" :has_ingot true
      :wherein ["cobalt_blue" "cinnabar"]}

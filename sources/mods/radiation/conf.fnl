@@ -75,20 +75,26 @@
    (cid "loria:sulfur")                           02.00})
 
 (local radiochem-table
-;; Isotope  | Mass (Da) | Half-life (s)         | Decay energy (MeV)                                     |
-  {"O"      {:M 015.999 :T½ math.huge                                                                    }
-   "F"      {:M 018.999 :T½ math.huge                                                                    }
-   "Cl-35"  {:M 034.969 :T½ math.huge                                                                    }
-   "Cl-37"  {:M 036.966 :T½ math.huge                                                                    }
-   "I"      {:M 126.904 :T½ math.huge                                                                    }
-   "Th-232" {:M 232.038 :T½ (* 014.000e+9 year) :decay [{:ratio 1.0 :α 4.082 :β 0.000 :γ 0.000 :X 0.000}]}
-   "Th-230" {:M 230.033 :T½ (* 075.400e+3 year) :decay [{:ratio 1.0 :α 4.770 :β 0.000 :γ 0.000 :X 0.000}]}
-   "Pu-241" {:M 241.057 :T½ (* 014.000e+0 year) :decay [{:ratio 1.0 :α 0.000 :β 0.021 :γ 0.000 :X 0.000}]}
-   "Pu-238" {:M 238.050 :T½ (* 087.700e+0 year) :decay [{:ratio 1.0 :α 5.593 :β 0.000 :γ 0.000 :X 0.000}]}
-   "U-234"  {:M 234.067 :T½ (* 246.000e+3 year) :decay [{:ratio 1.0 :α 4.800 :β 0.000 :γ 0.000 :X 0.000}]}
-   "U-235"  {:M 235.044 :T½ (* 703.800e+3 year) :decay [{:ratio 1.0 :α 4.679 :β 0.000 :γ 0.000 :X 0.000}]}
-   "U-238"  {:M 238.051 :T½ (* 004.468e+9 year) :decay [{:ratio 1.0 :α 4.267 :β 0.000 :γ 0.000 :X 0.000}]}
-   "Am-241" {:M 241.057 :T½ (* 432.200e+0 year) :decay [{:ratio 1.0 :α 5.486 :β 0.000 :γ 0.060 :X 0.000}]}})
+;; Isotope  | Mass (Da) | Half-life (s)         | Decay energy (MeV)                                        |
+  {"H"      {:M 001.008 :T½ math.huge                                                                       }
+   "O"      {:M 015.999 :T½ math.huge                                                                       }
+   "F"      {:M 018.999 :T½ math.huge                                                                       }
+   "Cl-35"  {:M 034.969 :T½ math.huge                                                                       }
+   "Cl-37"  {:M 036.966 :T½ math.huge                                                                       }
+   "K-39"   {:M 038.964 :T½ math.huge                                                                       }
+   "K-40"   {:M 039.964 :T½ (* 001.251e+9 year) :decay [{:ratio 0.8928 :α 0.000 :β 1.310 :γ 0.000 :X 0.000}
+                                                        {:ratio 0.1072 :α 0.000 :β 0.000 :γ 1.505 :X 0.000}]}
+   "K-41"   {:M 040.962 :T½ math.huge                                                                       }
+   "Mn"     {:M 054.938 :T½ math.huge                                                                       }
+   "I"      {:M 126.904 :T½ math.huge                                                                       }
+   "Th-232" {:M 232.038 :T½ (* 014.000e+9 year) :decay [{:ratio 1.0000 :α 4.082 :β 0.000 :γ 0.000 :X 0.000}]}
+   "Th-230" {:M 230.033 :T½ (* 075.400e+3 year) :decay [{:ratio 1.0000 :α 4.770 :β 0.000 :γ 0.000 :X 0.000}]}
+   "Pu-241" {:M 241.057 :T½ (* 014.000e+0 year) :decay [{:ratio 1.0000 :α 0.000 :β 0.021 :γ 0.000 :X 0.000}]}
+   "Pu-238" {:M 238.050 :T½ (* 087.700e+0 year) :decay [{:ratio 1.0000 :α 5.593 :β 0.000 :γ 0.000 :X 0.000}]}
+   "U-234"  {:M 234.067 :T½ (* 246.000e+3 year) :decay [{:ratio 1.0000 :α 4.800 :β 0.000 :γ 0.000 :X 0.000}]}
+   "U-235"  {:M 235.044 :T½ (* 703.800e+3 year) :decay [{:ratio 1.0000 :α 4.679 :β 0.000 :γ 0.000 :X 0.000}]}
+   "U-238"  {:M 238.051 :T½ (* 004.468e+9 year) :decay [{:ratio 1.0000 :α 4.267 :β 0.000 :γ 0.000 :X 0.000}]}
+   "Am-241" {:M 241.057 :T½ (* 432.200e+0 year) :decay [{:ratio 1.0000 :α 5.486 :β 0.000 :γ 0.060 :X 0.000}]}})
 
 (local molecular-table
 ;; Molecule | Density (g/cm³) | Isotopes (relative amount)
@@ -102,52 +108,73 @@
    "PuF₃"   {:ρ 09.300        :iso {"Pu-238" 0.80000 "Pu-241" 0.20000 "F"     3.00000}}
    "PuF₄"   {:ρ 07.100        :iso {"Pu-238" 0.80000 "Pu-241" 0.20000 "F"     4.00000}}
    "PuO₂"   {:ρ 11.500        :iso {"Pu-238" 0.80000 "Pu-241" 0.20000 "O"     2.00000}}
-   "AmF₃"   {:ρ 09.530        :iso {"Am-241" 1.00000 "F"      3.00000                }}})
+   "AmF₃"   {:ρ 09.530        :iso {"Am-241" 1.00000 "F"      3.00000                }}
+   "K"      {:ρ 00.890        :iso {"K-39"   0.92040 "K-40"   0.01230 "K-41"  0.06730}}
+   "KMnO₄"  {:ρ 02.700        :iso {"K-39"   0.92040 "K-40"   0.01230 "K-41"  0.06730
+                                    "Mn"     1.00000 "O"      4.00000}}
+   "K₂MnO₄" {:ρ 02.780        :iso {"K-39"   1.84080 "K-40"   0.02460 "K-41"  0.13460
+                                    "Mn"     1.00000 "O"      4.00000}}
+   "KCl"    {:ρ 01.980        :iso {"K-39"   0.92040 "K-40"   0.01230 "K-41"  0.06730
+                                    "Cl-35"  3.04000 "Cl-37"  0.96000}}
+   "KOH"    {:ρ 02.120        :iso {"K-39"   0.92040 "K-40"   0.01230 "K-41"  0.06730
+                                    "O"      1.00000 "H"      1.00000}}})
 
 (local item-table
-;; Item / node                         | Components (m³)
+;; Item / node                            | Components (m³)
   {;; Thorium
-   "loria:thorium"                     {"Th"   1.0000}
-   "loria:thorium_ingot"               {"Th"   0.1000}
-   "electricity:thorium_wire"          {"Th"   0.0100}
-   "loria:thorium_iodide"              {"ThI"  1.0000}
-   "loria:thorium_dioxide"             {"ThO₂" 1.0000}
-   "loria:thorium_dioxide_brick"       {"ThO₂" 0.9800}
-   "furnace:thorium"                   {"Th"   0.4000}
-   "furnace:thorium_active"            {"Th"   0.4000}
+   "loria:thorium"                        {"Th"     1.0000}
+   "loria:thorium_ingot"                  {"Th"     0.1000}
+   "electricity:thorium_wire"             {"Th"     0.0100}
+   "loria:thorium_iodide"                 {"ThI"    1.0000}
+   "loria:thorium_dioxide"                {"ThO₂"   1.0000}
+   "loria:thorium_dioxide_brick"          {"ThO₂"   0.9800}
+   "furnace:thorium"                      {"Th"     0.4000}
+   "furnace:thorium_active"               {"Th"     0.4000}
    ;; Uranium
-   "loria:uranium"                     {"U"    1.0000}
-   "loria:uranium_ingot"               {"U"    0.1000}
-   "electricity:uranium_wire"          {"U"    0.0100}
-   "loria:uranium_tetrachloride"       {"UCl₄" 1.0000}
-   "loria:uranium_tetrachloride_brick" {"UCl₄" 0.9800}
+   "loria:uranium"                        {"U"      1.0000}
+   "loria:uranium_ingot"                  {"U"      0.1000}
+   "electricity:uranium_wire"             {"U"      0.0100}
+   "loria:uranium_tetrachloride"          {"UCl₄"   1.0000}
+   "loria:uranium_tetrachloride_brick"    {"UCl₄"   0.9800}
    ;; Plutonium
-   "loria:plutonium"                   {"Pu"   1.0000}
-   "loria:plutonium_ingot"             {"Pu"   0.1000}
-   "electricity:plutonium_wire"        {"Pu"   0.0100}
-   "loria:plutonium_trifluoride"       {"PuF₃" 1.0000}
-   "loria:plutonium_tetrafluoride"     {"PuF₄" 1.0000}
-   "loria:plutonium_dioxide"           {"PuO₂" 1.0000}
-   "loria:plutonium_dioxide_brick"     {"PuO₂" 0.9800}
+   "loria:plutonium"                      {"Pu"     1.0000}
+   "loria:plutonium_ingot"                {"Pu"     0.1000}
+   "electricity:plutonium_wire"           {"Pu"     0.0100}
+   "loria:plutonium_trifluoride"          {"PuF₃"   1.0000}
+   "loria:plutonium_tetrafluoride"        {"PuF₄"   1.0000}
+   "loria:plutonium_dioxide"              {"PuO₂"   1.0000}
+   "loria:plutonium_dioxide_brick"        {"PuO₂"   0.9800}
    ;; Americium
-   "loria:americium_trifluoride"       {"AmF₃" 1.0000}
+   "loria:americium_trifluoride"          {"AmF₃"   1.0000}
+   ;; Potassium
+   "loria:potassium"                      {"K"      1.0000}
+   "loria:potassium_ingot"                {"K"      0.1000}
+   "loria:potassium_chloride"             {"KCl"    1.0000}
+   "loria:potassium_manganate"            {"K₂MnO₄" 1.0000}
+   "loria:potassium_permanganate_source"  {"KMnO₄"  1.0000}
+   "loria:potassium_permanganate_flowing" {"KMnO₄"  1.0000}
+   "loria:bucket_potassium_permanganate"  {"KMnO₄"  1.0000}
+   "loria:potassium_hydroxide_source"     {"KOH"    1.0000}
+   "loria:potassium_hydroxide_flowing"    {"KOH"    1.0000}
+   "loria:bucket_potassium_hydroxide"     {"KOH"    1.0000}
    ;; Polluted mercury
-   "loria:polluted_mercury_source"     {"Th"   0.0800
-                                        "ThI"  0.0300
-                                        "ThO₂" 0.0200
-                                        "PuF₄" 2.4e-6}
-   "loria:polluted_mercury_flowing"    {"Th"   0.0800
-                                        "ThI"  0.0300
-                                        "ThO₂" 0.0200
-                                        "PuF₄" 2.4e-6}
-   "loria:bucket_polluted_mercury"     {"Th"   0.0400
-                                        "ThI"  0.0150
-                                        "ThO₂" 0.0100
-                                        "PuF₄" 1.2e-6}
+   "loria:polluted_mercury_source"        {"Th"     0.0800
+                                           "ThI"    0.0300
+                                           "ThO₂"   0.0200
+                                           "PuF₄"   2.4e-6}
+   "loria:polluted_mercury_flowing"       {"Th"     0.0800
+                                           "ThI"    0.0300
+                                           "ThO₂"   0.0200
+                                           "PuF₄"   2.4e-6}
+   "loria:bucket_polluted_mercury"        {"Th"     0.0400
+                                           "ThI"    0.0150
+                                           "ThO₂"   0.0100
+                                           "PuF₄"   1.2e-6}
    ;; Pickaxes
-   "loria:uranium_pickaxe"             {"U"    0.2000}
-   "loria:thorium_pickaxe"             {"Th"   0.2000}
-   "loria:plutonium_pickaxe"           {"Pu"   0.2000}})
+   "loria:uranium_pickaxe"                {"U"      0.2000}
+   "loria:thorium_pickaxe"                {"Th"     0.2000}
+   "loria:plutonium_pickaxe"              {"Pu"     0.2000}
+   "loria:potassium_pickaxe"              {"K"      0.2000}})
 
 ;;; Then set up configuration tables
 (global radpower (radiant-power-table))
