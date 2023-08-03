@@ -290,7 +290,7 @@ for name, params in pairs(small_mushrooms) do
             local area = getVoxelArea(vm, pos)
             local data = vm:get_data()
 
-            local radiation = total(calculate_radiation(area, data, pos))
+            local radiation = EquivalentDose(radiantFluxAtPos(area, data, pos))
 
             if radiation > max_radiation then
                 minetest.set_node(pos, { name = "air" })

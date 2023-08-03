@@ -6,20 +6,20 @@
 (local radiation-vect (vector.new 10 10 10))
 (local radiation-effects-timeout 1.0)
 
-(local maximum-dose 20) ; Gy
+(local maximum-dose 20) ; Sv
 
-(local height-coeff 2e+10)
+(local height-coeff 1.4e-6)
 
 (fn cosmic-rays [height]
   (var res (null))
   (when (> height 0)
-    (set res.X-ray (* height-coeff height)))
+    (set res.X (* height-coeff height)))
   res)
 
-(fn get-activity [name]
+(fn get-radpower [name]
   (or (if (∈ name minetest.registered_nodes)
-          (. activity (minetest.get_content_id name))
-          (. activity name))
+          (. radpower (minetest.get_content_id name))
+          (. radpower name))
       (null)))
 
 (fn hypot-sqr [pos₁ pos₂]
@@ -28,7 +28,7 @@
      (^ (- pos₁.z pos₂.z) 2)))
 
 (local max-attenuation 10)
-(fn radiation-summary [A source pos area data]
+(fn get-flux [P source pos area data]
   (let [dist² (hypot-sqr source pos)]
     (var attenuation 0)
     (each [thing (Raycast source pos false true) &until (> attenuation max-attenuation)]
@@ -40,7 +40,7 @@
           0.5)))))
     (var res {})
     (each [kind handler (pairs ionizing)]
-      (tset res kind (handler (. A kind) dist² attenuation)))
+      (tset res kind (handler (. P kind) dist² attenuation)))
     res))
 
 (fn add [A₁ A₂]
@@ -56,32 +56,34 @@
   res)
 
 ; Give equivalent radiation dose relative to gamma
-(global ionizing_power
-  {"X-ray" 1
-   "alpha" 10e+3
-   "beta"  100
-   "gamma" 1})
+(global ionizing_power {:X 1 :α 10e+3 :β 100 :γ 1})
 
-(defun total [A]
-  (var res 0)
+(defun EquivalentDose [E]
+  (var retval 0)
   (each [kind _ (pairs ionizing)]
-    (set+ res (* (. A kind) (. ionizing_power kind))))
-  res)
+    (set+ retval (* (. E kind) (. ionizing_power kind))))
+  retval)
+
+(defun Total [E]
+  (var retval 0)
+  (each [kind _ (pairs ionizing)]
+    (set+ retval (. E kind)))
+  retval)
 
 (fn calculate-inventory-radiation [inv]
   (var radiation (null))
   (each [listname lst (pairs (inv:get_lists))]
     (when (≠ listname "creative_inv")
       (each [_ stack (ipairs lst)]
-        (let [A (get-activity (stack:get_name))
+        (let [P (get-radpower (stack:get_name))
               stack-count (stack:get_count)]
-          ;; no alpha here
+          ;; no α- here
           (each [kind _ (pairs ionizing)]
-            (if (≠ kind "alpha")
+            (if (≠ kind "α")
               (tset radiation kind
                 (+ (. radiation kind)
-                   (/ (* (. A kind) stack-count)
-                      (if (= kind "beta") 10 50))))))))))
+                   (/ (* (. P kind) stack-count)
+                      (if (= kind "β") 10 50))))))))))
   radiation)
 
 (defun getVoxelArea [vm pos]
@@ -92,24 +94,24 @@
 
   (VoxelArea:new {:MinEdge minp :MaxEdge maxp}))
 
-(defun calculate_radiation [area data pos]
+(defun radiantFluxAtPos [area data pos]
   (var radiation (null))
 
   (for [i 1 (length data)]
-    (local cid (. data i)) (local A (. activity cid))
-    (when A (let [source (area:position i)]
-      (set radiation (add radiation (radiation-summary A source pos area data)))
-      (set radiation (add radiation (radiation-summary A source (vector.add pos (vector.new 0 1 0)) area data)))))
+    (local cid (. data i)) (local P (. radpower cid))
+    (when P (let [source (area:position i)]
+      (set radiation (add radiation (get-flux P source pos area data)))
+      (set radiation (add radiation (get-flux P source (vector.add pos (vector.new 0 1 0)) area data)))))
     (when (∈ cid has_inventory)
       (let [source (area:position i)
             inv (-> (minetest.get_meta source) (: :get_inventory))
-            A (calculate-inventory-radiation inv)]
-        (set radiation (add radiation (radiation-summary A source pos area data)))
-        (set radiation (add radiation (radiation-summary A source (vector.add pos (vector.new 0 1 0)) area data))))))
+            P (calculate-inventory-radiation inv)]
+        (set radiation (add radiation (get-flux P source pos area data)))
+        (set radiation (add radiation (get-flux P source (vector.add pos (vector.new 0 1 0)) area data))))))
   (set radiation (add (cosmic-rays pos.y) radiation))
   radiation)
 
-(fn calculate-player-radiation [vm player]
+(fn radiant-flux-at-player [vm player]
   (local pos (player:get_pos))
   (local objs (->> (vector.length radiation-vect)
                    (minetest.get_objects_inside_radius pos)))
@@ -117,27 +119,28 @@
   (local area (getVoxelArea vm pos))
   (local data (vm:get_data))
 
-  (var radiation (calculate_radiation area data pos))
+  (var radiation (radiantFluxAtPos area data pos))
 
   (each [_ obj (pairs objs)]
     (let [name (player:get_player_name)
           entity (obj:get_luaentity)]
       (when (∧ entity (= entity.name "__builtin:item"))
         (let [stack (ItemStack entity.itemstring)
-              A (get-activity (stack:get_name))]
+              P     (get-radpower (stack:get_name))]
           ;; TODO: remove code duplication
           (set radiation (add radiation
             (mult (stack:get_count)
-                  (radiation-summary A (obj:get_pos) pos area data))))
+                  (get-flux P (obj:get_pos) pos area data))))
           (set radiation (add radiation
             (mult (stack:get_count)
-                  (radiation-summary A (obj:get_pos) (vector.add pos (vector.new 0 1 0)) area data))))))))
+                  (get-flux P (obj:get_pos) (vector.add pos (vector.new 0 1 0)) area data))))))))
 
   ;; wielded item alpha
   (let [wielded (player:get_wielded_item)]
-    (tset radiation :alpha
-      (+ radiation.alpha (/ (* (. (get-activity (wielded:get_name)) :alpha) (wielded:get_count)) 10)))
+    (tset radiation :α
+      (+ radiation.α (/ (* (. (get-radpower (wielded:get_name)) :α) (wielded:get_count)) 10)))
     (set radiation (add radiation (calculate-inventory-radiation (player:get_inventory)))))
+
   radiation)
 
 (fn reset-tint [player] (tint player transparent))
@@ -182,11 +185,7 @@
 
 (fn radiation-effects [player radiation]
   (local meta (player:get_meta))
-  (local dose₀ (meta:get_float :received_dose))
-  (var dose (infix dose₀ + radiation-effects-timeout * radiation / 3600))
-  (when (< dose 0) (set dose 0))
-
-  (meta:set_float :received_dose dose)
+  (local dose (meta:get_float :received_dose))
   (local dose-damage-limit (meta:get_float :dose_damage_limit))
 
   ;; Consume anti-radiation drug
@@ -233,16 +232,19 @@
   (let [vm (minetest.get_voxel_manip)]
     (each [_ player (ipairs (minetest.get_connected_players))]
       (let [meta (player:get_meta)
-            radiation₀ (meta:get_float :radiation)
-            radiation  (total (calculate-player-radiation vm player))
-            ;; Quick and dirty conversion from Bq to Gy/h (activity to dose/time)
-            ;; Good enough approximation for for X-rays, should be reasonable for others
-            radiation-Gyh (math.min (* radiation 7e-17 3600) 1000)
-            radiation′    (infix (radiation₀ + radiation-Gyh) / 2)]
-        (meta:set_float :radiation radiation′)
+            m     75.0                               ; Player mass, kg
+            flux  (radiant-flux-at-player vm player) ; Radiant flux, W
+            E     (Mult Δt flux)                     ; Radiant energy, J
+            D     (Div E m)                          ; Absorbed dose, Gy
+            H     (EquivalentDose D)                 ; Equivalent dose, Sv
+            flux₀ (meta:get_float :radiation)        ; W
+            H₀    (meta:get_float :received_dose)    ; Gy
+            flux′ (infix (flux₀ + (Total flux)) / 2)]
+        (meta:set_float :radiation (Total flux))
+        (meta:set_float :received_dose (+ H₀ H))
+
         (when (> radiation-timer radiation-effects-timeout)
-          ;; Other effects
-          (radiation-effects player radiation-Gyh))))
+          (radiation-effects player))))
 
     (when (> radiation-timer radiation-effects-timeout)
       (set radiation-timer 0))))

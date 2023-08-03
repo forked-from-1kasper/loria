@@ -35,7 +35,7 @@
 
 (fn first [...] `(. ,(list (unpack [...])) 1))
 
-(fn alpha-beta-gamma [α β γ X] {:alpha α :beta β :gamma γ :X-ray (or X 0)})
+(fn alpha-beta-gamma [α β γ X] {:α α :β β :γ γ :X (or X 0)})
 
 (fn define-type [name init-func]
   `(do (global ,name {} )
