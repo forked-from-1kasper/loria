@@ -55,13 +55,12 @@
     (tset res kind (* (. A kind) k)))
   res)
 
-; Give equivalent radiation dose relative to gamma
-(global ionizing_power {:X 1 :α 10e+3 :β 100 :γ 1})
+(local radiation-weighting-factor {:X 1 :α 20 :β 1 :γ 1})
 
 (defun EquivalentDose [E]
   (var retval 0)
   (each [kind _ (pairs ionizing)]
-    (set+ retval (* (. E kind) (. ionizing_power kind))))
+    (set+ retval (* (. E kind) (. radiation-weighting-factor kind))))
   retval)
 
 (defun Total [E]
@@ -147,22 +146,22 @@
 (local effect-list
   {"blindness"
     {:prob      0.05
-     :min-dose  15
+     :min-dose  3.5
      :priority  ["semiblindness"]
      :action (fn [player] (tint player {:r 0 :g 0 :b 0 :a 255}))
      :revert reset-tint}
    "semiblindness"
     {:prob      0.1
-     :min-dose  8
+     :min-dose  3
      :conflicts ["blindness"]
      :action (fn [player] (tint player {:r 0 :g 0 :b 0 :a 240}))
      :revert reset-tint}
    "weakness"
     {:prob      0.1
-     :min-dose  3
+     :min-dose  2.5
      :conflicts []
      :action (fn [player] (player:set_physics_override {"speed" 0.3}))
-     :revert (fn [player] (player:set_physics_override {"speed" 1}))}})
+     :revert (fn [player] (player:set_physics_override {"speed" 1.0}))}})
 
 (fn applied? [meta name]
   (> (meta:get_int name) 0))
@@ -226,6 +225,8 @@
           (minetest.add_item pos stack))
         (inv:set_list listname [])))))
 
+(fn mean [A B] (math.sqrt (* A B)))
+
 (var radiation-timer 0)
 (def-globalstep [Δt]
   (set radiation-timer (+ radiation-timer Δt))
@@ -237,10 +238,11 @@
             E     (Mult Δt flux)                     ; Radiant energy, J
             D     (Div E m)                          ; Absorbed dose, Gy
             H     (EquivalentDose D)                 ; Equivalent dose, Sv
-            flux₀ (meta:get_float :radiation)        ; W
-            H₀    (meta:get_float :received_dose)    ; Gy
-            flux′ (infix (flux₀ + (Total flux)) / 2)]
-        (meta:set_float :radiation (Total flux))
+            H₀    (meta:get_float :received_dose)    ; Sv
+            rate₀ (meta:get_float :radiation)        ; Gy/s
+            rate  (/ (Total flux) m)                 ; Gy/s
+            rate′ (mean rate₀ rate)]
+        (meta:set_float :radiation rate′)
         (meta:set_float :received_dose (+ H₀ H))
 
         (when (> radiation-timer radiation-effects-timeout)

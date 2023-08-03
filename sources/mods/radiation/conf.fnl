@@ -132,15 +132,18 @@
    ;; Americium
    "loria:americium_trifluoride"       {"AmF₃" 1.0000}
    ;; Polluted mercury
-   "loria:polluted_mercury_source"     {"Th"   0.0500
+   "loria:polluted_mercury_source"     {"Th"   0.0800
                                         "ThI"  0.0300
-                                        "ThO₂" 0.0200}
-   "loria:polluted_mercury_flowing"    {"Th"   0.0500
+                                        "ThO₂" 0.0200
+                                        "PuF₄" 2.4e-6}
+   "loria:polluted_mercury_flowing"    {"Th"   0.0800
                                         "ThI"  0.0300
-                                        "ThO₂" 0.0200}
-   "loria:bucket_polluted_mercury"     {"Th"   0.0250
+                                        "ThO₂" 0.0200
+                                        "PuF₄" 2.4e-6}
+   "loria:bucket_polluted_mercury"     {"Th"   0.0400
                                         "ThI"  0.0150
-                                        "ThO₂" 0.0100}
+                                        "ThO₂" 0.0100
+                                        "PuF₄" 1.2e-6}
    ;; Pickaxes
    "loria:uranium_pickaxe"             {"U"    0.2000}
    "loria:thorium_pickaxe"             {"Th"   0.2000}

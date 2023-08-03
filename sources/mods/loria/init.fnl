@@ -45,7 +45,7 @@
     (player:hud_set_flags {:healthbar false})
     (tset oxygen_hud name (player:hud_add
       {:hud_elem_type "text"
-       :position {:x 0 :y 0.9}
+       :position {:x 0 :y 0.87}
        :text "N/A"
        :number 0xFFFFFF
        :alignment "right"
