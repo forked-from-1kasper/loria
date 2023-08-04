@@ -225,7 +225,7 @@
           (minetest.add_item pos stack))
         (inv:set_list listname [])))))
 
-(fn mean [A B] (math.sqrt (* A B)))
+(fn mean [A B] (/ (+ A B) 2))
 
 (var radiation-timer 0)
 (def-globalstep [Δt]
