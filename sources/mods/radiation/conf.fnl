@@ -235,7 +235,7 @@
      "loria:nihil"                       (α-β-γ 000.0e+00 000.0e+00 007.0e-03)
      "loria:lectica"                     (α-β-γ 000.0e+00 000.0e+00 004.9e-02)
      ;; Other
-     "radiation:danger"                  (α-β-γ 052.5e-05 024.5e-03 052.5e-05)})
+     "radiation:danger"                  (α-β-γ 052.5e+02 024.5e-03 003.0e+03)})
 
   (each [name params (pairs ores)]
     (when (∈ :radioactive params)
