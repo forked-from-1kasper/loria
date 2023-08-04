@@ -22,24 +22,24 @@
 
 (fn clamp [min max value] (math.max min (math.min value max)))
 
-(fn get-suitable-prefix [value]
+(fn get-suitable-prefix [min-prefix max-prefix value]
   (local prefix-step 3)
   (let [exp    (math.floor (math.log10 value))
-        N      (clamp -5 +5 (math.floor (/ exp prefix-step)))
+        N      (clamp min-prefix max-prefix (math.floor (/ exp prefix-step)))
         prefix (case N -1 :m -2 :μ -3 :n -4 :p -5 :f +0 ""
                        +1 :k +2 :M +3 :G +4 :T +5 :P)]
     (values prefix (* N prefix-step))))
 
-(fn format-prefix [value unit]
-  (let [(prefix exp) (get-suitable-prefix value)]
+(fn format-prefix [min-prefix max-prefix value unit]
+  (let [(prefix exp) (get-suitable-prefix min-prefix max-prefix value)]
     (string.format "%.3f %s%s" (/ value (^ 10 exp)) prefix unit)))
 
 (fn radiation [player]
   (let [meta (player:get_meta)
         flux (* (meta:get_float "radiation") 3600)
         dose (meta:get_float "received_dose")]
-    (.. "Radiant flux: " (format-prefix flux "Gy/h") "\n"
-        "Est. equiv. dose: " (format-prefix dose "Sv"))))
+    (.. "Radiant flux: " (format-prefix -5 +5 flux "Gy/h") "\n"
+        "Est. equiv. dose: " (format-prefix -1 +5 dose "Sv"))))
 
 (fn copyright [player]
   (join "\n" ""
