@@ -19,7 +19,7 @@
    :paramtype2 "facedir"
 
    :groups {:crumbly 3 :source 1}
-  
+
    :on_construct
     (fn [pos]
       (let [meta (minetest.get_meta pos)
