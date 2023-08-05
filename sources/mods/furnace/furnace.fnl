@@ -42,7 +42,7 @@
       (each [_ func (ipairs conf.on_tick)]
         (when (¬ func pos elapsed)
           (stop_furnace conf pos)
-          (lua "return true")))
+          (return! true)))
 
       (var cooking (+ (meta:get_float "cooking") elapsed))
       (local recipe (get_craft conf.crafts inv))

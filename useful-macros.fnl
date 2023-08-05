@@ -1,3 +1,5 @@
+(local fennel (require :fennel))
+
 (fn defun [name args ...]
   `(global ,name (fn ,args ,(unpack [...]))))
 
@@ -74,6 +76,9 @@
   (fn [M i j val]
     `(: ,M :set ,i ,j (,(sym φ) (: ,M :get ,i ,j) ,val))))
 
+(fn early-return [ε] (let [value (gensym)]
+  `(lua ,(tostring (fennel.compile ε)))))
+
 {;; Unicode aliases and syntaxes
  "∈" table-contains "∉" table-not-contains
  "≠" (alias :not=) "∧" (alias :and) "∨" (alias :or)
@@ -96,4 +101,6 @@
  :define-type define-type :first first
  :define-circuit define-circuit
  :incf (unary-macro "+") :set+ (set-op "+")
- :decf (unary-macro "-") :set- (set-op "-")}
+ :decf (unary-macro "-") :set- (set-op "-")
+ :set* (set-op "*") :set/ (set-op "/")
+ :return! early-return}
