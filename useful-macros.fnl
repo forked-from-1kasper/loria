@@ -89,6 +89,8 @@
  ;; Macros for matrices
  "+=" (function-assignment "+")
  "-=" (function-assignment "-")
+ "*=" (function-assignment "*")
+ "/=" (function-assignment "/")
  ;; Other
  :local-require local-require :α-β-γ alpha-beta-gamma
  :define-type define-type :first first
