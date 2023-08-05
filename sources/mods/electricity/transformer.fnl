@@ -66,16 +66,19 @@
    :paramtype "light"        :drawtype "nodebox"
    :node_box transformer-box :selection_box transformer-box
 
-    :on_construct
-      (fn [pos]
-        (setup-transformer-formspec pos)
-        ((set_resis transformer-resis) pos))
-    :on_destruct (andthen reset_current drop_everything)
+   :on_construct
+    (fn [pos]
+      (setup-transformer-formspec pos)
+      ((set_resis transformer-resis) pos))
 
-    :allow_metadata_inventory_put (fn [pos listname index stack player]
-        (if (wire? (stack:get_name)) (stack:get_count) 0))
+   :on_destruct (andthen reset_current drop_everything)
 
-    :allow_metadata_inventory_move (fn [pos from-list from-index to-list to-index count player]
+   :allow_metadata_inventory_put
+    (fn [pos listname index stack player]
+      (if (wire? (stack:get_name)) (stack:get_count) 0))
+
+   :allow_metadata_inventory_move
+    (fn [pos from-list from-index to-list to-index count player]
       (let [meta  (minetest.get_meta pos)
             inv   (meta:get_inventory)
             stack (inv:get_stack from-list from-index)]
