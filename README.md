@@ -4,7 +4,7 @@
 
 <img alt="Made with secret alien technology" align="right" src="pictures/Lisp.png">
 
-Minetest 5.4.0+, still WIP. [Craft list](manuals/craft_list.md).
+Minetest 5.7.0+, still WIP. [Craft list](manuals/craft_list.md).
 
 You can get the latest build via:
 
@@ -24,7 +24,7 @@ wget `curl -s https://api.github.com/repos/forked-from-1kasper/loria/releases/la
 
 ## License
 
-Copyright © 2021 The Loria Developers
+Copyright © 2020–2023 The Loria Developers
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by

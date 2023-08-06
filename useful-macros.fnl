@@ -76,8 +76,46 @@
   (fn [M i j val]
     `(: ,M :set ,i ,j (,(sym φ) (: ,M :get ,i ,j) ,val))))
 
+(fn compile [ast] (fennel.compile ast {:scope (get-scope) :compiler-env _G}))
+
 (fn early-return [ε] (let [value (gensym)]
-  `(lua ,(tostring (fennel.compile ε)))))
+  `(lua ,(tostring (compile ε)))))
+
+(fn check-constexpr-value [value]
+  (case (type value)
+    "function" (error "“function” in constexpr")
+    "userdata" (error "“userdata” in constexpr")
+    "thread"   (error "“thread” in constexpr")
+    "table"    (each [_ v (pairs value)] (check-constexpr-value v))))
+
+(fn get-ident [ε]
+  (if (sym? ε) (fennel.mangle (tostring ε))
+      (error (string.format "“%s” expected to be an identifier" (view ε)))))
+
+(fn compile-and-load [ast]
+  (let [lua-code (compile ast)
+        callback (load lua-code)]
+    (callback)))
+
+(fn constexpr-emit [tag ε₁ ε₂]
+  (tset _G tag ε₁) `(tset _G ,tag ,ε₂))
+
+(fn constexpr-value [E ...]
+  (let [tag   (get-ident E)
+        ast  `(do ,...)
+        value (compile-and-load ast)]
+    (check-constexpr-value value)
+    (constexpr-emit tag value value)))
+
+(fn constexpr-defun [E ...]
+  (let [tag   (get-ident E)
+        ast  `(fn ,...)
+        value (compile-and-load ast)]
+    (constexpr-emit tag value ast)))
+
+(fn constexpr [τ ...]
+  (if (= τ `defun) (constexpr-defun ...)
+      (constexpr-value τ ...)))
 
 {;; Unicode aliases and syntaxes
  "∈" table-contains "∉" table-not-contains
@@ -103,4 +141,5 @@
  :incf (unary-macro "+") :set+ (set-op "+")
  :decf (unary-macro "-") :set- (set-op "-")
  :set* (set-op "*") :set/ (set-op "/")
- :return! early-return}
+ :return! early-return
+ :constexpr constexpr}

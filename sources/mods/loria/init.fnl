@@ -53,12 +53,9 @@
 
     (player:set_clouds {:density 0})
 
-    (tset loria "enough-fresh?"
-      (∧ player.set_sun player.set_moon player.set_stars))
-    (when loria.enough-fresh?
-      (player:set_sun   {:texture "star.png" :scale 0.5 :sunrise_visible false})
-      (player:set_moon  {:scale 7 :texture "gas_giant.png"})
-      (player:set_stars {:scale 0.5 :star_color "#ffffffff"}))
+    (player:set_sun   {:texture "star.png" :scale 0.5 :sunrise_visible false})
+    (player:set_moon  {:scale 7 :texture "gas_giant.png"})
+    (player:set_stars {:scale 0.25 :star_color "#ffffffff" :count 4500})
 
     (player_api.set_model player "player.b3d")
     (player:set_local_animation
