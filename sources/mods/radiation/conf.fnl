@@ -32,9 +32,9 @@
 (fn specific-activity [T½ M] (/ (* Avogadro (math.log 2)) (* T½ M)))
 
 ;; Handlers
-(fn alpha [P dist² att] (/ (if (≠ dist² 0) (* P (/ 1.0 (* 4.0 π dist²))) P) (math.exp (* att 7e+3))))
-(fn beta  [P dist² att] (/ (if (≠ dist² 0) (* P (/ 1.0 (* 4.0 π dist²))) P) (math.exp (* att 700))))
-(fn rays  [P dist² att] (/ (if (≠ dist² 0) (* P (/ 1.0 (* 4.0 π dist²))) P) (math.exp (* att 180))))
+(fn alpha [P dist² att] (/ (if (> dist² 0) (* P (/ 1.0 (* 4.0 π dist²))) P) (math.exp (* att 7e+3))))
+(fn beta  [P dist² att] (/ (if (> dist² 0) (* P (/ 1.0 (* 4.0 π dist²))) P) (math.exp (* att 700))))
+(fn rays  [P dist² att] (/ (if (> dist² 0) (* P (/ 1.0 (* 4.0 π dist²))) P) (math.exp (* att 180))))
 
 (global ionizing {:α alpha :β beta :γ rays :X rays})
 

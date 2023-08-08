@@ -8,12 +8,12 @@
 
 (local maximum-dose 20) ; Sv
 
-(local height-coeff 1.4e-6)
+(local cosmic-rays-power-per-meter 1.4e-6)
 
 (fn cosmic-rays [height]
   (var res (null))
   (when (> height 0)
-    (set res.X (* height-coeff height)))
+    (set res.X (* cosmic-rays-power-per-meter height)))
   res)
 
 (fn get-radpower [name]
@@ -31,7 +31,7 @@
 (fn get-flux [P source pos area data]
   (let [dist² (hypot-sqr source pos)]
     (var attenuation 0)
-    (each [thing (Raycast source pos false true) &until (> attenuation max-attenuation)]
+    (each [thing (Raycast source pos false true) &until (≥ attenuation max-attenuation)]
       (when (∧ (= thing.type "node"))
         (let [cid (. data (area:indexp thing.under))
               att (or (. node_attenuation cid) 1.2e-3)]
@@ -42,18 +42,6 @@
     (each [kind handler (pairs ionizing)]
       (tset res kind (handler (. P kind) dist² attenuation)))
     res))
-
-(fn add [A₁ A₂]
-  (var res {})
-  (each [kind _ (pairs ionizing)]
-    (tset res kind (+ (. A₁ kind) (. A₂ kind))))
-  res)
-
-(fn mult [k A]
-  (var res {})
-  (each [kind _ (pairs ionizing)]
-    (tset res kind (* (. A kind) k)))
-  res)
 
 (local radiation-weighting-factor {:X 1 :α 20 :β 1 :γ 1})
 
@@ -99,15 +87,15 @@
   (for [i 1 (length data)]
     (local cid (. data i)) (local P (. radpower cid))
     (when P (let [source (area:position i)]
-      (set radiation (add radiation (get-flux P source pos area data)))
-      (set radiation (add radiation (get-flux P source (vector.add pos (vector.new 0 1 0)) area data)))))
+      (set radiation (Add radiation (get-flux P source pos area data)))
+      (set radiation (Add radiation (get-flux P source (vector.add pos (vector.new 0 1 0)) area data)))))
     (when (∈ cid has_inventory)
       (let [source (area:position i)
             inv (-> (minetest.get_meta source) (: :get_inventory))
             P (calculate-inventory-radiation inv)]
-        (set radiation (add radiation (get-flux P source pos area data)))
-        (set radiation (add radiation (get-flux P source (vector.add pos (vector.new 0 1 0)) area data))))))
-  (set radiation (add (cosmic-rays pos.y) radiation))
+        (set radiation (Add radiation (get-flux P source pos area data)))
+        (set radiation (Add radiation (get-flux P source (vector.add pos (vector.new 0 1 0)) area data))))))
+  (set radiation (Add (cosmic-rays pos.y) radiation))
   radiation)
 
 (fn radiant-flux-at-player [vm player]
@@ -127,18 +115,18 @@
         (let [stack (ItemStack entity.itemstring)
               P     (get-radpower (stack:get_name))]
           ;; TODO: remove code duplication
-          (set radiation (add radiation
-            (mult (stack:get_count)
+          (set radiation (Add radiation
+            (Mult (stack:get_count)
                   (get-flux P (obj:get_pos) pos area data))))
-          (set radiation (add radiation
-            (mult (stack:get_count)
+          (set radiation (Add radiation
+            (Mult (stack:get_count)
                   (get-flux P (obj:get_pos) (vector.add pos (vector.new 0 1 0)) area data))))))))
 
   ;; wielded item alpha
   (let [wielded (player:get_wielded_item)]
     (tset radiation :α
       (+ radiation.α (/ (* (. (get-radpower (wielded:get_name)) :α) (wielded:get_count)) 10)))
-    (set radiation (add radiation (calculate-inventory-radiation (player:get_inventory)))))
+    (set radiation (Add radiation (calculate-inventory-radiation (player:get_inventory)))))
 
   radiation)
 
