@@ -1,8 +1,7 @@
 minetest_game/*
 minimal/*
 loria/*
-sources/**/*.lua
-sources/**/*.lua~
+build/*
 *.dll
 *.tgz
 *.zip
