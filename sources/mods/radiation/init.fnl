@@ -16,10 +16,10 @@
     (set res.X (* cosmic-rays-power-per-meter height)))
   res)
 
-(fn get-radpower [name]
+(fn get-radiant-power [name]
   (or (if (∈ name minetest.registered_nodes)
-          (. radpower (minetest.get_content_id name))
-          (. radpower name))
+          (. radiant-power (minetest.get_content_id name))
+          (. radiant-power name))
       (null)))
 
 (fn hypot-sqr [pos₁ pos₂]
@@ -34,10 +34,11 @@
     (each [thing (Raycast source pos false true) &until (≥ attenuation max-attenuation)]
       (when (∧ (= thing.type "node"))
         (let [cid (. data (area:indexp thing.under))
-              att (or (. node_attenuation cid) 1.2e-3)]
-          (set+ attenuation (* (if (> (hypot-sqr source thing.under) 0.5)
-              att (/ att 10000))
-          0.5)))))
+              att (or (. node-attenuation cid) 1.2e-3)]
+          (set+ attenuation
+            (* 0.5 (if (> (hypot-sqr source thing.under) 0.5)
+                       att (/ att 10000)))))))
+
     (var res {})
     (each [kind handler (pairs ionizing)]
       (tset res kind (handler (. P kind) dist² attenuation)))
@@ -62,7 +63,7 @@
   (each [listname lst (pairs (inv:get_lists))]
     (when (≠ listname "creative_inv")
       (each [_ stack (ipairs lst)]
-        (let [P (get-radpower (stack:get_name))
+        (let [P (get-radiant-power (stack:get_name))
               stack-count (stack:get_count)]
           ;; no α- here
           (each [kind _ (pairs ionizing)]
@@ -85,12 +86,12 @@
   (var flux (null))
 
   (for [i 1 (length data)]
-    (local cid (. data i)) (local P (. radpower cid))
+    (local cid (. data i)) (local P (. radiant-power cid))
     (when P (let [source (area:position i)]
       (Add flux (get-flux P source pos area data) flux)
       (Add flux (get-flux P source (vector.add pos (vector.new 0 1 0)) area data) flux)))
 
-    (when (∈ cid has_inventory)
+    (when (∈ cid has-inventory)
       (let [source (area:position i)
             inv (-> (minetest.get_meta source) (: :get_inventory))
             P (calculate-inventory-flux inv)]
@@ -115,14 +116,14 @@
           entity (obj:get_luaentity)]
       (when (∧ entity (= entity.name "__builtin:item"))
         (let [stack (ItemStack entity.itemstring)
-              P     (get-radpower (stack:get_name))]
+              P     (get-radiant-power (stack:get_name))]
           ;; TODO: remove code duplication
           (Add flux (Mult (stack:get_count) (get-flux P (obj:get_pos) pos area data)) flux)
           (Add flux (Mult (stack:get_count) (get-flux P (obj:get_pos) (vector.add pos (vector.new 0 1 0)) area data)) flux)))))
 
   ;; wielded item alpha
   (let [wielded (player:get_wielded_item)]
-    (set+ flux.α (/ (* (. (get-radpower (wielded:get_name)) :α) (wielded:get_count)) 10))
+    (set+ flux.α (/ (* (. (get-radiant-power (wielded:get_name)) :α) (wielded:get_count)) 10))
     (Add flux (calculate-inventory-flux (player:get_inventory)) flux))
 
   flux)
@@ -175,7 +176,7 @@
   ;; Consume anti-radiation drug
   (let [inv (player:get_inventory)
         drug-stack (. (inv:get_list :antiradiation) 1)
-        drug-value (. antiradiation_drugs (drug-stack:get_name))]
+        drug-value (. antiradiation-drugs (drug-stack:get_name))]
     (when (∧ drug-value (≤ drug-value dose))
       (do (meta:set_float :received_dose (- dose drug-value))
         (drug-stack:set_count (- (drug-stack:get_count) 1))

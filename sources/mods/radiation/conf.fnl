@@ -3,33 +3,43 @@
 
 (local cid minetest.get_content_id)
 
-(defun Add [tbl₁ tbl₂ tbl₃]
+(constexpr defun Add [tbl₁ tbl₂ tbl₃]
   (var tbl (or tbl₃ {}))
   (each [k v (pairs tbl₁)]
     (tset tbl k (+ v (. tbl₂ k))))
   tbl)
 
-(defun Mult [K tbl₁ tbl₂]
+(constexpr defun Mult [K tbl₁ tbl₂]
   (var tbl′ (or tbl₂ {}))
   (each [k v (pairs tbl₁)]
     (tset tbl′ k (* K v)))
   tbl′)
 
-(defun Div [tbl₁ K tbl₂] (Mult (/ 1.0 K) tbl₁ tbl₂))
+(constexpr defun Div [tbl₁ K tbl₂]
+  (Mult (/ 1.0 K) tbl₁ tbl₂))
 
-;;; First define some helpful types
-;; radiant-power-table
-(define-type radiant-power-table nope)
-(fn radiant-power-table.update [self tbl]
+(define-type Table nope)
+(fn Table.update [self tbl]
   (each [name val (pairs tbl)]
     (when (¬ pcall (fn [] (tset self (cid name) val)))
       (tset self name val))))
 
-(local π        math.pi)
-(local Avogadro 6.022e+23)
-(local year     (* 365 24 60 60))
+(constexpr π math.pi)
+(constexpr Avogadro 6.022e+23)
+(constexpr year (* 365 24 60 60))
 
-(fn specific-activity [T½ M] (/ (* Avogadro (math.log 2)) (* T½ M)))
+(constexpr defun specific-activity [T½ M]
+  (/ (* Avogadro (math.log 2)) (* T½ M)))
+
+(constexpr defun null []
+  (var res {})
+
+  (tset res :α 0)
+  (tset res :β 0)
+  (tset res :γ 0)
+  (tset res :X 0)
+
+  res)
 
 ;; Handlers
 (fn alpha [P dist² att] (/ (if (> dist² 0) (* P (/ 1.0 (* 4.0 π dist²))) P) (math.exp (* att 7e+3))))
@@ -38,43 +48,15 @@
 
 (global ionizing {:α alpha :β beta :γ rays :X rays})
 
-;; Default radiation
-(defun null []
-  (var res {})
-  (each [kind _ (pairs ionizing)]
-    (tset res kind 0))
-  res)
-
-;; menge (set)
-(define-type menge nope)
-(fn menge.add [self name]
+(define-type Set nope)
+(fn Set.add [self name]
   (tset self name true))
 
-(fn menge.join-array [self arr]
+(fn Set.join-array [self arr]
   (each [_ val (ipairs arr)]
     (tset self val true)))
 
-;; Attenuation relative to water/live tissue
-(global node_attenuation
-  {(cid "loria:ammonium_manganese_pyrophosphate") 03.00
-   (cid "loria:chromia")                          05.22
-   (cid "loria:chromium_fluoride")                03.80
-   (cid "loria:cinnabar")                         08.10
-   (cid "loria:cobalt_blue")                      03.65
-   (cid "loria:copper_sulfate_pure")              03.60
-   (cid "loria:copper_sulfate")                   02.29
-   (cid "loria:copper_sulfate")                   02.29
-   (cid "loria:lead_sulfate")                     06.29
-   (cid "loria:mercury")                          13.50
-   (cid "loria:mercury_oxide")                    11.14
-   (cid "loria:nickel_nitrate")                   02.05
-   (cid "loria:polluted_mercury_source")          13.50
-   (cid "loria:polluted_mercury_flowing")         07.80
-   (cid "loria:red_mercury_oxide")                11.14
-   (cid "loria:sodium_peroxide")                  02.80
-   (cid "loria:sulfur")                           02.00})
-
-(local radiochem-table
+(constexpr radiochem-table
 ;; Isotope  | Mass (Da) | Half-life (s)         | Decay energy (MeV)                                        |
   {"H"      {:M 001.008 :T½ math.huge                                                                       }
    "O"      {:M 015.999 :T½ math.huge                                                                       }
@@ -96,7 +78,7 @@
    "U-238"  {:M 238.051 :T½ (* 004.468e+9 year) :decay [{:ratio 1.0000 :α 4.267 :β 0.000 :γ 0.000 :X 0.000}]}
    "Am-241" {:M 241.057 :T½ (* 432.200e+0 year) :decay [{:ratio 1.0000 :α 5.486 :β 0.000 :γ 0.060 :X 0.000}]}})
 
-(local molecular-table
+(constexpr molecular-table
 ;; Molecule | Density (g/cm³) | Isotopes (relative amount)
   {"Th"     {:ρ 11.700        :iso {"Th-232" 0.99980 "Th-230" 0.00020                }}
    "ThI"    {:ρ 06.000        :iso {"Th-232" 0.99970 "Th-230" 0.00030 "I"     4.00000}}
@@ -119,7 +101,7 @@
    "KOH"    {:ρ 02.120        :iso {"K-39"   0.92040 "K-40"   0.01230 "K-41"  0.06730
                                     "O"      1.00000 "H"      1.00000}}})
 
-(local item-table
+(constexpr item-table
 ;; Item / node                            | Components (m³)
   {;; Thorium
    "loria:thorium"                        {"Th"     1.0000}
@@ -176,13 +158,8 @@
    "loria:plutonium_pickaxe"              {"Pu"     0.2000}
    "loria:potassium_pickaxe"              {"K"      0.2000}})
 
-;;; Then set up configuration tables
-(global radpower (radiant-power-table))
-
-(on-mods-loaded
-  (var inh (null))
-  (each [name _ (pairs minetest.registered_items)]
-    (tset radpower name inh))
+(constexpr PWR-isotope
+  (var retval {})
 
   (each [isotope vals (pairs radiochem-table)]
     (when (∈ :decay vals)
@@ -192,7 +169,12 @@
         (each [_ E (ipairs vals.decay)]
           (Add PWR (Mult (* a E.ratio) E) PWR))
 
-        (tset vals :PWR (Mult 1.602e-13 PWR))))) ;; W/g
+        (tset retval isotope (Mult 1.602e-13 PWR))))) ;; W/g
+
+  retval)
+
+(constexpr PWR-molecule
+  (var retval {})
 
   (each [molecule vals (pairs molecular-table)]
     (var M 0.0) ;; Molecular mass (Da)
@@ -201,31 +183,62 @@
 
     (var PWR (null))
     (each [isotope ratio (pairs vals.iso)]
-      (when (∈ :PWR (. radiochem-table isotope))
+      (when (∈ isotope PWR-isotope)
         (let [m  (. radiochem-table isotope :M)
               Aᵣ (/ (* ratio m) M)]
-          (Add PWR (Mult Aᵣ (. radiochem-table isotope :PWR)) PWR))))
+          (Add PWR (Mult Aᵣ (. PWR-isotope isotope)) PWR))))
+    (tset retval molecule PWR))
 
-    (tset vals :PWR PWR))
+  retval)
+
+(constexpr item-radiant-power
+  (var retval {})
 
   (each [name vals (pairs item-table)]
     (var P (null)) ;; W
 
     (each [molecule V (pairs vals)]
-      (let [ρ   (. molecular-table molecule :ρ)   ;; g/cm³
-            PWR (. molecular-table molecule :PWR) ;; W/g
-            m   (* ρ V 1e+6)]                     ;; g
+      (let [ρ   (. molecular-table molecule :ρ) ;; g/cm³
+            PWR (. PWR-molecule molecule)       ;; W/g
+            m   (* ρ V 1e+6)]                   ;; g
         (Add P (Mult m PWR) P)))
+    (tset retval name P))
 
-    (tset vals :P P))
+  retval)
+
+;;; Then set up configuration tables
+(global radiant-power (Table))
+
+;; Attenuation relative to water/live tissue
+(global node-attenuation
+  {(cid "loria:ammonium_manganese_pyrophosphate") 03.00
+   (cid "loria:chromia")                          05.22
+   (cid "loria:chromium_fluoride")                03.80
+   (cid "loria:cinnabar")                         08.10
+   (cid "loria:cobalt_blue")                      03.65
+   (cid "loria:copper_sulfate_pure")              03.60
+   (cid "loria:copper_sulfate")                   02.29
+   (cid "loria:copper_sulfate")                   02.29
+   (cid "loria:lead_sulfate")                     06.29
+   (cid "loria:mercury")                          13.50
+   (cid "loria:mercury_oxide")                    11.14
+   (cid "loria:nickel_nitrate")                   02.05
+   (cid "loria:polluted_mercury_source")          13.50
+   (cid "loria:polluted_mercury_flowing")         07.80
+   (cid "loria:red_mercury_oxide")                11.14
+   (cid "loria:sodium_peroxide")                  02.80
+   (cid "loria:sulfur")                           02.00})
+
+(on-mods-loaded
+  (each [name _ (pairs minetest.registered_items)]
+    (tset radiant-power name (null)))
 
   ;; Set up radiant power of each item in W.
   ;; We consider that wires are 0.01 m³, ingots are 0.1 m³, pickaxes are 0.2 m³.
   ;; Compounds are scaled by the relative molar mass of radioactive element.
-  (each [name vals (pairs item-table)]
-    (radpower:update {name vals.P}))
+  (radiant-power:update item-radiant-power)
 
-  (radpower:update
+  (radiant-power:update
     {;; Technic
      "furnace:refiner_active"            (α-β-γ 000.0e+00 000.0e+00 010.5e-04)
      ;; Organic
@@ -238,22 +251,22 @@
 
   (each [name params (pairs ores)]
     (when (∈ :radioactive params)
-      (let [P₀ (. radpower (cid (.. "loria:" name)))
+      (let [P₀ (. radiant-power (cid (.. "loria:" name)))
             P  (Mult params.ratio P₀)]
         (each [_ place (ipairs params.wherein)]
-          (tset radpower (cid (.. "loria:" name "_" place)) P))))
+          (tset radiant-power (cid (.. "loria:" name "_" place)) P))))
 
     (each [_ place (ipairs params.wherein)]
-      (tset node_attenuation (cid (.. "loria:" name "_" place))
-        (. node_attenuation (cid (.. "loria:" place)))))))
+      (tset node-attenuation (cid (.. "loria:" name "_" place))
+        (. node-attenuation (cid (.. "loria:" place)))))))
 
-(global antiradiation_drugs
+(global antiradiation-drugs
   {"loria:manganese_oxide" 0.5})
 
-(global has_inventory (menge))
+(global has-inventory (Set))
 
 (local emits-rays
   ["loria:lead_box" "loria:silicon_box"
    "furnace:gas" "furnace:refiner" "furnace:electric"
    "electricity:riteg"])
-(on-mods-loaded (has_inventory:join-array (map cid emits-rays)))
+(on-mods-loaded (has-inventory:join-array (map cid emits-rays)))
