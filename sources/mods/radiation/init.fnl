@@ -57,8 +57,8 @@
     (set+ retval (. E kind)))
   retval)
 
-(fn calculate-inventory-radiation [inv]
-  (var radiation (null))
+(fn calculate-inventory-flux [inv]
+  (var flux (null))
   (each [listname lst (pairs (inv:get_lists))]
     (when (≠ listname "creative_inv")
       (each [_ stack (ipairs lst)]
@@ -67,11 +67,11 @@
           ;; no α- here
           (each [kind _ (pairs ionizing)]
             (if (≠ kind "α")
-              (tset radiation kind
-                (+ (. radiation kind)
+              (tset flux kind
+                (+ (. flux kind)
                    (/ (* (. P kind) stack-count)
                       (if (= kind "β") 10 50))))))))))
-  radiation)
+  flux)
 
 (defun getVoxelArea [vm pos]
   (local (minp maxp)
@@ -82,21 +82,23 @@
   (VoxelArea:new {:MinEdge minp :MaxEdge maxp}))
 
 (defun radiantFluxAtPos [area data pos]
-  (var radiation (null))
+  (var flux (null))
 
   (for [i 1 (length data)]
     (local cid (. data i)) (local P (. radpower cid))
     (when P (let [source (area:position i)]
-      (set radiation (Add radiation (get-flux P source pos area data)))
-      (set radiation (Add radiation (get-flux P source (vector.add pos (vector.new 0 1 0)) area data)))))
+      (Add flux (get-flux P source pos area data) flux)
+      (Add flux (get-flux P source (vector.add pos (vector.new 0 1 0)) area data) flux)))
+
     (when (∈ cid has_inventory)
       (let [source (area:position i)
             inv (-> (minetest.get_meta source) (: :get_inventory))
-            P (calculate-inventory-radiation inv)]
-        (set radiation (Add radiation (get-flux P source pos area data)))
-        (set radiation (Add radiation (get-flux P source (vector.add pos (vector.new 0 1 0)) area data))))))
-  (set radiation (Add (cosmic-rays pos.y) radiation))
-  radiation)
+            P (calculate-inventory-flux inv)]
+        (Add flux (get-flux P source pos area data) flux)
+        (Add flux (get-flux P source (vector.add pos (vector.new 0 1 0)) area data) flux))))
+
+  (Add flux (cosmic-rays pos.y) flux)
+  flux)
 
 (fn radiant-flux-at-player [vm player]
   (local pos (player:get_pos))
@@ -106,7 +108,7 @@
   (local area (getVoxelArea vm pos))
   (local data (vm:get_data))
 
-  (var radiation (radiantFluxAtPos area data pos))
+  (var flux (radiantFluxAtPos area data pos))
 
   (each [_ obj (pairs objs)]
     (let [name (player:get_player_name)
@@ -115,20 +117,15 @@
         (let [stack (ItemStack entity.itemstring)
               P     (get-radpower (stack:get_name))]
           ;; TODO: remove code duplication
-          (set radiation (Add radiation
-            (Mult (stack:get_count)
-                  (get-flux P (obj:get_pos) pos area data))))
-          (set radiation (Add radiation
-            (Mult (stack:get_count)
-                  (get-flux P (obj:get_pos) (vector.add pos (vector.new 0 1 0)) area data))))))))
+          (Add flux (Mult (stack:get_count) (get-flux P (obj:get_pos) pos area data)) flux)
+          (Add flux (Mult (stack:get_count) (get-flux P (obj:get_pos) (vector.add pos (vector.new 0 1 0)) area data)) flux)))))
 
   ;; wielded item alpha
   (let [wielded (player:get_wielded_item)]
-    (tset radiation :α
-      (+ radiation.α (/ (* (. (get-radpower (wielded:get_name)) :α) (wielded:get_count)) 10)))
-    (set radiation (Add radiation (calculate-inventory-radiation (player:get_inventory)))))
+    (set+ flux.α (/ (* (. (get-radpower (wielded:get_name)) :α) (wielded:get_count)) 10))
+    (Add flux (calculate-inventory-flux (player:get_inventory)) flux))
 
-  radiation)
+  flux)
 
 (fn reset-tint [player] (tint player transparent))
 (local effect-list
@@ -170,7 +167,7 @@
         ;; https://github.com/minetest/minetest/issues/2862
         (effect.action player))))))
 
-(fn radiation-effects [player radiation]
+(fn radiation-effects [player]
   (local meta (player:get_meta))
   (local dose (meta:get_float :received_dose))
   (local dose-damage-limit (meta:get_float :dose_damage_limit))

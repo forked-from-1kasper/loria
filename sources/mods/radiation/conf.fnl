@@ -3,19 +3,19 @@
 
 (local cid minetest.get_content_id)
 
-(defun Add [tbl₁ tbl₂]
-  (var tbl {})
+(defun Add [tbl₁ tbl₂ tbl₃]
+  (var tbl (or tbl₃ {}))
   (each [k v (pairs tbl₁)]
     (tset tbl k (+ v (. tbl₂ k))))
   tbl)
 
-(defun Mult [K tbl]
-  (var tbl′ {})
-  (each [k v (pairs tbl)]
+(defun Mult [K tbl₁ tbl₂]
+  (var tbl′ (or tbl₂ {}))
+  (each [k v (pairs tbl₁)]
     (tset tbl′ k (* K v)))
   tbl′)
 
-(defun Div [tbl K] (Mult (/ 1.0 K) tbl))
+(defun Div [tbl₁ K tbl₂] (Mult (/ 1.0 K) tbl₁ tbl₂))
 
 ;;; First define some helpful types
 ;; radiant-power-table
@@ -190,7 +190,7 @@
         (var PWR (null)) ;; MeV/g
 
         (each [_ E (ipairs vals.decay)]
-          (set PWR (Add PWR (Mult (* a E.ratio) E))))
+          (Add PWR (Mult (* a E.ratio) E) PWR))
 
         (tset vals :PWR (Mult 1.602e-13 PWR))))) ;; W/g
 
@@ -204,8 +204,7 @@
       (when (∈ :PWR (. radiochem-table isotope))
         (let [m  (. radiochem-table isotope :M)
               Aᵣ (/ (* ratio m) M)]
-          (set PWR (Add PWR (Mult Aᵣ
-            (. radiochem-table isotope :PWR)))))))
+          (Add PWR (Mult Aᵣ (. radiochem-table isotope :PWR)) PWR))))
 
     (tset vals :PWR PWR))
 
@@ -216,7 +215,7 @@
       (let [ρ   (. molecular-table molecule :ρ)   ;; g/cm³
             PWR (. molecular-table molecule :PWR) ;; W/g
             m   (* ρ V 1e+6)]                     ;; g
-        (set P (Add P (Mult m PWR)))))
+        (Add P (Mult m PWR) P)))
 
     (tset vals :P P))
 
