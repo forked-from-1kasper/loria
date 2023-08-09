@@ -20,7 +20,7 @@ $(ARTFDIR):
 
 $(ARTF): $(ARTFDIR)/%.lua: $(SRCDIR)/%.fnl
 	mkdir -p `dirname $@`
-	$(LUA) $(FENNEL) --no-compiler-sandbox --compile $< > $@~
+	$(LUA) $(FENNEL) --no-compiler-sandbox --correlate --compile $< > $@~
 	mv -f $@~ $@
 
 tar: fennel
