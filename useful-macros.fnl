@@ -92,9 +92,11 @@
   (if (sym? ε) (fennel.mangle (tostring ε))
       (error (string.format "“%s” expected to be an identifier" (view ε)))))
 
+(local lua-load (or loadstring load))
+
 (fn compile-and-load [ast]
   (let [lua-code (compile ast)
-        callback (load lua-code)]
+        callback (lua-load lua-code)]
     (callback)))
 
 (fn constexpr-emit [tag ε₁ ε₂]

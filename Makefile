@@ -1,4 +1,5 @@
-FENNEL  ?= fennel
+LUA     ?= lua5.1
+FENNEL  ?= $(shell which fennel)
 ARCHIVE  = loria
 ROOT     = loria
 
@@ -10,7 +11,7 @@ fennel: $(SRC:.fnl=.lua)
 	# Fennel done
 
 $(SRC:.fnl=.lua): %.lua: %.fnl
-	$(FENNEL) --no-compiler-sandbox --compile $< > $@
+	$(LUA) $(FENNEL) --no-compiler-sandbox --compile $< > $@
 
 tar: fennel
 	(find resources -type f; find sources -type f -name "*.lua"; echo $(DOCS)) | \
