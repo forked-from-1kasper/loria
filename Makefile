@@ -1,10 +1,11 @@
-LUA     ?= lua5.1
-FENNEL  ?= $(shell which fennel)
-ARCHIVE  = loria
-ROOT     = loria
-SRCDIR   = sources
-RESDIR   = resources
-ARTFDIR  = build
+LUA      ?= lua5.1
+FENNEL   ?= $(shell which fennel)
+ARCHIVE  ?= loria
+ROOT     ?= loria
+ARTFDIR  ?= build
+FNLFLAGS ?= --no-compiler-sandbox --correlate
+SRCDIR    = sources
+RESDIR    = resources
 
 SRC        := $(shell find $(SRCDIR) -type f -name '*.fnl')
 MODULES    := $(SRC:$(SRCDIR)/%.fnl=%)
@@ -20,7 +21,7 @@ $(ARTFDIR):
 
 $(ARTF): $(ARTFDIR)/%.lua: $(SRCDIR)/%.fnl
 	mkdir -p `dirname $@`
-	$(LUA) $(FENNEL) --no-compiler-sandbox --correlate --compile $< > $@~
+	$(LUA) $(FENNEL) $(FNLFLAGS) --compile $< > $@~
 	mv -f $@~ $@
 
 tar: fennel
