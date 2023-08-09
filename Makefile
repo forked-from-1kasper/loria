@@ -11,7 +11,8 @@ fennel: $(SRC:.fnl=.lua)
 	# Fennel done
 
 $(SRC:.fnl=.lua): %.lua: %.fnl
-	$(LUA) $(FENNEL) --no-compiler-sandbox --compile $< > $@
+	$(LUA) $(FENNEL) --no-compiler-sandbox --compile $< > $@~
+	mv -f $@~ $@
 
 tar: fennel
 	(find resources -type f; find sources -type f -name "*.lua"; echo $(DOCS)) | \
