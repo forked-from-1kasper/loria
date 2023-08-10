@@ -58,20 +58,20 @@
     (set+ retval (. E kind)))
   retval)
 
+(local inventory-shielding-factor {:α 0 :β 0.1 :γ 0.5 :X 0.5})
+
 (fn calculate-inventory-flux [inv]
   (var flux (null))
+
   (each [listname lst (pairs (inv:get_lists))]
     (when (≠ listname "creative_inv")
       (each [_ stack (ipairs lst)]
         (let [P (get-radiant-power (stack:get_name))
               stack-count (stack:get_count)]
-          ;; no α- here
           (each [kind _ (pairs ionizing)]
-            (if (≠ kind "α")
-              (tset flux kind
-                (+ (. flux kind)
-                   (/ (* (. P kind) stack-count)
-                      (if (= kind "β") 10 50))))))))))
+            (tset flux kind (+ (. flux kind)
+                               (* (. P kind) stack-count
+                                  (. inventory-shielding-factor kind)))))))))
   flux)
 
 (defun getVoxelArea [vm pos]
@@ -261,3 +261,13 @@
         :wall_top    [-0.5000  0.4375 -0.5000  0.5000  0.5000 0.5000]
         :wall_bottom [-0.5000 -0.5000 -0.5000  0.5000 -0.4375 0.5000]
         :wall_side   [-0.5000 -0.5000 -0.5000 -0.4375  0.5000 0.5000]}}))
+
+(minetest.register_chatcommand "reset-dose"
+  {:description "Resets player received dose."
+   :privs {:debug true}
+   :func (fn [name]
+           (let [player (minetest.get_player_by_name name)]
+            (when player
+              (let [meta (player:get_meta)]
+                (meta:set_float :radiation 0)
+                (meta:set_float :received_dose 0)))))})

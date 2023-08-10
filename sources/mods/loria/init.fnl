@@ -124,7 +124,7 @@
 (minetest.register_chatcommand "clearitems"
   {:params ""
    :description (.. "Deletes all items in " clear-radius " meters")
-   :privs []
+   :privs {:debug true}
    :func (fn [name]
      (let [player (minetest.get_player_by_name name)]
       (when player
@@ -140,7 +140,7 @@
   {:description "Allow to use “/kill” command"})
 
 (minetest.register_chatcommand "kill"
-  {:params "[name]" :description "Kills player" :privs {"kill" true}
+  {:params "[name]" :description "Kills player" :privs {:kill true}
    :func (fn [name₁ name₂]
      (let [name (if (≠ name₁ "") name₁ name₂)
            player (minetest.get_player_by_name name)]

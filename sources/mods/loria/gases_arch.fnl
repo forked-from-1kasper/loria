@@ -91,7 +91,7 @@
 (minetest.register_chatcommand "chemical_attack"
   {:params "<gas>"
    :description "Sends gas"
-   :privs []
+   :privs {:debug true}
    :func (fn [name gas]
      (let [player (minetest.get_player_by_name name)]
        (when player
@@ -107,7 +107,7 @@
 (minetest.register_chatcommand "fill"
   {:params "<nodename>"
    :description (string.format "Fill %d × %d square" fill-radius fill-radius)
-   :privs []
+   :privs {:debug true}
    :func (fn [name nodename]
      (let [player (minetest.get_player_by_name name)]
        (when (∧ nodename player (∈ nodename minetest.registered_nodes))
@@ -121,11 +121,10 @@
 (minetest.register_chatcommand "cid"
   {:params "<node>"
    :description "Returns content id."
-   :privs []
-   :func
-     (fn [name node]
-       (minetest.chat_send_player name
-         (tostring (minetest.get_content_id node))))})
+   :privs {:debug true}
+   :func (fn [name node]
+           (let [(ok cid) (pcall (fn [] (minetest.get_content_id node)))]
+             (when ok (minetest.chat_send_player name (tostring cid)))))})
 
 (minetest.register_abm
   {:label "Chlorine source"
