@@ -14,7 +14,7 @@
 
 (fn oxygen [player]
   (let [meta (player:get_meta)]
-    (.. "Oxygen: " (meta:get_int "oxygen") "/" (meta:get_int "oxygen_max"))))
+    (.. "Oxygen: " (meta:get_int "oxygen") "/" (meta:get_int "oxygen-max"))))
 
 (fn gravity [player]
   (let [gravity (* (. (player:get_physics_override) :gravity) 100)]
