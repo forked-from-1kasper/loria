@@ -21,7 +21,7 @@ $(ARTFDIR):
 
 $(ARTF): $(ARTFDIR)/%.lua: $(SRCDIR)/%.fnl
 	mkdir -p `dirname $@`
-	$(LUA) $(FENNEL) $(FNLFLAGS) --compile $< > $@~
+	$(FENNEL) $(FNLFLAGS) --compile $< > $@~
 	mv -f $@~ $@
 
 tar: fennel
