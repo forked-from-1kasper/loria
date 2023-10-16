@@ -86,7 +86,7 @@
    :groups      {:cracky 1 :conductor 1}})
 
 (minetest.register_node "loria:brick"
-  {:description "Brick"
+  {:description "Ceramic brick"
    :tiles       ["loria_brick.png"]
    :groups      {:cracky 2}})
 
