@@ -91,7 +91,7 @@
              {:name "loria:bucket_water"      :count 1}
              {:name "loria:empty_balloon"     :count 1}]
     :time 3}
-   {:input  [{:name "loria:aluminium"       :count 4}
+   {:input  [{:name "loria:aluminium_ingot"       :count 4}
              {:name "loria:oxygen_balloon"  :count 1}]
     :output [{:name "loria:aluminium_oxide" :count 2}
              {:name "loria:empty_balloon"   :count 1}]
@@ -112,7 +112,7 @@
              {:name "loria:magnesium_oxide" :count 2}]
     :time 5}
    {:input  [{:name "loria:silicon_dioxide" :count 3}
-             {:name "loria:aluminium"       :count 4}]
+             {:name "loria:aluminium_ingot"       :count 4}]
     :output [{:name "loria:silicon"         :count 3}
              {:name "loria:aluminium_oxide" :count 2}]
     :time 6}
@@ -143,7 +143,7 @@
              {:name "loria:oxygen_balloon"    :count 3}]
     :time 3}
    {:input  [{:name "loria:chromia"         :count 1}
-             {:name "loria:aluminium"       :count 2}]
+             {:name "loria:aluminium_ingot" :count 2}]
     :output [{:name "loria:aluminium_oxide" :count 1}
              {:name "loria:chromium"        :count 2}]
     :time 5}
@@ -197,7 +197,7 @@
    {:input  [{:name "loria:aluminium_oxide" :count 4}
              {:name "loria:silicon_dioxide" :count 4}
              {:name "loria:bucket_water"    :count 1}]
-    :output [{:name "loria:brick"           :count 4}
+    :output [{:name "loria:brick"           :count 16}
              {:name "loria:bucket_empty"    :count 1}]
     :time 2}
    {:input  [{:name "loria:plutonium_ingot" :count 9}]
