@@ -211,7 +211,9 @@
 
 ;; Attenuation relative to water/live tissue
 (global node-attenuation
-  {(cid "loria:ammonium_manganese_pyrophosphate") 03.00
+  {(cid "loria:aluminium_oxide")                  03.99
+   (cid "loria:ammonium_manganese_pyrophosphate") 03.00
+   (cid "loria:brick")                            03.22
    (cid "loria:chromia")                          05.22
    (cid "loria:chromium_fluoride")                03.80
    (cid "loria:cinnabar")                         08.10
@@ -223,11 +225,32 @@
    (cid "loria:mercury")                          13.50
    (cid "loria:mercury_oxide")                    11.14
    (cid "loria:nickel_nitrate")                   02.05
+   (cid "loria:plutonium_dioxide")                11.50
    (cid "loria:polluted_mercury_source")          13.50
    (cid "loria:polluted_mercury_flowing")         07.80
    (cid "loria:red_mercury_oxide")                11.14
+   (cid "loria:silicon_dioxide")                  02.20
    (cid "loria:sodium_peroxide")                  02.80
-   (cid "loria:sulfur")                           02.00})
+   (cid "loria:sulfur")                           02.00
+   (cid "loria:thorium_dioxide")                  10.00
+   (cid "loria:uranium_tetrachloride")            04.87})
+
+(each [name params (pairs ores)]
+  (each [_ place (ipairs params.wherein)]
+    (let [node_name (.. "loria:" name "_" place)]
+    (let [att (. node-attenuation (cid (.. "loria:" place)))]
+      (tset node-attenuation node_name att)))))
+
+(each [name _ (pairs liquid_ores)]
+  (each [_ place (ipairs {1 "cinnabar" 2 "cobalt_blue"})]
+    (let [node_name (.. "loria:" name "_" place)]
+    (let [att (. node-attenuation (cid (.. "loria:" place)))]
+      (tset node-attenuation node_name att)))))
+
+(each [name _ (pairs brickable)]
+  (let [node_name (.. name "_brick")]
+  (let [att (. node-attenuation (cid name))]
+    (tset node-attenuation node_name (/ att 2.0)))))
 
 (on-mods-loaded
   (each [name _ (pairs minetest.registered_items)]
