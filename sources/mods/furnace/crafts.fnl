@@ -266,13 +266,24 @@
     :time 8}))
 
 (each [name params (opairs brickable)]
-  (when (not params.crumbly)
+  (if (not params.crumbly)
     (let [target-list (if params.refractory high_temperature_crafts
                                             furnace_crafts)]
       (table.insert target-list
         {:input  [{:name name               :count 1}]
          :output [{:name (.. name "_brick") :count 2}]
-         :time 3}))))
+         :time 3}))
+    (let [target-list (if params.refractory high_temperature_crafts
+                                            furnace_crafts)]
+      (table.insert target-list
+        {:input  [{:name name                         :count 4}
+                  {:name "loria:silicon_dioxide"      :count 4}
+                  {:name "loria:aluminium_brick_mold" :count 1}
+                  {:name "loria:bucket_water"         :count 1}]
+         :output [{:name (.. name "_brick")           :count 4}
+                  {:name "loria:aluminium_brick_mold" :count 1}
+                  {:name "loria:bucket_empty"         :count 1}]
+         :time 5}))))
 
 (global fuel_list
   {"loria:cinnabar"                    1
@@ -289,3 +300,4 @@
 (global high_temperature_furnace_crafts [])
 (append high_temperature_furnace_crafts furnace_crafts)
 (append high_temperature_furnace_crafts high_temperature_crafts)
+
