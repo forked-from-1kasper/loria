@@ -213,7 +213,7 @@
 (global node-attenuation
   {(cid "loria:aluminium_oxide")                  03.99
    (cid "loria:ammonium_manganese_pyrophosphate") 03.00
-   (cid "loria:brick")                            03.22
+   (cid "loria:brick")                            04.55
    (cid "loria:chromia")                          05.22
    (cid "loria:chromium_fluoride")                03.80
    (cid "loria:cinnabar")                         08.10
@@ -250,7 +250,7 @@
 (each [name _ (pairs brickable)]
   (let [node_name (.. name "_brick")]
   (let [att (. node-attenuation (cid name))]
-    (tset node-attenuation node_name (/ att 2.0)))))
+    (tset node-attenuation node_name att))))
 
 (on-mods-loaded
   (each [name _ (pairs minetest.registered_items)]
