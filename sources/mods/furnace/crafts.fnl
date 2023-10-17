@@ -194,10 +194,10 @@
     :output [{:name "loria:bucket_empty"   :count 1}
              {:name "loria:glow_stick"     :count 12}]
     :time 1}
-   {:input  [{:name "loria:aluminium_oxide" :count 4}
-             {:name "loria:silicon_dioxide" :count 4}
+   {:input  [{:name "loria:aluminium_oxide" :count 1}
+             {:name "loria:silicon_dioxide" :count 6}
              {:name "loria:bucket_water"    :count 1}]
-    :output [{:name "loria:brick"           :count 16}
+    :output [{:name "loria:brick"           :count 8}
              {:name "loria:bucket_empty"    :count 1}]
     :time 2}
    {:input  [{:name "loria:plutonium_ingot" :count 9}]
@@ -271,18 +271,14 @@
                                             furnace_crafts)]
       (table.insert target-list
         {:input  [{:name name               :count 1}]
-         :output [{:name (.. name "_brick") :count 2}]
+         :output [{:name (.. name "_brick") :count 1}]
          :time 3}))
     (let [target-list (if params.refractory high_temperature_crafts
                                             furnace_crafts)]
       (table.insert target-list
         {:input  [{:name name                         :count 4}
-                  {:name "loria:silicon_dioxide"      :count 4}
-                  {:name "loria:aluminium_brick_mold" :count 1}
-                  {:name "loria:bucket_water"         :count 1}]
-         :output [{:name (.. name "_brick")           :count 4}
-                  {:name "loria:aluminium_brick_mold" :count 1}
-                  {:name "loria:bucket_empty"         :count 1}]
+                  {:name "loria:aluminium_brick_mold" :count 1}]
+         :output [{:name (.. name "_brick")           :count 4}]
          :time 5}))))
 
 (global fuel_list
