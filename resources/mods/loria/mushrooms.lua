@@ -1,41 +1,41 @@
 local tau = 2 * math.pi
 
-local c_air = minetest.get_content_id("air")
-local c_copper_sulfate = minetest.get_content_id("loria:copper_sulfate")
+local c_air = core.get_content_id("air")
+local c_copper_sulfate = core.get_content_id("loria:copper_sulfate")
 
-local c_viridi_stem = minetest.get_content_id("loria:viridi_petasum_stem")
-local c_viridi_body = minetest.get_content_id("loria:viridi_petasum_body")
-local c_vastatorem = minetest.get_content_id("loria:vastatorem")
+local c_viridi_stem = core.get_content_id("loria:viridi_petasum_stem")
+local c_viridi_body = core.get_content_id("loria:viridi_petasum_body")
+local c_vastatorem = core.get_content_id("loria:vastatorem")
 
-local c_rete_stem = minetest.get_content_id("loria:rete_stem")
-local c_rete_body = minetest.get_content_id("loria:rete_body")
+local c_rete_stem = core.get_content_id("loria:rete_stem")
+local c_rete_body = core.get_content_id("loria:rete_body")
 
 local c_ammonium_manganese_pyrophosphate =
-    minetest.get_content_id("loria:ammonium_manganese_pyrophosphate")
-local c_naga = minetest.get_content_id("loria:naga")
+    core.get_content_id("loria:ammonium_manganese_pyrophosphate")
+local c_naga = core.get_content_id("loria:naga")
 
 local c_potassium_permanganate_source =
-    minetest.get_content_id("loria:potassium_permanganate_source")
+    core.get_content_id("loria:potassium_permanganate_source")
 
 local c_potassium_permanganate_flowing =
-    minetest.get_content_id("loria:potassium_permanganate_flowing")
+    core.get_content_id("loria:potassium_permanganate_flowing")
 
-local c_turris_stem = minetest.get_content_id("loria:turris_stem")
-local c_turris_body = minetest.get_content_id("loria:turris_body")
+local c_turris_stem = core.get_content_id("loria:turris_stem")
+local c_turris_body = core.get_content_id("loria:turris_body")
 
-local c_red_mercury_oxide = minetest.get_content_id("loria:red_mercury_oxide")
+local c_red_mercury_oxide = core.get_content_id("loria:red_mercury_oxide")
 
-local c_colossus_stem = minetest.get_content_id("loria:colossus_stem")
-local c_colossus_body = minetest.get_content_id("loria:colossus_body")
+local c_colossus_stem = core.get_content_id("loria:colossus_stem")
+local c_colossus_body = core.get_content_id("loria:colossus_body")
 
-local c_sodium_peroxide = minetest.get_content_id("loria:sodium_peroxide")
+local c_sodium_peroxide = core.get_content_id("loria:sodium_peroxide")
 
-local c_altitudo_stem = minetest.get_content_id("loria:altitudo_stem")
-local c_altitudo_body = minetest.get_content_id("loria:altitudo_body")
+local c_altitudo_stem = core.get_content_id("loria:altitudo_stem")
+local c_altitudo_body = core.get_content_id("loria:altitudo_body")
 
-local c_nickel_nitrate = minetest.get_content_id("loria:nickel_nitrate")
+local c_nickel_nitrate = core.get_content_id("loria:nickel_nitrate")
 
-local c_timor_stem = minetest.get_content_id("loria:timor_stem")
+local c_timor_stem = core.get_content_id("loria:timor_stem")
 
 local viridi_petasum = {
     min_height = 7,
@@ -89,7 +89,7 @@ local function generate_hat(x, y, z, radius, obj)
     local minp0 = vector.new(x - radius, y, z - radius)
     local maxp0 = vector.new(x + radius, y, z + radius)
 
-    local vm = minetest.get_voxel_manip()
+    local vm = core.get_voxel_manip()
     local minp, maxp = vm:read_from_map(minp0, maxp0)
 
     local area = VoxelArea:new({MinEdge = minp, MaxEdge = maxp})
@@ -372,11 +372,11 @@ function isthere(arr, x)
     end
 end
 
-minetest.register_on_generated(function(minp0, maxp0, seed)
+core.register_on_generated(function(minp0, maxp0, seed)
     local height_min = -31000
     local height_max = 31000
 
-    local vm = minetest.get_voxel_manip()
+    local vm = core.get_voxel_manip()
     local minp, maxp = vm:read_from_map(minp0, maxp0)
 
     if maxp.y < height_min or minp.y > height_max then
@@ -389,7 +389,7 @@ minetest.register_on_generated(function(minp0, maxp0, seed)
     local y_min = math.max(minp.y, height_min)
     local y_max = math.min(maxp.y, height_max)
 
-    local perlin1 = minetest.get_perlin(230, 3, 0.6, 100)
+    local perlin1 = core.get_perlin(230, 3, 0.6, 100)
     local divlen = 4
     local divs = (maxp.x - minp.x) / divlen + 1
 

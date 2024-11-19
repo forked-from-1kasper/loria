@@ -23,7 +23,7 @@
     (meta:set_string :infotext
       (string.format "I = %.1f A\nU = %.1f V\nR = %.3f Ohms" I U R))))
 
-(minetest.register_node "electricity:multimeter"
+(core.register_node "electricity:multimeter"
   {:description "Multimeter"
    :tiles
      ["electricity_multimeter_top.png"
@@ -40,14 +40,14 @@
 
    :on_construct (andthen
      (set_resis multimeter-resis.min)
-     (comp update-infotext minetest.get_meta))
+     (comp update-infotext core.get_meta))
    :on_destruct reset_current
 
    :drawtype "nodebox" :use_texture_alpha "blend"
    :node_box multimeter-box :selection_box multimeter-box
 
    :on_rightclick (fn [pos node clicker itemstack pointed_thing]
-       (let [meta (minetest.get_meta pos)]
+       (let [meta (core.get_meta pos)]
          (->> (meta:get_float :resis)
                multimeter-resis-step
               (meta:set_float :resis))
@@ -56,17 +56,17 @@
 (tset model "electricity:multimeter" vconsumer)
 (tset on_circuit_tick "electricity:multimeter" update-infotext)
 
-(minetest.register_craftitem "electricity:multimeter_debug"
+(core.register_craftitem "electricity:multimeter_debug"
   {:inventory_image "electricity_multimeter.png"
    :description "Multimeter (debug tool)"
    :stack_max 1
    :liquids_pointable true
    :on_use (fn [itemstack user pointed_thing]
      (when (= pointed_thing.type :node)
-       (let [meta (minetest.get_meta pointed_thing.under)
+       (let [meta (core.get_meta pointed_thing.under)
              I  (meta:get_float :I)
              φᵢ (math.deg (meta:get_float :φᵢ))
              U  (meta:get_float :U)
              φᵤ (math.deg (meta:get_float :φᵤ))]
-         (minetest.chat_send_player (user:get_player_name)
+         (core.chat_send_player (user:get_player_name)
            (string.format "I = %f A, φᵢ = %f°, U = %f V, φᵤ = %f°" I φᵢ U φᵤ)))))})

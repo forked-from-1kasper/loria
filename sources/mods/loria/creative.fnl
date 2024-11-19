@@ -1,7 +1,7 @@
 (require-macros :useful-macros)
 (require-macros :infix)
 
-(local creative? (minetest.settings:get_bool "creative_mode"))
+(local creative? (core.settings:get_bool "creative_mode"))
 
 (var craft-list-formspec "")
 
@@ -75,7 +75,7 @@
 (var shift-max nil)
 
 (on-mods-loaded
-  (each [name params (pairs minetest.registered_items)]
+  (each [name params (pairs core.registered_items)]
     (when (not params.groups.not_in_creative_inventory)
       (table.insert creative-inv name)))
   (let [pages (math.floor (/ (length creative-inv) creative-formspec-width))]
@@ -92,7 +92,7 @@
       "list[context;main;0.5,6;8,1;]"
       "list[context;main;0.5,7.5;8,3;8]"))
 
-(minetest.register_on_player_receive_fields (fn [player formname fields]
+(core.register_on_player_receive_fields (fn [player formname fields]
   (let [inv (player:get_inventory)
         meta (player:get_meta)]
     (if fields.go_to_creative
@@ -116,7 +116,7 @@
               (player:set_inventory_formspec (creative-formspec shift″)))))
     (inv:set_list "creative_inv" creative-inv))))
 
-(minetest.register_privilege "creative"
+(core.register_privilege "creative"
   {:description "Creative game mode"
    :give_to_singleplayer false
    :give_to_admin false})
@@ -133,15 +133,15 @@
 
     (player:set_inventory_formspec (player-formspec))
 
-    (let [privs    (minetest.get_player_privs name)
+    (let [privs    (core.get_player_privs name)
           granted? (∨ creative? nil)]
       (foreach (fn [priv] (tset privs priv granted?)) creative-privs)
-      (minetest.set_player_privs name privs))))
+      (core.set_player_privs name privs))))
 
 (fn is-valid-balloon? [name]
   (= name "loria:oxygen_balloon"))
 
-(minetest.register_allow_player_inventory_action
+(core.register_allow_player_inventory_action
   (fn [player action inventory inventory_info]
     (if (= action "move")
         (let [inv (player:get_inventory)

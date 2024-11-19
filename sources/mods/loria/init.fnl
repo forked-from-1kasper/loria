@@ -2,8 +2,8 @@
 (require-macros :infix)
 
 (global loria {})
-(dofile (.. (minetest.get_modpath :loria) "/" "basic.lua"))
-(dofile (.. (minetest.get_modpath :loria) "/" "prelude.lua"))
+(dofile (.. (core.get_modpath :loria) "/" "basic.lua"))
+(dofile (.. (core.get_modpath :loria) "/" "prelude.lua"))
 
 (import :loria
   "greet" "conf" "inv_crafts" "creative" "tint" "biomes" "ores" "mushrooms_nodes"
@@ -18,7 +18,7 @@
       "loria:silicon_box 1,radiation:sign 15"))
 (local start-items {})
 
-(let [words (or (minetest.settings:get "start_items") start-items-default)]
+(let [words (or (core.settings:get "start_items") start-items-default)]
   (each [word (string.gmatch words "([^,]+)")]
     (table.insert start-items (ItemStack word))))
 
@@ -40,7 +40,7 @@
 
 (global oxygen_hud {})
 
-(minetest.register_on_joinplayer (fn [player]
+(core.register_on_joinplayer (fn [player]
   (let [name (player:get_player_name)]
     (player:hud_set_flags {:healthbar false})
     (tset oxygen_hud name (player:hud_add
@@ -65,9 +65,9 @@
       {:x 200 :y 219}
       30)
 
-    (minetest.chat_send_player name "Welcome to Loria!"))))
+    (core.chat_send_player name "Welcome to Loria!"))))
 
-(minetest.register_on_player_hpchange
+(core.register_on_player_hpchange
   (fn [player hp-change reason]
     (let [meta (player:get_meta)
           space-suit (meta:get_int "space_suit")]
@@ -95,7 +95,7 @@
       (each [index stack (ipairs start-items)]
         (add_or_drop inv "main" stack pos)))))
 
-(minetest.register_on_newplayer (fn [player]
+(core.register_on_newplayer (fn [player]
   (init-inv player)
   (let [meta (player:get_meta)]
     (meta:set_int "oxygen" 0)
@@ -104,7 +104,7 @@
     (meta:set_float "dose_damage_limit" 4) ; 4 Gy whole-body
     (meta:set_int "space_suit" space-suit-strength))))
 
-(minetest.register_on_respawnplayer (fn [player]
+(core.register_on_respawnplayer (fn [player]
   (let [meta (player:get_meta)]
     (player:set_hp 20)
     (meta:set_float "received_dose" 0)
@@ -112,7 +112,7 @@
     (meta:set_int "space_suit" space-suit-strength))))
 
 (def-globalstep [_]
-  (each [_ player (ipairs (minetest.get_connected_players))]
+  (each [_ player (ipairs (core.get_connected_players))]
     (let [pos (player:get_pos)]
       (if (≠ pos.y (- max-height))
           (let [h (. (player:get_pos) :y)
@@ -121,27 +121,27 @@
           (player:set_physics_override {:gravity 1})))))
 
 (local clear-radius 500)
-(minetest.register_chatcommand "clearitems"
+(core.register_chatcommand "clearitems"
   {:params ""
    :description (.. "Deletes all items in " clear-radius " meters")
    :privs {:debug true}
    :func (fn [name]
-     (let [player (minetest.get_player_by_name name)]
+     (let [player (core.get_player_by_name name)]
       (when player
         (let [pos (player:get_pos)
               name (player:get_player_name)
-              objs (minetest.get_objects_inside_radius pos clear-radius)]
+              objs (core.get_objects_inside_radius pos clear-radius)]
           (each [_ obj (pairs objs)]
             (let [entity (obj:get_luaentity)]
               (when (∧ entity (= entity.name "__builtin:item"))
                     (obj:remove))))))))})
 
-(minetest.register_privilege "kill"
+(core.register_privilege "kill"
   {:description "Allow to use “/kill” command"})
 
-(minetest.register_chatcommand "kill"
+(core.register_chatcommand "kill"
   {:params "[name]" :description "Kills player" :privs {:kill true}
    :func (fn [name₁ name₂]
      (let [name (if (≠ name₁ "") name₁ name₂)
-           player (minetest.get_player_by_name name)]
+           player (core.get_player_by_name name)]
        (when player (player:set_hp 0))))})

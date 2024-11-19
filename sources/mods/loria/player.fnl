@@ -72,7 +72,7 @@
 
 ;; Check each player and apply animations
 (def-globalstep [_]
-  (each [_ player (pairs (minetest.get_connected_players))]
+  (each [_ player (pairs (core.get_connected_players))]
     (let [name       (player:get_player_name)
           model-name (. player-model name)
           model      (∧ model-name (. models model-name))]

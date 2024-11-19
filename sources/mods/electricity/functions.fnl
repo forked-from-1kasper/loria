@@ -8,7 +8,7 @@
 
 (defun set_resis [R′ X′]
   (let [R (∨ R′ 0) X (∨ X′ 0)]
-    (fn [pos] (let [meta (minetest.get_meta pos)]
+    (fn [pos] (let [meta (core.get_meta pos)]
                 (meta:set_float :resis R)
                 (meta:set_float :react X)))))
 
@@ -18,7 +18,7 @@
   (reset_circuits pos already_processed))
 
 (defun reset_consumer [name]
-  (fn [pos] (let [meta (minetest.get_meta pos)
+  (fn [pos] (let [meta (core.get_meta pos)
                   consumer (. consumers name)]
               (when (∧ (¬ check_current meta consumer)
                         consumer.on_deactivate)

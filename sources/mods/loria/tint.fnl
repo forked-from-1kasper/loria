@@ -2,7 +2,7 @@
 
 (fn get-tint-img [color]
   (string.format "blind.png^[colorize:%s:255^[opacity:%d"
-    (minetest.rgba color.r color.g color.b) color.a))
+    (core.rgba color.r color.g color.b) color.a))
 
 (fn get-or-default [meta key default]
   (if (meta:contains key)
@@ -18,7 +18,7 @@
 
 (global transparent {:r 255 :g 255 :b 255 :a 0})
 
-(minetest.register_on_joinplayer (fn [player]
+(core.register_on_joinplayer (fn [player]
   (let [meta (player:get_meta)
         img  (get-or-default meta "tint-image" (get-tint-img transparent))]
     (meta:set_int "tint"

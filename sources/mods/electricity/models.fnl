@@ -10,7 +10,7 @@
     (string.format "%s&%s" (hash_node_pos pos1) (hash_node_pos pos2))))
 
 (defun dirtwopole [pos]
-  (let [dir     (-> (minetest.get_node pos) (. :param2) minetest.facedir_to_dir)
+  (let [dir     (-> (core.get_node pos) (. :param2) core.facedir_to_dir)
         cross   (vector.cross dir k)
         input   (->> (vector.subtract pos dir) (hash_node_connect pos))
         output  (->> (vector.add pos dir) (hash_node_connect pos))
@@ -29,18 +29,18 @@
     (+ (real R) (if (≥ X 0) (inductance X) (capacitance X)))))
 
 (fn get-resis-from-meta [pos]
-  (let [meta (minetest.get_meta pos)]
+  (let [meta (core.get_meta pos)]
     (get-Z (meta:get_float :resis) (meta:get_float :react))))
 
 (defun vconsumer [pos id] (twopole :consumer id pos (get-resis-from-meta pos)))
 (defun consumer [R X] (fn [pos id] (twopole :consumer id pos (get-Z R X))))
 
 (defun vsource [pos id]
-  (let [meta (minetest.get_meta pos)
+  (let [meta (core.get_meta pos)
         emf (meta:get_float :emf)
 
         resis (meta:get_float :resis)
-        dir (-> (minetest.get_node pos) (. :param2) minetest.facedir_to_dir)
+        dir (-> (core.get_node pos) (. :param2) core.facedir_to_dir)
 
         input (->> (vector.subtract pos dir) (hash_node_connect pos))
         output (->> (vector.add pos dir) (hash_node_connect pos))]

@@ -5,14 +5,14 @@
   {"loria:oxygen_balloon" (* balloon_coeff 3)})
 
 (fn furnace-ready? [pos]
-  (let [meta (minetest.get_meta pos)
+  (let [meta (core.get_meta pos)
         inv  (meta:get_inventory)
         gas  (: (first inv:get_list :gas)  :get_name)
         fuel (: (first inv:get_list :fuel) :get_name)]
     (∧ (∈ gas gases-list) (∈ fuel fuel_list))))
 
 (defun update_gas [pos elapsed]
-  (let [meta  (minetest.get_meta pos)
+  (let [meta  (core.get_meta pos)
         inv   (meta:get_inventory)
         gas   (first inv:get_list :gas)
         Δwear (. gases-list (gas:get_name))
@@ -48,7 +48,7 @@
 
 (defun update_fuel [fuel_list]
   (fn [pos elapsed]
-    (let [meta (minetest.get_meta pos)
+    (let [meta (core.get_meta pos)
           inv (meta:get_inventory)
           fuel (first inv:get_list "fuel")
           fuel-name (fuel:get_name)
@@ -85,7 +85,7 @@
               :animation {:type "vertical_frames"
                           :aspect_w 16 :aspect_h 16 :length 1.5}}]}
        :groups {:cracky 2} :light_source 10
-       :after_stop (fn [pos] (-> (minetest.get_meta pos) (: :set_float :cycle 0)))
+       :after_stop (fn [pos] (-> (core.get_meta pos) (: :set_float :cycle 0)))
        :crafts crafts})))
 
 (register-gas-furnace "gas"     "Gas furnace (PbSe)" furnace_crafts)

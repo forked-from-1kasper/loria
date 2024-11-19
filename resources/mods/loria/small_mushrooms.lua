@@ -1,32 +1,32 @@
 function destruct_column(name, pos)
     pos.y = pos.y + 1
-    while minetest.get_node(pos).name == name do
-        minetest.set_node(pos, { name = "air" })
-        minetest.add_item(pos, { name = name })
+    while core.get_node(pos).name == name do
+        core.set_node(pos, { name = "air" })
+        core.add_item(pos, { name = name })
         pos.y = pos.y + 1
     end
 end
 
 function destruct_hanging(name, pos)
     pos.y = pos.y - 1
-    while minetest.get_node(pos).name == name do
-        minetest.set_node(pos, { name = "air" })
-        minetest.add_item(pos, { name = name })
+    while core.get_node(pos).name == name do
+        core.set_node(pos, { name = "air" })
+        core.add_item(pos, { name = name })
         pos.y = pos.y - 1
     end
 end
 
-minetest.register_on_dignode(function(pos, oldnode, digger)
-    local node_above_name = minetest.get_node(above(pos)).name
-    local node_under_name = minetest.get_node(under(pos)).name
+core.register_on_dignode(function(pos, oldnode, digger)
+    local node_above_name = core.get_node(above(pos)).name
+    local node_under_name = core.get_node(under(pos)).name
 
-    if minetest.get_item_group(oldnode.name, "column") > 0 then
+    if core.get_item_group(oldnode.name, "column") > 0 then
         destruct_column(oldnode.name, pos)
-    elseif minetest.get_item_group(oldnode.name, "hanging") > 0 then
+    elseif core.get_item_group(oldnode.name, "hanging") > 0 then
         destruct_hanging(oldnode.name, pos)
-    elseif minetest.get_item_group(node_above_name, "column") > 0 then
+    elseif core.get_item_group(node_above_name, "column") > 0 then
         destruct_column(node_above_name, pos)
-    elseif minetest.get_item_group(node_under_name, "hanging") > 0 then
+    elseif core.get_item_group(node_under_name, "hanging") > 0 then
         destruct_hanging(node_under_name, pos)
     end
 end)
@@ -35,28 +35,28 @@ local function can_grow(placename, nodename)
     local key, _ = nodename:match("^loria:([^%d]+)_%d+$")
     key = nodename:match("^loria:([^%d]+)$") or key
 
-    local walkable = minetest.registered_nodes[placename].walkable
+    local walkable = core.registered_nodes[placename].walkable
     return walkable and not (key and grasses[key] and grasses[key].place_on ~= placename)
 end
 
-minetest.register_on_placenode(function(pos, newnode, placer, oldnode, itemstack, pointed_thing)
-    if minetest.get_item_group(newnode.name, "column") > 0 then
-        local under = minetest.get_node(under(pos))
+core.register_on_placenode(function(pos, newnode, placer, oldnode, itemstack, pointed_thing)
+    if core.get_item_group(newnode.name, "column") > 0 then
+        local under = core.get_node(under(pos))
         if not (can_grow(under.name, newnode.name) or under.name == newnode.name) then
-            minetest.set_node(pos, { name = "air" })
-            minetest.add_item(pos, { name = newnode.name })
+            core.set_node(pos, { name = "air" })
+            core.add_item(pos, { name = newnode.name })
         end
-    elseif minetest.get_item_group(newnode.name, "hanging") > 0 then
-        local above = minetest.get_node(above(pos))
+    elseif core.get_item_group(newnode.name, "hanging") > 0 then
+        local above = core.get_node(above(pos))
         if not (can_grow(above.name, newnode.name) or above.name == newnode.name) then
-            minetest.set_node(pos, { name = "air" })
-            minetest.add_item(pos, { name = newnode.name })
+            core.set_node(pos, { name = "air" })
+            core.add_item(pos, { name = newnode.name })
         end
     end
 end)
 
 on_grasses(function(name, desc, _)
-    minetest.register_node("loria:" .. name, {
+    core.register_node("loria:" .. name, {
         description = capitalization(desc),
         drawtype = "plantlike",
         tiles = { "loria_" .. name .. ".png" },
@@ -68,24 +68,24 @@ on_grasses(function(name, desc, _)
         sunlight_propagates = true,
     })
 
-    minetest.register_abm{
+    core.register_abm{
         label = desc .. " growth",
         nodenames = { "loria:" .. name },
         interval = 15,
         chance = 500,
         action = function(pos)
-            local name = minetest.get_node(pos).name
-            if minetest.get_node(above(pos)).name == "air" then
+            local name = core.get_node(pos).name
+            if core.get_node(above(pos)).name == "air" then
                 local height = 0
                 local curr = pos
 
-                while minetest.get_node(curr).name == name do
+                while core.get_node(curr).name == name do
                     height = height + 1
                     curr = under(curr)
                 end
 
                 if math.random() <= (1 / height) then
-                    minetest.set_node(above(pos), minetest.get_node(pos))
+                    core.set_node(above(pos), core.get_node(pos))
                 end
             end
         end,
@@ -101,7 +101,7 @@ pars_names = {
 }
 
 for i, name in ipairs(pars_names) do
-    minetest.register_node("loria:pars_" .. i, {
+    core.register_node("loria:pars_" .. i, {
         description = "Pars " .. name,
         drawtype = "plantlike",
         tiles = { "loria_pars_" .. i .. ".png" },
@@ -124,7 +124,7 @@ odorantur_names = {
 }
 
 for i, name in ipairs(odorantur_names) do
-    minetest.register_node("loria:odorantur_" .. i, {
+    core.register_node("loria:odorantur_" .. i, {
         description = "Odorantur " .. name,
         drawtype = "plantlike",
         tiles = { "loria_odorantur_" .. i .. ".png" },
@@ -143,7 +143,7 @@ petite_names = {
 }
 
 for i, name in ipairs(petite_names) do
-    minetest.register_node("loria:petite_" .. i, {
+    core.register_node("loria:petite_" .. i, {
         description = "Petite " .. name,
         drawtype = "plantlike",
         tiles = { "loria_petite_" .. i .. ".png" },
@@ -167,7 +167,7 @@ qui_lucem_names = {
 }
 
 for i, name in ipairs(qui_lucem_names) do
-    minetest.register_node("loria:qui_lucem_" .. i, {
+    core.register_node("loria:qui_lucem_" .. i, {
         description = "Qui lucem " .. name,
         drawtype = "plantlike",
         tiles = { "loria_qui_lucem_" .. i .. ".png" },
@@ -180,7 +180,7 @@ for i, name in ipairs(qui_lucem_names) do
     })
 end
 
-minetest.register_node("loria:imitationis", {
+core.register_node("loria:imitationis", {
     description = "Imitationis",
     drawtype = "plantlike",
     tiles = { "loria_imitationis.png" },
@@ -192,7 +192,7 @@ minetest.register_node("loria:imitationis", {
     sunlight_propagates = true,
 })
 
-minetest.register_node("loria:nihil", {
+core.register_node("loria:nihil", {
     description = "Nihil",
     drawtype = "plantlike",
     tiles = { "loria_nihil.png" },
@@ -204,7 +204,7 @@ minetest.register_node("loria:nihil", {
     sunlight_propagates = true,
 })
 
-minetest.register_node("loria:viriditas", {
+core.register_node("loria:viriditas", {
     description = "Viriditas",
     drawtype = "plantlike",
     tiles = { "loria_viriditas.png" },
@@ -216,7 +216,7 @@ minetest.register_node("loria:viriditas", {
     sunlight_propagates = true,
 })
 
-minetest.register_node("loria:naga", {
+core.register_node("loria:naga", {
     description = "Naga",
     drawtype = "plantlike",
     tiles = { "loria_naga.png" },
@@ -230,7 +230,7 @@ minetest.register_node("loria:naga", {
 })
 
 on_grasses(function(name, desc, _)
-    minetest.register_node("loria:" .. name .. "_pressed", {
+    core.register_node("loria:" .. name .. "_pressed", {
         description = "Pressed " .. desc,
         tiles = { "loria_" .. name .. "_pressed.png" },
         groups = { crumbly = 3 },
@@ -261,14 +261,14 @@ for name, params in pairs(small_mushrooms) do
         info[key] = value
     end
 
-    minetest.register_node("loria:" .. name, info)
-    minetest.register_abm({
+    core.register_node("loria:" .. name, info)
+    core.register_abm({
         label = capitalization(name) .. " spread",
         nodenames = { "loria:" .. name },
         interval = 11,
         chance = 150,
         action = function(pos)
-            local positions = minetest.find_nodes_in_area_under_air(
+            local positions = core.find_nodes_in_area_under_air(
                 { x = pos.x - 1, y = pos.y - 2, z = pos.z - 1 },
                 { x = pos.x + 1, y = pos.y + 1, z = pos.z + 1 },
                 params.place_on
@@ -286,23 +286,23 @@ for name, params in pairs(small_mushrooms) do
             local optimal_radiation = params.optimal_radiation or 3.0
             local max_radiation = params.max_radiation or 5.0
 
-            local vm   = minetest.get_voxel_manip()
+            local vm   = core.get_voxel_manip()
             local area = getVoxelArea(vm, pos)
             local data = vm:get_data()
 
             local radiation = EquivalentDose(radiantFluxAtPos(area, data, pos))
 
             if radiation > max_radiation then
-                minetest.set_node(pos, { name = "air" })
-            elseif minetest.get_node_light(pos) <= optimal_light and
+                core.set_node(pos, { name = "air" })
+            elseif core.get_node_light(pos) <= optimal_light and
                    radiation >= optimal_radiation then
-                minetest.set_node(pos2, { name = "loria:" .. name })
+                core.set_node(pos2, { name = "loria:" .. name })
             end
         end
     })
 
     if params.place_on and params.fill_ratio and params.biomes then
-        minetest.register_decoration({
+        core.register_decoration({
             deco_type = "simple",
             place_on = params.place_on,
             sidelen = params.sidelen or 16,
@@ -323,7 +323,7 @@ terribilis_names = {
 }
 
 for name, params in pairs(terribilis_names) do
-    minetest.register_node("loria:terribilis_" .. name, {
+    core.register_node("loria:terribilis_" .. name, {
         description = "Terribilis " .. name,
         tiles = {
             "loria_cobalt_blue.png^loria_terribilis_" .. name .. ".png"
@@ -333,8 +333,8 @@ for name, params in pairs(terribilis_names) do
         on_punch = function(pos, node, puncher, pointed_thing)
             for _, dir in ipairs(neighbors) do
                 local vect = vector.add(pos, dir)
-                if minetest.get_node(vect).name == "air" then
-                    minetest.set_node(vect, {
+                if core.get_node(vect).name == "air" then
+                    core.set_node(vect, {
                         name = params.gas, param2 = params.value or 200
                     })
                 end
@@ -342,13 +342,13 @@ for name, params in pairs(terribilis_names) do
         end,
 
         after_destruct = function(pos, oldnode)
-            minetest.set_node(pos, { name = "loria:cobalt_blue" })
+            core.set_node(pos, { name = "loria:cobalt_blue" })
         end,
 
         drop = "",
     })
 
-    minetest.register_ore({
+    core.register_ore({
         ore_type       = "blob",
         ore            = "loria:terribilis_" .. name,
         wherein        = "loria:cobalt_blue",
@@ -369,7 +369,7 @@ for name, params in pairs(terribilis_names) do
     })
 end
 
-minetest.register_ore({
+core.register_ore({
     ore_type       = "blob",
     ore            = "loria:humus",
     wherein        = "loria:copper_sulfate",

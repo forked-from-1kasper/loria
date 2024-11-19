@@ -1,4 +1,4 @@
-(foreach2 minetest.register_alias
+(foreach2 core.register_alias
   {"mapgen_stone" "loria:cinnabar"
    "mapgen_dirt" "loria:mercury_oxide"
    "mapgen_dirt_with_grass" "loria:red_mercury_oxide"
@@ -15,10 +15,10 @@
    "mapgen_stair_cobble" "loria:cinnabar"
    "mapgen_mossycobble" "loria:cinnabar"})
 
-(minetest.clear_registered_biomes)
-(minetest.clear_registered_decorations)
+(core.clear_registered_biomes)
+(core.clear_registered_decorations)
 
-(minetest.register_biome
+(core.register_biome
   {:name "loria:redland"
    :node_top "loria:red_mercury_oxide"
    :depth_top 1
@@ -32,7 +32,7 @@
    :node_riverbed "loria:lead_sulfate"
    :depth_riverbed 2})
 
-(minetest.register_biome
+(core.register_biome
   {:name "loria:reptile_house"
    :node_top "loria:nickel_nitrate"
    :depth_top 2
@@ -45,7 +45,7 @@
    :node_riverbed "loria:lead_sulfate"
    :depth_riverbed 4})
 
-(minetest.register_biome
+(core.register_biome
   {:name "loria:acidic_landscapes"
    :node_top "loria:sodium_peroxide"
    :depth_top 5
@@ -58,7 +58,7 @@
    :node_riverbed "loria:lead_sulfate"
    :depth_riverbed 4})
 
-(minetest.register_biome
+(core.register_biome
   {:name "loria:azure"
    :node_top "loria:copper_sulfate"
    :depth_top 2
@@ -71,7 +71,7 @@
    :node_riverbed "loria:lead_sulfate"
    :depth_riverbed 2})
 
-(minetest.register_biome
+(core.register_biome
   {:name "loria:azure_bottom"
    :node_top "loria:cobalt_blue"
    :depth_top 1
@@ -81,7 +81,7 @@
    :heat_point 30
    :humidity_point 50})
 
-(minetest.register_biome
+(core.register_biome
   {:name "loria:purple_swamp"
    :node_stone "loria:ammonium_manganese_pyrophosphate"
    :y_min -15
@@ -89,7 +89,7 @@
    :heat_point 40
    :humidity_point 50})
 
-(minetest.register_biome
+(core.register_biome
   {:name "loria:swamp_connector"
    :node_stone "loria:ammonium_manganese_pyrophosphate"
    :node_top "loria:potassium_permanganate_source"
@@ -104,7 +104,7 @@
    :heat_point 40
    :humidity_point 50})
 
-(minetest.register_biome
+(core.register_biome
   {:name "loria:mercury_ocean"
    :node_top "loria:lead_sulfate"
    :depth_top 1

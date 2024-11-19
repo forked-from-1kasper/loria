@@ -13,7 +13,7 @@
   (fn [args ...] `(,(sym func) (fn ,args ,(unpack [...])))))
 
 (fn on-mods-loaded [...]
-  `(minetest.register_on_mods_loaded (fn [] ,(unpack [...]))))
+  `(core.register_on_mods_loaded (fn [] ,(unpack [...]))))
 
 (fn table-contains [elem tbl] `(. ,tbl ,elem))
 (fn table-not-contains [elem tbl] `(not (. ,tbl ,elem)))
@@ -128,9 +128,9 @@
  "¬" (prefix :not) "−" (prefix "-")
  ;; Some useful macros for defining various functions
  :defun defun :on-mods-loaded on-mods-loaded :ffi-proc ffi-proc
- :def-globalstep (callback-register "minetest.register_globalstep")
- :on-joinplayer  (callback-register "minetest.register_on_joinplayer")
- :on-leaveplayer (callback-register "minetest.register_on_leaveplayer")
+ :def-globalstep (callback-register "core.register_globalstep")
+ :on-joinplayer  (callback-register "core.register_on_joinplayer")
+ :on-leaveplayer (callback-register "core.register_on_leaveplayer")
  ;; Macros for matrices
  "+=" (function-assignment "+")
  "-=" (function-assignment "-")

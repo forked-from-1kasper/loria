@@ -8,7 +8,7 @@
     (vector.new (tonumber x) (tonumber y) (tonumber z))))
 
 (fn drop-current [pos]
-  (let [meta (minetest.get_meta pos)]
+  (let [meta (core.get_meta pos)]
     (meta:set_float :I  0)
     (meta:set_float :φᵢ 0)
     (meta:set_float :U  0)
@@ -17,16 +17,16 @@
 (defun reset_circuits [current already-processed]
   (each [_ vect (ipairs neighbors)]
     (let [pos  (vector.add current vect)
-          name (-> (minetest.get_node pos) (. :name))]
-      (when (∧ (∨ (> (minetest.get_item_group name :conductor) 0)
-                  (> (minetest.get_item_group name :wire) 0))
+          name (-> (core.get_node pos) (. :name))]
+      (when (∧ (∨ (> (core.get_item_group name :conductor) 0)
+                  (> (core.get_item_group name :wire) 0))
                (∉ (serialize_pos pos) already-processed))
-        (let [meta (minetest.get_meta pos)]
+        (let [meta (core.get_meta pos)]
           (meta:set_float :I 0) (meta:set_float :U 0)
           (tset already-processed (serialize_pos pos) true)
 
           (when (∈ name consumers)
-            (-> (minetest.get_node_timer pos) (: :start 0.5)))
+            (-> (core.get_node_timer pos) (: :start 0.5)))
           (reset_circuits pos already-processed))))))
 
 (fn measurement-delta [X]
@@ -50,7 +50,7 @@
      :burn       (> I consumer.Iₘₐₓ)}))
 
 (fn get-float-by-pos [key]
-  (fn [pos] (-> (minetest.get_meta pos) (: :get_float key))))
+  (fn [pos] (-> (core.get_meta pos) (: :get_float key))))
 
 (local get-emf (get-float-by-pos :emf))
 (local get-resis (get-float-by-pos :resis))
@@ -59,10 +59,10 @@
 (fn get-name [] (incf idx) idx)
 
 (fn is-conductor [name]
-  (≠ (minetest.get_item_group name :conductor) 0))
+  (≠ (core.get_item_group name :conductor) 0))
 
 (fn is-source [name]
-  (≠ (minetest.get_item_group name :source) 0))
+  (≠ (core.get_item_group name :source) 0))
 
 (fn find-circuits [pos descriptions connections processed-sources]
   (var res []) (var queue [pos])
@@ -70,7 +70,7 @@
   (each [_ current (ipairs queue)]
     (each [_ vect (ipairs neighbors)]
       (let [pos (vector.add current vect)
-            name (-> (minetest.get_node pos) (. :name))
+            name (-> (core.get_node pos) (. :name))
             str (serialize_pos pos)]
         (when (∧ (∉ str descriptions) (∉ str processed-sources)
                  (∨ (is-conductor name) (is-source name)))
@@ -80,7 +80,7 @@
 
             (when (is-source name) (tset processed-sources str true))
             (when (∈ name consumers)
-              (-> (minetest.get_node_timer pos) (: :start 0.5)))
+              (-> (core.get_node_timer pos) (: :start 0.5)))
 
             (drop-current pos) (table.insert queue pos)))))))
 
@@ -90,8 +90,8 @@
       (meta:set_float name (∨ value 0))))
 
 (fn calculate-device [info elapsed]
-  (let [meta      (minetest.get_meta info.pos)
-        name      (-> (minetest.get_node info.pos) (. :name))
+  (let [meta      (core.get_meta info.pos)
+        name      (-> (core.get_node info.pos) (. :name))
         consumer′ (. consumers name)]
     (set-float meta :I info.I) (set-float meta :φᵢ info.φᵢ)
     (set-float meta :U info.U) (set-float meta :φᵤ info.φᵤ)
@@ -113,12 +113,12 @@
 
 (fn get-time []
   "Returns gametime in seconds"
-  (* (minetest.get_timeofday) 60 60 24))
+  (* (core.get_timeofday) 60 60 24))
 
 (fn process-source [pos processed-sources elapsed]
   (var descriptions {}) (var connections {}) (var circ [])
   (local str (serialize_pos pos))
-  (local func (. model (-> (minetest.get_node pos) (. :name))))
+  (local func (. model (-> (core.get_node pos) (. :name))))
   (when func
     (let [(connection desc) (func pos (get-name))]
       (tset descriptions str desc)
@@ -158,7 +158,7 @@
 
 (global sources {})
 
-(minetest.register_abm
+(core.register_abm
   {:label "Enable electrcity sources"
    :nodenames ["group:source"]
    :interval 1

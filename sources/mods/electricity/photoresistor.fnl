@@ -14,7 +14,7 @@
 
 (fn photoresistor-resis [L] (* R (^ (+ L 1) γ)))
 
-(minetest.register_node "electricity:photoresistor"
+(core.register_node "electricity:photoresistor"
   {:description "Photoresistor"
    :tiles ["electricity_photoresistor_top.png"
            "electricity_photoresistor_bottom.png"
@@ -30,6 +30,6 @@
    :on_construct (set_resis 1 0) :on_destruct reset_current})
 
 (tset model "electricity:photoresistor"
-  (fn [pos id] (let [L (∨ (minetest.get_node_light pos) 0)
+  (fn [pos id] (let [L (∨ (core.get_node_light pos) 0)
                      R (photoresistor-resis L)]
     (twopole :consumer id pos R))))

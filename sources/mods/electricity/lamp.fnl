@@ -4,7 +4,7 @@
   (math.random 5 15))
 
 (fn spawn-sparks [pos]
-  (minetest.add_particlespawner
+  (core.add_particlespawner
     {:amount (get-sparks-amount)
      :time   0.2
      :minpos pos :maxpos pos
@@ -26,17 +26,17 @@
         disabled-name (.. "electricity:" conf.name "_off")
         active-name   (.. "electricity:" conf.name "_on")
         burn          (lamp-burn broken-name)]
-    (minetest.register_node broken-name
+    (core.register_node broken-name
       {:description (.. (capitalization conf.name) " (broken)")
        :tiles conf.tiles-broken :groups {:cracky 3}
        :paramtype2 "facedir"})
 
-    (minetest.register_node disabled-name
+    (core.register_node disabled-name
       {:description (capitalization conf.name)
        :tiles conf.tiles :groups {:cracky 3 :conductor 1}
        :paramtype2 "facedir" :on_destruct reset_current})
 
-    (minetest.register_node active-name
+    (core.register_node active-name
       {:description (.. (capitalization conf.name) " (active)")
        :tiles conf.tiles :groups {:cracky 3 :conductor 1}
        :light_source conf.light-source :paramtype2 "facedir"

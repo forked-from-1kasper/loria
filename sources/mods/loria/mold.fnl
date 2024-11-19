@@ -1,6 +1,6 @@
 (require-macros :useful-macros)
 
-(minetest.register_node "loria:fingunt_pessima"
+(core.register_node "loria:fingunt_pessima"
   {:description "Fingunt pessima"
    :tiles [{:name "loria_fingunt_pessima.png"
             :backface_culling false
@@ -19,18 +19,18 @@
    (vector.new  0  0 -1)])
 
 (fn mold-grow [pos direction]
-  (let [node (minetest.get_node pos)]
+  (let [node (core.get_node pos)]
     (each [_ Δpos (ipairs neighbors)]
       (let [dist (vector.distance pos direction)
             pos′ (vector.add pos Δpos)
-            node′ (minetest.get_node pos′)
+            node′ (core.get_node pos′)
             dist′ (vector.distance pos′ direction)]
         (when (∧ (< dist′ dist) (= node′.name "air"))
-          (minetest.set_node pos′ {:name node.name}))))))
+          (core.set_node pos′ {:name node.name}))))))
 
-(minetest.register_abm
+(core.register_abm
   {:label "mold growing"
    :nodenames ["loria:fingunt_pessima"]
    :interval 5 :chance 20 :action
-     (fn [pos] (each [_ player (ipairs (minetest.get_connected_players))]
+     (fn [pos] (each [_ player (ipairs (core.get_connected_players))]
        (mold-grow pos (player:get_pos))))})

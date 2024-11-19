@@ -13,17 +13,17 @@
 
 (defun run_furnace [conf pos]
   (when conf.before_run (conf.before_run pos))
-  (: (minetest.get_node_timer pos) :start 0.3)
+  (: (core.get_node_timer pos) :start 0.3)
   (swap_node pos (.. "furnace:" conf.name "_active")))
 
 (defun stop_furnace [conf pos]
-  (let [meta (minetest.get_meta pos)]
+  (let [meta (core.get_meta pos)]
     (swap_node pos (.. "furnace:" conf.name))
 
     (meta:set_string "formspec" (furnace-formspec conf 0 meta))
     (meta:set_float "cooking" 0)
 
-    (: (minetest.get_node_timer pos) :stop)
+    (: (core.get_node_timer pos) :stop)
 
     (when conf.after_stop (conf.after_stop pos))))
 
@@ -37,7 +37,7 @@
 
 (defun furnace_on_timer [conf]
   (fn [pos elapsed]
-    (let [meta (minetest.get_meta pos)
+    (let [meta (core.get_meta pos)
           inv  (meta:get_inventory)]
       (each [_ func (ipairs conf.on_tick)]
         (when (¬ func pos elapsed)
@@ -66,7 +66,7 @@
 
 (fn construct-furnace [conf]
   (fn [pos]
-    (let [meta (minetest.get_meta pos)
+    (let [meta (core.get_meta pos)
           inv  (meta:get_inventory)]
       (meta:set_string "formspec" (furnace-formspec conf 0 meta))
       (meta:set_float "cycle" 0)
@@ -82,7 +82,7 @@
         (conf.on_construct pos)))))
 
 (defun register_furnace [conf]
-  (minetest.register_node (.. "furnace:" conf.name)
+  (core.register_node (.. "furnace:" conf.name)
     {:description conf.description
      :drop (or conf.drop (.. "furnace:" conf.name))
      :tiles conf.textures.inactive
@@ -119,7 +119,7 @@
 
      :on_receive_fields conf.on_receive_fields})
 
-  (minetest.register_node (.. "furnace:" conf.name "_active")
+  (core.register_node (.. "furnace:" conf.name "_active")
     {:description (.. conf.description " (active)")
      :drop (or conf.drop (.. "furnace:" conf.name))
      :tiles conf.textures.active
@@ -145,7 +145,7 @@
      :allow_metadata_inventory_move
       (fn [pos from-list from-index to-list to-index count player]
         (if (= to-list "input") 0
-          (let [meta  (minetest.get_meta pos)
+          (let [meta  (core.get_meta pos)
                 inv   (meta:get_inventory)
                 stack (inv:get_stack from-list from-index)]
             (stack:get_count))))

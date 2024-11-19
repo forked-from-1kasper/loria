@@ -49,7 +49,7 @@
 (local hud-elems [health space-suit gas oxygen gravity radiation copyright])
 
 (def-globalstep [_]
-  (each [_ player (ipairs (minetest.get_connected_players))]
+  (each [_ player (ipairs (core.get_connected_players))]
     (var text "")
     (each [_ func (ipairs hud-elems)]
         (set text (.. text "\n" (func player))))

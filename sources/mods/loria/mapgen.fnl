@@ -1,7 +1,7 @@
 (require-macros :useful-macros)
 
 (each [i _ (ipairs pars_names)]
-  (minetest.register_decoration
+  (core.register_decoration
     {:deco_type "simple"
      :place_on "loria:copper_sulfate"
      :sidelen 16
@@ -12,7 +12,7 @@
      :y_min -20}))
 
 (each [i _ (ipairs odorantur_names)]
-  (minetest.register_decoration
+  (core.register_decoration
     {:deco_type "simple"
      :place_on "loria:sodium_peroxide"
      :sidelen 16
@@ -23,7 +23,7 @@
      :y_min -20}))
 
 (each [i _ (ipairs qui_lucem_names)]
-  (minetest.register_decoration
+  (core.register_decoration
     {:deco_type "simple"
      :place_on "loria:nickel_nitrate"
      :sidelen 16
@@ -34,7 +34,7 @@
      :y_min -20}))
 
 (each [i _ (ipairs petite_names)]
-  (minetest.register_decoration
+  (core.register_decoration
     {:deco_type "simple"
      :place_on "loria:ammonium_manganese_pyrophosphate"
      :sidelen 16
@@ -46,7 +46,7 @@
 
 (on_grasses
   (λ [name _ params]
-    (minetest.register_decoration
+    (core.register_decoration
       {:deco_type "simple"
        :place_on params.place_on
        :sidelen (or params.sidelen 16)
@@ -67,7 +67,7 @@
 
 (each [name params (pairs ores)]
   (each [_ place (ipairs params.wherein)]
-    (minetest.register_ore
+    (core.register_ore
       {:ore_type        (∨ params.ore-type "blob")
        :ore             (.. "loria:" name "_" place)
        :wherein         (.. "loria:" place)
@@ -79,7 +79,7 @@
        :noise_threshold (∨ params.noise-threshold 0.0)
        :noise_params    (∨ params.noise noise-params-default)})))
 
-(minetest.register_decoration
+(core.register_decoration
   {:deco_type "simple"
    :place_on "loria:lead_sulfate"
    :sidelen 16
@@ -89,7 +89,7 @@
    :height 1
    :y_min -20})
 
-(minetest.register_decoration
+(core.register_decoration
   {:deco_type "simple"
    :place_on "loria:sodium_peroxide"
    :sidelen 16
@@ -99,7 +99,7 @@
    :height 1
    :y_min -20})
 
-(minetest.register_decoration
+(core.register_decoration
   {:deco_type "simple"
    :place_on "loria:sodium_peroxide"
    :sidelen 16

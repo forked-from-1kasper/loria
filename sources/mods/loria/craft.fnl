@@ -16,7 +16,7 @@
       (each [_ result (ipairs recipe.output)]
         (inv:add_item "output" result)))))
 
-(minetest.register_on_player_receive_fields (λ [player formname fields]
+(core.register_on_player_receive_fields (λ [player formname fields]
   (when (= fields.craft_it "Craft")
     (let [inv (player:get_inventory)
           pos (player:get_pos)
@@ -27,6 +27,6 @@
                  recipe.output))))
   (update_preview player)))
 
-(minetest.register_on_player_inventory_action
+(core.register_on_player_inventory_action
   (fn [player action inventory inventory_info]
     (update_preview player)))

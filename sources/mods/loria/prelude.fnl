@@ -41,16 +41,16 @@
   (or (= ending "") (= (str:sub (- (length ending))) ending)))
 
 (defun swap_node [pos name]
-  (var node (minetest.get_node pos))
+  (var node (core.get_node pos))
   (when (≠ node.name name)
     (tset node :name name)
-    (minetest.swap_node pos node)))
+    (core.swap_node pos node)))
 
 (defun add_or_drop [inv listname stack pos]
   (fn add-or-drop [stack]
     (if (inv:room_for_item listname stack)
         (inv:add_item listname stack)
-        (minetest.add_item pos stack)))
+        (core.add_item pos stack)))
 
   (let [stack′ (ItemStack stack)
         max    (stack′:get_stack_max)
@@ -84,7 +84,7 @@
 (defun under [pos] (vector.subtract pos k))
 
 (defun import [mod ...]
-  (let [modpath (minetest.get_modpath mod)
+  (let [modpath (core.get_modpath mod)
         get-path (fn [name] (.. modpath "/" name ".lua"))]
     (foreach (comp dofile get-path) [...])))
 

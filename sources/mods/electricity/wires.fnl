@@ -93,29 +93,29 @@
         "group:disabled_electric_tool"]
      :on_destruct reset_current})
 
-  (minetest.register_node (.. "electricity:" conf.name "_wire")
+  (core.register_node (.. "electricity:" conf.name "_wire")
     (union wire-desc {:description wire-name
                       :tiles tiles :inventory_image inv-image
                       :wield_image inv-image}))
-  (minetest.register_alias (.. "electricity:" conf.name "_cable")
-                           (.. "electricity:" conf.name "_wire"))
+  (core.register_alias (.. "electricity:" conf.name "_cable")
+                       (.. "electricity:" conf.name "_wire"))
 
   (let [insulated-inv-image (.. inv-image "^electricity_insulator_item.png")]
-    (minetest.register_node (.. "electricity:" conf.name "_insulated_wire")
+    (core.register_node (.. "electricity:" conf.name "_insulated_wire")
       (union wire-desc {:description (.. wire-name " (insulated)")
                         :tiles insulator-textures
                         :inventory_image insulated-inv-image
                         :wield_image insulated-inv-image})))
 
-  (minetest.register_node (.. "electricity:" conf.name "_wire_overlap")
+  (core.register_node (.. "electricity:" conf.name "_wire_overlap")
     {:description (.. (capitalization conf.name) " wire (overlap)")
      :drawtype "nodebox" :tiles tiles :use_texture_alpha "blend"
      :is_ground_content false :sunlight_propagates true :paramtype "light"
      :groups {:crumbly 3 :dig_immediate 3 :conductor 1 :wire 1}
      :selection_box wire-overlap-box :node_box wire-overlap-box
      :on_destruct reset_current})
-  (minetest.register_alias (.. "electricity:" conf.name "_cable_overlap")
-                           (.. "electricity:" conf.name "_wire_overlap"))
+  (core.register_alias (.. "electricity:" conf.name "_cable_overlap")
+                       (.. "electricity:" conf.name "_wire_overlap"))
 
   (tset model (.. "electricity:" conf.name "_wire") (wire-model conf.resis))
   (tset model (.. "electricity:" conf.name "_insulated_wire") (wire-model conf.resis))

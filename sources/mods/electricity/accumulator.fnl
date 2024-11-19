@@ -1,6 +1,6 @@
 (require-macros :useful-macros)
 
-(minetest.register_tool "electricity:accumulator"
+(core.register_tool "electricity:accumulator"
   {:inventory_image "electricity_accumulator.png"
    :description "Accumulator"
    :groups {:item_source 4 :rechargeable 1}})
@@ -15,7 +15,7 @@
       "list[current_player;main;0,2;8,1;]"
       "list[current_player;main;0,3.5;8,3;8]"))
 
-(minetest.register_node "electricity:charger_box"
+(core.register_node "electricity:charger_box"
   {:description "Charger box"
    :tiles
      ["electricity_charger_box.png"
@@ -28,20 +28,20 @@
    :paramtype2 :facedir
 
    :on_construct (fn [pos]
-     (let [meta (minetest.get_meta pos)
+     (let [meta (core.get_meta pos)
            inv (meta:get_inventory)]
        (inv:set_size :place 1)
        (meta:set_string :formspec charger-formspec)
-       (-> (minetest.get_node_timer pos) (: :start 0.5))))
+       (-> (core.get_node_timer pos) (: :start 0.5))))
 
    :on_destruct (andthen reset_current drop_everything)
    :on_timer (fn [pos elapsed]
-     (let [meta (minetest.get_meta pos)
+     (let [meta (core.get_meta pos)
            inv (meta:get_inventory)
            stack (inv:get_stack "place" 1)
            name (stack:get_name)
-           emf (minetest.get_item_group name :item_source)]
-       (when (∧ (> (minetest.get_item_group name :rechargeable) 0) (> emf 0))
+           emf (core.get_item_group name :item_source)]
+       (when (∧ (> (core.get_item_group name :rechargeable) 0) (> emf 0))
          (let [I (meta:get_float :I)
                U (meta:get_float :U)
                wear (stack:get_wear)
@@ -55,7 +55,7 @@
      true)
 
    :allow_metadata_inventory_put (fn [pos listname index stack player]
-     (let [inv (: (minetest.get_meta pos) :get_inventory)]
+     (let [inv (: (core.get_meta pos) :get_inventory)]
        (if (= (: (inv:get_stack listname index) :get_count) 1) 0 1)))})
 
 (tset model "electricity:charger_box" (consumer charger-box-resis))

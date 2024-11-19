@@ -5,7 +5,7 @@
         tool-capabilities-default
           {:full_punch_interval 1.5 :max_drop_level 1
            :groupcaps [] :damage_groups {:fleshy 2}}]
-    (minetest.register_tool (.. "loria:" material "_pickaxe")
+    (core.register_tool (.. "loria:" material "_pickaxe")
       {:description (.. (capitalization material) " pickaxe")
        :stack_max 1 :liquids_pointable false :range 2.0
        :inventory_image texture :wield_image texture

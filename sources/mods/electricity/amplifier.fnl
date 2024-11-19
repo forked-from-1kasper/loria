@@ -8,7 +8,7 @@
   {:type "fixed"
    :fixed [[(/ -1 2) (/ -1 2) (/ -1 2) (/ 1 2) (infix -1 / 2 + 5 / 16) (/ 1 2)]]})
 
-(minetest.register_node "electricity:amplifier"
+(core.register_node "electricity:amplifier"
   {:description "Amplifier"
    :tiles ["electricity_amplifier_top.png"
            "electricity_amplifier_bottom.png"
@@ -21,7 +21,7 @@
    :use_texture_alpha "blend" :groups {:crumbly 3 :conductor 1}})
 
 (tset model "electricity:amplifier" (fn [pos id]
-  (let [meta (minetest.get_meta pos) U (meta:get_float :U)
+  (let [meta (core.get_meta pos) U (meta:get_float :U)
         (minus plus out) (dirtwopole pos)]
     (values {:pos plus :neg minus}
       (define-circuit

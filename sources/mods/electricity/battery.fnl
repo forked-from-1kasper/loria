@@ -7,7 +7,7 @@
       "list[current_player;main;0,2;8,1;]"
       "list[current_player;main;0,3.5;8,3;8]"))
 
-(minetest.register_node "electricity:battery_box"
+(core.register_node "electricity:battery_box"
   {:description "Battery box"
    :tiles ["electricity_battery_top.png"
            "electricity_battery_bottom.png"
@@ -22,7 +22,7 @@
 
    :on_construct
     (fn [pos]
-      (let [meta (minetest.get_meta pos)
+      (let [meta (core.get_meta pos)
             inv  (meta:get_inventory)]
         (inv:set_size "box" 6)
         (meta:set_float "resis" 0.4)
@@ -31,17 +31,17 @@
 
    :allow_metadata_inventory_put
     (fn [pos listname index stack player]
-      (if (> (minetest.get_item_group (stack:get_name) "item_source") 0)
+      (if (> (core.get_item_group (stack:get_name) "item_source") 0)
           (stack:get_count) 0))
 
    :allow_metadata_inventory_move
     (fn [pos from-list from-index to-list to-index count player]
-      (let [meta  (minetest.get_meta pos)
+      (let [meta  (core.get_meta pos)
             inv   (meta:get_inventory)
             stack (inv:get_stack from-list from-index)]
 
         (if (= to-list "box")
-          (if (> (minetest.get_item_group (stack:get_name) "item_source") 0)
+          (if (> (core.get_item_group (stack:get_name) "item_source") 0)
             (stack:get_count) 0)
           (stack:get_count))))
 
@@ -58,7 +58,7 @@
       (var emf 0)
 
       (each [idx stack (ipairs (inv:get_list "box"))]
-        (let [stack-emf (minetest.get_item_group (stack:get_name) "item_source")]
+        (let [stack-emf (core.get_item_group (stack:get_name) "item_source")]
           (when (> stack-emf 0)
             (set+ emf (* (- 65536 (stack:get_wear)) (/ stack-emf 65536)))
 

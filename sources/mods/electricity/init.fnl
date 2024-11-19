@@ -1,9 +1,9 @@
 (require-macros :useful-macros)
 
-(global fallback (or (minetest.settings:get_bool "electricity_fallback") false))
+(global fallback (or (core.settings:get_bool "electricity_fallback") false))
 
 (when (not fallback)
-  (local ie (minetest.request_insecure_environment))
+  (local ie (core.request_insecure_environment))
   (when (not ie)
     (error (.. "Electricity mod requires access to insecure functions in order "
                "to work. Please add the electricity mod to your secure.trusted_mods.\n"

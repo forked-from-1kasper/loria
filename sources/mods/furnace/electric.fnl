@@ -15,7 +15,7 @@
    :on_tick [(andthen (reset_consumer "furnace:electric") (const true))]
    :on_destruct (andthen reset_current drop_everything)
    :is_furnace_ready (fn [pos]
-     (= (-> (minetest.get_meta pos) (: :get_int :active)) 1))
+     (= (-> (core.get_meta pos) (: :get_int :active)) 1))
    :additional_formspec (fn [meta] "label[1,2;Electric furnace]")
    :textures electric-furnace-textures
    :light_source 6
@@ -24,7 +24,7 @@
    :on_destruct reset_current
    :crafts furnace_crafts})
 
-(minetest.register_node "furnace:electric_broken"
+(core.register_node "furnace:electric_broken"
   {:description "Electric furnace (broken)"
    :tiles electric-furnace-textures.inactive
    :groups {:cracky 2}

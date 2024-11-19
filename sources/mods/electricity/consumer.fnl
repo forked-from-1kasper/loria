@@ -15,7 +15,7 @@
 
 (fn register-consumer [conf]
   (local name (string.format "electricity:%s_%s" conf.elem-name conf.idx))
-  (minetest.register_node name
+  (core.register_node name
     {:description (string.format "%s (%s)" (capitalization conf.elem-name) conf.desc)
      :tiles
        [(string.format "%s^[colorize:%sf0" conf.tiles.top-bottom conf.color)
@@ -72,7 +72,7 @@
              [(/ -1 2) β        (/ -1 2) (/ 1 2) (/ 1 2) (/ 1 2)]
              [α        α        α        β       β       β]]}))
 
-(minetest.register_node "electricity:heavy_inductor"
+(core.register_node "electricity:heavy_inductor"
   {:description "Heavy inductor (1 H)"
    :tiles ["electricity_heavy_inductor_top_bottom.png"
            "electricity_heavy_inductor_top_bottom.png"

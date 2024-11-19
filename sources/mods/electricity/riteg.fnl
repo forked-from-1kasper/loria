@@ -23,13 +23,13 @@
       "list[current_player;main;0,3.5;8,3;8]"))
 
 (fn update-riteg [pos]
-  (let [meta (minetest.get_meta pos)
+  (let [meta (core.get_meta pos)
         inv (meta:get_inventory)
         stack (inv:get_stack "place" 1)
         emf (or (. fuel (stack:get_name)) 0)]
     (meta:set_float :emf emf)))
 
-(minetest.register_node "electricity:riteg"
+(core.register_node "electricity:riteg"
   {:description "RITEG"
    :tiles
      ["electricity_riteg_top.png"
@@ -43,7 +43,7 @@
 
    :on_construct
      (fn [pos]
-       (let [meta (minetest.get_meta pos)
+       (let [meta (core.get_meta pos)
              inv  (meta:get_inventory)]
          (inv:set_size "place" 1) (meta:set_float :resis 0.4)
          (meta:set_string "formspec" riteg-formspec)))
@@ -52,7 +52,7 @@
    :node_box riteg-box :selection_box riteg-box
 
    :allow_metadata_inventory_put (fn [pos listname index stack player]
-      (let [inv (-> (minetest.get_meta pos) (: :get_inventory))]
+      (let [inv (-> (core.get_meta pos) (: :get_inventory))]
         (if (= (-> (inv:get_stack listname index) (: :get_count)) 1) 0 1)))
 
    :on_metadata_inventory_move update-riteg

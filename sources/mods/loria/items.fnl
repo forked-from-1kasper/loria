@@ -1,6 +1,6 @@
 (require-macros :useful-macros)
 
-(minetest.register_item ":"
+(core.register_item ":"
   {:type "none"
    :wield_image "wieldhand.png"
    :wield_scale {:x 1 :y 1 :z 3.5}
@@ -15,11 +15,11 @@
        :cracky                  {:times {1 9.00 2 7.00 3 5.00}}}
      :damage_groups {:fleshy 1}}})
 
-(minetest.register_craftitem "loria:broken_drill"
+(core.register_craftitem "loria:broken_drill"
   {:description     "Broken drill"
    :inventory_image "loria_broken_drill.png"})
 
-(minetest.register_tool "loria:drill"
+(core.register_tool "loria:drill"
   {:description "Drill"
    :stack_max 1
    :liquids_pointable false
@@ -41,7 +41,7 @@
         {:name "loria:broken_drill" :count 1}
         (do (itemstack:add_wear digparams.wear) itemstack)))})
 
-(minetest.register_craftitem "loria:super_drill"
+(core.register_craftitem "loria:super_drill"
   {:description "Super drill"
    :stack_max 1
    :liquids_pointable false
@@ -57,7 +57,7 @@
        :oddly_breakable_by_hand {:times {1 0.05 2 0.05 3 0.05}}}
      :damage_groups {:fleshy 2}}})
 
-(minetest.register_tool "loria:copper_hammer"
+(core.register_tool "loria:copper_hammer"
   {:inventory_image "loria_copper_hammer.png"
    :description "Copper hammer"
    :stack_max 1
@@ -83,7 +83,7 @@
           {:name "loria:stick" :count 1}
           (do (itemstack:add_wear digparams.wear) itemstack)))})
 
-(minetest.register_tool "loria:copper_hammer_head"
+(core.register_tool "loria:copper_hammer_head"
   {:inventory_image "loria_copper_hammer_head.png"
    :description "Copper hammer head"
    :stack_max 1
@@ -102,14 +102,14 @@
       (if (≥ (+ (itemstack:get_wear) digparams.wear) 65535) nil
           (do (itemstack:add_wear digparams.wear) itemstack)))})
 
-(minetest.register_tool "loria:nail_file"
+(core.register_tool "loria:nail_file"
   {:inventory_image "loria_nail_file.png"
    :description "Nail file"
    :stack_max 1
    :on_use (fn [itemstack user pointed_thing]
              (itemstack:set_name "loria:broken_nail_file") itemstack)})
 
-(minetest.register_tool "loria:broken_nail_file"
+(core.register_tool "loria:broken_nail_file"
   {:inventory_image "loria_broken_nail_file.png"
    :description "Broken nail file"
    :stack_max 1
@@ -119,49 +119,49 @@
      :max_drop_level 0
      :groupcaps {:snappy {:times {1 100 2 60 3 30} :uses 5}}}})
 
-(minetest.register_tool "loria:battery"
+(core.register_tool "loria:battery"
   {:inventory_image "loria_battery.png"
    :description "Battery"
    :groups {:item_source 5}})
 
-(minetest.register_craftitem "loria:stick"
+(core.register_craftitem "loria:stick"
   {:inventory_image "loria_stick.png"
    :description     "Stick"
    :stack_max       120})
 
-(minetest.register_craftitem "loria:aluminium_brick_mold"
+(core.register_craftitem "loria:aluminium_brick_mold"
   {:inventory_image "loria_aluminium_brick_mold.png"
    :description     "Aluminium brick mold"
    :stack_max       9})
 
-(minetest.register_craftitem "loria:aluminium_case"
+(core.register_craftitem "loria:aluminium_case"
   {:inventory_image "loria_aluminium_case.png"
    :description     "Aluminium case"
    :stack_max       16})
 
-(minetest.register_craftitem "loria:wolfram_filament"
+(core.register_craftitem "loria:wolfram_filament"
   {:inventory_image "loria_wolfram_filament.png"
    :description     "Wolfram filament"
    :stack_max       30})
 
-(minetest.register_craftitem "loria:empty_balloon"
+(core.register_craftitem "loria:empty_balloon"
   {:inventory_image "loria_empty_balloon.png"
    :description     "Empty balloon"
    :stack_max       1})
 
-(minetest.register_craftitem "loria:thorium_ingot"
+(core.register_craftitem "loria:thorium_ingot"
   {:description     "Thorium ingot"
    :inventory_image "loria_thorium_ingot.png"})
 
-(minetest.register_craftitem "loria:uranium_ingot"
+(core.register_craftitem "loria:uranium_ingot"
   {:description     "Uranium ingot"
    :inventory_image "loria_uranium_ingot.png"})
 
-(minetest.register_craftitem "loria:plutonium_ingot"
+(core.register_craftitem "loria:plutonium_ingot"
   {:description     "Plutonium ingot"
    :inventory_image "loria_plutonium_ingot.png"})
 
-(defun get_gas [pos] (detect_gas (. (minetest.get_node pos) :name)))
+(defun get_gas [pos] (detect_gas (. (core.get_node pos) :name)))
 
 (global balloon_use            100)
 (global balloon_coeff          64)
@@ -172,7 +172,7 @@
 (def-globalstep [Δt]
   (set+ oxygen-timer Δt)
 
-  (each [_ player (ipairs (minetest.get_connected_players))]
+  (each [_ player (ipairs (core.get_connected_players))]
     ;; disables breath mechanic
     (when (≠ (player:get_breath) 11)
       (player:set_breath 11))

@@ -9,7 +9,7 @@
       [(/ -5 16) (infix -1 / 2 + 2 / 16) (/ -6 16)
        (/  5 16) (/ 1 2)                 (/  6 16)]]})
 
-(minetest.register_node "electricity:relay"
+(core.register_node "electricity:relay"
   {:description "Relay"
    :tiles ["electricity_relay.png"
            "electricity_relay_bottom.png"
@@ -30,7 +30,7 @@
     (real (if (≥ U Uₘᵢₙ) relay-resis break))))
 
 (tset model "electricity:relay" (fn [pos id]
-  (let [meta (minetest.get_meta pos) U (meta:get_float :U)
+  (let [meta (core.get_meta pos) U (meta:get_float :U)
         (input output control) (dirtwopole pos)]
     (values {:pos control :neg ground}
       (define-circuit

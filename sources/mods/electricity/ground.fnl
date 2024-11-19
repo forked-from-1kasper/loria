@@ -8,7 +8,7 @@
 
 (local ground-connect-resis 0.1)
 
-(minetest.register_node "electricity:ground"
+(core.register_node "electricity:ground"
   {:description "Ground"
    :tiles
      ["electricity_ground_top.png"
@@ -25,6 +25,6 @@
    :use_texture_alpha "blend"})
 
 (tset model "electricity:ground" (fn [pos id]
-  (let [dir   (-> (minetest.get_node pos) (. :param2) minetest.facedir_to_dir)
+  (let [dir   (-> (core.get_node pos) (. :param2) core.facedir_to_dir)
         input (->> (vector.subtract pos dir) (hash_node_connect pos))]
     (values {} (define-circuit :consumer id input :gnd ground-connect-resis)))))

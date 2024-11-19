@@ -36,7 +36,7 @@
        (infix  1 / 2 - 5 / 16) (infix  1 / 2 - 1 / 16)]]})
 
 (fn setup-transformer-formspec [pos]
-  (let [meta (minetest.get_meta pos)
+  (let [meta (core.get_meta pos)
         inv  (meta:get_inventory)]
     (inv:set_size "primary" 1)
     (inv:set_size "secondary" 1)
@@ -49,9 +49,9 @@
           "list[current_player;main;0,2;8,1;]"
           "list[current_player;main;0,3.5;8,3;8]"))))
 
-(fn wire? [name] (≠ (minetest.get_item_group name "wire") 0))
+(fn wire? [name] (≠ (core.get_item_group name "wire") 0))
 
-(minetest.register_node "electricity:transformer"
+(core.register_node "electricity:transformer"
   {:description "Transformer"
    :tiles
      ["electricity_transformer_top.png"
@@ -79,7 +79,7 @@
 
    :allow_metadata_inventory_move
     (fn [pos from-list from-index to-list to-index count player]
-      (let [meta  (minetest.get_meta pos)
+      (let [meta  (core.get_meta pos)
             inv   (meta:get_inventory)
             stack (inv:get_stack from-list from-index)]
         (if (∨ (= to-list "primary") (= to-list "secondary"))
@@ -87,7 +87,7 @@
             (stack:get_count))))})
 
 (tset model "electricity:transformer" (fn [pos id]
-  (let [meta (minetest.get_meta pos)
+  (let [meta (core.get_meta pos)
         inv (meta:get_inventory)
         prim-winding (inv:get_stack "primary" 1)
         sec-winding (inv:get_stack "secondary" 1)

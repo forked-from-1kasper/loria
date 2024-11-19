@@ -1,7 +1,7 @@
 (require-macros :useful-macros)
 (require-macros :infix)
 
-(local cid minetest.get_content_id)
+(local cid core.get_content_id)
 
 (constexpr defun Add [tbl₁ tbl₂ tbl₃]
   (var tbl (or tbl₃ {}))
@@ -253,7 +253,7 @@
     (tset node-attenuation node_name att))))
 
 (on-mods-loaded
-  (each [name _ (pairs minetest.registered_items)]
+  (each [name _ (pairs core.registered_items)]
     (tset radiant-power name (null)))
 
   ;; Set up radiant power of each item in W.

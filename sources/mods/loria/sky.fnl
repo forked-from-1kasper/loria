@@ -3,11 +3,11 @@
 (local default-color {:r 140 :g 186 :b 250})
 (local night-color   {:r 0 :g 0 :b 16})
 
-(local change-distance (or (minetest.settings:get "sky_color_change_distance") 4))
+(local change-distance (or (core.settings:get "sky_color_change_distance") 4))
 (local area-side (+ (* change-distance 2) 1))
 (local area-volume (^ area-side 3))
 
-(local biome-id minetest.get_biome_id)
+(local biome-id core.get_biome_id)
 
 (local colors
   {(biome-id "loria:redland")           {:r 255 :g 200 :b 150}
@@ -44,7 +44,7 @@
       (brightness color 0)))
 
 (fn get-color-at-pos [pos]
-  (or (. colors (. (minetest.get_biome_data pos) :biome)) default-color))
+  (or (. colors (. (core.get_biome_data pos) :biome)) default-color))
 
 (fn calc-color [pos]
   (var color {:r 0 :g 0 :b 0})
@@ -58,8 +58,8 @@
   (brightness color (/ 1 area-volume)))
 
 (def-globalstep [_]
-  (let [timeofday (minetest.get_timeofday)]
-    (each [_ player (ipairs (minetest.get_connected_players))]
+  (let [timeofday (core.get_timeofday)]
+    (each [_ player (ipairs (core.get_connected_players))]
       (let [pos (player:get_pos)
             color′ (calc-color pos)
             color (addition (get-sky-color color′ timeofday) night-color)]

@@ -17,8 +17,8 @@
   res)
 
 (fn get-radiant-power [name]
-  (or (if (∈ name minetest.registered_nodes)
-          (. radiant-power (minetest.get_content_id name))
+  (or (if (∈ name core.registered_nodes)
+          (. radiant-power (core.get_content_id name))
           (. radiant-power name))
       (null)))
 
@@ -93,7 +93,7 @@
 
     (when (∈ cid has-inventory)
       (let [source (area:position i)
-            inv (-> (minetest.get_meta source) (: :get_inventory))
+            inv (-> (core.get_meta source) (: :get_inventory))
             P (calculate-inventory-flux inv)]
         (Add flux (get-flux P source pos area data) flux)
         (Add flux (get-flux P source (vector.add pos (vector.new 0 1 0)) area data) flux))))
@@ -104,7 +104,7 @@
 (fn radiant-flux-at-player [vm player]
   (local pos (player:get_pos))
   (local objs (->> (vector.length radiation-vect)
-                   (minetest.get_objects_inside_radius pos)))
+                   (core.get_objects_inside_radius pos)))
 
   (local area (getVoxelArea vm pos))
   (local data (vm:get_data))
@@ -157,10 +157,10 @@
                    revert (. effect :revert)]
               (meta:set_int name 0) (revert player))))
 
-(minetest.register_on_respawnplayer (fn [player]
+(core.register_on_respawnplayer (fn [player]
   (foreach2 (drop-effect player (player:get_meta)) effect-list)))
 
-(minetest.register_on_joinplayer (fn [player]
+(core.register_on_joinplayer (fn [player]
   (let [meta (player:get_meta)]
     (each [name effect (pairs effect-list)]
       (when (applied? meta name)
@@ -208,7 +208,7 @@
     (each [listname lst (pairs (inv:get_lists))]
       (when (¬ contains special-inventory listname)
         (each [_ stack (ipairs lst)]
-          (minetest.add_item pos stack))
+          (core.add_item pos stack))
         (inv:set_list listname [])))))
 
 (fn mean [A B] (/ (+ A B) 2))
@@ -216,8 +216,8 @@
 (var radiation-timer 0)
 (def-globalstep [Δt]
   (set radiation-timer (+ radiation-timer Δt))
-  (let [vm (minetest.get_voxel_manip)]
-    (each [_ player (ipairs (minetest.get_connected_players))]
+  (let [vm (core.get_voxel_manip)]
+    (each [_ player (ipairs (core.get_connected_players))]
       (let [meta (player:get_meta)
             m     75.0                               ; Player mass, kg
             flux  (radiant-flux-at-player vm player) ; Radiant flux, W
@@ -239,16 +239,16 @@
 
 (fn get-danger-texture [color]
   (string.format "radiation_danger.png^[multiply:%s"
-    (minetest.rgba color.r color.g color.b)))
+    (core.rgba color.r color.g color.b)))
 
 (local danger-texture "radiation_danger.png")
-(minetest.register_node "radiation:danger"
+(core.register_node "radiation:danger"
   {:description "Radiation source"
    :tiles [(get-danger-texture {:r 255 :g 0 :b 0})]
    :groups {:cracky 1}})
 
 (let [texture (get-danger-texture {:r 232 :g 191 :b 40})]
-  (minetest.register_node "radiation:sign"
+  (core.register_node "radiation:sign"
     {:description "Radiation hazard warning sign"
      :drawtype "nodebox" :tiles [texture]
      :groups {:dig_immediate 3} :walkable false
@@ -262,11 +262,11 @@
         :wall_bottom [-0.5000 -0.5000 -0.5000  0.5000 -0.4375 0.5000]
         :wall_side   [-0.5000 -0.5000 -0.5000 -0.4375  0.5000 0.5000]}}))
 
-(minetest.register_chatcommand "reset-dose"
+(core.register_chatcommand "reset-dose"
   {:description "Resets player received dose."
    :privs {:debug true}
    :func (fn [name]
-           (let [player (minetest.get_player_by_name name)]
+           (let [player (core.get_player_by_name name)]
             (when player
               (let [meta (player:get_meta)]
                 (meta:set_float :radiation 0)

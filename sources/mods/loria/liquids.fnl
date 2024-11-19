@@ -5,19 +5,19 @@
 (fn opacity [texture opacity]
   (.. texture "^[opacity:" opacity))
 
-(minetest.register_craftitem "loria:bucket_empty"
+(core.register_craftitem "loria:bucket_empty"
   {:inventory_image "bucket.png"
    :description "Empty bucket"
    :stack_max 1
    :liquids_pointable true
    :on_use (λ [itemstack user pointed_thing]
        (when (= pointed_thing.type "node")
-         (let [n (minetest.get_node pointed_thing.under)
+         (let [n (core.get_node pointed_thing.under)
                liquiddef (. bucket.liquids n.name)]
            (when (∧ (≠ liquiddef nil)
                     (= liquiddef.source n.name)
                     (∈ :itemname liquiddef))
-             (minetest.add_node pointed_thing.under {:name "air"})
+             (core.add_node pointed_thing.under {:name "air"})
              {:name liquiddef.itemname :wear (itemstack:get_wear)}))))})
 
 (each [name params (pairs liquids)]
@@ -26,7 +26,7 @@
         itemname (.. "loria:bucket_" name)
         texture₁ (opacity params.animated_texture params.alpha)
         texture₂ (opacity params.animated_flowing_texture params.alpha)]
-    (minetest.register_node source
+    (core.register_node source
       {:description (.. (capitalization name) " source")
        :drawtype "liquid"
        :tiles
@@ -63,7 +63,7 @@
        :damage_per_second (or params.damage_per_second 0)
        :groups {:liquid 3 :not_in_creative_inventory 1}})
 
-    (minetest.register_node flowing
+    (core.register_node flowing
       {:description (.. "Flowing " name)
        :drawtype "flowingliquid"
        :tiles [params.texture]
@@ -109,7 +109,7 @@
     (tset bucket.liquids flowing (. bucket.liquids source))
     (tset bucket.is_bucket itemname true)
 
-    ((if params.is_fuel minetest.register_tool minetest.register_craftitem)
+    ((if params.is_fuel core.register_tool core.register_craftitem)
       itemname
       {:description params.bucket_description
        :inventory_image params.bucket_image
@@ -118,10 +118,10 @@
        :on_use
          (λ [itemstack user pointed_thing]
            (when (= pointed_thing.type "node")
-             (let [n (minetest.get_node pointed_thing.under)]
+             (let [n (core.get_node pointed_thing.under)]
                (if (∉ n.name bucket.liquids)
-                   (minetest.add_node pointed_thing.above {:name source})
+                   (core.add_node pointed_thing.above {:name source})
                    (≠ n.name source)
-                   (minetest.add_node pointed_thing.under {:name source})
+                   (core.add_node pointed_thing.under {:name source})
                    (nope))
                {:name "loria:bucket_empty" :wear (itemstack:get_wear)})))})))
