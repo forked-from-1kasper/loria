@@ -1,9 +1,9 @@
 vector = { new = function() end }
 
-dofile("../sources/mods/loria/prelude.lua")
-dofile("../sources/mods/loria/conf.lua")
-dofile("../sources/mods/loria/inv_crafts.lua")
-dofile("../sources/mods/furnace/crafts.lua")
+dofile("../loria/mods/loria/prelude.lua")
+dofile("../loria/mods/loria/conf.lua")
+dofile("../loria/mods/loria/inv_crafts.lua")
+dofile("../loria/mods/furnace/crafts.lua")
 
 local special_names = {
     ["furnace:gas"] = "Gas powered furnace (PbSe)",

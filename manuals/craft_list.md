@@ -95,7 +95,7 @@
 |6|Aluminium ingot × 1|Aluminium case × 1|
 |7|Bucket empty × 1, Mercury × 1|Bucket mercury × 1|
 |8|Bucket lucidum × 1|Bucket empty × 1, Glow stick × 12|
-|9|Aluminium oxide × 4, Silicon dioxide × 4, Bucket water × 1|Brick × 4, Bucket empty × 1|
+|9|Aluminium oxide × 1, Silicon dioxide × 6, Bucket water × 1|Brick × 8, Bucket empty × 1|
 |10|Plutonium ingot × 9|Plutonium × 1|
 |11|Plutonium × 1|Plutonium ingot × 9|
 |12|Viridi petasum body × 3|Silicon dioxide × 1|
@@ -114,6 +114,13 @@
 |25|Timor body 4 × 3|Silicon dioxide × 1|
 |26|Timor body 5 × 3|Silicon dioxide × 1|
 |27|Timor stem × 5|Silicon dioxide × 1|
+|28|Ammonium manganese pyrophosphate × 4, Aluminium brick mold × 1|Ammonium manganese pyrophosphate brick × 4|
+|29|Cinnabar × 4, Aluminium brick mold × 1|Cinnabar brick × 4|
+|30|Lead sulfate × 4, Aluminium brick mold × 1|Lead sulfate brick × 4|
+|31|Mercury oxide × 4, Aluminium brick mold × 1|Mercury oxide brick × 4|
+|32|Red mercury oxide × 4, Aluminium brick mold × 1|Red mercury oxide brick × 4|
+|33|Thorium dioxide × 4, Aluminium brick mold × 1|Thorium dioxide brick × 4|
+|34|Uranium tetrachloride × 4, Aluminium brick mold × 1|Uranium tetrachloride brick × 4|
 
 ## Furnace (high temperature)
 
@@ -124,7 +131,7 @@
 |3|Thorium ingot × 9|Thorium × 1|
 |4|Thorium × 1|Thorium ingot × 9|
 |5|Copper ingot × 3|Copper hammer head × 1|
-|6|Plutonium dioxide × 1|Plutonium dioxide brick × 2|
+|6|Plutonium dioxide × 1|Plutonium dioxide brick × 1|
 
 ## Refiner
 
@@ -146,18 +153,18 @@
 |14|Lead oxide × 1, Hydrogen balloon × 1, Bucket empty × 1|Lead × 1, Empty balloon × 1, Bucket water × 1|
 |15|Bucket potassium permanganate × 2, Empty balloon × 1|Potassium manganate × 1, Manganese dioxide × 1, Oxygen balloon × 1, Bucket empty × 2|
 |16|Manganese dioxide × 1, Bucket empty × 1, Hydrogen balloon × 1|Manganese oxide × 1, Bucket water × 1, Empty balloon × 1|
-|17|Aluminium × 4, Oxygen balloon × 1|Aluminium oxide × 2, Empty balloon × 1|
+|17|Aluminium ingot × 4, Oxygen balloon × 1|Aluminium oxide × 2, Empty balloon × 1|
 |18|Wolfram ingot × 1|Wolfram filament × 15|
 |19|Silicon dioxide × 1, Hydrogen balloon × 2, Bucket empty × 2|Silicon × 1, Bucket water × 2, Empty balloon × 2|
 |20|Silicon dioxide × 1, Magnesium × 2|Silicon × 1, Magnesium oxide × 2|
-|21|Silicon dioxide × 3, Aluminium × 4|Silicon × 3, Aluminium oxide × 2|
+|21|Silicon dioxide × 3, Aluminium ingot × 4|Silicon × 3, Aluminium oxide × 2|
 |22|Thorium iodide × 1|Thorium × 1, Iodine × 2|
 |23|Plutonium tetrafluoride × 3|Plutonium trifluoride × 2, Plutonium hexafluoride × 1|
 |24|Plutonium trifluoride × 2, Calcium × 3|Plutonium × 2, Calcium fluoride × 3|
 |25|Humus × 2|Silicon dioxide × 1|
 |26|Sodium peroxide × 2, Empty balloon × 1|Sodium oxide × 2, Oxygen balloon × 1|
 |27|Chormium trioxide × 4, Empty balloon × 3|Chromia × 2, Oxygen balloon × 3|
-|28|Chromia × 1, Aluminium × 2|Aluminium oxide × 1, Chromium × 2|
+|28|Chromia × 1, Aluminium ingot × 2|Aluminium oxide × 1, Chromium × 2|
 |29|Silicon × 3|Transistor × 5|
 |30|Silicon × 1|Diode × 5|
 |31|Lead × 1, Selenium × 1|Lead selenide × 1|
