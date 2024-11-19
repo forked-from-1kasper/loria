@@ -24,7 +24,7 @@ wget `curl -s https://api.github.com/repos/forked-from-1kasper/loria/releases/la
 
 ## License
 
-Copyright © 2020–2023 The Loria Developers
+Copyright © 2020–2024 The Loria Developers
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
